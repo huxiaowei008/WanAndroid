@@ -1,0 +1,58 @@
+package com.hxw.wanandroid.base;
+
+import android.app.Application;
+import android.content.Context;
+import android.support.annotation.NonNull;
+
+import com.google.gson.GsonBuilder;
+import com.hxw.lol.delegate.AppLifecycle;
+import com.hxw.lol.di.module.ClientModule;
+import com.hxw.lol.di.module.GlobalConfigModule;
+import com.hxw.lol.integration.ConfigModule;
+import com.hxw.wanandroid.BuildConfig;
+
+import java.util.List;
+
+import timber.log.Timber;
+
+/**
+ * @author hxw on 2018/5/5.
+ */
+public class GlobalConfiguration implements ConfigModule {
+    @Override
+    public void applyOptions(Context context, GlobalConfigModule.Builder builder) {
+        builder.gsonConfiguration(new ClientModule.GsonConfiguration() {
+            @Override
+            public void configGson(Context context, GsonBuilder builder) {
+                builder.setDateFormat("yyyy-MM-dd HH:mm:ss");
+            }
+        });
+    }
+
+    @Override
+    public void injectAppLifecycle(Context context, List<AppLifecycle> lives) {
+        lives.add(new AppLifecycle() {
+            @Override
+            public void attachBaseContext(@NonNull Context base) {
+
+            }
+
+            @Override
+            public void onCreate(@NonNull Application application) {
+                if (BuildConfig.DEBUG) {
+                    Timber.plant(new Timber.DebugTree());
+                }
+            }
+
+            @Override
+            public void onTerminate(@NonNull Application application) {
+
+            }
+        });
+    }
+
+    @Override
+    public void injectActivityLifecycle(Context context, List<Application.ActivityLifecycleCallbacks> lives) {
+
+    }
+}
