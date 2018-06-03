@@ -1,4 +1,4 @@
-package com.hxw.lol.delegate;
+package com.hxw.core.delegate;
 
 import android.app.Application;
 import android.content.Context;

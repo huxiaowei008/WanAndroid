@@ -1,4 +1,4 @@
-package com.hxw.lol.utils.constant;
+package com.hxw.core.utils.constant;
 
 import android.support.annotation.IntDef;
 
@@ -7,6 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * 时间相关常量
+ *
  * @author hxw on 2018/5/7.
  */
 public final class TimeConstants {

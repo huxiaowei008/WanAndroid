@@ -1,6 +1,7 @@
 package com.hxw.wanandroid.di;
 
-import com.hxw.lol.di.AppModuleScope;
+
+import com.hxw.core.di.AppModuleScope;
 import com.hxw.wanandroid.WanApi;
 
 import dagger.Module;

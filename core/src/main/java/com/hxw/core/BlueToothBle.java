@@ -1,4 +1,4 @@
-package com.hxw.lol;
+package com.hxw.core;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -98,8 +98,8 @@ public class BlueToothBle {
             mBluetoothAdapter = null;
         }
         bluetoothManager = null;
-        mCharacteristic=null;
-        mLeScanCallback=null;
+        mCharacteristic = null;
+        mLeScanCallback = null;
     }
 
     /**

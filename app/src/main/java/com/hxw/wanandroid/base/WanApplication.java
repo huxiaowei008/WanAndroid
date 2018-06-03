@@ -2,7 +2,8 @@ package com.hxw.wanandroid.base;
 
 import android.content.Context;
 
-import com.hxw.lol.delegate.AppDelegate;
+
+import com.hxw.core.delegate.AppDelegate;
 import com.hxw.wanandroid.di.DaggerWanComponent;
 
 import dagger.android.AndroidInjector;

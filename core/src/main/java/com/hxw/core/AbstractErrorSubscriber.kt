@@ -2,7 +2,7 @@ package com.hxw.lol
 
 import android.net.ParseException
 import com.google.gson.JsonParseException
-import com.hxw.lol.utils.AppUtils
+import com.hxw.core.utils.AppUtils
 import io.reactivex.Observer
 import org.json.JSONException
 import retrofit2.HttpException

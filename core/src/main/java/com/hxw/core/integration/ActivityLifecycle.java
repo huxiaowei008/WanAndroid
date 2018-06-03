@@ -1,11 +1,12 @@
-package com.hxw.lol.integration;
+package com.hxw.core.integration;
 
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import com.hxw.lol.base.IActivity;
+
+import com.hxw.core.base.IActivity;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

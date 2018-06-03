@@ -1,4 +1,4 @@
-package com.hxw.lol.mvp;
+package com.hxw.core.mvp;
 
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;

@@ -1,7 +1,8 @@
-package com.hxw.wanandroid
+package com.hxw.wanandroid.mvp
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.hxw.wanandroid.R
 
 class MainActivity : AppCompatActivity() {
 

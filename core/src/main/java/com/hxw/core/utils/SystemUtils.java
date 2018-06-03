@@ -1,4 +1,4 @@
-package com.hxw.lol.utils;
+package com.hxw.core.utils;
 
 import android.os.Build;
 import android.os.Environment;
@@ -54,12 +54,12 @@ public final class SystemUtils {
      * 两台设备的系统虽然为 android 6.0，但不支持状态栏icon颜色改变，因此经常需要对它们进行额外判断。
      */
     public static boolean isZUKZ1() {
-        final String board = android.os.Build.MODEL;
+        final String board = Build.MODEL;
         return board != null && board.toLowerCase().contains(ZUKZ1);
     }
 
     public static boolean isZTKC2016() {
-        final String board = android.os.Build.MODEL;
+        final String board = Build.MODEL;
         return board != null && board.toLowerCase().contains(ZTEC2016);
     }
 

@@ -1,4 +1,4 @@
-package com.hxw.lol.di.module;
+package com.hxw.core.di.module;
 
 import android.app.Application;
 import android.content.Context;

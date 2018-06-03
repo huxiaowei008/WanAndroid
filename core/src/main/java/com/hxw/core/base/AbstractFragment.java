@@ -1,4 +1,4 @@
-package com.hxw.lol.base;
+package com.hxw.core.base;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,8 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hxw.lol.delegate.AppDelegate;
-import com.hxw.lol.di.AppComponent;
+import com.hxw.core.delegate.AppDelegate;
+import com.hxw.core.di.AppComponent;
+
 
 /**
  * {@link Fragment} 基类

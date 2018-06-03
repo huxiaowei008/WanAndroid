@@ -1,9 +1,10 @@
-package com.hxw.lol.base;
+package com.hxw.core.base;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 
-import com.hxw.lol.mvp.BasePresenter;
+
+import com.hxw.core.mvp.BasePresenter;
 
 import javax.inject.Inject;
 

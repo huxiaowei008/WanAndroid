@@ -1,4 +1,4 @@
-package com.hxw.lol.utils;
+package com.hxw.core.utils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -13,7 +13,8 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Toast;
 
-import com.hxw.lol.delegate.AppDelegate;
+import com.hxw.core.delegate.AppDelegate;
+
 
 /**
  * App相关工具类

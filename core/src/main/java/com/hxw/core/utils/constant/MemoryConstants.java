@@ -1,4 +1,4 @@
-package com.hxw.lol.utils.constant;
+package com.hxw.core.utils.constant;
 
 import android.support.annotation.IntDef;
 

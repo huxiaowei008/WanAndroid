@@ -1,15 +1,16 @@
-package com.hxw.lol.delegate;
+package com.hxw.core.delegate;
 
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.hxw.lol.di.AppComponent;
-import com.hxw.lol.di.DaggerAppComponent;
-import com.hxw.lol.di.module.GlobalConfigModule;
-import com.hxw.lol.integration.ActivityLifecycle;
-import com.hxw.lol.integration.ConfigModule;
-import com.hxw.lol.integration.ManifestParser;
+
+import com.hxw.core.di.AppComponent;
+import com.hxw.core.di.DaggerAppComponent;
+import com.hxw.core.di.module.GlobalConfigModule;
+import com.hxw.core.integration.ActivityLifecycle;
+import com.hxw.core.integration.ConfigModule;
+import com.hxw.core.integration.ManifestParser;
 
 import java.util.ArrayList;
 import java.util.List;

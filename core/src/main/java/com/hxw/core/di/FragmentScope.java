@@ -1,4 +1,4 @@
-package com.hxw.lol.di;
+package com.hxw.core.di;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

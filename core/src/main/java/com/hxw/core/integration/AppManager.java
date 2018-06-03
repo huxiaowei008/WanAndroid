@@ -1,4 +1,4 @@
-package com.hxw.lol.integration;
+package com.hxw.core.integration;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;

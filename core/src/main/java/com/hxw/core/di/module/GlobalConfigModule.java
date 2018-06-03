@@ -1,11 +1,12 @@
-package com.hxw.lol.di.module;
+package com.hxw.core.di.module;
 
 import android.app.Application;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.hxw.lol.imageloader.GlideAppliesOptions;
-import com.hxw.lol.utils.FileUtils;
+
+import com.hxw.core.imageloader.GlideAppliesOptions;
+import com.hxw.core.utils.FileUtils;
 
 import java.io.File;
 

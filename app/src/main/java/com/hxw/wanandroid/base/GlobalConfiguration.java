@@ -5,10 +5,11 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.google.gson.GsonBuilder;
-import com.hxw.lol.delegate.AppLifecycle;
-import com.hxw.lol.di.module.ClientModule;
-import com.hxw.lol.di.module.GlobalConfigModule;
-import com.hxw.lol.integration.ConfigModule;
+
+import com.hxw.core.delegate.AppLifecycle;
+import com.hxw.core.di.module.ClientModule;
+import com.hxw.core.di.module.GlobalConfigModule;
+import com.hxw.core.integration.ConfigModule;
 import com.hxw.wanandroid.BuildConfig;
 
 import java.util.List;

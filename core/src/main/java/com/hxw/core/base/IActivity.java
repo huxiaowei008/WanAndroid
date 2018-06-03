@@ -1,4 +1,4 @@
-package com.hxw.lol.base;
+package com.hxw.core.base;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,7 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 
-import com.hxw.lol.di.AppComponent;
+import com.hxw.core.di.AppComponent;
+
 
 /**
  * {@link Activity} 基础接口

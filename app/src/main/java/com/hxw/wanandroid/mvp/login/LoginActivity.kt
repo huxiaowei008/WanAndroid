@@ -1,7 +1,8 @@
 package com.hxw.wanandroid.mvp.login
 
 import android.os.Bundle
-import com.hxw.lol.base.AbstractActivity
+import com.hxw.core.base.AbstractActivity
+
 import com.hxw.wanandroid.R
 
 /**

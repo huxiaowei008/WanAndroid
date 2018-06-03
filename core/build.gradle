@@ -1,15 +1,16 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'kotlin-android'//用于编译Android代码
+apply plugin: 'kotlin-kapt'//那些注释处理需要用这个,就是annotationProcessor替换成kapt
 android {
-    compileSdkVersion 27
+    compileSdkVersion config.target_sdk
 
 
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion config.min_sdk
+        targetSdkVersion config.target_sdk
+        versionCode config.version_code
+        versionName config.version_name
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -27,8 +28,151 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    api project(':annotation')
+
+    //KTX https://github.com/android/android-ktx
+    api 'androidx.core:core-ktx:0.3'
+
+    //support https://github.com/dandar3/android-support-library-README
+    api("com.android.support:appcompat-v7:$versions.support") {
+        exclude group: 'android.arch.lifecycle'
+    }
+    api("com.android.support:design:$versions.support") {
+        exclude group: 'android.arch.lifecycle'
+    }
+    api("com.android.support:support-v4:$versions.support") {
+        exclude group: 'android.arch.lifecycle'
+    }
+//    api "com.android.support:support-v13:$versions.support"
+    api "com.android.support:cardview-v7:$versions.support"
+    api "com.android.support:recyclerview-v7:$versions.support"
+    api "com.android.support:support-annotations:$versions.support"
+    api "com.android.support:support-vector-drawable:$versions.support"
+    api "com.android.support:animated-vector-drawable:$versions.support"
+
+    //Lifecycle https://developer.android.google.cn/topic/libraries/architecture/lifecycle
+    api "android.arch.lifecycle:runtime:$versions.lifecycle"
+    kapt "android.arch.lifecycle:compiler:$versions.lifecycle"
+
+    //ViewModel https://developer.android.google.cn/topic/libraries/architecture/viewmodel
+    api "android.arch.lifecycle:viewmodel:$versions.lifecycle"
+
+    //retrofit https://github.com/square/retrofit
+    api("com.squareup.retrofit2:retrofit:$versions.retrofit") {
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+        exclude module: 'okio'
+    }
+    implementation("com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit") {
+        exclude module: 'rxjava'
+        exclude module: 'okhttp'
+        exclude module: 'retrofit'
+        exclude module: 'okio'
+    }
+    implementation("com.squareup.retrofit2:converter-gson:$versions.retrofit") {
+        exclude module: 'gson'
+        exclude module: 'okhttp'
+        exclude module: 'okio'
+        exclude module: 'retrofit'
+    }
+
+    //Gson https://github.com/google/gson
+    api 'com.google.code.gson:gson:2.8.4'
+
+    //okHttp https://github.com/square/okhttp
+    api "com.squareup.okhttp3:okhttp:$versions.okhttp"
+
+    //这在okhttp主页下的okhttp-logging-interceptor包中
+    api "com.squareup.okhttp3:logging-interceptor:$versions.okhttp"
+
+    //timber https://github.com/JakeWharton/timber
+    api 'com.jakewharton.timber:timber:4.7.0'
+
+    //glide图片加载 https://github.com/bumptech/glide
+    api("com.github.bumptech.glide:glide:$versions.glide") {
+        exclude group: 'android.arch.lifecycle'
+    }
+    api("com.github.bumptech.glide:okhttp3-integration:$versions.glide") {
+        transitive = false
+    }
+    kapt "com.github.bumptech.glide:compiler:$versions.glide"
+
+    //    示例代码：
+
+    //    为了更好地控制，你也可以从 okhttp-integration 库中排除过渡依赖：
+
+    //
+
+    //    implementation (com.github.bumptech.glide:okhttp-integration:4.4.0) {
+
+    //        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+
+    //    }
+
+    //    或你可以简单地排除所有 okhttp-integration 库的所有过渡依赖：
+
+    //
+
+    //    implementation (com.github.bumptech.glide:okhttp-integration:4.4.0) {
+
+    //        transitive = false
+
+    //    }
+
+    //RxKotlin
+    api ('io.reactivex.rxjava2:rxkotlin:2.2.0'){
+        exclude module: 'rxjava'
+    }
+
+    //RxJava https://github.com/ReactiveX/RxJava/tree/2.x
+    api 'io.reactivex.rxjava2:rxjava:2.1.13'
+
+    //RxAndroid https://github.com/ReactiveX/RxAndroid/tree/2.x
+    api('io.reactivex.rxjava2:rxandroid:2.0.2') {
+        exclude module: 'rxjava'
+    }
+
+    //RxRelay https://github.com/JakeWharton/RxRelay
+    api 'com.jakewharton.rxrelay2:rxrelay:2.0.0'
+
+    //RxLifecycle https://github.com/trello/RxLifecycle/tree/2.x
+//    api('com.trello.rxlifecycle2:rxlifecycle-android-lifecycle:2.2.1') {
+//        exclude module: 'rxjava'
+//        exclude module: 'rxandroid'
+//        exclude module: 'jsr305'
+//    }
+
+    //RxBinding https://github.com/JakeWharton/RxBinding
+    api("com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:$versions.rxbinding") {
+        transitive = false
+    }
+    api("com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:$versions.rxbinding") {
+        transitive = false
+    }
+    api("com.jakewharton.rxbinding2:rxbinding-design-kotlin:$versions.rxbinding") {
+        transitive = false
+    }
+    api("com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:$versions.rxbinding") {
+        transitive = false
+    }
+
+    //dagger2 https://github.com/google/dagger
+    api ("com.google.dagger:dagger:$versions.dagger"){
+        exclude group: 'android.arch.lifecycle'
+    }
+    kapt "com.google.dagger:dagger-compiler:$versions.dagger"
+    api ("com.google.dagger:dagger-android-support:$versions.dagger"){
+        exclude group: 'android.arch.lifecycle'
+    }
+    kapt "com.google.dagger:dagger-android-processor:$versions.dagger"
+
+    //AutoDispose https://github.com/uber/AutoDispose
+    api('com.uber.autodispose:autodispose-android-archcomponents-kotlin:0.8.0') {
+        exclude group: 'android.arch.lifecycle'
+        exclude module: 'rxjava'
+        exclude module: 'rxandroid'
+    }
 }

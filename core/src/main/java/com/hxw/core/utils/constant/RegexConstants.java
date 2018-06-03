@@ -1,4 +1,4 @@
-package com.hxw.lol.utils.constant;
+package com.hxw.core.utils.constant;
 
 /**
  * 正则相关常量

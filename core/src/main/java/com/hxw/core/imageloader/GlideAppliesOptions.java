@@ -1,4 +1,4 @@
-package com.hxw.lol.imageloader;
+package com.hxw.core.imageloader;
 
 import android.content.Context;
 

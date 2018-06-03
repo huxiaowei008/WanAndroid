@@ -1,4 +1,4 @@
-package com.hxw.lol.di.module;
+package com.hxw.core.di.module;
 
 import android.app.Application;
 import android.content.Context;
@@ -7,7 +7,8 @@ import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.hxw.lol.utils.StringUtils;
+import com.hxw.core.utils.StringUtils;
+
 
 import javax.inject.Singleton;
 

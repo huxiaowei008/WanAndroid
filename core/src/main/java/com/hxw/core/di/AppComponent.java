@@ -1,14 +1,15 @@
-package com.hxw.lol.di;
+package com.hxw.core.di;
 
 import android.app.Application;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
-import com.hxw.lol.delegate.AppDelegate;
-import com.hxw.lol.di.module.AppModule;
-import com.hxw.lol.di.module.ClientModule;
-import com.hxw.lol.di.module.GlobalConfigModule;
-import com.hxw.lol.integration.AppManager;
+import com.hxw.core.delegate.AppDelegate;
+import com.hxw.core.di.module.AppModule;
+import com.hxw.core.di.module.ClientModule;
+import com.hxw.core.di.module.GlobalConfigModule;
+import com.hxw.core.integration.AppManager;
+
 
 import java.io.File;
 

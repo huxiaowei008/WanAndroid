@@ -1,4 +1,4 @@
-package com.hxw.lol.utils;
+package com.hxw.core.utils;
 
 import android.support.annotation.NonNull;
 

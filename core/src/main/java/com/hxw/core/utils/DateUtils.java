@@ -1,4 +1,4 @@
-package com.hxw.lol.utils;
+package com.hxw.core.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

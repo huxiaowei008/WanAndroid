@@ -1,4 +1,4 @@
-package com.hxw.lol.integration;
+package com.hxw.core.integration;
 
 import android.content.Context;
 import android.os.Bundle;

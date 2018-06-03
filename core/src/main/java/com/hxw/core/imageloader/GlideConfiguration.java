@@ -1,4 +1,4 @@
-package com.hxw.lol.imageloader;
+package com.hxw.core.imageloader;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -18,7 +18,8 @@ import com.bumptech.glide.load.engine.cache.MemorySizeCalculator;
 import com.bumptech.glide.load.engine.executor.GlideExecutor;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.module.AppGlideModule;
-import com.hxw.lol.delegate.AppDelegate;
+import com.hxw.core.delegate.AppDelegate;
+
 
 import java.io.InputStream;
 

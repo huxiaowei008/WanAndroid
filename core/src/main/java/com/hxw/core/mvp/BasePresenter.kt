@@ -1,15 +1,12 @@
-package com.hxw.lol.mvp
+package com.hxw.core.mvp
+
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleOwner
-import com.hxw.lol.utils.RxUtils
-
-import com.uber.autodispose.AutoDispose
+import com.hxw.core.utils.RxUtils
 import com.uber.autodispose.AutoDisposeConverter
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-
 import timber.log.Timber
 
 /**

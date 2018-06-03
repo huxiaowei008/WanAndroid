@@ -1,10 +1,11 @@
-package com.hxw.lol.integration;
+package com.hxw.core.integration;
 
 import android.app.Application;
 import android.content.Context;
 
-import com.hxw.lol.delegate.AppLifecycle;
-import com.hxw.lol.di.module.GlobalConfigModule;
+
+import com.hxw.core.delegate.AppLifecycle;
+import com.hxw.core.di.module.GlobalConfigModule;
 
 import java.util.List;
 
