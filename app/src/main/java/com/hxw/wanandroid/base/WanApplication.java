@@ -1,6 +1,7 @@
 package com.hxw.wanandroid.base;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatDelegate;
 
 
 import com.hxw.core.delegate.AppDelegate;
@@ -31,7 +32,7 @@ public class WanApplication extends DaggerApplication {
             appDelegate.onCreate(this);
         }
         super.onCreate();
-
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
     @Override
