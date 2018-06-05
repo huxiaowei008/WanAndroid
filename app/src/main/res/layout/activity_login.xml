@@ -18,6 +18,7 @@
         app:lottie_rawRes="@raw/gradient_animated_background" />
 
     <android.support.v7.widget.CardView
+        android:id="@+id/card_login"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_marginBottom="8dp"
@@ -125,6 +126,10 @@
         android:id="@+id/fa_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:fabSize="normal"
-        android:src="@drawable/ic_add"/>
+        android:layout_marginTop="16dp"
+        app:fabSize="mini"
+        app:layout_constraintEnd_toEndOf="@+id/card_login"
+        app:layout_constraintStart_toEndOf="@+id/card_login"
+        app:layout_constraintTop_toTopOf="@+id/card_login"
+        app:srcCompat="@drawable/ic_add" />
 </android.support.constraint.ConstraintLayout>

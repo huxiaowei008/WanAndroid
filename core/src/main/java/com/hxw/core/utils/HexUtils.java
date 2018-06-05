@@ -1,0 +1,213 @@
+package com.hxw.core.utils;
+
+import java.util.Random;
+
+/**
+ * 十六进制转化相关工具
+ *
+ * @author hxw on 2018/6/5.
+ */
+public class HexUtils {
+
+
+    /**
+     * 用于建立十六进制字符的输出的小写字符数组
+     */
+    private static final char[] DIGITS_LOWER = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+
+    /**
+     * 将十六进制字符数组转换为十进制字节数组
+     * data长度需为偶数,例:
+     * data = "12345a".toCharArray() = {'1','2','3','4','5','a'}
+     * 结果是{18,52,90} 0x12->18  0x34->52  0x5a->90
+     *
+     * @param data 十六进制char[]
+     * @return byte[]
+     * @throws RuntimeException 如果源十六进制字符数组是一个奇怪的长度，将抛出运行时异常
+     */
+    public static byte[] hexStr2Bytes(char[] data) {
+
+        int len = data.length;
+
+        //取最低位,判断是否为0,为0说明是偶数,为1说明是奇数
+        if ((len & 0x01) != 0) {
+            throw new RuntimeException("data 长度是奇数");
+        }
+        //len >> 1 右移一位，等价于/2
+        byte[] out = new byte[len >> 1];
+
+        // (0&0=0,0&1=0,1&1=1,0|0=0,0|1=1,1|1=1)
+        for (int j = 0; j < len; j += 2) {
+            //取到第一个值后左移4位变成高4位,空出低4位为0 取到第二个值后补到低4位上
+            int f = (toDigit(data[j]) << 4 | toDigit(data[j + 1]));
+            // & 0xff的作用是把更高的位清0
+            out[j >> 1] = (byte) (f & 0xFF);
+        }
+        return out;
+    }
+
+    /**
+     * 将十六进制字符数组转换为十进制字节数组
+     * data长度需为偶数,例:
+     * data="12345a"
+     * 结果是{18,52,90} 0x12->18  0x34->52  0x5a->90
+     *
+     * @param data 十六进制char[]
+     * @return byte[]
+     * @throws RuntimeException 如果源十六进制字符数组是一个奇怪的长度，将抛出运行时异常
+     */
+    public static byte[] hexStr2Bytes(String data) {
+
+        int len = data.length();
+
+        if (len % 2 != 0) {
+            throw new RuntimeException("data 长度是奇数");
+        }
+
+        int size = len / 2;
+        byte[] out = new byte[size];
+
+        for (int i = 0; i < size; i++) {
+            int start = i * 2;
+            out[i] = (byte) (Integer
+                    .parseInt(data.substring(start, start + 2), 16) & 0xFF);
+        }
+        return out;
+    }
+
+    /**
+     * 将十六进制字符转换成一个十进制整数
+     * 'a'->10
+     *
+     * @param ch 十六进制char
+     * @return 一个十进制整数
+     * @throws RuntimeException 当ch不是一个合法的十六进制字符时，抛出运行时异常
+     */
+    public static int toDigit(char ch) {
+        int digit = Character.digit(ch, 16);
+        if (digit == -1) {
+            throw new RuntimeException("不合法的十六进制字符-> " + ch);
+        }
+        return digit;
+    }
+
+    /**
+     * 将字节数组转换为十六进制字符数组
+     * {18,52,90} -> {'1','2','3','4','5','a'}
+     * 有符号的byte会被过滤成1个字节,变成无符号
+     *
+     * @param data byte[]
+     * @return 十六进制char[]
+     */
+    public static char[] bytes2Hex(byte[] data) {
+        int l = data.length;
+        //l << 1 左移1位,相当于 *2
+        char[] out = new char[l << 1];
+        // (0&0=0,0&1=0,1&1=1,0|0=0,0|1=1,1|1=1)
+        for (int i = 0, j = 0; i < l; i++) {
+            //把低4位清0,然后无符号右移4位
+            out[j++] = DIGITS_LOWER[(0xF0 & data[i]) >>> 4];
+            //把高4位清0
+            out[j++] = DIGITS_LOWER[0x0F & data[i]];
+        }
+        return out;
+    }
+
+    /**
+     * 将字节数组转换为十六进制字符数组
+     * {18,52,90} -> "12345a"
+     * 注:Integer.toHexString(-12)-> fffffff4
+     * (item & 0xFF) 过滤掉负数的高位,只保留末位1个字节,等于把有符号转为无符号
+     *
+     * @param data byte[]
+     * @return 十六进制char[]
+     */
+    public static String bytes2HexStr(byte[] data) {
+        StringBuilder builder = new StringBuilder();
+        for (byte item : data) {
+            String str = Integer.toHexString(item & 0xFF);
+            if (str.length() == 1) {
+                builder.append('0');
+            }
+            builder.append(str);
+        }
+        return builder.toString();
+    }
+
+    /**
+     * 产生十六进制随机数
+     *
+     * @param len 随机数长度(字节)
+     * @return 返回的字符串长度是随机数长度的2倍
+     */
+    public static String randomHex(int len) {
+        //存放产生随机数的byte[]
+        byte[] random = new byte[len];
+        //此方法产生的随机byte是带有符号的,就是说会产生负数
+        new Random().nextBytes(random);
+        return bytes2HexStr(random);
+    }
+
+    /**
+     * 为字符串左边补指定字符
+     *
+     * @param str       需要补0的字符串(通常是进制字符串)
+     * @param strLength 完整字符串的长度(若以字节算,通常是 字节数*2)
+     * @param c         需要补的字符
+     * @return 补完整的字符串
+     */
+    public static String addZeroToLeft(String str, int strLength, char c) {
+        int strLen = str.length();
+        if (strLen < strLength) {
+            StringBuilder builder = new StringBuilder();
+            builder.append(str);
+            do {
+                builder.insert(0, c);
+            } while (builder.length() < strLength);
+            return builder.toString();
+        } else {
+            return str.substring(strLen - strLength);
+        }
+    }
+
+    /**
+     * 为字符串右边补指定字符
+     *
+     * @param str       需要补0的字符串(通常是进制字符串)
+     * @param strLength 完整字符串的长度(若以字节算,通常是 字节数*2)
+     * @param c         需要补的字符
+     * @return 补完整的字符串
+     */
+    public static String addZeroToRight(String str, int strLength, char c) {
+        int strLen = str.length();
+        if (strLen < strLength) {
+            StringBuilder builder = new StringBuilder();
+            builder.append(str);
+            do {
+                builder.append(c);
+            } while (builder.length() < strLength);
+            return builder.toString();
+        } else {
+            return str.substring(strLen - strLength);
+        }
+    }
+
+    /**
+     * 把无符号的整型转化成有符号的整型
+     * (1个字节是-128~127)
+     * (2个字节是-32768~32767)
+     *
+     * @param value 无符号的值
+     * @return 转化为有符号的值
+     */
+    public static int unSignedToSigned(int value) {
+        if (value > 127 && value <= 255) {
+            return value - 256;
+        } else if (value > 32767 && value <= 65535) {
+            return value - 65536;
+        } else {
+            return value;
+        }
+    }
+
+}
