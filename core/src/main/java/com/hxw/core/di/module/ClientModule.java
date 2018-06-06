@@ -36,7 +36,8 @@ public class ClientModule {
     @Singleton
     @Provides
     static Gson provideGson(Application application, @Nullable GsonConfiguration configuration) {
-        GsonBuilder builder = new GsonBuilder();
+        GsonBuilder builder = new GsonBuilder()
+                .serializeNulls();//值为null时会输出null
         if (configuration != null) {
             configuration.configGson(application, builder);
         }

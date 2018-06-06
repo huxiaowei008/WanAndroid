@@ -3,6 +3,7 @@ package com.hxw.wanandroid.base;
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatDelegate;
 
 import com.google.gson.GsonBuilder;
 
@@ -43,6 +44,7 @@ public class GlobalConfiguration implements ConfigModule {
                 if (BuildConfig.DEBUG) {
                     Timber.plant(new Timber.DebugTree());
                 }
+                AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
             }
 
             @Override

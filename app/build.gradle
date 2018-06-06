@@ -15,6 +15,7 @@ android {
         versionCode config.version_code
         versionName config.version_name
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {

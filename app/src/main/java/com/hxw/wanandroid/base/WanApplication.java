@@ -2,7 +2,6 @@ package com.hxw.wanandroid.base;
 
 import android.content.Context;
 
-
 import com.hxw.core.delegate.AppDelegate;
 import com.hxw.wanandroid.di.DaggerWanComponent;
 
@@ -31,7 +30,6 @@ public class WanApplication extends DaggerApplication {
             appDelegate.onCreate(this);
         }
         super.onCreate();
-
     }
 
     @Override
