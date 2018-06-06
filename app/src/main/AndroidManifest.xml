@@ -24,7 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mvp.register.RegisterActivity" />
+        <activity android:name=".mvp.register.RegisterActivity"
+            android:theme="@style/TransparentWindow"/>
 
     </application>
 

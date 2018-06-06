@@ -8,6 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--透明的Window-->
+    <style name="TransparentWindow" parent="AppTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
     <style name="InputLayout" parent="AppTheme">
         <!--1、android:colorControlActivated：表示CheckBox、EditText、Switch、Spinner、
         RadioButton等控件激活时候的色调，与之相同作用的一个属性：android:colorAccent。作用也是一样的。-->
