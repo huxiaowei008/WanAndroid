@@ -8,4 +8,21 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="InputLayout" parent="AppTheme">
+        <!--1、android:colorControlActivated：表示CheckBox、EditText、Switch、Spinner、
+        RadioButton等控件激活时候的色调，与之相同作用的一个属性：android:colorAccent。作用也是一样的。-->
+        <!--2、android:colorControlNormal：表示CheckBox、EditText、Switch、Spinner、RadioButton等控件默认时的色调-->
+        <!--3、android:colorPrimary：设置appBar的背景色-->
+        <!--4、android:colorPrimaryDark：设置状态栏的颜色-->
+        <!--5、android:textColorPrimary：设置appBar上字体的颜色-->
+        <!--在5.0以上设置style为：-->
+        <!--<item name="android:colorControlHighlight">#00BCD4</item>-->
+        <!--<item name="android:colorButtonNormal">#CDDC39</item>-->
+        <!--在5.0以下设置style为：-->
+        <!--<item name="colorControlHighlight">#00BCD4</item>-->
+        <!--<item name="colorButtonNormal">#CDDC39</item>-->
+        <!--1、colorControlHighlight：设置按钮点击时的背景色-->
+        <!--2、colorButtonNormal：设置按钮默认状态下的背景色-->
+        <item name="colorControlActivated">@color/green_500</item>
+    </style>
 </resources>
