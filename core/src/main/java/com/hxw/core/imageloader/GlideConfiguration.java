@@ -18,8 +18,7 @@ import com.bumptech.glide.load.engine.cache.MemorySizeCalculator;
 import com.bumptech.glide.load.engine.executor.GlideExecutor;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.module.AppGlideModule;
-import com.hxw.core.delegate.AppDelegate;
-
+import com.hxw.core.utils.AppUtils;
 
 import java.io.InputStream;
 
@@ -57,7 +56,7 @@ public class GlideConfiguration extends AppGlideModule {
                 //Bitmap 池
                 .setBitmapPool(new LruBitmapPool(calculator.getBitmapPoolSize()))
                 //磁盘缓存
-                .setDiskCache(new DiskLruCacheFactory(AppDelegate.getAppComponent()
+                .setDiskCache(new DiskLruCacheFactory(AppUtils.getAppComponent()
                         .cacheFile().getParent(), "Glide", maxSize))
                 .setDiskCacheExecutor(GlideExecutor
                         .newDiskCacheExecutor(GlideExecutor.UncaughtThrowableStrategy.THROW))
@@ -73,6 +72,6 @@ public class GlideConfiguration extends AppGlideModule {
         //Glide默认使用HttpURLConnection做网络请求,
         //用了OkHttpUrlLoader.Factory()后会换成OKHttp请求，在这放入我们自己创建的OkHttp
         registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader
-                .Factory(AppDelegate.getAppComponent().okHttpClient()));
+                .Factory(AppUtils.getAppComponent().okHttpClient()));
     }
 }

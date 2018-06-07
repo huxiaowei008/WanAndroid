@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.google.gson.GsonBuilder;
-
 import com.hxw.core.delegate.AppLifecycle;
 import com.hxw.core.di.module.ClientModule;
 import com.hxw.core.di.module.GlobalConfigModule;

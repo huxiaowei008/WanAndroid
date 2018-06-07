@@ -6,13 +6,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.hxw.core.delegate.AppDelegate;
 import com.hxw.core.di.AppComponent;
+import com.hxw.core.utils.AppUtils;
 
 
 /**
  * {@link Activity} 基类
  * 如果继承这类使用Presenter,记得添加生命周期订阅  getLifecycle().addObserver(mPresenter);
+ *
  * @author hxw on 2018/5/5.
  */
 public abstract class AbstractActivity extends AppCompatActivity implements IActivity {
@@ -23,7 +24,7 @@ public abstract class AbstractActivity extends AppCompatActivity implements IAct
         if (getLayoutId() != 0) {
             setContentView(getLayoutId());
         }
-        injectActivityComponent(AppDelegate.getAppComponent());
+        injectActivityComponent(AppUtils.getAppComponent());
         init(savedInstanceState);
     }
 

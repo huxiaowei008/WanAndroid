@@ -1,51 +1,57 @@
 package com.hxw.wanandroid.base;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatDelegate;
 
-import com.hxw.core.delegate.AppDelegate;
-import com.hxw.wanandroid.di.DaggerWanComponent;
+import com.google.gson.GsonBuilder;
+import com.hxw.core.base.AbstractApplication;
+import com.hxw.core.di.module.ClientModule;
+import com.hxw.core.di.module.GlobalConfigModule;
+import com.hxw.wanandroid.BuildConfig;
 
 import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;
+import timber.log.Timber;
 
 /**
  * @author hxw on 2018/5/3.
  */
-public class WanApplication extends DaggerApplication {
+public class WanApplication extends AbstractApplication {
 
-    private AppDelegate appDelegate;
-
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        if (appDelegate == null) {
-            appDelegate = new AppDelegate(base);
-        }
-        appDelegate.attachBaseContext(base);
-    }
 
     @Override
     public void onCreate() {
-        if (appDelegate != null) {
-            appDelegate.onCreate(this);
-        }
         super.onCreate();
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new Timber.DebugTree());
+        }
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
     @Override
     public void onTerminate() {
-        if (appDelegate != null) {
-            appDelegate.onTerminate(this);
-        }
         super.onTerminate();
 
     }
 
     @Override
-    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-        return DaggerWanComponent
-                .builder()
-                .appComponent(AppDelegate.getAppComponent())
+    protected GlobalConfigModule getGlobalConfigModule() {
+        return GlobalConfigModule.builder()
+                .gsonConfiguration(new ClientModule.GsonConfiguration() {
+                    @Override
+                    public void configGson(Context context, GsonBuilder builder) {
+                        builder.setDateFormat("yyyy-MM-dd HH:mm:ss");
+                    }
+                })
                 .build();
+    }
+
+    @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+//        return DaggerWanComponent
+//                .builder()
+//                .appComponent(AppUtils.getAppComponent())
+//                .build();
+        return null;
     }
 }

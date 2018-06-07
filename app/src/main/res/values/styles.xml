@@ -10,7 +10,9 @@
 
     <!--透明的Window-->
     <style name="TransparentWindow" parent="AppTheme">
+        <!--window背景透明-->
         <item name="android:windowBackground">@android:color/transparent</item>
+        <!--window透明-->
         <item name="android:windowIsTranslucent">true</item>
     </style>
 

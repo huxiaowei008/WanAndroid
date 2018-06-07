@@ -4,13 +4,13 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-
 import com.hxw.core.di.AppComponent;
 import com.hxw.core.di.DaggerAppComponent;
 import com.hxw.core.di.module.GlobalConfigModule;
 import com.hxw.core.integration.ActivityLifecycle;
 import com.hxw.core.integration.ConfigModule;
 import com.hxw.core.integration.ManifestParser;
+import com.hxw.core.utils.AppUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,6 @@ import javax.inject.Inject;
  * @author hxw on 2018/5/4.
  */
 public class AppDelegate implements AppLifecycle {
-    private static AppComponent mAppComponent;
 
     @Inject
     protected ActivityLifecycle mActivityLifecycle;
@@ -42,13 +41,6 @@ public class AppDelegate implements AppLifecycle {
         }
     }
 
-    public static AppComponent getAppComponent() {
-        if (mAppComponent == null) {
-            throw new NullPointerException("AppComponent还未初始化,调用太早了!");
-        }
-        return mAppComponent;
-    }
-
     @Override
     public void attachBaseContext(@NonNull Context base) {
         for (AppLifecycle lifecycle : mAppLifecycle) {
@@ -58,12 +50,13 @@ public class AppDelegate implements AppLifecycle {
 
     @Override
     public void onCreate(@NonNull Application application) {
-        mAppComponent = DaggerAppComponent
+        AppComponent appComponent = DaggerAppComponent
                 .builder()
                 .application(application)
                 .globalConfigModule(getGlobalConfigModule(application, mModules))
                 .build();
-        mAppComponent.inject(this);
+        appComponent.inject(this);
+        AppUtils.setAppComponent(appComponent);
 
         this.mModules = null;
         //注册框架内部已实现的 Activity 生命周期逻辑
