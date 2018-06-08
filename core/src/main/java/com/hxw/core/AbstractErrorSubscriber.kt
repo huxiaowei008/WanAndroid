@@ -1,4 +1,4 @@
-package com.hxw.lol
+package com.hxw.core
 
 import android.net.ParseException
 import com.google.gson.JsonParseException
