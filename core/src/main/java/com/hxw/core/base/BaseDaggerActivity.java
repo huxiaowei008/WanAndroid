@@ -21,7 +21,7 @@ import dagger.internal.Beta;
  * @author hxw on 2018/6/1.
  */
 @Beta
-public abstract class BaseDaggerAndroidActivity<P extends BasePresenter> extends AbstractActivity
+public abstract class BaseDaggerActivity<P extends BasePresenter> extends AbstractActivity
         implements HasSupportFragmentInjector {
 
     @Inject

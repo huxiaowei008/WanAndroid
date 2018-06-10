@@ -17,6 +17,8 @@ import java.util.List;
 import timber.log.Timber;
 
 /**
+ * 全局配置类
+ *
  * @author hxw on 2018/5/5.
  */
 public class GlobalConfiguration implements ConfigModule {

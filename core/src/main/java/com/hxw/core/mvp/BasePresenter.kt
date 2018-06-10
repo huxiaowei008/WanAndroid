@@ -31,6 +31,7 @@ class BasePresenter : IPresenter {
      * 3、onLifecycleChanged
      */
     override fun onLifecycleChanged(owner: LifecycleOwner, event: Lifecycle.Event) {
+        Timber.d("Presenter->onLifecycleChanged")
         if (event == Lifecycle.Event.ON_DESTROY) {
             owner.lifecycle.removeObserver(this)
             dispose()

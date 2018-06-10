@@ -16,6 +16,6 @@ import dagger.android.support.AndroidSupportInjectionModule;
 @Component(dependencies = {AppComponent.class},
         modules = {AndroidSupportInjectionModule.class,
                 ActivityBindingModule.class})
-public interface WanComponent extends AndroidInjector<WanApplication> {
+interface WanComponent extends AndroidInjector<WanApplication> {
 
 }

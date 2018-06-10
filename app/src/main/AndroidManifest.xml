@@ -12,9 +12,9 @@
         android:theme="@style/AppTheme">
 
         <!-- 框架配置 -->
-        <!--<meta-data-->
-            <!--android:name="com.hxw.wanandroid.base.GlobalConfiguration"-->
-            <!--android:value="ConfigModule" />-->
+        <meta-data
+            android:name="com.hxw.wanandroid.base.GlobalConfiguration"
+            android:value="ConfigModule" />
 
 
         <activity android:name=".mvp.login.LoginActivity">

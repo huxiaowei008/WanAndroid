@@ -10,9 +10,21 @@ import android.support.annotation.NonNull;
  * @author hxw on 2018/5/4.
  */
 public interface AppLifecycle {
+    /**
+     * {@link Application} attachBaseContext
+     * @param base Context
+     */
     void attachBaseContext(@NonNull Context base);
 
+    /**
+     * {@link Application} onCreate
+     * @param application {@link Application}
+     */
     void onCreate(@NonNull Application application);
 
+    /**
+     * {@link Application} onCreate
+     * @param application {@link Application}
+     */
     void onTerminate(@NonNull Application application);
 }

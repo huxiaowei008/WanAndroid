@@ -5,7 +5,6 @@ import android.app.Application;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-
 import com.hxw.core.base.IActivity;
 
 import javax.inject.Inject;
@@ -30,7 +29,7 @@ public final class ActivityLifecycle implements Application.ActivityLifecycleCal
     Lazy<FragmentLifecycle> mFragmentLifecycle;
 
     @Inject
-    public ActivityLifecycle() {
+    ActivityLifecycle() {
     }
 
     @Override

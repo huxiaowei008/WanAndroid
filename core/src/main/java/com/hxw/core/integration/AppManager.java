@@ -23,7 +23,7 @@ public final class AppManager {
     private LinkedList<Activity> mActivityStack = new LinkedList<>();
 
     @Inject
-    public AppManager() {
+    AppManager() {
     }
 
     public Activity getCurrentActivity() {

@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hxw.core.utils.StringUtils;
 
-
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -92,6 +91,12 @@ public class ClientModule {
      * Gson配置接口
      */
     public interface GsonConfiguration {
+        /**
+         * 配置方法
+         *
+         * @param context {@link Context}
+         * @param builder {@link GsonBuilder}
+         */
         void configGson(Context context, GsonBuilder builder);
     }
 
@@ -99,6 +104,12 @@ public class ClientModule {
      * Retrofit配置接口
      */
     public interface RetrofitConfiguration {
+        /**
+         * 配置方法
+         *
+         * @param context {@link Context}
+         * @param builder {@link Retrofit.Builder}
+         */
         void configRetrofit(Context context, Retrofit.Builder builder);
     }
 
@@ -106,6 +117,12 @@ public class ClientModule {
      * OkHttp配置接口
      */
     public interface OkHttpConfiguration {
+        /**
+         * 配置方法
+         *
+         * @param context {@link Context}
+         * @param builder {@link OkHttpClient.Builder}
+         */
         void configOkHttp(Context context, OkHttpClient.Builder builder);
     }
 }

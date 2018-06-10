@@ -53,7 +53,7 @@ public class AppDelegate implements AppLifecycle {
         AppComponent appComponent = DaggerAppComponent
                 .builder()
                 .application(application)
-                .globalConfigModule(getGlobalConfigModule(application, mModules))
+                .globalConfigModule(getGlobalConfigModule(application.getApplicationContext(), mModules))
                 .build();
         appComponent.inject(this);
         AppUtils.setAppComponent(appComponent);
@@ -83,6 +83,7 @@ public class AppDelegate implements AppLifecycle {
             for (Application.ActivityLifecycleCallbacks lifecycle : mActivityLives) {
                 application.unregisterActivityLifecycleCallbacks(lifecycle);
             }
+            mActivityLives = null;
         }
 
         if (mAppLifecycle != null && mAppLifecycle.size() > 0) {

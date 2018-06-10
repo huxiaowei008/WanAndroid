@@ -11,9 +11,9 @@ import java.lang.annotation.Target;
  * https://juejin.im/post/5a9698a8f265da4e7d6077bc
  * Retention 保留的范围，默认值为CLASS. 可选值有三种
  * <p>
- * RetentionPolicy.SOURCE(只保留在源码中，会被编译器丢弃)
- * RetentionPolicy.CLASS(注解会被编译器记录在class文件中，但不需要被VM保留到运行时，这也是默认的行为)
- * RetentionPolicy.RUNTIME(注解会被编译器记录在class文件中并被VM保留到运行时，所以可以通过反射获取)
+ * RetentionPolicy.SOURCE(只保留在源码中，会被编译器丢弃)(只在源码中可用)
+ * RetentionPolicy.CLASS(注解会被编译器记录在class文件中，但不需要被VM保留到运行时，这也是默认的行为)(在源码和字节码中可用)
+ * RetentionPolicy.RUNTIME(注解会被编译器记录在class文件中并被VM保留到运行时，所以可以通过反射获取)(在源码,字节码,运行时均可用)
  * </p>
  * Target 表明该注解类型可以注解哪些程序元素
  * <p>

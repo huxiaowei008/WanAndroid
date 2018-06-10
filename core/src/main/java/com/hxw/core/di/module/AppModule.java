@@ -15,7 +15,7 @@ import dagger.Provides;
  * @author hxw on 2018/5/3.
  */
 @Module
-public abstract class AppModule {
+public class AppModule {
 
     @Singleton
     @Provides

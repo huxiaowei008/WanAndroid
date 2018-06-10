@@ -1,13 +1,9 @@
 package com.hxw.core.base;
 
 
-import com.hxw.core.di.AppComponent;
-import com.hxw.core.di.DaggerAppComponent;
-import com.hxw.core.di.module.GlobalConfigModule;
-import com.hxw.core.integration.ActivityLifecycle;
-import com.hxw.core.utils.AppUtils;
+import android.content.Context;
 
-import javax.inject.Inject;
+import com.hxw.core.delegate.AppDelegate;
 
 import dagger.android.support.DaggerApplication;
 
@@ -18,37 +14,28 @@ import dagger.android.support.DaggerApplication;
  */
 public abstract class AbstractApplication extends DaggerApplication {
 
-    @Inject
-    protected ActivityLifecycle mActivityLifecycle;
+    private AppDelegate appDelegate;
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        appDelegate = new AppDelegate(base);
+        appDelegate.attachBaseContext(base);
+    }
 
     @Override
     public void onCreate() {
-        AppComponent mAppComponent = DaggerAppComponent
-                .builder()
-                .application(this)
-                .globalConfigModule(getGlobalConfigModule())
-                .build();
-        AppUtils.setAppComponent(mAppComponent);
-        //applicationInjector在super.onCreate()中就会调用到,会在那注入
+        appDelegate.onCreate(this);
         super.onCreate();
 
-        //注册框架内部已实现的 Activity 生命周期逻辑
-        registerActivityLifecycleCallbacks(mActivityLifecycle);
     }
 
     @Override
     public void onTerminate() {
+        appDelegate.onTerminate(this);
         super.onTerminate();
-        if (mActivityLifecycle != null) {
-            unregisterActivityLifecycleCallbacks(mActivityLifecycle);
-            mActivityLifecycle = null;
-        }
+        appDelegate = null;
     }
 
-    /**
-     * 给外部实现内部的全局配置
-     *
-     * @return 全局配置Module
-     */
-    protected abstract GlobalConfigModule getGlobalConfigModule();
+
 }
