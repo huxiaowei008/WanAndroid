@@ -19,8 +19,8 @@ public abstract class AbstractApplication extends DaggerApplication {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        appDelegate = new AppDelegate(base);
-        appDelegate.attachBaseContext(base);
+        appDelegate = new AppDelegate(this);
+        appDelegate.attachBaseContext(this);
     }
 
     @Override

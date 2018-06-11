@@ -12,9 +12,9 @@ import android.support.annotation.NonNull;
 public interface AppLifecycle {
     /**
      * {@link Application} attachBaseContext
-     * @param base Context
+     * @param application {@link Application}
      */
-    void attachBaseContext(@NonNull Context base);
+    void attachBaseContext(@NonNull Application application);
 
     /**
      * {@link Application} onCreate

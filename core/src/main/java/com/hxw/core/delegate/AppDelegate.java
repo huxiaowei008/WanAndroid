@@ -29,22 +29,22 @@ public class AppDelegate implements AppLifecycle {
     private List<AppLifecycle> mAppLifecycle = new ArrayList<>();
     private List<Application.ActivityLifecycleCallbacks> mActivityLives = new ArrayList<>();
 
-    public AppDelegate(@NonNull Context context) {
+    public AppDelegate(@NonNull Application application) {
         //用反射, 将 AndroidManifest.xml 中带有 ConfigModule 标签的 class 转成对象集合（List<ConfigModule>）
-        this.mModules = new ManifestParser(context).parse();
+        this.mModules = new ManifestParser(application).parse();
         //遍历之前获得的集合, 执行每一个 ConfigModule 实现类的某些方法
         for (ConfigModule module : mModules) {
             //将框架外部, 开发者实现的 Application 的生命周期回调 (AppLifecycle) 存入 mAppLifecycle 集合 (此时还未注册回调)
-            module.injectAppLifecycle(context, mAppLifecycle);
+            module.injectAppLifecycle(application, mAppLifecycle);
             //将框架外部, 开发者实现的 Activity 的生命周期回调 (ActivityLifecycleCallbacks) 存入 mActivityLives 集合 (此时还未注册回调)
-            module.injectActivityLifecycle(context, mActivityLives);
+            module.injectActivityLifecycle(application, mActivityLives);
         }
     }
 
     @Override
-    public void attachBaseContext(@NonNull Context base) {
+    public void attachBaseContext(@NonNull Application application) {
         for (AppLifecycle lifecycle : mAppLifecycle) {
-            lifecycle.attachBaseContext(base);
+            lifecycle.attachBaseContext(application);
         }
     }
 

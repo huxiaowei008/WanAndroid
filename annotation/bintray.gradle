@@ -84,8 +84,9 @@ task sourcesJar(type: Jar) {
 // 生成jarDoc的task，不需要修改。
 //task javadoc(type: Javadoc) {
 //    failOnError false // 忽略注释语法错误，如果用jdk1.8你的注释写的不规范就编译不过。
-//    source = sourceSets.main.java.srcDirs
-//    classpath += project.files(getBootClasspath().join(File.pathSeparator))
+//    source =  android.sourceSets.main.java.srcDirs
+//    classpath += configurations.compile
+//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 //
 //}
 // 生成javaDoc的jar，不需要修改。

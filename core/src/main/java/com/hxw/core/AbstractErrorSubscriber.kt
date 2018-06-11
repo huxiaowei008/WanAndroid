@@ -18,7 +18,7 @@ import java.net.UnknownHostException
 abstract class AbstractErrorSubscriber<T> : Observer<T> {
 
     override fun onError(e: Throwable) {
-        Timber.tag("Catch-Error").w(e)
+        Timber.tag("Catch-Error").e(e)
         val msg = when (e) {
             is UnknownHostException -> "网络不可用"
             is SocketTimeoutException -> "请求网络超时"

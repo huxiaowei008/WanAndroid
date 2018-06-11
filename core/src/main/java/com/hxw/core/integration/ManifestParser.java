@@ -64,7 +64,7 @@ public final class ManifestParser {
             ApplicationInfo appInfo = context.getPackageManager()
                     .getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
             if (appInfo.metaData == null) {
-                Timber.tag(TAG).d("Got null app info metadata");
+                Timber.tag(TAG).i("Got null app info metadata");
                 return modules;
             }
 
@@ -74,7 +74,7 @@ public final class ManifestParser {
                 if (MODULE_VALUE.equals(appInfo.metaData.get(key))) {
                     modules.add(parseModule(key));
                     if (Log.isLoggable(TAG, Log.DEBUG)) {
-                        Timber.tag(TAG).d("Loaded Config module: %s", key);
+                        Timber.tag(TAG).v("Loaded Config module: %s", key);
                     }
                 }
             }
@@ -82,7 +82,7 @@ public final class ManifestParser {
             throw new RuntimeException("Unable to find metadata to parse ConfigModules", e);
         }
 
-        Timber.tag(TAG).d("Finished loading Config modules");
+        Timber.tag(TAG).i("Finished loading Config modules");
 
         return modules;
     }

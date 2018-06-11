@@ -36,7 +36,7 @@ public class GlobalConfiguration implements ConfigModule {
     public void injectAppLifecycle(Context context, List<AppLifecycle> lives) {
         lives.add(new AppLifecycle() {
             @Override
-            public void attachBaseContext(@NonNull Context base) {
+            public void attachBaseContext(@NonNull Application application) {
 
             }
 

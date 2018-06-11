@@ -74,7 +74,7 @@ public class ClientModule {
                 if (message.startsWith("{") || message.startsWith("[")) {
                     str = StringUtils.jsonFormat(message);
                 }
-                Timber.tag("OkHttp").d(str);
+                Timber.tag("OkHttp").i(str);
             }
         });
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);

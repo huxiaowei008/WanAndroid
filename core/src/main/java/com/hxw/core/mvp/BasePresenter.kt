@@ -17,12 +17,12 @@ class BasePresenter : IPresenter {
     private var lifecycleOwner: LifecycleOwner? = null
     private val mCompositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
     override fun onCreate(owner: LifecycleOwner) {
-        Timber.d("Presenter->onCreate")
+        Timber.i("Presenter->onCreate")
         this.lifecycleOwner = owner
     }
 
     override fun onDestroy(owner: LifecycleOwner) {
-        Timber.d("Presenter->onDestroy")
+        Timber.i("Presenter->onDestroy")
     }
 
     /**
@@ -31,7 +31,7 @@ class BasePresenter : IPresenter {
      * 3、onLifecycleChanged
      */
     override fun onLifecycleChanged(owner: LifecycleOwner, event: Lifecycle.Event) {
-        Timber.d("Presenter->onLifecycleChanged")
+        Timber.i("Presenter->onLifecycleChanged")
         if (event == Lifecycle.Event.ON_DESTROY) {
             owner.lifecycle.removeObserver(this)
             dispose()

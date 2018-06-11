@@ -34,7 +34,7 @@ public final class ActivityLifecycle implements Application.ActivityLifecycleCal
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        Timber.w("%s - onActivityCreated", activity.toString());
+        Timber.i("%s - onActivityCreated", activity.toString());
         mAppManager.addActivity(activity);
 
         boolean useFragment = activity instanceof IActivity && ((IActivity) activity).useFragment();
@@ -46,23 +46,23 @@ public final class ActivityLifecycle implements Application.ActivityLifecycleCal
 
     @Override
     public void onActivityStarted(Activity activity) {
-        Timber.w("%s - onActivityStarted", activity.toString());
+        Timber.i("%s - onActivityStarted", activity.toString());
     }
 
     @Override
     public void onActivityResumed(Activity activity) {
-        Timber.w("%s - onActivityResumed", activity.toString());
+        Timber.i("%s - onActivityResumed", activity.toString());
         mAppManager.setCurrentActivity(activity);
     }
 
     @Override
     public void onActivityPaused(Activity activity) {
-        Timber.w("%s - onActivityPaused", activity.toString());
+        Timber.i("%s - onActivityPaused", activity.toString());
     }
 
     @Override
     public void onActivityStopped(Activity activity) {
-        Timber.w("%s - onActivityStopped", activity.toString());
+        Timber.i("%s - onActivityStopped", activity.toString());
         if (mAppManager.getCurrentActivity() == activity) {
             mAppManager.setCurrentActivity(null);
         }
@@ -70,12 +70,12 @@ public final class ActivityLifecycle implements Application.ActivityLifecycleCal
 
     @Override
     public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-        Timber.w("%s - onActivitySaveInstanceState", activity.toString());
+        Timber.i("%s - onActivitySaveInstanceState", activity.toString());
     }
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-        Timber.w("%s - onActivityDestroyed", activity.toString());
+        Timber.i("%s - onActivityDestroyed", activity.toString());
         mAppManager.removeActivity(activity);
     }
 }

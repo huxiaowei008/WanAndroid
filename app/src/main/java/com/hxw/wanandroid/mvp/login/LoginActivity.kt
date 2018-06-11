@@ -6,6 +6,7 @@ import com.hxw.core.base.AbstractActivity
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.mvp.register.RegisterActivity
 import kotlinx.android.synthetic.main.activity_login.*
+import timber.log.Timber
 
 /**
  * @author hxw on 2018/6/2.
@@ -20,7 +21,9 @@ class LoginActivity : AbstractActivity() {
 
         fa_btn.setOnClickListener { startActivity(Intent(this, RegisterActivity::class.java)) }
 
-        btn_login.setOnClickListener { }
+        btn_login.setOnClickListener {
+            Timber.i("登陆")
+        }
 
 
     }
