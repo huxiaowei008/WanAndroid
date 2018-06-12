@@ -99,7 +99,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/bg_shape_white"
-                android:stateListAnimator="@drawable/state_list_animator_z"
+                android:stateListAnimator="@animator/state_list_animator_z"
                 android:text="注册"
                 android:textColor="@color/colorAccent"
                 tools:targetApi="lollipop" />
@@ -110,10 +110,12 @@
         android:id="@+id/fa_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:transitionName="fab"
         app:fabSize="normal"
         app:layout_constraintBottom_toTopOf="@+id/card_register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/card_register"
-        app:srcCompat="@drawable/ic_close" />
+        app:srcCompat="@drawable/ic_close"
+        tools:targetApi="lollipop" />
 </android.support.constraint.ConstraintLayout>

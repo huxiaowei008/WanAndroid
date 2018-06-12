@@ -112,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/bg_btn_line"
-                android:stateListAnimator="@drawable/state_list_animator_z"
+                android:stateListAnimator="@animator/state_list_animator_z"
                 android:text="登陆"
                 android:textColor="#bdbdbd"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -127,9 +127,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:fabSize="normal"
+        android:transitionName="fab"
+        app:fabSize="mini"
         app:layout_constraintEnd_toEndOf="@+id/card_login"
         app:layout_constraintStart_toEndOf="@+id/card_login"
         app:layout_constraintTop_toTopOf="@+id/card_login"
-        app:srcCompat="@drawable/ic_add" />
+        app:srcCompat="@drawable/ic_add"
+        tools:targetApi="lollipop" />
 </android.support.constraint.ConstraintLayout>

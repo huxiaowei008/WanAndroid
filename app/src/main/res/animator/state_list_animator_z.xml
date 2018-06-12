@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true">
+        <!--XML方式属性动画-->
         <set>
             <objectAnimator android:propertyName="rotationX"
                 android:duration="@android:integer/config_shortAnimTime"
