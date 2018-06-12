@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <transitionSet xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:duration="300"
-    android:interpolator="@android:interpolator/linear_out_slow_in"
-    tools:targetApi="lollipop">
+    android:interpolator="@android:interpolator/linear_out_slow_in">
     <!--ChangeBounds 该transition 在场景切换时关注布局边界的变化，并且生成相应的改变。-->
     <changeBounds>
         <!--弧形运动-->
+        <!--suppress AndroidElementNotAllowed -->
         <arcMotion
             android:maximumAngle="0"
             android:minimumHorizontalAngle="90"
             android:minimumVerticalAngle="60" />
     </changeBounds>
+
 
 </transitionSet>
