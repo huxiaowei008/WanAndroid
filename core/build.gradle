@@ -59,7 +59,10 @@ dependencies {
     kapt "android.arch.lifecycle:compiler:$versions.lifecycle"
 
     //ViewModel https://developer.android.google.cn/topic/libraries/architecture/viewmodel
-    api "android.arch.lifecycle:viewmodel:$versions.lifecycle"
+//    api "android.arch.lifecycle:viewmodel:$versions.lifecycle"
+    api ("android.arch.lifecycle:extensions:$versions.lifecycle"){
+        exclude module: 'livedata'
+    }
 
     //retrofit https://github.com/square/retrofit
     api("com.squareup.retrofit2:retrofit:$versions.retrofit") {

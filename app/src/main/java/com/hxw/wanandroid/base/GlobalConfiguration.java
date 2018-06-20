@@ -11,6 +11,7 @@ import com.hxw.core.di.module.ClientModule;
 import com.hxw.core.di.module.GlobalConfigModule;
 import com.hxw.core.integration.ConfigModule;
 import com.hxw.wanandroid.BuildConfig;
+import com.hxw.wanandroid.WanApi;
 
 import java.util.List;
 
@@ -24,12 +25,13 @@ import timber.log.Timber;
 public class GlobalConfiguration implements ConfigModule {
     @Override
     public void applyOptions(Context context, GlobalConfigModule.Builder builder) {
-        builder.gsonConfiguration(new ClientModule.GsonConfiguration() {
-            @Override
-            public void configGson(Context context, GsonBuilder builder) {
-                builder.setDateFormat("yyyy-MM-dd HH:mm:ss");
-            }
-        });
+        builder.baseurl(WanApi.BASEURL)
+                .gsonConfiguration(new ClientModule.GsonConfiguration() {
+                    @Override
+                    public void configGson(Context context, GsonBuilder builder) {
+                        builder.setDateFormat("yyyy-MM-dd HH:mm:ss");
+                    }
+                });
     }
 
     @Override

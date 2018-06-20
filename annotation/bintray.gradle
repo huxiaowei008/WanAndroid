@@ -3,7 +3,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 
 
 def vName = config.version_name
-def projectName = 'MyCore-annotation'
+def projectName = 'FrameCore-annotation'
 def gitUrl = 'https://github.com/huxiaowei008/WanAndroid.git'   // Git仓库的url
 def siteUrl = 'https://github.com/huxiaowei008/WanAndroid'   // 项目的主页
 
