@@ -26,7 +26,7 @@ public abstract class BaseDaggerFragment<P extends BasePresenter> extends Abstra
     DispatchingAndroidInjector<Fragment> childFragmentInjector;
 
     @Inject
-    P mPresenter;
+    protected P mPresenter;
 
     @Override
     public void onAttach(Context context) {

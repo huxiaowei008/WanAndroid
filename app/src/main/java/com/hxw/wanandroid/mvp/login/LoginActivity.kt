@@ -4,18 +4,17 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import com.hxw.core.base.AbstractActivity
+import com.hxw.core.base.BaseDaggerActivity
+import com.hxw.core.utils.AppUtils
 import com.hxw.wanandroid.R
-import com.hxw.wanandroid.mvp.register.RegisterActivity
 import kotlinx.android.synthetic.main.activity_login.*
-import timber.log.Timber
 
 
 /**
  * @author hxw on 2018/6/2.
  *
  */
-class LoginActivity : AbstractActivity() {
+class LoginActivity : BaseDaggerActivity<LoginPresenter>(), LoginView {
     override fun getLayoutId(): Int {
         return R.layout.activity_login
     }
@@ -40,9 +39,19 @@ class LoginActivity : AbstractActivity() {
         }
 
         btn_login.setOnClickListener {
-            Timber.i("登陆")
+            val username = et_username.text.toString()
+            val password = et_password.text.toString()
+            if (username.isNotEmpty() && password.isNotEmpty()) {
+                mPresenter.login(username, password)
+            }else{
+                AppUtils.showToast("信息未填完整")
+            }
         }
 
+    }
 
+    override fun onResume() {
+        super.onResume()
+        mPresenter.takeView(this)
     }
 }

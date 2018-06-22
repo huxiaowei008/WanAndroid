@@ -10,7 +10,7 @@ def siteUrl = 'https://github.com/huxiaowei008/WanAndroid'   // 项目的主页
 //项目引用的版本号，比如compile 'com.yanzhenjie:andserver:1.0.1'中的1.0.1就是这里配置的。
 version = vName//指定版本号
 //唯一包名，比如compile 'com.yanzhenjie:andserver:1.0.1'中的com.yanzhenjie就是这里配置的。
-group = "com.hxw.core"// 这里是groupId ,必须填写  一般填你唯一的包名
+group = "com.hxw.mycore"// 这里是groupId ,必须填写  一般填你唯一的包名
 
 //这里是读取Bintray相关的信息，我们上传项目到github上的时候会把gradle文件传上去，
 //所以不要把帐号密码的信息直接写在这里，写在local.properties中，这里动态读取。

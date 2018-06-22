@@ -4,6 +4,7 @@ import android.net.ParseException
 import com.google.gson.JsonParseException
 import com.hxw.core.utils.AppUtils
 import io.reactivex.Observer
+import io.reactivex.disposables.Disposable
 import org.json.JSONException
 import retrofit2.HttpException
 import timber.log.Timber
@@ -16,6 +17,14 @@ import java.net.UnknownHostException
  * @author hxw on 2018/5/3.
  */
 abstract class AbstractErrorSubscriber<T> : Observer<T> {
+
+    override fun onSubscribe(d: Disposable) {
+
+    }
+
+    override fun onComplete() {
+
+    }
 
     override fun onError(e: Throwable) {
         Timber.tag("Catch-Error").e(e)

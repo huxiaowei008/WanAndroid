@@ -4,8 +4,6 @@ apply plugin: 'kotlin-kapt'//那些注释处理需要用这个,就是annotationP
 android {
     compileSdkVersion config.target_sdk
 
-
-
     defaultConfig {
         minSdkVersion config.min_sdk
         targetSdkVersion config.target_sdk

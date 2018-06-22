@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 /**
  * @author hxw on 2018/5/30.
  */
-public interface IPresenter extends LifecycleObserver {
+public interface IPresenter<V extends IView> extends LifecycleObserver {
 
     /**
      * 创建的生命周期
@@ -36,4 +36,16 @@ public interface IPresenter extends LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_ANY)
     void onLifecycleChanged(@NonNull LifecycleOwner owner,
                             @NonNull Lifecycle.Event event);
+
+    /**
+     * 绑定视图,这里是使用的起点
+     *
+     * @param view 被绑定的视图
+     */
+    void takeView(V view);
+
+    /**
+     * 销毁视图
+     */
+    void dropView();
 }

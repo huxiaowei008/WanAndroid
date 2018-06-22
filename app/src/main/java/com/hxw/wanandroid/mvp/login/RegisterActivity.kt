@@ -1,4 +1,4 @@
-package com.hxw.wanandroid.mvp.register
+package com.hxw.wanandroid.mvp.login
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -10,7 +10,8 @@ import android.transition.TransitionInflater
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.animation.AccelerateInterpolator
-import com.hxw.core.base.AbstractActivity
+import com.hxw.core.base.BaseDaggerActivity
+import com.hxw.core.utils.AppUtils
 import com.hxw.wanandroid.R
 import kotlinx.android.synthetic.main.activity_register.*
 
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_register.*
  * @author hxw on 2018/6/6.
  *
  */
-class RegisterActivity : AbstractActivity() {
+class RegisterActivity : BaseDaggerActivity<LoginPresenter>(), LoginView {
 
 
     override fun getLayoutId(): Int {
@@ -37,8 +38,24 @@ class RegisterActivity : AbstractActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             showEnterAnimation()
         }
+
+        btn_register.setOnClickListener {
+            val username=et_username.text.toString()
+            val password=et_password.text.toString()
+            val repassword=et_repeat_password.text.toString()
+            if (username.isNotEmpty()&&password.isNotEmpty()&&repassword.isNotEmpty()){
+                mPresenter.register(username, password, repassword)
+            }else{
+                AppUtils.showToast("信息未填完整")
+            }
+
+        }
     }
 
+    override fun onResume() {
+        super.onResume()
+        mPresenter.takeView(this)
+    }
     /**
      * 若要在完成第二个活动时反转场景转换动画,请调用Activity.finishAfterTransition()方法
      * 而不是Activity.finish(),注意版本5.0

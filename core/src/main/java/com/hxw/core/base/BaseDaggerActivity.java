@@ -28,7 +28,7 @@ public abstract class BaseDaggerActivity<P extends BasePresenter> extends Abstra
     DispatchingAndroidInjector<Fragment> supportFragmentInjector;
 
     @Inject
-    P mPresenter;
+    protected P mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
