@@ -10,10 +10,10 @@ versions.lifecycle = "1.1.1"
 def config = [:]
 config.min_sdk = 16
 config.target_sdk = 27
-config.version_code = 1
-config.version_name = "0.1"
+config.version_code = 2
+config.version_name = "0.2"
 ext.config = config
-ext.kotlin_version = '1.2.41'
+ext.kotlin_version = '1.2.50'
 
 ext.dependencies = [
         "androidJUnitRunner"                   : "android.support.test.runner.AndroidJUnitRunner",

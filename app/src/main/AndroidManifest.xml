@@ -17,14 +17,16 @@
         <meta-data
             android:name="com.hxw.wanandroid.base.GlobalConfiguration"
             android:value="ConfigModule" />
+    <activity android:name=".mvp.MainActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
 
         <activity android:name=".mvp.login.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".mvp.login.RegisterActivity"
