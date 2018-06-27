@@ -153,9 +153,10 @@ public class HexUtils {
         // (0&0=0,0&1=0,1&1=1,0|0=0,0|1=1,1|1=1)
         for (int i = 0, j = 0; i < l; i++) {
             //把低4位清0,然后无符号右移4位
-            out[j++] = DIGITS_LOWER[(0xF0 & data[i]) >>> 4];
+            //或者先右移4位,在高4位清0
+            out[j++] = DIGITS_LOWER[data[i] >>> 4 & 0x0F];
             //把高4位清0
-            out[j++] = DIGITS_LOWER[0x0F & data[i]];
+            out[j++] = DIGITS_LOWER[data[i] & 0x0F];
         }
         return out;
     }

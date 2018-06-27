@@ -6,7 +6,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * @author hxw on 2018/5/7.
  */
-public final class MD5Utils {
+public final class EncryptUtils {
 
     private static final char[] HEX_DIGITS =
             {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
@@ -42,6 +42,39 @@ public final class MD5Utils {
      */
     public static byte[] encryptMD5(final byte[] data) {
         return hashTemplate(data, "MD5");
+    }
+
+    /**
+     * Return the hex string of SHA1 encryption.
+     *
+     * @param data The data.
+     * @return the hex string of SHA1 encryption
+     */
+    public static String encryptSHA1ToString(final String data) {
+        if (data == null || data.length() == 0) {
+            return "";
+        }
+        return encryptSHA1ToString(data.getBytes());
+    }
+
+    /**
+     * Return the hex string of SHA1 encryption.
+     *
+     * @param data The data.
+     * @return the hex string of SHA1 encryption
+     */
+    public static String encryptSHA1ToString(final byte[] data) {
+        return bytes2HexString(encryptSHA1(data));
+    }
+
+    /**
+     * Return the bytes of SHA1 encryption.
+     *
+     * @param data The data.
+     * @return the bytes of SHA1 encryption
+     */
+    public static byte[] encryptSHA1(final byte[] data) {
+        return hashTemplate(data, "SHA1");
     }
 
     /**
