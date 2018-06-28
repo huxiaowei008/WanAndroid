@@ -167,7 +167,6 @@ import java.util.Locale;
  */
 public final class DateUtils {
 
-
     /**
      * 将Date类型转为时间字符串
      * <p>格式为pattern</p>

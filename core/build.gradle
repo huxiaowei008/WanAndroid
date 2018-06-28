@@ -26,7 +26,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -34,6 +34,10 @@ dependencies {
 
     //KTX https://github.com/android/android-ktx
     api 'androidx.core:core-ktx:0.3'
+
+    //Anko Commons https://github.com/Kotlin/anko
+    api "org.jetbrains.anko:anko-commons:0.10.5"
+    api "org.jetbrains.anko:anko-appcompat-v7-commons:0.10.5"
 
     //support https://github.com/dandar3/android-support-library-README
     api("com.android.support:appcompat-v7:$versions.support") {
@@ -58,7 +62,7 @@ dependencies {
 
     //ViewModel https://developer.android.google.cn/topic/libraries/architecture/viewmodel
 //    api "android.arch.lifecycle:viewmodel:$versions.lifecycle"
-    api ("android.arch.lifecycle:extensions:$versions.lifecycle"){
+    api("android.arch.lifecycle:extensions:$versions.lifecycle") {
         exclude module: 'livedata'
     }
 
@@ -124,7 +128,7 @@ dependencies {
     //    }
 
     //RxKotlin
-    api ('io.reactivex.rxjava2:rxkotlin:2.2.0'){
+    api('io.reactivex.rxjava2:rxkotlin:2.2.0') {
         exclude module: 'rxjava'
     }
 
@@ -161,11 +165,11 @@ dependencies {
     }
 
     //dagger2 https://github.com/google/dagger
-    api ("com.google.dagger:dagger:$versions.dagger"){
+    api("com.google.dagger:dagger:$versions.dagger") {
         exclude group: 'android.arch.lifecycle'
     }
     kapt "com.google.dagger:dagger-compiler:$versions.dagger"
-    api ("com.google.dagger:dagger-android-support:$versions.dagger"){
+    api("com.google.dagger:dagger-android-support:$versions.dagger") {
         exclude group: 'android.arch.lifecycle'
     }
     kapt "com.google.dagger:dagger-android-processor:$versions.dagger"
