@@ -3,7 +3,8 @@
     <item android:state_pressed="true">
         <!--XML方式属性动画-->
         <set>
-            <objectAnimator android:propertyName="rotationX"
+            <objectAnimator
+                android:propertyName="rotationX"
                 android:duration="@android:integer/config_shortAnimTime"
                 android:valueTo="90"
                 android:valueType="floatType"/>
@@ -11,7 +12,8 @@
     </item>
     <item android:state_pressed="false">
         <set>
-            <objectAnimator android:propertyName="rotationX"
+            <objectAnimator
+                android:propertyName="rotationX"
                 android:duration="@android:integer/config_shortAnimTime"
                 android:valueTo="0"
                 android:valueType="floatType"/>

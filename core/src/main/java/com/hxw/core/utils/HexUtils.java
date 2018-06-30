@@ -72,8 +72,13 @@ public class HexUtils {
      * @throws RuntimeException 如果源十六进制字符数组是一个奇怪的长度，将抛出运行时异常
      */
     public static byte[] hexStr2Bytes(char[] data) {
-
+        if (data == null) {
+            return new byte[0];
+        }
         int len = data.length;
+        if (len <= 0) {
+            return new byte[0];
+        }
 
         //取最低位,判断是否为0,为0说明是偶数,为1说明是奇数
         if ((len & 0x01) != 0) {
@@ -103,7 +108,9 @@ public class HexUtils {
      * @throws RuntimeException 如果源十六进制字符数组是一个奇怪的长度，将抛出运行时异常
      */
     public static byte[] hexStr2Bytes(String data) {
-
+        if (data == null) {
+            return new byte[0];
+        }
         int len = data.length();
 
         if (len % 2 != 0) {
@@ -129,7 +136,7 @@ public class HexUtils {
      * @return 一个十进制整数
      * @throws RuntimeException 当ch不是一个合法的十六进制字符时，抛出运行时异常
      */
-    public static int toDigit(char ch) {
+    private static int toDigit(char ch) {
         int digit = Character.digit(ch, 16);
         if (digit == -1) {
             throw new RuntimeException("不合法的十六进制字符-> " + ch);
@@ -146,7 +153,13 @@ public class HexUtils {
      * @return 十六进制char[]
      */
     public static char[] bytes2Hex(byte[] data) {
+        if (data == null) {
+            return new char[0];
+        }
         int l = data.length;
+        if (l <= 0) {
+            return new char[0];
+        }
         //l << 1 左移1位,相当于 *2
         char[] out = new char[l << 1];
         // (0&0=0,0&1=0,1&1=1,0|0=0,0|1=1,1|1=1)
@@ -170,6 +183,9 @@ public class HexUtils {
      * @return 十六进制char[]
      */
     public static String bytes2HexStr(byte[] data) {
+        if (data == null) {
+            return "";
+        }
         StringBuilder builder = new StringBuilder();
         for (byte item : data) {
             String str = Integer.toHexString(item & 0xFF);
@@ -248,7 +264,6 @@ public class HexUtils {
      * @return 转化为有符号的值
      */
     public static int unSignedToSigned(String value) {
-
         int length = value.length();
         if (length <= 2) {
             //1个字节

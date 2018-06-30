@@ -30,7 +30,7 @@ public final class EncryptUtils {
      * @return the hex string of MD5 encryption
      */
     public static String encryptMD5ToString(final byte[] data) {
-        return bytes2HexString(encryptMD5(data));
+        return HexUtils.bytes2HexStr(encryptMD5(data));
     }
 
     /**
@@ -63,7 +63,7 @@ public final class EncryptUtils {
      * @return the hex string of SHA1 encryption
      */
     public static String encryptSHA1ToString(final byte[] data) {
-        return bytes2HexString(encryptSHA1(data));
+        return HexUtils.bytes2HexStr(encryptSHA1(data));
     }
 
     /**
@@ -95,21 +95,5 @@ public final class EncryptUtils {
             e.printStackTrace();
             return null;
         }
-    }
-
-    private static String bytes2HexString(final byte[] bytes) {
-        if (bytes == null) {
-            return "";
-        }
-        int len = bytes.length;
-        if (len <= 0) {
-            return "";
-        }
-        char[] ret = new char[len << 1];
-        for (int i = 0, j = 0; i < len; i++) {
-            ret[j++] = HEX_DIGITS[bytes[i] >>> 4 & 0x0f];
-            ret[j++] = HEX_DIGITS[bytes[i] & 0x0f];
-        }
-        return new String(ret);
     }
 }

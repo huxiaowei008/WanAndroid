@@ -99,7 +99,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/bg_shape_white"
-                android:stateListAnimator="@animator/state_list_animator_z"
+                android:stateListAnimator="@drawable/state_list_animator_z"
                 android:text="注册"
                 android:textColor="@color/colorAccent"
                 tools:targetApi="lollipop" />
