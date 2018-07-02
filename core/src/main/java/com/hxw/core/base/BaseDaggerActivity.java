@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
-
 import com.hxw.core.mvp.BasePresenter;
 
 import javax.inject.Inject;
@@ -25,10 +24,9 @@ public abstract class BaseDaggerActivity<P extends BasePresenter> extends Abstra
         implements HasSupportFragmentInjector {
 
     @Inject
-    DispatchingAndroidInjector<Fragment> supportFragmentInjector;
-
-    @Inject
     protected P mPresenter;
+    @Inject
+    DispatchingAndroidInjector<Fragment> supportFragmentInjector;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,5 +38,11 @@ public abstract class BaseDaggerActivity<P extends BasePresenter> extends Abstra
     @Override
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return supportFragmentInjector;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter = null;
     }
 }

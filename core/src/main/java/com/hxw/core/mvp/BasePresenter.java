@@ -25,7 +25,7 @@ public class BasePresenter<V extends IView> implements IPresenter<V> {
      */
     @Override
     public void onCreate(@NonNull LifecycleOwner owner) {
-        Timber.i("Presenter->onCreate");
+        Timber.i("%s - onCreate",this.toString());
         this.lifecycleOwner = owner;
     }
 
@@ -34,7 +34,7 @@ public class BasePresenter<V extends IView> implements IPresenter<V> {
      */
     @Override
     public void onDestroy(@NonNull LifecycleOwner owner) {
-        Timber.i("Presenter->onDestroy");
+        Timber.i("%s - onDestroy",this.toString());
         dropView();
     }
 
@@ -46,7 +46,7 @@ public class BasePresenter<V extends IView> implements IPresenter<V> {
      */
     @Override
     public void onLifecycleChanged(@NonNull LifecycleOwner owner, @NonNull Lifecycle.Event event) {
-        Timber.i("Presenter->onLifecycleChanged");
+        Timber.i("%s - onLifecycleChanged",this.toString());
         if (event == Lifecycle.Event.ON_DESTROY) {
             owner.getLifecycle().removeObserver(this);
             lifecycleOwner = null;

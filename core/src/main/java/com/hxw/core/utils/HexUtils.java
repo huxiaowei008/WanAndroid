@@ -183,7 +183,7 @@ public class HexUtils {
      * @return 十六进制char[]
      */
     public static String bytes2HexStr(byte[] data) {
-        if (data == null) {
+        if (data == null || data.length <= 0) {
             return "";
         }
         StringBuilder builder = new StringBuilder();
