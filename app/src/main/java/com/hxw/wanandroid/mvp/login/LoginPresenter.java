@@ -6,7 +6,10 @@ import com.hxw.core.mvp.BasePresenter;
 import com.hxw.core.utils.AppUtils;
 import com.hxw.wanandroid.WanApi;
 import com.hxw.wanandroid.entity.BaseEntity;
+import com.hxw.wanandroid.entity.HotKeyEntity;
 import com.hxw.wanandroid.entity.UserEntity;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -60,6 +63,21 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                             AppUtils.showToast("注册成功");
                         } else {
                             AppUtils.showToast("注册失败->" + userEntity.getErrorMsg());
+                        }
+                    }
+                });
+    }
+
+    public void getHotKey() {
+        wanApi.getHotKey()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .as(this.<BaseEntity<List<HotKeyEntity>>>bindLifecycle())
+                .subscribe(new AbstractErrorSubscriber<BaseEntity<List<HotKeyEntity>>>() {
+                    @Override
+                    public void onNext(BaseEntity<List<HotKeyEntity>> listBaseEntity) {
+                        if (listBaseEntity.getErrorCode()==0){
+                            AppUtils.showToast("热词成功");
                         }
                     }
                 });
