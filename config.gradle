@@ -13,7 +13,7 @@ config.target_sdk = 27
 config.version_code = 4
 config.version_name = "0.4"
 ext.config = config
-ext.kotlin_version = '1.2.50'
+ext.kotlin_version = '1.2.51'
 
 ext.dependencies = [
         "androidJUnitRunner"                   : "android.support.test.runner.AndroidJUnitRunner",
