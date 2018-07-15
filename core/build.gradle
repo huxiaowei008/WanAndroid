@@ -49,12 +49,12 @@ dependencies {
     api("com.android.support:support-v4:$versions.support") {
         exclude group: 'android.arch.lifecycle'
     }
-//    api "com.android.support:support-v13:$versions.support"
     api "com.android.support:cardview-v7:$versions.support"
-    api "com.android.support:recyclerview-v7:$versions.support"
-    api "com.android.support:support-annotations:$versions.support"
-    api "com.android.support:support-vector-drawable:$versions.support"
-    api "com.android.support:animated-vector-drawable:$versions.support"
+//    api "com.android.support:support-v13:$versions.support"
+//    api "com.android.support:recyclerview-v7:$versions.support"
+//    api "com.android.support:support-annotations:$versions.support"
+//    api "com.android.support:support-vector-drawable:$versions.support"
+//    api "com.android.support:animated-vector-drawable:$versions.support"
 
     //Lifecycle https://developer.android.google.cn/topic/libraries/architecture/lifecycle
     api "android.arch.lifecycle:runtime:$versions.lifecycle"
@@ -64,6 +64,7 @@ dependencies {
 //    api "android.arch.lifecycle:viewmodel:$versions.lifecycle"
     api("android.arch.lifecycle:extensions:$versions.lifecycle") {
         exclude module: 'livedata'
+        exclude group: 'com.android.support'
     }
 
     //retrofit https://github.com/square/retrofit
@@ -99,6 +100,7 @@ dependencies {
     //glide图片加载 https://github.com/bumptech/glide
     api("com.github.bumptech.glide:glide:$versions.glide") {
         exclude group: 'android.arch.lifecycle'
+        exclude group: 'com.android.support'
     }
     api("com.github.bumptech.glide:okhttp3-integration:$versions.glide") {
         transitive = false
