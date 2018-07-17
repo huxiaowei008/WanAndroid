@@ -2,7 +2,6 @@ package com.hxw.core.imageloader;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
@@ -22,8 +21,6 @@ import com.hxw.core.utils.AppUtils;
 
 import java.io.InputStream;
 
-import javax.inject.Inject;
-
 /**
  * {@link Glide}的配置类
  *
@@ -32,10 +29,6 @@ import javax.inject.Inject;
 @Excludes(OkHttpLibraryGlideModule.class)
 @GlideModule
 public class GlideConfiguration extends AppGlideModule {
-
-    @Nullable
-    @Inject
-    GlideAppliesOptions options;
 
     @Override
     public boolean isManifestParsingEnabled() {
@@ -62,8 +55,8 @@ public class GlideConfiguration extends AppGlideModule {
                         .newDiskCacheExecutor(GlideExecutor.UncaughtThrowableStrategy.THROW))
                 .setSourceExecutor(GlideExecutor
                         .newSourceExecutor(GlideExecutor.UncaughtThrowableStrategy.THROW));
-        if (options != null) {
-            options.applyGlideOptions(context, builder);
+        if (AppUtils.getAppComponent().options() != null) {
+            AppUtils.getAppComponent().options().applyGlideOptions(context, builder);
         }
     }
 

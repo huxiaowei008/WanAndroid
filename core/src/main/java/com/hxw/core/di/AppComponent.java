@@ -2,17 +2,18 @@ package com.hxw.core.di;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.support.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.hxw.core.delegate.AppDelegate;
 import com.hxw.core.di.module.AppModule;
 import com.hxw.core.di.module.ClientModule;
 import com.hxw.core.di.module.GlobalConfigModule;
-import com.hxw.core.integration.AppManager;
-
+import com.hxw.core.imageloader.GlideAppliesOptions;
 
 import java.io.File;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.BindsInstance;
@@ -28,8 +29,6 @@ import retrofit2.Retrofit;
 @Singleton
 @Component(modules = {AppModule.class, ClientModule.class, GlobalConfigModule.class})
 public interface AppComponent {
-
-    AppManager appManager();
 
     Application application();
 
@@ -48,7 +47,11 @@ public interface AppComponent {
     /**
      * 存放用户数据的SharedPreferences
      */
+    @Named("User")
     SharedPreferences userSharedPreferences();
+
+    @Nullable
+    GlideAppliesOptions options();
 
     void inject(AppDelegate delegate);
 

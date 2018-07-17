@@ -31,5 +31,6 @@ public interface IFragment {
      *
      * @param appComponent {@link AppComponent}
      */
+    @Deprecated
     void injectFragmentComponent(@NonNull AppComponent appComponent);
 }

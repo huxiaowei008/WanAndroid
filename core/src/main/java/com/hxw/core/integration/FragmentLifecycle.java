@@ -6,9 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import timber.log.Timber;
 
 /**
@@ -17,12 +14,8 @@ import timber.log.Timber;
  *
  * @author hxw on 2018/5/5.
  */
-@Singleton
-public final class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallbacks {
 
-    @Inject
-    FragmentLifecycle() {
-    }
+public final class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallbacks {
 
     @Override
     public void onFragmentAttached(FragmentManager fm, Fragment f, Context context) {

@@ -33,6 +33,7 @@ public interface IActivity {
      *
      * @param appComponent {@link AppComponent}
      */
+    @Deprecated
     void injectActivityComponent(@NonNull AppComponent appComponent);
 
     /**

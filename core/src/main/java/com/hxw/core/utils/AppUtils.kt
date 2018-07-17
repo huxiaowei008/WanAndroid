@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Toast
 import com.hxw.core.DelegatesExt
 import com.hxw.core.di.AppComponent
+import com.hxw.core.integration.AppManager
 
 
 /**
@@ -41,9 +42,7 @@ object AppUtils {
 
     @JvmStatic
     fun showSnackBar(message: String) {
-        val currentActivity = mAppComponent
-                .appManager()
-                .currentActivity
+        val currentActivity = AppManager.getCurrentActivity()
         if (currentActivity != null) {
             val view = currentActivity
                     .window.decorView.findViewById<View>(android.R.id.content)

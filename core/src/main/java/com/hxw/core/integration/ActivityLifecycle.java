@@ -7,9 +7,6 @@ import android.support.v4.app.FragmentActivity;
 
 import com.hxw.core.base.IActivity;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import dagger.Lazy;
 import timber.log.Timber;
 
@@ -19,23 +16,18 @@ import timber.log.Timber;
  *
  * @author hxw on 2018/5/5.
  */
-@Singleton
 public final class ActivityLifecycle implements Application.ActivityLifecycleCallbacks {
 
-    @Inject
-    AppManager mAppManager;
+   private Lazy<FragmentLifecycle> mFragmentLifecycle;
 
-    @Inject
-    Lazy<FragmentLifecycle> mFragmentLifecycle;
-
-    @Inject
-    ActivityLifecycle() {
+    public ActivityLifecycle(Lazy<FragmentLifecycle> fragmentLifecycleLazy) {
+        mFragmentLifecycle = fragmentLifecycleLazy;
     }
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
         Timber.i("%s - onActivityCreated", activity.toString());
-        mAppManager.addActivity(activity);
+        AppManager.INSTANCE.addActivity(activity);
 
         boolean useFragment = activity instanceof IActivity && ((IActivity) activity).useFragment();
         if (activity instanceof FragmentActivity && useFragment) {
@@ -52,7 +44,7 @@ public final class ActivityLifecycle implements Application.ActivityLifecycleCal
     @Override
     public void onActivityResumed(Activity activity) {
         Timber.i("%s - onActivityResumed", activity.toString());
-        mAppManager.setCurrentActivity(activity);
+        AppManager.INSTANCE.setCurrentActivity(activity);
     }
 
     @Override
@@ -63,8 +55,8 @@ public final class ActivityLifecycle implements Application.ActivityLifecycleCal
     @Override
     public void onActivityStopped(Activity activity) {
         Timber.i("%s - onActivityStopped", activity.toString());
-        if (mAppManager.getCurrentActivity() == activity) {
-            mAppManager.setCurrentActivity(null);
+        if (AppManager.INSTANCE.getCurrentActivity() == activity) {
+            AppManager.INSTANCE.setCurrentActivity(null);
         }
     }
 
@@ -76,6 +68,6 @@ public final class ActivityLifecycle implements Application.ActivityLifecycleCal
     @Override
     public void onActivityDestroyed(Activity activity) {
         Timber.i("%s - onActivityDestroyed", activity.toString());
-        mAppManager.removeActivity(activity);
+        AppManager.INSTANCE.removeActivity(activity);
     }
 }

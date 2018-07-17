@@ -6,6 +6,7 @@ versions.glide = "4.7.1"
 versions.rxbinding = "2.1.1"
 versions.dagger = "2.16"
 versions.lifecycle = "1.1.1"
+versions.kodein="5.2.0"
 
 def config = [:]
 config.min_sdk = 16

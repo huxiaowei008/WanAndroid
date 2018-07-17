@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import com.hxw.core.base.BaseDaggerActivity
+import com.hxw.core.imageloader.GlideApp
 import com.hxw.core.utils.AppUtils
 import com.hxw.wanandroid.R
 import kotlinx.android.synthetic.main.activity_login.*
@@ -53,5 +54,10 @@ class LoginActivity : BaseDaggerActivity<LoginPresenter>(), LoginView {
     override fun onResume() {
         super.onResume()
         mPresenter.takeView(this)
+        GlideApp.with(this)
+    }
+
+    override fun useFragment(): Boolean {
+        return false
     }
 }

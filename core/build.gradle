@@ -166,6 +166,13 @@ dependencies {
     }
     kapt "com.google.dagger:dagger-android-processor:$versions.dagger"
 
+    //Kodein-DI https://github.com/Kodein-Framework/Kodein-DI
+    api "org.kodein.di:kodein-di-generic-jvm:$versions.kodein"
+    api "org.kodein.di:kodein-di-framework-android-core:$versions.kodein"
+//    api 'org.kodein.di:kodein-di-framework-android-x:5.2.0'
+    api "org.kodein.di:kodein-di-framework-android-support:$versions.kodein"
+    api "org.kodein.di:kodein-di-jx-inject-jvm:$versions.kodein"
+
     //AutoDispose https://github.com/uber/AutoDispose
     api('com.uber.autodispose:autodispose-android-archcomponents-kotlin:0.8.0') {
         exclude group: 'android.arch.lifecycle'
