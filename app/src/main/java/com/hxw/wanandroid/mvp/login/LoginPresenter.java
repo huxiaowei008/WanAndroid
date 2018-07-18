@@ -1,7 +1,6 @@
 package com.hxw.wanandroid.mvp.login;
 
 import com.hxw.core.AbstractErrorSubscriber;
-import com.hxw.core.di.ActivityScope;
 import com.hxw.core.mvp.BasePresenter;
 import com.hxw.core.utils.AppUtils;
 import com.hxw.wanandroid.WanApi;
@@ -19,16 +18,15 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * @author hxw on 2018/6/22.
  */
-@ActivityScope
 public class LoginPresenter extends BasePresenter<LoginView> {
 
-    @Inject
-    WanApi wanApi;
+    private WanApi wanApi;
 
     @Inject
-    LoginPresenter() {
-
+    LoginPresenter(WanApi api) {
+        this.wanApi = api;
     }
+
 
     public void login(String username, String password) {
         wanApi.login(username, password)
@@ -76,7 +74,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                 .subscribe(new AbstractErrorSubscriber<BaseEntity<List<HotKeyEntity>>>() {
                     @Override
                     public void onNext(BaseEntity<List<HotKeyEntity>> listBaseEntity) {
-                        if (listBaseEntity.getErrorCode()==0){
+                        if (listBaseEntity.getErrorCode() == 0) {
                             AppUtils.showToast("热词成功");
                         }
                     }

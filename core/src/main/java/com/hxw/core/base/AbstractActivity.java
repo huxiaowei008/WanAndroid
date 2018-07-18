@@ -2,12 +2,8 @@ package com.hxw.core.base;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-
-import com.hxw.core.di.AppComponent;
-import com.hxw.core.utils.AppUtils;
 
 
 /**
@@ -24,13 +20,7 @@ public abstract class AbstractActivity extends AppCompatActivity implements IAct
         if (getLayoutId() != 0) {
             setContentView(getLayoutId());
         }
-        injectActivityComponent(AppUtils.getAppComponent());
         init(savedInstanceState);
-    }
-
-    @Override
-    public void injectActivityComponent(@NonNull AppComponent appComponent) {
-
     }
 
     @Override

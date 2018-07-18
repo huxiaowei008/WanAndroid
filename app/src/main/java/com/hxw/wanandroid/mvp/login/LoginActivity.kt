@@ -4,24 +4,31 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import com.hxw.core.base.BaseDaggerActivity
+import com.hxw.core.base.AbstractActivity
 import com.hxw.core.imageloader.GlideApp
 import com.hxw.core.utils.AppUtils
 import com.hxw.wanandroid.R
 import kotlinx.android.synthetic.main.activity_login.*
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.closestKodein
+import org.kodein.di.jxinject.jx
 
 
 /**
  * @author hxw on 2018/6/2.
  *
  */
-class LoginActivity : BaseDaggerActivity<LoginPresenter>(), LoginView {
+class LoginActivity : AbstractActivity(), LoginView, KodeinAware {
+    override val kodein: Kodein by closestKodein()
+    private val mPresenter: LoginPresenter by lazy { kodein.jx.newInstance<LoginPresenter>() }
+
     override fun getLayoutId(): Int {
         return R.layout.activity_login
     }
 
     override fun init(savedInstanceState: Bundle?) {
-
+        lifecycle.addObserver(mPresenter)
         fa_btn.setOnClickListener {
             /**
              * 过渡动画需要在5.0版本以上
@@ -44,7 +51,7 @@ class LoginActivity : BaseDaggerActivity<LoginPresenter>(), LoginView {
             val password = et_password.text.toString()
             if (username.isNotEmpty() && password.isNotEmpty()) {
                 mPresenter.login(username, password)
-            }else{
+            } else {
                 AppUtils.showToast("信息未填完整")
             }
         }

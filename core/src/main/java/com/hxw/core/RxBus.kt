@@ -10,6 +10,7 @@ import io.reactivex.Observable
  *
  * @author hxw on 2018/5/3.
  */
+@Deprecated("不推荐使用")
 object RxBus {
     private val mBus: Relay<Any> by lazy { PublishRelay.create<Any>().toSerialized() }
 

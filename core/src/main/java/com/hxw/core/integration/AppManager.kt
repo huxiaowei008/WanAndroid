@@ -13,7 +13,6 @@ import java.util.*
  * @author hxw on 2018/5/4.
  */
 object AppManager {
-    val kodein = Kodein {  }
     private var currentActivity: WeakReference<Activity>? = null
     private val mActivityStack = LinkedList<Activity>()
 

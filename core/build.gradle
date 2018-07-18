@@ -157,14 +157,14 @@ dependencies {
     }
 
     //dagger2 https://github.com/google/dagger
-    api("com.google.dagger:dagger:$versions.dagger") {
-        exclude group: 'android.arch.lifecycle'
-    }
-    kapt "com.google.dagger:dagger-compiler:$versions.dagger"
-    api("com.google.dagger:dagger-android-support:$versions.dagger") {
-        exclude group: 'android.arch.lifecycle'
-    }
-    kapt "com.google.dagger:dagger-android-processor:$versions.dagger"
+//    api("com.google.dagger:dagger:$versions.dagger") {
+//        exclude group: 'android.arch.lifecycle'
+//    }
+//    kapt "com.google.dagger:dagger-compiler:$versions.dagger"
+//    api("com.google.dagger:dagger-android-support:$versions.dagger") {
+//        exclude group: 'android.arch.lifecycle'
+//    }
+//    kapt "com.google.dagger:dagger-android-processor:$versions.dagger"
 
     //Kodein-DI https://github.com/Kodein-Framework/Kodein-DI
     api "org.kodein.di:kodein-di-generic-jvm:$versions.kodein"

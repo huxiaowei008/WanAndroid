@@ -5,6 +5,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
+import com.hxw.core.base.ConfigModule;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +15,11 @@ import timber.log.Timber;
 
 /**
  * 用于解析 AndroidManifest 中的 Meta 属性
+ * 现在应该不需要了
  *
  * @author hxw on 2018/5/4.
  */
+@Deprecated
 public final class ManifestParser {
     private static final String TAG = "ManifestParser";
     private static final String MODULE_VALUE = "ConfigModule";
@@ -74,7 +78,7 @@ public final class ManifestParser {
                 if (MODULE_VALUE.equals(appInfo.metaData.get(key))) {
                     modules.add(parseModule(key));
                     if (Log.isLoggable(TAG, Log.DEBUG)) {
-                        Timber.tag(TAG).v("Loaded Config module: %s", key);
+                        Timber.tag(TAG).v("Loaded ConfigModule module: %s", key);
                     }
                 }
             }
@@ -82,7 +86,7 @@ public final class ManifestParser {
             throw new RuntimeException("Unable to find metadata to parse ConfigModules", e);
         }
 
-        Timber.tag(TAG).i("Finished loading Config modules");
+        Timber.tag(TAG).i("Finished loading ConfigModule modules");
 
         return modules;
     }

@@ -10,24 +10,29 @@ import android.transition.TransitionInflater
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.animation.AccelerateInterpolator
-import com.hxw.core.base.BaseDaggerActivity
+import com.hxw.core.base.AbstractActivity
 import com.hxw.core.utils.AppUtils
 import com.hxw.wanandroid.R
 import kotlinx.android.synthetic.main.activity_register.*
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.closestKodein
+import org.kodein.di.jxinject.jx
 
 /**
  * @author hxw on 2018/6/6.
  *
  */
-class RegisterActivity : BaseDaggerActivity<LoginPresenter>(), LoginView {
-
+class RegisterActivity : AbstractActivity(), LoginView, KodeinAware {
+    override val kodein: Kodein by closestKodein()
+    private val mPresenter: LoginPresenter by lazy { kodein.jx.newInstance<LoginPresenter>() }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_register
     }
 
     override fun init(savedInstanceState: Bundle?) {
-
+        lifecycle.addObserver(mPresenter)
         fa_btn.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 animateRevealClose()
@@ -40,12 +45,12 @@ class RegisterActivity : BaseDaggerActivity<LoginPresenter>(), LoginView {
         }
 
         btn_register.setOnClickListener {
-            val username=et_username.text.toString()
-            val password=et_password.text.toString()
-            val repassword=et_repeat_password.text.toString()
-            if (username.isNotEmpty()&&password.isNotEmpty()&&repassword.isNotEmpty()){
+            val username = et_username.text.toString()
+            val password = et_password.text.toString()
+            val repassword = et_repeat_password.text.toString()
+            if (username.isNotEmpty() && password.isNotEmpty() && repassword.isNotEmpty()) {
                 mPresenter.register(username, password, repassword)
-            }else{
+            } else {
                 AppUtils.showToast("信息未填完整")
             }
 
@@ -56,6 +61,7 @@ class RegisterActivity : BaseDaggerActivity<LoginPresenter>(), LoginView {
         super.onResume()
         mPresenter.takeView(this)
     }
+
     /**
      * 若要在完成第二个活动时反转场景转换动画,请调用Activity.finishAfterTransition()方法
      * 而不是Activity.finish(),注意版本5.0

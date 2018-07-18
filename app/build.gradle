@@ -37,8 +37,8 @@ dependencies {
     implementation project(':core')
 //    kapt project(':compiler')
 
-    kapt "com.google.dagger:dagger-compiler:$versions.dagger"
-    kapt "com.google.dagger:dagger-android-processor:$versions.dagger"
+//    kapt "com.google.dagger:dagger-compiler:$versions.dagger"
+//    kapt "com.google.dagger:dagger-android-processor:$versions.dagger"
     //Lottie https://github.com/airbnb/lottie-android
     implementation('com.airbnb.android:lottie:2.5.5') {
         transitive = false

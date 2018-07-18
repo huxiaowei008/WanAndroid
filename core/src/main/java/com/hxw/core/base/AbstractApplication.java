@@ -1,41 +1,40 @@
 package com.hxw.core.base;
 
+import android.app.Application;
+import android.support.v7.app.AppCompatDelegate;
 
-import android.content.Context;
+import com.hxw.core.integration.ActivityLifecycle;
+import com.hxw.core.utils.AppUtils;
 
-import com.hxw.core.delegate.AppDelegate;
-
-import dagger.android.support.DaggerApplication;
+import org.kodein.di.Kodein;
+import org.kodein.di.KodeinAware;
 
 /**
- * Application基类,需要外部实现
+ * {@link Application}加入生命周期打印的基类
  *
- * @author hxw on 2018/6/7.
+ * @author hxw on 2018/7/18.
  */
-public abstract class AbstractApplication extends DaggerApplication {
-
-    private AppDelegate appDelegate;
-
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        appDelegate = new AppDelegate(this);
-        appDelegate.attachBaseContext(this);
-    }
+public abstract class AbstractApplication extends Application implements KodeinAware {
+    protected ActivityLifecycle mActivityLifecycle;
 
     @Override
     public void onCreate() {
-        appDelegate.onCreate(this);
         super.onCreate();
+        AppUtils.INSTANCE.setKodein(getKodein());
+        mActivityLifecycle = new ActivityLifecycle();
+        //注册框架内部已实现的 Activity 生命周期逻辑
+        registerActivityLifecycleCallbacks(mActivityLifecycle);
 
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
     @Override
     public void onTerminate() {
-        appDelegate.onTerminate(this);
         super.onTerminate();
-        appDelegate = null;
+        if (mActivityLifecycle != null) {
+            //注销框架内部已实现的 Activity 生命周期逻辑
+            unregisterActivityLifecycleCallbacks(mActivityLifecycle);
+            mActivityLifecycle = null;
+        }
     }
-
-
 }

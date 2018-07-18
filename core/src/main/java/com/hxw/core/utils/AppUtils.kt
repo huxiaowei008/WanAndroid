@@ -1,6 +1,5 @@
 package com.hxw.core.utils
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
@@ -10,8 +9,8 @@ import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.Toast
 import com.hxw.core.DelegatesExt
-import com.hxw.core.di.AppComponent
 import com.hxw.core.integration.AppManager
+import org.kodein.di.Kodein
 
 
 /**
@@ -19,26 +18,9 @@ import com.hxw.core.integration.AppManager
  *
  * @author hxw on 2018/5/5.
  */
-@SuppressLint("ShowToast")
 object AppUtils {
-    private val mToast: Toast by lazy {
-        Toast.makeText(mAppComponent.application(),
-                "", Toast.LENGTH_SHORT)
-    }
-    private var mAppComponent: AppComponent by DelegatesExt.notNullSingleValue()
 
-    /**
-     * 内部调用,外部再调用就会出错
-     */
-    @JvmStatic
-    fun setAppComponent(appComponent: AppComponent) {
-        mAppComponent = appComponent
-    }
-
-    @JvmStatic
-    fun getAppComponent(): AppComponent {
-        return mAppComponent
-    }
+    var kodein: Kodein by DelegatesExt.notNullSingleValue()
 
     @JvmStatic
     fun showSnackBar(message: String) {
@@ -52,8 +34,10 @@ object AppUtils {
 
     @JvmStatic
     fun showToast(message: String) {
-        mToast.setText(message)
-        mToast.show()
+        val currentActivity = AppManager.getCurrentActivity()
+        if (currentActivity != null) {
+            Toast.makeText(currentActivity.applicationContext, message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     /**

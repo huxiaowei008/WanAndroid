@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".base.WanApplication"
+        android:name=".base.WanKodeinApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -13,13 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- 框架配置 -->
-        <meta-data
-            android:name="com.hxw.wanandroid.base.GlobalConfiguration"
-            android:value="ConfigModule" />
-    <activity android:name=".mvp.MainActivity">
+        <activity android:name=".mvp.MainActivity">
 
-    </activity>
+        </activity>
 
         <activity android:name=".mvp.login.LoginActivity">
             <intent-filter>
@@ -31,7 +27,9 @@
         <activity
             android:name=".mvp.login.RegisterActivity"
             android:theme="@style/TransparentWindow" />
+        <activity android:name=".TestActivity">
 
+        </activity>
     </application>
 
 </manifest>

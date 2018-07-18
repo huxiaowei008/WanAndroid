@@ -8,9 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hxw.core.di.AppComponent;
-import com.hxw.core.utils.AppUtils;
-
 
 /**
  * {@link Fragment} 基类
@@ -29,13 +26,7 @@ public abstract class AbstractFragment extends Fragment implements IFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        injectFragmentComponent(AppUtils.getAppComponent());
         init(savedInstanceState);
-    }
-
-    @Override
-    public void injectFragmentComponent(@NonNull AppComponent appComponent) {
-
     }
 
 }
