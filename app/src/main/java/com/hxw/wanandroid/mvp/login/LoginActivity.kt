@@ -28,7 +28,6 @@ class LoginActivity : AbstractActivity(), LoginView, KodeinAware {
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        lifecycle.addObserver(mPresenter)
         fa_btn.setOnClickListener {
             /**
              * 过渡动画需要在5.0版本以上

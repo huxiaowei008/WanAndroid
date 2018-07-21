@@ -32,7 +32,6 @@ class RegisterActivity : AbstractActivity(), LoginView, KodeinAware {
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        lifecycle.addObserver(mPresenter)
         fa_btn.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 animateRevealClose()
