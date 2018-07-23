@@ -62,6 +62,7 @@ dependencies {
     implementation("android.arch.navigation:navigation-ui-ktx:1.0.0-alpha04") {
         exclude group: 'android.arch.lifecycle'
     }
+
     //Paging https://developer.android.google.cn/topic/libraries/architecture/paging/
     implementation "android.arch.paging:runtime:1.0.1"
     implementation "android.arch.paging:rxjava2:1.0.1"
