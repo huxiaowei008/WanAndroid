@@ -25,6 +25,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    //用这配置统一support依赖的版本,这里除外multidex包
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == 'com.android.support') {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion '27.1.1' //这里改为你项目使用的版本即可
+                }
+            }
+        }
+    }
 }
 
 dependencies {
@@ -43,5 +54,16 @@ dependencies {
     implementation('com.airbnb.android:lottie:2.5.5') {
         transitive = false
     }
+
+    //Navigation https://developer.android.google.cn/topic/libraries/architecture/navigation/navigation-implementing
+    implementation("android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha04") {
+        exclude group: 'android.arch.lifecycle'
+    }
+    implementation("android.arch.navigation:navigation-ui-ktx:1.0.0-alpha04") {
+        exclude group: 'android.arch.lifecycle'
+    }
+    //Paging https://developer.android.google.cn/topic/libraries/architecture/paging/
+    implementation "android.arch.paging:runtime:1.0.1"
+    implementation "android.arch.paging:rxjava2:1.0.1"
 
 }
