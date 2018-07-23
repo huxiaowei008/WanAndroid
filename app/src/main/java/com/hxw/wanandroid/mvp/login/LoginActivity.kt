@@ -28,7 +28,7 @@ class LoginActivity : AbstractActivity(), LoginView, KodeinAware {
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        lifecycle.addObserver(mPresenter)
+        mPresenter.takeView(this)
         fa_btn.setOnClickListener {
             /**
              * 过渡动画需要在5.0版本以上
@@ -60,8 +60,6 @@ class LoginActivity : AbstractActivity(), LoginView, KodeinAware {
 
     override fun onResume() {
         super.onResume()
-        mPresenter.takeView(this)
-        GlideApp.with(this)
     }
 
     override fun useFragment(): Boolean {

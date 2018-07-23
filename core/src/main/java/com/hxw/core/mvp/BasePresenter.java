@@ -56,6 +56,9 @@ public class BasePresenter<V extends IView> implements IPresenter<V> {
     @Override
     public void takeView(V view) {
         this.mView = view;
+        if (view instanceof LifecycleOwner){
+            ((LifecycleOwner) view).getLifecycle().addObserver(this);
+        }
     }
 
     @Override
