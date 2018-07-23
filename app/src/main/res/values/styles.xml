@@ -9,11 +9,6 @@
 
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
     <!--透明的Window-->
     <style name="TransparentWindow" parent="AppTheme">
         <!--window背景透明-->
