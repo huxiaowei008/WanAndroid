@@ -25,6 +25,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    //用这配置统一support依赖的版本,这里除外multidex包
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == 'com.android.support') {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion '27.1.1' //这里改为你项目使用的版本即可
+                }
+            }
+        }
+    }
 }
 
 dependencies {
