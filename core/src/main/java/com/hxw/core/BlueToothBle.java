@@ -126,7 +126,7 @@ public class BlueToothBle {
     public void stopScan() {
         if (mLeScanCallback != null) {
             mBluetoothAdapter.stopLeScan(mLeScanCallback);
-            mLeScanCallback=null;
+            mLeScanCallback = null;
         }
     }
 
