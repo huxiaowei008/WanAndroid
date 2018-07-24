@@ -2,25 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_add"
-        android:title="首页" />
-
+        android:id="@+id/fragment_home"
+        android:icon="@drawable/ic_home"
+        android:title="@string/home" />
     <item
-
-        android:id="@+id/navigation_system"
-        android:icon="@drawable/ic_add"
-        android:title="体系" />
-
+        android:id="@+id/fragment_system"
+        android:icon="@drawable/ic_system"
+        android:title="@string/system" />
     <item
-
-        android:id="@+id/navigation_navigation"
-        android:icon="@drawable/ic_add"
-        android:title="导航" />
+        android:id="@+id/fragment_navigation"
+        android:icon="@drawable/ic_navigation"
+        android:title="@string/navigation" />
     <item
-
-        android:id="@+id/navigation_project"
-        android:icon="@drawable/ic_add"
-        android:title="项目" />
+        android:id="@+id/fragment_project"
+        android:icon="@drawable/ic_project"
+        android:title="@string/project" />
 </menu>

@@ -17,7 +17,22 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    >
+    app:startDestination="@+id/fragment_home">
 
-
+    <fragment
+        android:id="@+id/fragment_home"
+        android:name="com.hxw.wanandroid.mvp.home.HomeFragment"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/fragment_system"
+        android:name="com.hxw.wanandroid.mvp.system.SystemFragment"
+        tools:layout="@layout/fragment_system" />
+    <fragment
+        android:id="@+id/fragment_navigation"
+        android:name="com.hxw.wanandroid.mvp.navigation.NavigationFragment"
+        tools:layout="@layout/fragment_navigation" />
+    <fragment
+        android:id="@+id/fragment_project"
+        android:name="com.hxw.wanandroid.mvp.project.ProjectFragment"
+        tools:layout="@layout/fragment_project" />
 </navigation>

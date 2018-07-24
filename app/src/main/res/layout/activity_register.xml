@@ -46,7 +46,7 @@
                 android:layout_marginEnd="56dp"
                 android:layout_marginStart="56dp"
                 android:layout_marginTop="8dp"
-                android:hint="用户名"
+                android:hint="@string/username"
                 android:textColorHint="@color/white"
                 android:theme="@style/InputLayout">
 
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="56dp"
                 android:layout_marginStart="56dp"
-                android:hint="密码"
+                android:hint="@string/password"
                 android:textColorHint="@color/white"
                 android:theme="@style/InputLayout">
 
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="56dp"
                 android:layout_marginStart="56dp"
-                android:hint="重复密码"
+                android:hint="@string/re_password"
                 android:textColorHint="@color/white"
                 android:theme="@style/InputLayout">
 
@@ -100,7 +100,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/bg_shape_white"
                 android:stateListAnimator="@drawable/state_list_animator_z"
-                android:text="注册"
+                android:text="@string/register"
                 android:textColor="@color/colorAccent"
                 tools:targetApi="lollipop" />
         </LinearLayout>
