@@ -17,7 +17,6 @@ import timber.log.Timber;
 public class BasePresenter<V extends IView> implements IPresenter<V> {
 
     protected V mView;
-    private LifecycleOwner lifecycleOwner;
     private CompositeDisposable mCompositeDisposable;
 
     /**
@@ -25,8 +24,7 @@ public class BasePresenter<V extends IView> implements IPresenter<V> {
      */
     @Override
     public void onCreate(@NonNull LifecycleOwner owner) {
-        Timber.i("%s - onCreate",this.toString());
-        this.lifecycleOwner = owner;
+        Timber.i("%s - onCreate", this.toString());
     }
 
     /**
@@ -34,7 +32,7 @@ public class BasePresenter<V extends IView> implements IPresenter<V> {
      */
     @Override
     public void onDestroy(@NonNull LifecycleOwner owner) {
-        Timber.i("%s - onDestroy",this.toString());
+        Timber.i("%s - onDestroy", this.toString());
         dropView();
     }
 
@@ -46,17 +44,16 @@ public class BasePresenter<V extends IView> implements IPresenter<V> {
      */
     @Override
     public void onLifecycleChanged(@NonNull LifecycleOwner owner, @NonNull Lifecycle.Event event) {
-        Timber.i("%s - onLifecycleChanged",this.toString());
+        Timber.i("%s - onLifecycleChanged", this.toString());
         if (event == Lifecycle.Event.ON_DESTROY) {
             owner.getLifecycle().removeObserver(this);
-            lifecycleOwner = null;
         }
     }
 
     @Override
     public void takeView(V view) {
         this.mView = view;
-        if (view instanceof LifecycleOwner){
+        if (view instanceof LifecycleOwner) {
             ((LifecycleOwner) view).getLifecycle().addObserver(this);
         }
     }
@@ -74,10 +71,14 @@ public class BasePresenter<V extends IView> implements IPresenter<V> {
      * 通过AutoDispose绑定生命周期
      */
     protected <T> AutoDisposeConverter<T> bindLifecycle() {
-        if (lifecycleOwner == null) {
-            throw new NullPointerException("lifecycleOwner == null");
+        if (mView == null) {
+            throw new NullPointerException("mView == null");
         }
-        return RxUtils.bindLifecycle(lifecycleOwner);
+        if (mView instanceof LifecycleOwner) {
+            return RxUtils.bindLifecycle((LifecycleOwner) mView);
+        } else {
+            throw new AssertionError("mView 不是 LifecycleOwner 的子类");
+        }
     }
 
     protected void addDispose(Disposable disposable) {

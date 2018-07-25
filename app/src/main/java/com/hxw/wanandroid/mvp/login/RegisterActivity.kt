@@ -139,4 +139,8 @@ class RegisterActivity : AbstractActivity(), LoginView, KodeinAware {
             super.onBackPressed()
         }
     }
+
+    override fun loginSuccess() {
+
+    }
 }

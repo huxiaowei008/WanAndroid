@@ -7,6 +7,7 @@ import android.os.Bundle
 import com.hxw.core.base.AbstractActivity
 import com.hxw.core.utils.AppUtils
 import com.hxw.wanandroid.R
+import com.hxw.wanandroid.mvp.MainActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -55,5 +56,9 @@ class LoginActivity : AbstractActivity(), LoginView, KodeinAware {
             }
         }
 
+    }
+
+    override fun loginSuccess() {
+        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
     }
 }
