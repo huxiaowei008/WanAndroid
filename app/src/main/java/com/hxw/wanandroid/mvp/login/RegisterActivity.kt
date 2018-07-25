@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
+import android.support.v4.app.ActivityCompat
 import android.transition.Transition
 import android.transition.TransitionInflater
 import android.view.View
@@ -57,21 +58,12 @@ class RegisterActivity : AbstractActivity(), LoginView, KodeinAware {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
-
     /**
      * 若要在完成第二个活动时反转场景转换动画,请调用Activity.finishAfterTransition()方法
      * 而不是Activity.finish(),注意版本5.0
      */
     private fun finishActivity() {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            finishAfterTransition()
-        } else {
-            finish()
-        }
+        ActivityCompat.finishAfterTransition(this)
     }
 
     /**
@@ -79,7 +71,6 @@ class RegisterActivity : AbstractActivity(), LoginView, KodeinAware {
      */
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun showEnterAnimation() {
-
 
         val transition = TransitionInflater.from(this).inflateTransition(R.transition.fab_transition)
 
@@ -107,9 +98,7 @@ class RegisterActivity : AbstractActivity(), LoginView, KodeinAware {
 
             }
 
-
         })
-
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -144,7 +133,6 @@ class RegisterActivity : AbstractActivity(), LoginView, KodeinAware {
     }
 
     override fun onBackPressed() {
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             animateRevealClose()
         } else {

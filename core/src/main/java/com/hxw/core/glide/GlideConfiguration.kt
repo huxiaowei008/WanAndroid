@@ -1,4 +1,4 @@
-package com.hxw.core.imageloader
+package com.hxw.core.glide
 
 import android.content.Context
 import com.bumptech.glide.Glide

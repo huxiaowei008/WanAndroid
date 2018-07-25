@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import com.hxw.core.base.AbstractActivity
-import com.hxw.core.imageloader.GlideApp
 import com.hxw.core.utils.AppUtils
 import com.hxw.wanandroid.R
 import kotlinx.android.synthetic.main.activity_login.*
@@ -56,13 +55,5 @@ class LoginActivity : AbstractActivity(), LoginView, KodeinAware {
             }
         }
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun useFragment(): Boolean {
-        return false
     }
 }
