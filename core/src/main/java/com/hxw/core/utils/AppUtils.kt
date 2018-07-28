@@ -1,6 +1,7 @@
 package com.hxw.core.utils
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.support.annotation.Size
@@ -37,6 +38,20 @@ object AppUtils {
         val currentActivity = AppManager.getCurrentActivity()
         if (currentActivity != null) {
             Toast.makeText(currentActivity.applicationContext, message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    /**
+     * 启动Activity
+     */
+    @JvmStatic
+    fun startActivity(intent: Intent, withFinish: Boolean = false) {
+        val currentActivity = AppManager.getCurrentActivity()
+        if (currentActivity != null) {
+            currentActivity.startActivity(intent)
+            if (withFinish) {
+                currentActivity.finish()
+            }
         }
     }
 

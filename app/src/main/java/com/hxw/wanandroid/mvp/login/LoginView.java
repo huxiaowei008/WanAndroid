@@ -8,7 +8,7 @@ import com.hxw.core.mvp.IView;
 public interface LoginView extends IView {
 
     /**
-     * 登录成功
+     * 登录或注册成功
      */
-    void loginSuccess();
+    void loginOrRegisterSuccess();
 }

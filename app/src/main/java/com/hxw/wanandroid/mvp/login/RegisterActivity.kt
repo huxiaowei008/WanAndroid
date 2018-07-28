@@ -140,7 +140,7 @@ class RegisterActivity : AbstractActivity(), LoginView, KodeinAware {
         }
     }
 
-    override fun loginSuccess() {
+    override fun loginOrRegisterSuccess() {
 
     }
 }
