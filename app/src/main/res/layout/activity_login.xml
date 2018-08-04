@@ -83,7 +83,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/body2" />
+                    android:textSize="@dimen/body2"
+                    android:text="huxiaowei008"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -104,7 +105,8 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorAccent"
                     android:inputType="textPassword"
-                    android:textSize="@dimen/body2" />
+                    android:textSize="@dimen/body2"
+                    android:text="123456"/>
             </android.support.design.widget.TextInputLayout>
 
             <Button

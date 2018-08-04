@@ -8,6 +8,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.kodein.di.Kodein
 import org.kodein.di.android.androidModule
+import org.kodein.di.android.support.androidSupportModule
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
@@ -24,6 +25,7 @@ import timber.log.Timber
  */
 fun coreModule(app: Application, configModule: ConfigModule) = Kodein.Module("MyCoreConfig") {
     import(androidModule(app))
+    import(androidSupportModule(app))
     import(jxInjectorModule)
 
     bind<ConfigModule>() with singleton { configModule }

@@ -58,7 +58,7 @@ class LoginActivity : AbstractActivity(), LoginView, KodeinAware {
 
     }
 
-    override fun loginSuccess() {
+    override fun loginOrRegisterSuccess() {
         startActivity(Intent(this@LoginActivity, MainActivity::class.java))
     }
 }
