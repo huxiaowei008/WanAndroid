@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
     android:orientation="vertical">
 
     <Button
@@ -21,9 +20,9 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.hxw.permission.MainFragment"
+        android:name="com.hxw.wanandroid.permission.PermissionFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_permission" />
 
 </LinearLayout>

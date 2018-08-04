@@ -11,4 +11,8 @@
     <string name="login">登录</string>
     <string name="re_password">重复密码</string>
     <string name="register">注册</string>
+
+    <string name="camera">相机</string>
+    <string name="location_and_contacts">定位和读取联系人</string>
+    <string name="sms">短信</string>
 </resources>

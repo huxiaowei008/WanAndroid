@@ -3,10 +3,7 @@ package com.hxw.core.utils
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
-import android.support.annotation.Size
 import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.Toast
 import com.hxw.core.DelegatesExt
@@ -85,31 +82,6 @@ object AppUtils {
             ""
         }
 
-    }
-
-    /**
-     * 检查权限
-     * 有权限: PackageManager.PERMISSION_GRANTED
-     * 无权限: PackageManager.PERMISSION_DENIED
-     *
-     * @param context 上下文
-     * @param perms   权限
-     * @return 是否有权限 `true` 有权限 `false` 无权限
-     */
-    @JvmStatic
-    fun hasPermissions(context: Context,
-                       @Size(min = 1) vararg perms: String): Boolean {
-        //版本6.0以下不需要请求权限
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return true
-        }
-        //是否有权限
-        for (perm in perms) {
-            if (ContextCompat.checkSelfPermission(context, perm) != PackageManager.PERMISSION_GRANTED) {
-                return false
-            }
-        }
-        return true
     }
 
     /**
