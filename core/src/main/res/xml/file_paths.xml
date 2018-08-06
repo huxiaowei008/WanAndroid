@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <files-path
+        name="files"
+        path="/" />
+
+    <cache-path
+        name="cache"
+        path="/" />
+
+    <external-path
+        name="external"
+        path="/" />
+
+    <external-files-path
+        name="external_file_path"
+        path="/" />
+
+    <external-cache-path
+        name="external_cache_path"
+        path="/" />
+    <!--其中，external-path就是用来指定Uri共享的，name值可以随便填，path属性的值表示共享的具体路径。-->
+    <!--这里设置空值就表示将整个SD卡进行共享，当然你也可以仅共享某个文件夹路径-->
+</paths>

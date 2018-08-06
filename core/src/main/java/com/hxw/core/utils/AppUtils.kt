@@ -3,12 +3,17 @@ package com.hxw.core.utils
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import android.support.design.widget.Snackbar
+import android.support.v4.content.FileProvider
 import android.view.View
 import android.widget.Toast
 import com.hxw.core.DelegatesExt
 import com.hxw.core.integration.AppManager
 import org.kodein.di.Kodein
+import java.io.File
 
 
 /**
@@ -51,6 +56,35 @@ object AppUtils {
             }
         }
     }
+
+    /**
+     * 获取启动相机意图,需要Manifest.permission.CAMERA权限
+     *
+     * @param outputImage 用来保存图片的文件
+     */
+    @JvmStatic
+    fun openCameraIntent(output: Uri): Intent {
+        val openCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        // 指定照片保存路径
+        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, output)
+        return openCameraIntent
+    }
+
+    /**
+     * 获取文件Uri,适配7.0
+     */
+    @JvmStatic
+    fun getUriFormFile(context: Context, file: File): Uri {
+        //7.0系统适配
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            //转变成Content uri
+            FileProvider.getUriForFile(context, context.packageName + ".provider", file)
+        } else {
+            //file uri
+            Uri.fromFile(file)
+        }
+    }
+
 
     /**
      * 获取版本号

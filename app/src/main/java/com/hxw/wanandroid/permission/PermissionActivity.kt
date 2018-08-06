@@ -1,6 +1,7 @@
 package com.hxw.wanandroid.permission
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import com.hxw.core.base.AbstractActivity
@@ -9,6 +10,7 @@ import com.hxw.wanandroid.R
 import kotlinx.android.synthetic.main.activity_permission.*
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.toast
+import timber.log.Timber
 
 /**
  * @author hxw on 2018/8/4.
@@ -24,7 +26,10 @@ class PermissionActivity : AbstractActivity() {
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        button_camera.setOnClickListener { cameraTask() }
+        button_camera.setOnClickListener {
+            cameraTask()
+//            startActivityForResult(Intent(this@PermissionActivity,TakePhotoActivity::class.java),1000)
+        }
         button_location_and_contacts.setOnClickListener { locationAndContactsTask() }
     }
 
@@ -56,5 +61,10 @@ class PermissionActivity : AbstractActivity() {
                 PermissionUtils.somePermissionPermanentlyDenied(this@PermissionActivity, s)
             }
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Timber.tag("result").i("activityResult->requestCode==$requestCode,resultCode==$resultCode")
     }
 }

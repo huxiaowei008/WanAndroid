@@ -11,8 +11,8 @@ versions.kodein="5.2.0"
 def config = [:]
 config.min_sdk = 16
 config.target_sdk = 27
-config.version_code = 6
-config.version_name = "0.6"
+config.version_code = 7
+config.version_name = "0.7"
 ext.config = config
 ext.kotlin_version = '1.2.60'
 

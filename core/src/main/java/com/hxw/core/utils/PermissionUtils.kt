@@ -49,6 +49,7 @@ object PermissionUtils {
     /**
      * 判断是否有必要向用户解释为什么要这项权限
      *
+     * @param host activity或fragment
      * @param perms 权限
      * @return 是否需要解释 `true` 需要 `false` 不需要
      */
@@ -72,6 +73,8 @@ object PermissionUtils {
 
     /**
      * 检查被拒绝权限列表中的至少一个权限是否已被永久拒绝（用户点击“永不再询问”）
+     *
+     * @param host activity或fragment
      * @param perms 权限
      */
     @JvmStatic

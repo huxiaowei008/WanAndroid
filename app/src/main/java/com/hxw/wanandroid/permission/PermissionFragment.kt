@@ -1,6 +1,7 @@
 package com.hxw.wanandroid.permission
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import com.hxw.core.base.AbstractFragment
@@ -9,6 +10,7 @@ import com.hxw.wanandroid.R
 import kotlinx.android.synthetic.main.fragment_permission.*
 import org.jetbrains.anko.support.v4.longToast
 import org.jetbrains.anko.support.v4.toast
+import timber.log.Timber
 
 /**
  * @author hxw on 2018/8/4.
@@ -23,7 +25,10 @@ class PermissionFragment : AbstractFragment() {
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        button_sms.setOnClickListener { smsTask() }
+        button_sms.setOnClickListener {
+            smsTask()
+//            startActivityForResult(Intent(activity, TakePhotoActivity::class.java),2000)
+        }
     }
 
     private fun smsTask() {
@@ -46,5 +51,10 @@ class PermissionFragment : AbstractFragment() {
                 PermissionUtils.somePermissionPermanentlyDenied(this@PermissionFragment, s)
             }
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Timber.tag("result").i("fragmentResult->requestCode==$requestCode,resultCode==$resultCode")
     }
 }

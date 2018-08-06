@@ -7,7 +7,7 @@ import java.util.Random;
  *
  * @author hxw on 2018/6/5.
  */
-public class HexUtils {
+public final class HexUtils {
     /**
      * 用于建立十六进制字符的输出的小写字符数组
      */
