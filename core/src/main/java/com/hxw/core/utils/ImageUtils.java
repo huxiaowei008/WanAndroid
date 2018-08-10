@@ -3,6 +3,7 @@ package com.hxw.core.utils;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
@@ -35,8 +36,14 @@ public final class ImageUtils {
         paint.setAlpha(config.getAlpha());
         Canvas canvas = new Canvas(ret);
         if (!TextUtils.isEmpty(config.getText())) {
-            paint.setColor(config.getTextColor());
+            //绘制白色字体内容
+            paint.setColor(Color.WHITE);
             paint.setTextSize(config.getTextSize());
+            canvas.drawText(config.getText(), config.getX(), config.getY() + paint.getFontSpacing(), paint);
+            //绘制黑色描边
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(4f);
             canvas.drawText(config.getText(), config.getX(), config.getY() + paint.getFontSpacing(), paint);
         }
         if (config.getWatermark() != null) {

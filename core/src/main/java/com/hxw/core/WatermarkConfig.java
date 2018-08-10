@@ -15,8 +15,6 @@ public class WatermarkConfig {
     private float x = 0;
     private float y = 0;
     private String text = "";
-    @ColorInt
-    private int textColor = Color.BLACK;
     private float textSize = 80;
     @IntRange(from = 0, to = 255)
     private int alpha = 255;
@@ -55,20 +53,6 @@ public class WatermarkConfig {
      */
     public WatermarkConfig setText(String text) {
         this.text = text;
-        return this;
-    }
-
-    public int getTextColor() {
-        return textColor;
-    }
-
-    /**
-     * 文字颜色
-     *
-     * @param textColor 颜色
-     */
-    public WatermarkConfig setTextColor(@ColorInt int textColor) {
-        this.textColor = textColor;
         return this;
     }
 

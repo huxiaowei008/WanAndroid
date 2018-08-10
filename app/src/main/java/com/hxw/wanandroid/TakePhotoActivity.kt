@@ -5,19 +5,20 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import com.hxw.core.WatermarkConfig
 import com.hxw.core.base.AbstractActivity
-import com.hxw.core.utils.AppUtils
-import com.hxw.core.utils.FileUtils
-import com.hxw.core.utils.PermissionUtils
+import com.hxw.core.utils.*
 import kotlinx.android.synthetic.main.activity_take_photo.*
 import org.jetbrains.anko.toast
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
 import java.io.File
+import java.util.*
 
 /**
  * @author hxw on 2018/7/18.
@@ -92,25 +93,23 @@ class TakePhotoActivity : AbstractActivity(), KodeinAware {
 //            image_test.setImageURI(imageUri)
 //            val w = Bitmap.createBitmap(500, 500, Bitmap.Config.RGB_565)
 //            w.eraseColor(Color.RED)
-//
-//            val bitmap = ImageUtils.addWatermark(MediaStore
-//                    .Images.Media.getBitmap(contentResolver, imageUri), WatermarkConfig()
-//                    .setAlpha(200)
-//                    .setXY(0f, 0f)
-//                    .setTextColor(Color.BLUE)
-//                    .setTextSize(AppUtils.spToPx(this@TakePhotoActivity, 50f).toFloat())
-//                    .setText(DateUtils.date2String(Date(), "yyyy-MM-dd HH:mm") + "\n胡晓伟\n高新园区")
-//                    .setRecycle(true)
-//            )
-//
-//            val file = File(externalCacheDir, "${System.currentTimeMillis()}压缩.jpg")
-//            ImageUtils.compressAndSave(bitmap, file, 20)
-//            image_test.setImageURI(Uri.fromFile(file))
-            val saveFile = File(externalCacheDir, "${System.currentTimeMillis()}crop.jpg")
-            saveUri = Uri.fromFile(saveFile)
-            val intent = AppUtils.getCropIntent(this@TakePhotoActivity, imageUri,
-                    saveFile)
-            startActivityForResult(intent, cropCode)
+
+            val bitmap = ImageUtils.addWatermark(MediaStore
+                    .Images.Media.getBitmap(contentResolver, imageUri), WatermarkConfig()
+                    .setAlpha(200)
+                    .setXY(0f, 0f)
+                    .setTextSize(AppUtils.spToPx(this@TakePhotoActivity, 60f).toFloat())
+                    .setText(DateUtils.date2String(Date(), "yyyy-MM-dd HH:mm") + "\n胡晓伟\n高新园区")
+                    .setRecycle(true))
+
+            val file = File(externalCacheDir, "${System.currentTimeMillis()}压缩.jpg")
+            ImageUtils.compressAndSave(bitmap, file, 20)
+            image_test.setImageURI(Uri.fromFile(file))
+//            val saveFile = File(externalCacheDir, "${System.currentTimeMillis()}crop.jpg")
+//            saveUri = Uri.fromFile(saveFile)
+//            val intent = AppUtils.getCropIntent(this@TakePhotoActivity, imageUri,
+//                    saveFile)
+//            startActivityForResult(intent, cropCode)
         } else if (requestCode == cameraCode2 && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 val bitmap: Bitmap = data.getParcelableExtra("data")
