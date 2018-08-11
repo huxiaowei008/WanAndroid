@@ -24,21 +24,21 @@
         </activity>
 
         <activity android:name=".mvp.login.LoginActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
-        <activity
-            android:name=".mvp.login.RegisterActivity"
-            android:theme="@style/TransparentWindow" />
-        <activity android:name=".TakePhotoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".mvp.login.RegisterActivity"
+            android:theme="@style/TransparentWindow" />
+        <activity android:name=".TakePhotoActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
 
         <activity android:name=".permission.PermissionActivity">

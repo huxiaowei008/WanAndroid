@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView
  * @author hxw on 2018/7/28
  */
 abstract class LoadMoreListener : RecyclerView.OnScrollListener() {
-    private var canLoadMore = true
+    private var canLoadMore = false
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         val layoutManager = recyclerView.layoutManager

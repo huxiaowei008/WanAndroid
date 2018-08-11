@@ -219,7 +219,7 @@ public final class HexUtils {
      * @param c         需要补的字符
      * @return 补完整的字符串
      */
-    public static String addZeroToLeft(String str, int strLength, char c) {
+    public static String addCharToLeft(String str, int strLength, char c) {
         int strLen = str.length();
         if (strLen < strLength) {
             StringBuilder builder = new StringBuilder();
@@ -241,7 +241,7 @@ public final class HexUtils {
      * @param c         需要补的字符
      * @return 补完整的字符串
      */
-    public static String addZeroToRight(String str, int strLength, char c) {
+    public static String addCharToRight(String str, int strLength, char c) {
         int strLen = str.length();
         if (strLen < strLength) {
             StringBuilder builder = new StringBuilder();
@@ -294,7 +294,7 @@ public final class HexUtils {
     public static String calcCrc16(String s) {
         byte[] data = hexStr2Bytes(s);
         int result = calcCrc16(data, 0, data.length);
-        return Integer.toHexString(result);
+        return addCharToLeft(Integer.toHexString(result), 4, '0');
     }
 
     /**
