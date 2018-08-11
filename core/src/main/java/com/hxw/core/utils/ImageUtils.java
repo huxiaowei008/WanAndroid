@@ -37,6 +37,12 @@ public final class ImageUtils {
         Bitmap ret = bitmap.copy(bitmap.getConfig(), true);
         Canvas canvas = new Canvas(ret);
 
+        if (config.getWatermark() != null) {
+            Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            paint.setAlpha(config.getAlpha());
+            canvas.drawBitmap(config.getWatermark(), config.getX(), config.getY(), paint);
+        }
+
         if (!TextUtils.isEmpty(config.getText())) {
             TextPaint textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
             textPaint.setAlpha(config.getAlpha());
@@ -58,12 +64,6 @@ public final class ImageUtils {
                     Layout.Alignment.ALIGN_NORMAL, 1, 0, true);
             staticLayout2.draw(canvas);
             canvas.restore();
-        }
-
-        if (config.getWatermark() != null) {
-            Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            paint.setAlpha(config.getAlpha());
-            canvas.drawBitmap(config.getWatermark(), config.getX(), config.getY(), paint);
         }
 
         if (config.isRecycle() && !bitmap.isRecycled()) {
