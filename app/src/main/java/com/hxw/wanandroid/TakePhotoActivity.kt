@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -97,9 +96,9 @@ class TakePhotoActivity : AbstractActivity(), KodeinAware {
             val bitmap = ImageUtils.addWatermark(MediaStore
                     .Images.Media.getBitmap(contentResolver, imageUri), WatermarkConfig()
                     .setAlpha(200)
-                    .setXY(0f, 0f)
-                    .setTextSize(AppUtils.spToPx(this@TakePhotoActivity, 60f).toFloat())
-                    .setText(DateUtils.date2String(Date(), "yyyy-MM-dd HH:mm") + "\n胡晓伟\n高新园区")
+                    .setXY(0, 0)
+                    .setTextSize(AppUtils.spToPx(this@TakePhotoActivity, 100f).toFloat())
+                    .setText(DateUtils.date2String(Date(), "yyyy-MM-dd HH:mm") + "胡晓伟高新园区32153153313212313515318513515")
                     .setRecycle(true))
 
             val file = File(externalCacheDir, "${System.currentTimeMillis()}压缩.jpg")

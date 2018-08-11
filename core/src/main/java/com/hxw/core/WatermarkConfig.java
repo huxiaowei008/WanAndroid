@@ -1,8 +1,6 @@
 package com.hxw.core;
 
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.support.annotation.ColorInt;
 import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
 
@@ -12,8 +10,8 @@ import android.support.annotation.Nullable;
  * @author hxw on 2018/8/6.
  */
 public class WatermarkConfig {
-    private float x = 0;
-    private float y = 0;
+    private int x = 0;
+    private int y = 0;
     private String text = "";
     private float textSize = 80;
     @IntRange(from = 0, to = 255)
@@ -22,11 +20,11 @@ public class WatermarkConfig {
     @Nullable
     private Bitmap watermark = null;
 
-    public float getX() {
+    public int getX() {
         return x;
     }
 
-    public float getY() {
+    public int getY() {
         return y;
     }
 
@@ -36,7 +34,7 @@ public class WatermarkConfig {
      * @param x 坐标x轴
      * @param y 坐标y轴
      */
-    public WatermarkConfig setXY(float x, float y) {
+    public WatermarkConfig setXY(int x, int y) {
         this.x = x;
         this.y = y;
         return this;

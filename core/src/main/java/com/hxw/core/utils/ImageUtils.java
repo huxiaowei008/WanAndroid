@@ -7,6 +7,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.text.TextUtils;
 
 import com.hxw.core.WatermarkConfig;
@@ -32,21 +35,34 @@ public final class ImageUtils {
      */
     public static Bitmap addWatermark(@NonNull Bitmap bitmap, @NonNull WatermarkConfig config) {
         Bitmap ret = bitmap.copy(bitmap.getConfig(), true);
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setAlpha(config.getAlpha());
         Canvas canvas = new Canvas(ret);
+
         if (!TextUtils.isEmpty(config.getText())) {
+            TextPaint textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+            textPaint.setAlpha(config.getAlpha());
+            canvas.save();
+
             //绘制白色字体内容
-            paint.setColor(Color.WHITE);
-            paint.setTextSize(config.getTextSize());
-            canvas.drawText(config.getText(), config.getX(), config.getY() + paint.getFontSpacing(), paint);
+            textPaint.setColor(Color.WHITE);
+            textPaint.setTextSize(config.getTextSize());
+            canvas.translate(config.getX(), config.getY());
+            StaticLayout staticLayout1 = new StaticLayout(config.getText(), textPaint, canvas.getWidth() - config.getX(),
+                    Layout.Alignment.ALIGN_NORMAL, 1, 0, true);
+            staticLayout1.draw(canvas);
+
             //绘制黑色描边
-            paint.setStyle(Paint.Style.STROKE);
-            paint.setColor(Color.BLACK);
-            paint.setStrokeWidth(4f);
-            canvas.drawText(config.getText(), config.getX(), config.getY() + paint.getFontSpacing(), paint);
+            textPaint.setStyle(Paint.Style.STROKE);
+            textPaint.setColor(Color.BLACK);
+            textPaint.setStrokeWidth(config.getTextSize() / 30);
+            StaticLayout staticLayout2 = new StaticLayout(config.getText(), textPaint, canvas.getWidth() - config.getX(),
+                    Layout.Alignment.ALIGN_NORMAL, 1, 0, true);
+            staticLayout2.draw(canvas);
+            canvas.restore();
         }
+
         if (config.getWatermark() != null) {
+            Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            paint.setAlpha(config.getAlpha());
             canvas.drawBitmap(config.getWatermark(), config.getX(), config.getY(), paint);
         }
 
