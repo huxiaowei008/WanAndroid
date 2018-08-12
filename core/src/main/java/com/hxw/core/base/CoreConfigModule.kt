@@ -24,9 +24,9 @@ import timber.log.Timber
  *
  */
 fun coreModule(app: Application, configModule: ConfigModule) = Kodein.Module("MyCoreConfig") {
-    import(androidModule(app))
-    import(androidSupportModule(app))
-    import(jxInjectorModule)
+    importOnce(androidModule(app))
+    importOnce(androidSupportModule(app))
+    importOnce(jxInjectorModule)
 
     bind<ConfigModule>() with singleton { configModule }
 

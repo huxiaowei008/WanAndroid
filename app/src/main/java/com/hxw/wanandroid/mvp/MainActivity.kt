@@ -1,6 +1,8 @@
 package com.hxw.wanandroid.mvp
 
+import android.os.Build
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -15,8 +17,10 @@ class MainActivity : AbstractActivity() {
     }
 
     override fun init(savedInstanceState: Bundle?) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = ContextCompat.getColor(this, android.R.color.transparent)
+        }
         setSupportActionBar(toolbar)
-
         //侧滑菜单在toolbar上的动画效果
         val toggle = ActionBarDrawerToggle(this, drawer_layout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close)

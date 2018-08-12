@@ -7,7 +7,7 @@ import java.util.Random;
  *
  * @author hxw on 2018/6/5.
  */
-public class HexUtils {
+public final class HexUtils {
     /**
      * 用于建立十六进制字符的输出的小写字符数组
      */
@@ -219,7 +219,7 @@ public class HexUtils {
      * @param c         需要补的字符
      * @return 补完整的字符串
      */
-    public static String addZeroToLeft(String str, int strLength, char c) {
+    public static String addCharToLeft(String str, int strLength, char c) {
         int strLen = str.length();
         if (strLen < strLength) {
             StringBuilder builder = new StringBuilder();
@@ -241,7 +241,7 @@ public class HexUtils {
      * @param c         需要补的字符
      * @return 补完整的字符串
      */
-    public static String addZeroToRight(String str, int strLength, char c) {
+    public static String addCharToRight(String str, int strLength, char c) {
         int strLen = str.length();
         if (strLen < strLength) {
             StringBuilder builder = new StringBuilder();
@@ -294,7 +294,7 @@ public class HexUtils {
     public static String calcCrc16(String s) {
         byte[] data = hexStr2Bytes(s);
         int result = calcCrc16(data, 0, data.length);
-        return Integer.toHexString(result);
+        return addCharToLeft(Integer.toHexString(result), 4, '0');
     }
 
     /**
