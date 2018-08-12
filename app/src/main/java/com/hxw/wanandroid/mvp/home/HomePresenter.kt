@@ -6,6 +6,7 @@ import com.hxw.core.utils.AppUtils
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.entity.ArticleData
 import com.hxw.wanandroid.entity.ArticleListEntity
+import com.hxw.wanandroid.entity.BannerListEntity
 import com.hxw.wanandroid.entity.BaseEntity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -29,6 +30,24 @@ class HomePresenter @Inject constructor(private val api: WanApi) : BasePresenter
                             AppUtils.showToast(t.errorMsg)
                         }
                     }
+                })
+
+    }
+
+    fun getBanner() {
+        api.banner
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .`as`(bindLifecycle<BannerListEntity>())
+                .subscribe(object : AbstractErrorSubscriber<BannerListEntity>() {
+                    override fun onNext(t: BannerListEntity) {
+                        if (t.errorCode == 0) {
+                            mView.addBanner(t)
+                        } else {
+                            AppUtils.showToast(t.errorMsg)
+                        }
+                    }
+
                 })
 
     }

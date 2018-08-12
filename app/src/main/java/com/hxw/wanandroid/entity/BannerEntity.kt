@@ -10,3 +10,9 @@ data class BannerEntity(
         val type: Int,
         val url: String
 )
+
+data class BannerListEntity(
+        val errorCode: Int,
+        val errorMsg: String,
+        val data: List<BannerEntity>
+)

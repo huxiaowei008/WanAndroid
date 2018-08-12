@@ -6,8 +6,10 @@ import com.hxw.core.base.AbstractFragment
 import com.hxw.wanandroid.LoadMoreListener
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.binder.ArticleItemViewBinder
+import com.hxw.wanandroid.binder.BannerViewBinder
 import com.hxw.wanandroid.entity.ArticleData
 import com.hxw.wanandroid.entity.ArticleListEntity
+import com.hxw.wanandroid.entity.BannerListEntity
 import kotlinx.android.synthetic.main.fragment_home.*
 import me.drakeet.multitype.Items
 import me.drakeet.multitype.MultiTypeAdapter
@@ -44,17 +46,17 @@ class HomeFragment : AbstractFragment(), HomeView, KodeinAware {
 
     override fun onResume() {
         super.onResume()
+        mPresenter.getBanner()
         mPresenter.getHomeArticle(curpage)
     }
 
     private fun initRecycler() {
-
+        mAdapter.register(BannerListEntity::class.java, BannerViewBinder())
         mAdapter.register(ArticleData::class.java, ArticleItemViewBinder())
         recycler_home.layoutManager = LinearLayoutManager(activity)
         recycler_home.adapter = mAdapter
         mAdapter.items = itemData
         mAdapter.notifyDataSetChanged()
-
         recycler_home.addOnScrollListener(loadMoreListener)
     }
 
@@ -64,6 +66,11 @@ class HomeFragment : AbstractFragment(), HomeView, KodeinAware {
         }
         curpage = articleListEntity.curPage
         itemData.addAll(articleListEntity.datas)
+        mAdapter.notifyDataSetChanged()
+    }
+
+    override fun addBanner(bannerListEntity: BannerListEntity) {
+        itemData.add(0, bannerListEntity)
         mAdapter.notifyDataSetChanged()
     }
 }

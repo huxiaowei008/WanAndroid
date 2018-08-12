@@ -63,16 +63,11 @@ dependencies {
         exclude group: 'android.arch.lifecycle'
     }
 
-    //Paging https://developer.android.google.cn/topic/libraries/architecture/paging/
-    implementation "android.arch.paging:runtime:1.0.1"
-    implementation "android.arch.paging:rxjava2:1.0.1"
-
     //MultiType https://github.com/drakeet/MultiType
     implementation 'me.drakeet.multitype:multitype-kotlin:3.4.4'
 
     //lottie-android https://github.com/airbnb/lottie-android
     implementation 'com.airbnb.android:lottie:2.5.5'
 
-    //UltraViewPager https://github.com/alibaba/UltraViewPager
-    implementation 'com.alibaba.android:ultraviewpager:1.0.7.7@aar'
+    implementation 'com.youth.banner:banner:1.4.10'
 }
