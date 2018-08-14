@@ -50,7 +50,7 @@ dependencies {
 
 //    kapt "com.google.dagger:dagger-compiler:$versions.dagger"
 //    kapt "com.google.dagger:dagger-android-processor:$versions.dagger"
-    //Lottie https://github.com/airbnb/lottie-android
+    //lottie-android https://github.com/airbnb/lottie-android
     implementation('com.airbnb.android:lottie:2.5.5') {
         transitive = false
     }
@@ -65,9 +65,6 @@ dependencies {
 
     //MultiType https://github.com/drakeet/MultiType
     implementation 'me.drakeet.multitype:multitype-kotlin:3.4.4'
-
-    //lottie-android https://github.com/airbnb/lottie-android
-    implementation 'com.airbnb.android:lottie:2.5.5'
 
     implementation 'com.youth.banner:banner:1.4.10'
 }
