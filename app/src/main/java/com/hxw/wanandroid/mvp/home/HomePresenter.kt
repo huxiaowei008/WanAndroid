@@ -3,6 +3,7 @@ package com.hxw.wanandroid.mvp.home
 import com.hxw.core.AbstractErrorSubscriber
 import com.hxw.core.mvp.BasePresenter
 import com.hxw.core.utils.AppUtils
+import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.entity.ArticleData
 import com.hxw.wanandroid.entity.ArticleListEntity
@@ -24,7 +25,7 @@ class HomePresenter @Inject constructor(private val api: WanApi) : BasePresenter
                 .`as`(bindLifecycle<BaseEntity<ArticleListEntity<ArticleData>>>())
                 .subscribe(object : AbstractErrorSubscriber<BaseEntity<ArticleListEntity<ArticleData>>>() {
                     override fun onNext(t: BaseEntity<ArticleListEntity<ArticleData>>) {
-                        if (t.errorCode == 0) {
+                        if (t.errorCode == Constant.NET_SUCCESS) {
                             mView.addArticleData(t.data)
                         } else {
                             AppUtils.showToast(t.errorMsg)
@@ -41,7 +42,7 @@ class HomePresenter @Inject constructor(private val api: WanApi) : BasePresenter
                 .`as`(bindLifecycle<BannerListEntity>())
                 .subscribe(object : AbstractErrorSubscriber<BannerListEntity>() {
                     override fun onNext(t: BannerListEntity) {
-                        if (t.errorCode == 0) {
+                        if (t.errorCode == Constant.NET_SUCCESS) {
                             mView.addBanner(t)
                         } else {
                             AppUtils.showToast(t.errorMsg)

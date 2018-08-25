@@ -3,6 +3,7 @@ package com.hxw.wanandroid.mvp.login;
 import com.hxw.core.AbstractErrorSubscriber;
 import com.hxw.core.mvp.BasePresenter;
 import com.hxw.core.utils.AppUtils;
+import com.hxw.wanandroid.Constant;
 import com.hxw.wanandroid.WanApi;
 import com.hxw.wanandroid.entity.BaseEntity;
 import com.hxw.wanandroid.entity.HotKeyEntity;
@@ -37,7 +38,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
 
                     @Override
                     public void onNext(BaseEntity<UserEntity> userEntity) {
-                        if (userEntity.getErrorCode() == 0) {
+                        if (userEntity.getErrorCode() == Constant.NET_SUCCESS) {
                             AppUtils.showToast("登陆成功");
                             mView.loginOrRegisterSuccess();
                         } else {
@@ -58,7 +59,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
 
                     @Override
                     public void onNext(BaseEntity<UserEntity> userEntity) {
-                        if (userEntity.getErrorCode() == 0) {
+                        if (userEntity.getErrorCode() == Constant.NET_SUCCESS) {
                             AppUtils.showToast("注册成功");
                         } else {
                             AppUtils.showToast("注册失败->" + userEntity.getErrorMsg());
@@ -75,7 +76,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                 .subscribe(new AbstractErrorSubscriber<BaseEntity<List<HotKeyEntity>>>() {
                     @Override
                     public void onNext(BaseEntity<List<HotKeyEntity>> listBaseEntity) {
-                        if (listBaseEntity.getErrorCode() == 0) {
+                        if (listBaseEntity.getErrorCode() == Constant.NET_SUCCESS) {
                             AppUtils.showToast("热词成功");
                         }
                     }
