@@ -120,7 +120,7 @@ class TakePhotoActivity : AbstractActivity(), KodeinAware {
                 val uri = data.data
                 val saveFile = File(externalCacheDir, "${System.currentTimeMillis()}crop.jpg")
                 saveUri = Uri.fromFile(saveFile)
-                val intent = AppUtils.getCropIntent(this@TakePhotoActivity, uri,
+                val intent = AppUtils.getCropIntent(this@TakePhotoActivity, uri!!,
                         saveFile)
                 startActivityForResult(intent, cropCode)
 //                image_test.setImageURI(uri)

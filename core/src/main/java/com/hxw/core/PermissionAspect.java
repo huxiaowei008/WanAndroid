@@ -1,51 +1,59 @@
-package com.modoutech.aopdemo;
+package com.hxw.core;
 
 
-import android.content.Context;
+import android.app.Activity;
 import android.support.v4.app.Fragment;
+
+import com.hxw.core.annotation.CheckPermission;
+import com.hxw.core.utils.PermissionUtils;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 
 /**
  * @author hxw on 2018/9/3.
  */
 @Aspect
 public class PermissionAspect {
-
-
-    /**
-     * Pointcut注解，就是设置一个切入点。类中的意思就是被CheckPermission的注解所修饰的方法作为一个切点。
-     *
-     * @param checkPermission
-     */
-    @Pointcut("execution(@com.modoutech.aopdemo.CheckPermission * *(..)) && @annotation(checkPermission)")
-    public void requestPermissionMethod(CheckPermission checkPermission) {
-    }
+    public static final int REQUEST_CODE = 10086;
 
     /**
      * Around注解，就是在执行被CheckPermission注解修饰的方法时，进入切点，并执行check方法。
      *
-     * @param joinPoint
-     * @param checkPermission
-     * @return
-     * @throws Throwable
+     * @param joinPoint       切入点
+     * @param checkPermission 检查权限的注解
      */
-//    @Around("requestPermissionMethod(checkPermission)")
-    @Around("execution(@com.modoutech.aopdemo.CheckPermission * *(..)) && @annotation(checkPermission)")
-    public void check(ProceedingJoinPoint joinPoint, CheckPermission checkPermission) throws Throwable {
-        Context context = null;
+    @Around("execution(@com.hxw.core.annotation.CheckPermission * *(..)) && @annotation(checkPermission)")
+    public void check(final ProceedingJoinPoint joinPoint, CheckPermission checkPermission) {
         final Object object = joinPoint.getThis();
-        if (object instanceof Context) {
-            context = (Context) object;
-        } else if (object instanceof Fragment) {
-            context = ((Fragment) object).getActivity();
-        }
-        if (context == null || checkPermission == null) {
+        if (checkPermission == null) {
             return;
         }
+        if (object instanceof Fragment) {
+            PermissionUtils.checkPermissions((Fragment) object, new PermissionUtils.PermissionAction() {
+                @Override
+                public void doAction() {
+                    try {
+                        joinPoint.proceed();
+                    } catch (Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
+                }
+            }, REQUEST_CODE, checkPermission.permissions());
+        } else if (object instanceof Activity) {
+            PermissionUtils.checkPermissions((Activity) object, new PermissionUtils.PermissionAction() {
+                @Override
+                public void doAction() {
+                    try {
+                        joinPoint.proceed();
+                    } catch (Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
+                }
+            }, REQUEST_CODE, checkPermission.permissions());
+        }
+
 
     }
 }

@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'//用于编译Android代码
 apply plugin: 'kotlin-kapt'//那些注释处理需要用这个,就是annotationProcessor替换成kapt
+//apply plugin: 'android-aspectjx'
 android {
     compileSdkVersion config.target_sdk
 
@@ -204,6 +205,8 @@ dependencies {
         exclude module: 'rxjava'
         exclude module: 'rxandroid'
     }
+    //AOP使用
+    api 'org.aspectj:aspectjrt:1.8.9'
 }
 //需要放在这,放上面会出问题 Error:Cause: android.compileSdkVersion is missing!
 apply from: 'bintray.gradle'

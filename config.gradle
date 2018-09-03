@@ -12,10 +12,10 @@ versions.anko_version='0.10.5'
 def config = [:]
 config.min_sdk = 16
 config.target_sdk = 28
-config.version_code = 8
-config.version_name = "0.8"
+config.version_code = 9
+config.version_name = "0.9"
 ext.config = config
-ext.kotlin_version = '1.2.60'
+ext.kotlin_version = '1.2.61'
 
 ext.dependencies = [
         "androidJUnitRunner"                   : "android.support.test.runner.AndroidJUnitRunner",

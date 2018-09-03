@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import com.hxw.core.annotation.CheckPermission
 import com.hxw.core.base.AbstractFragment
 import com.hxw.core.utils.PermissionUtils
 import com.hxw.wanandroid.R
@@ -31,27 +32,11 @@ class PermissionFragment : AbstractFragment() {
         }
     }
 
+    @CheckPermission(permissions = [Manifest.permission.READ_SMS])
     private fun smsTask() {
-        PermissionUtils.checkPermissions(this@PermissionFragment, object : PermissionUtils.PermissionAction {
-            override fun doAction() {
-                longToast("TODO: SMS things")
-            }
-
-        }, RC_SMS_PERM, Manifest.permission.READ_SMS)
+        longToast("TODO: SMS things")
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        permissions.forEachIndexed { index, s ->
-            if (grantResults[index] == PackageManager.PERMISSION_GRANTED) {
-                //申请成功
-                toast("申请成功 requestCode:$requestCode")
-            } else {
-                toast("申请失败 requestCode:$requestCode")
-                PermissionUtils.somePermissionPermanentlyDenied(this@PermissionFragment, s)
-            }
-        }
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

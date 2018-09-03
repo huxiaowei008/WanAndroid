@@ -14,6 +14,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
+import com.hxw.core.PermissionAspect
 
 /**
  * 权限工具
@@ -21,6 +22,8 @@ import android.support.v7.app.AlertDialog
  *
  */
 object PermissionUtils {
+
+    private lateinit var resultAction: PermissionAction
 
     /**
      * 检查权限
@@ -69,6 +72,24 @@ object PermissionUtils {
             else -> throw AssertionError("host 不是activity 或 fragment")
         }
         return false
+    }
+
+    /**
+     * 请求权限的结果
+     */
+    @JvmStatic
+    fun onRequestPermissionsResult(host: Any, requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (requestCode != PermissionAspect.REQUEST_CODE) {
+            return
+        }
+        permissions.forEachIndexed { index, s ->
+            if (grantResults[index] == PackageManager.PERMISSION_DENIED) {
+                //申请失败
+                PermissionUtils.somePermissionPermanentlyDenied(host, s)
+                return
+            }
+        }
+        resultAction.doAction()
     }
 
     /**
@@ -127,6 +148,7 @@ object PermissionUtils {
                 builder.setMessage("没有此权限会导致某些功能无法使用或崩溃")
                 builder.setPositiveButton("申请权限") { dialog, _ ->
                     //申请权限
+                    resultAction = action
                     ActivityCompat.requestPermissions(host, perms, requestCode)
                     dialog.dismiss()
                 }
@@ -134,6 +156,7 @@ object PermissionUtils {
                 builder.show()
             } else {
                 //第三步:不需要就申请
+                resultAction = action
                 ActivityCompat.requestPermissions(host, perms, requestCode)
             }
         }
@@ -154,6 +177,7 @@ object PermissionUtils {
                 builder.setMessage("没有此权限会导致某些功能无法使用或崩溃")
                 builder.setPositiveButton("申请权限") { dialog, _ ->
                     //申请权限
+                    resultAction = action
                     host.requestPermissions(perms, requestCode)
                     dialog.dismiss()
                 }
@@ -161,6 +185,7 @@ object PermissionUtils {
                 builder.show()
             } else {
                 //第三步:不需要就申请
+                resultAction = action
                 host.requestPermissions(perms, requestCode)
             }
         }
