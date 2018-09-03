@@ -11,6 +11,7 @@ import org.kodein.di.android.androidModule
 import org.kodein.di.android.support.androidSupportModule
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
 import org.kodein.di.jxinject.jxInjectorModule
 import retrofit2.Retrofit
@@ -28,7 +29,7 @@ fun coreModule(app: Application, configModule: ConfigModule) = Kodein.Module("My
     importOnce(androidSupportModule(app))
     importOnce(jxInjectorModule)
 
-    bind<ConfigModule>() with singleton { configModule }
+    bind() from  provider { configModule }
 
     bind<Gson>() with singleton {
         val builder = GsonBuilder()

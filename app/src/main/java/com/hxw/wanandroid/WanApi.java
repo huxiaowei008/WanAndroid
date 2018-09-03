@@ -3,6 +3,7 @@ package com.hxw.wanandroid;
 import com.hxw.wanandroid.entity.ArticleData;
 import com.hxw.wanandroid.entity.ArticleListEntity;
 import com.hxw.wanandroid.entity.BannerEntity;
+import com.hxw.wanandroid.entity.BannerListEntity;
 import com.hxw.wanandroid.entity.BaseEntity;
 import com.hxw.wanandroid.entity.CollectData;
 import com.hxw.wanandroid.entity.FriendEntity;
@@ -46,7 +47,7 @@ public interface WanApi {
      * @return Banners数据
      */
     @GET("banner/json")
-    Observable<BaseEntity<List<BannerEntity>>> getBanner();
+    Observable<BannerListEntity> getBanner();
 
     /**
      * 1.3 常用网站

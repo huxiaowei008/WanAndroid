@@ -33,7 +33,9 @@ dependencies {
 //    api project(':annotation')
 
     //KTX https://github.com/android/android-ktx
-    api 'androidx.core:core-ktx:0.3'
+    api ('androidx.core:core-ktx:0.3'){
+        exclude group: 'com.android.support'
+    }
 
     //Anko Commons https://github.com/Kotlin/anko
     api "org.jetbrains.anko:anko-commons:$versions.anko_version"
@@ -148,7 +150,9 @@ dependencies {
     }
 
     //RxRelay https://github.com/JakeWharton/RxRelay
-    api 'com.jakewharton.rxrelay2:rxrelay:2.0.0'
+    api ('com.jakewharton.rxrelay2:rxrelay:2.0.0'){
+        exclude module: 'rxjava'
+    }
 
     //RxLifecycle https://github.com/trello/RxLifecycle/tree/2.x
 //    api('com.trello.rxlifecycle2:rxlifecycle-android-lifecycle:2.2.1') {
@@ -159,16 +163,20 @@ dependencies {
 
     //RxBinding https://github.com/JakeWharton/RxBinding
     api("com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:$versions.rxbinding") {
-        transitive = false
+        exclude module: 'rxandroid'
+        exclude group: 'com.android.support'
     }
     api("com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:$versions.rxbinding") {
-        transitive = false
+        exclude module: 'rxandroid'
+        exclude group: 'com.android.support'
     }
     api("com.jakewharton.rxbinding2:rxbinding-design-kotlin:$versions.rxbinding") {
-        transitive = false
+        exclude module: 'rxandroid'
+        exclude group: 'com.android.support'
     }
     api("com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:$versions.rxbinding") {
-        transitive = false
+        exclude module: 'rxandroid'
+        exclude group: 'com.android.support'
     }
 
     //dagger2 https://github.com/google/dagger
@@ -185,7 +193,9 @@ dependencies {
     api "org.kodein.di:kodein-di-generic-jvm:$versions.kodein"
     api "org.kodein.di:kodein-di-framework-android-core:$versions.kodein"
 //    api 'org.kodein.di:kodein-di-framework-android-x:5.2.0'
-    api "org.kodein.di:kodein-di-framework-android-support:$versions.kodein"
+    api ("org.kodein.di:kodein-di-framework-android-support:$versions.kodein"){
+        exclude group: 'com.android.support'
+    }
     api "org.kodein.di:kodein-di-jx-inject-jvm:$versions.kodein"
 
     //AutoDispose https://github.com/uber/AutoDispose

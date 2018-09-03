@@ -72,6 +72,7 @@ class MainActivity : AbstractActivity() {
 
     override fun onBackPressed() {
 //        super.onBackPressed()
+        finish()
         //这里禁掉返回按键的监听,简单处理navController对无法监听出栈的事件从而影响交互显示的问题
     }
 
