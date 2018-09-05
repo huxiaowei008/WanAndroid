@@ -27,7 +27,7 @@ class PermissionActivity : AbstractActivity() {
             cameraTask()
 //            startActivityForResult(Intent(this@PermissionActivity,TakePhotoActivity::class.java),1000)
         }
-        button_location_and_contacts.setOnClickListener { locationAndContactsTask() }
+        button_location_and_contacts.setOnClickListener { locationAndContactsTask("多任务") }
     }
 
     @CheckPermission(permissions = [Manifest.permission.CAMERA])
@@ -36,9 +36,9 @@ class PermissionActivity : AbstractActivity() {
     }
 
     @CheckPermission(permissions = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_CONTACTS])
-    private fun locationAndContactsTask() {
+    private fun locationAndContactsTask(msg: String) {
         longToast("TODO: Location and Contacts things")
-        toast("change")
+        toast(msg)
     }
 
 
