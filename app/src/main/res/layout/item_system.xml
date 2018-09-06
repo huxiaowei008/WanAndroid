@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/H6"
-            app:layout_constraintEnd_toStartOf="@+id/img"
+            app:layout_constraintEnd_toStartOf="@+id/iv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="开发环境" />
@@ -30,13 +30,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/img"
+            app:layout_constraintEnd_toStartOf="@+id/iv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_system_title"
             tools:text="Android Studio相关   gradle  官方发布" />
 
         <ImageView
-            android:id="@+id/img"
+            android:id="@+id/iv"
             android:layout_width="48dp"
             android:layout_height="48dp"
             app:layout_constraintBottom_toBottomOf="parent"

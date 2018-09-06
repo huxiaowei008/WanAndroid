@@ -4,6 +4,7 @@ import android.Manifest
 import android.os.Bundle
 import com.hxw.core.annotation.CheckPermission
 import com.hxw.core.base.AbstractActivity
+import com.hxw.core.glide.GlideApp
 import com.hxw.wanandroid.R
 import kotlinx.android.synthetic.main.activity_permission.*
 import org.jetbrains.anko.longToast
@@ -28,6 +29,10 @@ class PermissionActivity : AbstractActivity() {
 //            startActivityForResult(Intent(this@PermissionActivity,TakePhotoActivity::class.java),1000)
         }
         button_location_and_contacts.setOnClickListener { locationAndContactsTask("多任务") }
+
+        GlideApp.with(this@PermissionActivity)
+                .load("http://172.16.8.237:28182/total/survey/survey_c9ccbe5fea7a47b98fce319758d6e0fb.jpg")
+                .into(iv_test)
     }
 
     @CheckPermission(permissions = [Manifest.permission.CAMERA])

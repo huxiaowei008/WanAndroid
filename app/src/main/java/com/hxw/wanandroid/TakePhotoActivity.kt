@@ -103,7 +103,7 @@ class TakePhotoActivity : AbstractActivity(), KodeinAware {
 
             val file = File(externalCacheDir, "${System.currentTimeMillis()}压缩.jpg")
             ImageUtils.compressAndSave(bitmap, file, 20)
-            image_test.setImageURI(Uri.fromFile(file))
+            iv_test.setImageURI(Uri.fromFile(file))
 //            val saveFile = File(externalCacheDir, "${System.currentTimeMillis()}crop.jpg")
 //            saveUri = Uri.fromFile(saveFile)
 //            val intent = AppUtils.getCropIntent(this@TakePhotoActivity, imageUri,
@@ -112,7 +112,7 @@ class TakePhotoActivity : AbstractActivity(), KodeinAware {
         } else if (requestCode == cameraCode2 && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 val bitmap: Bitmap = data.getParcelableExtra("data")
-                image_test.setImageBitmap(bitmap)
+                iv_test.setImageBitmap(bitmap)
             }
 
         } else if (requestCode == pickCode && resultCode == Activity.RESULT_OK) {
@@ -126,7 +126,7 @@ class TakePhotoActivity : AbstractActivity(), KodeinAware {
 //                image_test.setImageURI(uri)
             }
         } else if (requestCode == cropCode && resultCode == Activity.RESULT_OK) {
-            image_test.setImageURI(saveUri)
+            iv_test.setImageURI(saveUri)
         }
     }
 }

@@ -13,7 +13,7 @@
         android:padding="8dp">
 
         <ImageView
-            android:id="@+id/img_logo"
+            android:id="@+id/iv_logo"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@mipmap/ic_logo_round"
@@ -27,9 +27,9 @@
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:textSize="@dimen/body1"
-            app:layout_constraintBottom_toBottomOf="@+id/img_logo"
-            app:layout_constraintStart_toEndOf="@+id/img_logo"
-            app:layout_constraintTop_toTopOf="@+id/img_logo" />
+            app:layout_constraintBottom_toBottomOf="@+id/iv_logo"
+            app:layout_constraintStart_toEndOf="@+id/iv_logo"
+            app:layout_constraintTop_toTopOf="@+id/iv_logo" />
 
         <TextView
             android:id="@+id/tv_classification"
@@ -37,10 +37,10 @@
             android:layout_height="wrap_content"
             android:gravity="end"
             android:textColor="@color/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="@+id/img_logo"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_author"
-            app:layout_constraintTop_toTopOf="@+id/img_logo" />
+            app:layout_constraintTop_toTopOf="@+id/iv_logo" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -50,12 +50,12 @@
             android:textColor="@color/textBlack_text"
             android:textSize="@dimen/H6"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/img_favorite"
+            app:layout_constraintEnd_toStartOf="@+id/iv_favorite"
             app:layout_constraintStart_toStartOf="@+id/tv_author"
-            app:layout_constraintTop_toBottomOf="@+id/img_logo" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
 
         <ImageView
-            android:id="@+id/img_time"
+            android:id="@+id/iv_time"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginTop="8dp"
@@ -71,18 +71,18 @@
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/img_time"
-            app:layout_constraintStart_toEndOf="@+id/img_time"
-            app:layout_constraintTop_toTopOf="@+id/img_time" />
+            app:layout_constraintBottom_toBottomOf="@+id/iv_time"
+            app:layout_constraintStart_toEndOf="@+id/iv_time"
+            app:layout_constraintTop_toTopOf="@+id/iv_time" />
 
         <ImageView
-            android:id="@+id/img_favorite"
+            android:id="@+id/iv_favorite"
             android:layout_width="24dp"
             android:layout_height="24dp"
             app:srcCompat="@drawable/ic_favorite"
             android:tint="@color/grey_500"
-            app:layout_constraintBottom_toBottomOf="@+id/img_time"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_time"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/img_time" />
+            app:layout_constraintTop_toTopOf="@+id/iv_time" />
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

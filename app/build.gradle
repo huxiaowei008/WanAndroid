@@ -56,10 +56,10 @@ dependencies {
     }
 
     //Navigation https://developer.android.google.cn/topic/libraries/architecture/navigation/navigation-implementing
-    implementation("android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha04") {
+    implementation("android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha05") {
         exclude group: 'android.arch.lifecycle'
     }
-    implementation("android.arch.navigation:navigation-ui-ktx:1.0.0-alpha04") {
+    implementation("android.arch.navigation:navigation-ui-ktx:1.0.0-alpha05") {
         exclude group: 'android.arch.lifecycle'
     }
 

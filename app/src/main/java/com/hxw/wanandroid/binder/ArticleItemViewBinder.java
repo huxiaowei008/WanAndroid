@@ -42,11 +42,11 @@ public class ArticleItemViewBinder extends ItemViewBinder<ArticleData, ArticleIt
         private TextView tvClassification;
         private TextView tvtitle;
         private TextView tvtime;
-        private ImageView imgfavorite;
+        private ImageView ivfavorite;
 
         ArticleHolder(@NonNull View itemView) {
             super(itemView);
-            this.imgfavorite = itemView.findViewById(R.id.img_favorite);
+            this.ivfavorite = itemView.findViewById(R.id.iv_favorite);
             this.tvtime = itemView.findViewById(R.id.tv_time);
             this.tvtitle = itemView.findViewById(R.id.tv_title);
             this.tvClassification = itemView.findViewById(R.id.tv_classification);

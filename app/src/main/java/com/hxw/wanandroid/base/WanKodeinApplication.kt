@@ -21,12 +21,10 @@ class WanKodeinApplication : AbstractApplication() {
         bind<WanApi>() with singleton { instance<Retrofit>().create(WanApi::class.java) }
     }
 
-
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
     }
-
 }

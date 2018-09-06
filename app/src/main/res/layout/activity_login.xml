@@ -82,9 +82,9 @@
                     android:id="@+id/et_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="huxiaowei008"
                     android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/body2"
-                    android:text="huxiaowei008"/>
+                    android:textSize="@dimen/body2" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -103,10 +103,10 @@
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccent"
                     android:inputType="textPassword"
-                    android:textSize="@dimen/body2"
-                    android:text="123456"/>
+                    android:text="123456"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/body2" />
             </android.support.design.widget.TextInputLayout>
 
             <Button
@@ -137,4 +137,15 @@
         app:layout_constraintTop_toTopOf="@+id/card_login"
         app:srcCompat="@drawable/ic_add"
         tools:targetApi="lollipop" />
+
+    <ImageView
+        android:id="@+id/iv_setting"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="8dp"
+        android:scaleX="0.6"
+        android:scaleY="0.6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_settings"/>
 </android.support.constraint.ConstraintLayout>
