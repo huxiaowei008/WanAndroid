@@ -7,6 +7,8 @@ import android.arch.lifecycle.OnLifecycleEvent;
 import android.support.annotation.NonNull;
 
 /**
+ * 本框架的Presenter基础接口
+ *
  * @author hxw on 2018/5/30.
  */
 public interface IPresenter<V extends IView> extends LifecycleObserver {

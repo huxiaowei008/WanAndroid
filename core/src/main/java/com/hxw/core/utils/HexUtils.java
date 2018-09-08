@@ -1,5 +1,8 @@
 package com.hxw.core.utils;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import java.util.Random;
 
 /**
@@ -64,17 +67,15 @@ public final class HexUtils {
     /**
      * 将十六进制字符数组转换为十进制字节数组
      * data长度需为偶数,例:
-     * data = "12345a".toCharArray() = {'1','2','3','4','5','a'}
-     * 结果是{18,52,90} 0x12->18  0x34->52  0x5a->90
+     * data = "12345a".toCharArray() = {'1','2','3','4','5','a'}->{18,52,90}
+     * 0x12->18  0x34->52  0x5a->90
      *
      * @param data 十六进制char[]
      * @return byte[]
      * @throws RuntimeException 如果源十六进制字符数组是一个奇怪的长度，将抛出运行时异常
      */
-    public static byte[] hexStr2Bytes(char[] data) {
-        if (data == null) {
-            return new byte[0];
-        }
+    public static byte[] hexStr2Bytes(@NonNull char[] data) {
+
         int len = data.length;
         if (len <= 0) {
             return new byte[0];
@@ -100,14 +101,14 @@ public final class HexUtils {
     /**
      * 将十六进制字符数组转换为十进制字节数组
      * data长度需为偶数,例:
-     * data="12345a"
-     * 结果是{18,52,90} 0x12->18  0x34->52  0x5a->90
+     * data="12345a"->{18,52,90}
+     * 0x12->18  0x34->52  0x5a->90
      *
-     * @param data 十六进制char[]
+     * @param data 十六进制字符串
      * @return byte[]
      * @throws RuntimeException 如果源十六进制字符数组是一个奇怪的长度，将抛出运行时异常
      */
-    public static byte[] hexStr2Bytes(String data) {
+    public static byte[] hexStr2Bytes(@Nullable String data) {
         if (data == null) {
             return new byte[0];
         }
@@ -146,19 +147,19 @@ public final class HexUtils {
 
     /**
      * 将字节数组转换为十六进制字符数组
-     * {18,52,90} -> {'1','2','3','4','5','a'}
+     * {18,52,90} -> {'1','2','3','4','5','a'}->"12345a"
      * 有符号的byte会被过滤成1个字节,变成无符号
      *
      * @param data byte[]
      * @return 十六进制char[]
      */
-    public static char[] bytes2Hex(byte[] data) {
+    public static String bytes2HexStr1(@Nullable byte[] data) {
         if (data == null) {
-            return new char[0];
+            return "";
         }
         int l = data.length;
         if (l <= 0) {
-            return new char[0];
+            return "";
         }
         //l << 1 左移1位,相当于 *2
         char[] out = new char[l << 1];
@@ -170,7 +171,7 @@ public final class HexUtils {
             //把高4位清0
             out[j++] = DIGITS_LOWER[data[i] & 0x0F];
         }
-        return out;
+        return new String(out);
     }
 
     /**
@@ -180,9 +181,9 @@ public final class HexUtils {
      * (item & 0xFF) 过滤掉负数的高位,只保留末位1个字节,等于把有符号转为无符号
      *
      * @param data byte[]
-     * @return 十六进制char[]
+     * @return 十六进制字符串
      */
-    public static String bytes2HexStr(byte[] data) {
+    public static String bytes2HexStr2(@Nullable byte[] data) {
         if (data == null || data.length <= 0) {
             return "";
         }
@@ -208,7 +209,7 @@ public final class HexUtils {
         byte[] random = new byte[len];
         //此方法产生的随机byte是带有符号的,就是说会产生负数
         new Random().nextBytes(random);
-        return bytes2HexStr(random);
+        return bytes2HexStr2(random);
     }
 
     /**
@@ -291,7 +292,7 @@ public final class HexUtils {
      * @param s 需要校验的字符
      * @return 校验生产的结果(2字节)
      */
-    public static String calcCrc16(String s) {
+    public static String calcCrc16(@Nullable String s) {
         byte[] data = hexStr2Bytes(s);
         int result = calcCrc16(data, 0, data.length);
         return addCharToLeft(Integer.toHexString(result), 4, '0');

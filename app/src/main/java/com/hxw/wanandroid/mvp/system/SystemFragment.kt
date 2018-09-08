@@ -40,8 +40,8 @@ class SystemFragment : AbstractFragment(), KodeinAware {
 
     private fun initRecycler() {
         mAdapter.register(TreeEntity::class.java, SystemViewBinder())
-        recycler_system.layoutManager = LinearLayoutManager(activity)
-        recycler_system.adapter = mAdapter
+        rv_system_article.layoutManager = LinearLayoutManager(activity)
+        rv_system_article.adapter = mAdapter
         mAdapter.items = itemData
         mAdapter.notifyDataSetChanged()
     }

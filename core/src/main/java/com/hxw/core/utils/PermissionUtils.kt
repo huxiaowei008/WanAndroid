@@ -32,7 +32,7 @@ object PermissionUtils {
      *
      * @param context 上下文
      * @param perms   权限
-     * @return 是否有权限 `true` 有权限 `false` 无权限
+     * @return 是否有权限 `true`: 有权限 `false`: 无权限
      */
     @JvmStatic
     fun hasPermissions(context: Context, @Size(min = 1) vararg perms: String): Boolean {
@@ -54,7 +54,7 @@ object PermissionUtils {
      *
      * @param host activity或fragment
      * @param perms 权限
-     * @return 是否需要解释 `true` 需要 `false` 不需要
+     * @return 是否需要解释 `true`: 需要 `false`: 不需要
      */
     @JvmStatic
     fun shouldShowRationale(host: Any, @Size(min = 1) @NonNull vararg perms: String): Boolean {

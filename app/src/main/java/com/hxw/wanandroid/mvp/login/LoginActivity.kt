@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import com.hxw.core.base.AbstractActivity
 import com.hxw.core.utils.AppUtils
+import com.hxw.core.utils.HexUtils
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.mvp.MainActivity
 import com.hxw.wanandroid.mvp.host.HostSettingActivity

@@ -96,6 +96,7 @@ public class WatermarkConfig {
         return this;
     }
 
+    @Nullable
     public Bitmap getWatermark() {
         return watermark;
     }

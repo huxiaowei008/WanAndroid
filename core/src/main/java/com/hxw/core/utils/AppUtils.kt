@@ -1,5 +1,6 @@
 package com.hxw.core.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -7,11 +8,11 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import android.support.design.widget.Snackbar
 import android.view.View
-import android.widget.Toast
 import com.hxw.core.DelegatesExt
 import com.hxw.core.integration.AppManager
+import org.jetbrains.anko.design.snackbar
+import org.jetbrains.anko.toast
 import org.kodein.di.Kodein
 import java.io.File
 
@@ -25,26 +26,36 @@ object AppUtils {
 
     var kodein: Kodein by DelegatesExt.notNullSingleValue()
 
+    /**
+     * 通过SnackBar展示信息
+     *
+     * @param message 信息
+     */
     @JvmStatic
     fun showSnackBar(message: String) {
-        val currentActivity = AppManager.getCurrentActivity()
-        if (currentActivity != null) {
-            val view = currentActivity
+        val topActivity = AppManager.getTopActivity()
+        if (topActivity != null) {
+            val view = topActivity
                     .window.decorView.findViewById<View>(android.R.id.content)
-            Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
-        }
-    }
-
-    @JvmStatic
-    fun showToast(message: String) {
-        val currentActivity = AppManager.getCurrentActivity()
-        if (currentActivity != null) {
-            Toast.makeText(currentActivity.applicationContext, message, Toast.LENGTH_SHORT).show()
+            snackbar(view, message)
         }
     }
 
     /**
+     * 通过Toast展示信息
+     *
+     * @param message 信息
+     */
+    @JvmStatic
+    fun showToast(message: String) {
+        val topActivity = AppManager.getTopActivity()
+        topActivity?.toast(message)
+    }
+
+    /**
      * 启动Activity
+     * @param intent 需要启动的意图
+     * @param withFinish 是否需要关闭当前的 [Activity]
      */
     @JvmStatic
     fun startActivity(intent: Intent, withFinish: Boolean = false) {
@@ -60,7 +71,7 @@ object AppUtils {
     /**
      * 获取启动相机意图,需要Manifest.permission.CAMERA权限
      *
-     * @param outputImage 用来保存图片的文件
+     * @param output 用来保存图片的文件Uri
      */
     @JvmStatic
     fun getOpenCameraIntent(output: Uri): Intent {
@@ -79,15 +90,19 @@ object AppUtils {
     fun getCropIntent(context: Context, uri: Uri, saveFile: File): Intent {
         val intent = Intent("com.android.camera.action.CROP")
 
-        val cropUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)//为7.0适配
-            uri
-        } else if ("content".equals(uri.scheme, true)) {
-            //相册选择4.4之前返回的uri是File类型的，之后就是content类型的
-            //所以在4.4到7.0之间,需要把content 类型的uri转化成file类型的
-            Uri.fromFile(File(FileUtils.getImagePath(context, uri, null)))
-        } else {
-            uri
+        val cropUri = when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> {
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)//为7.0适配
+                uri
+            }
+            "content".equals(uri.scheme, true) -> {
+                //相册选择4.4之前返回的uri是File类型的，之后就是content类型的
+                //所以在4.4到7.0之间,需要把content 类型的uri转化成file类型的
+                Uri.fromFile(File(FileUtils.getImagePath(context, uri, null)))
+            }
+            else -> {
+                uri
+            }
         }
 
         intent.setDataAndType(cropUri, "image/*")
@@ -132,11 +147,15 @@ object AppUtils {
      * 获取版本号
      */
     @JvmStatic
-    fun getVersionCode(context: Context): Int {
+    fun getVersionCode(context: Context): Long {
         return try {
             val info = context.packageManager
                     .getPackageInfo(context.packageName, 0)
-            info.versionCode
+            if (Build.VERSION.SDK_INT >= 28) {
+                info.longVersionCode
+            } else {
+                info.versionCode.toLong()
+            }
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
             0

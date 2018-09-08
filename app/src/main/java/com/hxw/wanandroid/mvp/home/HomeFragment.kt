@@ -53,11 +53,11 @@ class HomeFragment : AbstractFragment(), HomeView, KodeinAware {
     private fun initRecycler() {
         mAdapter.register(BannerListEntity::class.java, BannerViewBinder())
         mAdapter.register(ArticleData::class.java, ArticleItemViewBinder())
-        recycler_home.layoutManager = LinearLayoutManager(activity)
-        recycler_home.adapter = mAdapter
+        rv_home_article.layoutManager = LinearLayoutManager(activity)
+        rv_home_article.adapter = mAdapter
         mAdapter.items = itemData
         mAdapter.notifyDataSetChanged()
-        recycler_home.addOnScrollListener(loadMoreListener)
+        rv_home_article.addOnScrollListener(loadMoreListener)
     }
 
     override fun addArticleData(articleListEntity: ArticleListEntity<ArticleData>) {

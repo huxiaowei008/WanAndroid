@@ -12,6 +12,7 @@ import com.hxw.core.utils.PermissionUtils;
 /**
  * {@link Activity} 基类
  * 如果继承这类使用Presenter,记得添加生命周期订阅  getLifecycle().addObserver(mPresenter);
+ * (现在已经在{@link com.hxw.core.mvp.BasePresenter}中做好了,记得调用mPresenter.takeView())
  *
  * @author hxw on 2018/5/5.
  */
