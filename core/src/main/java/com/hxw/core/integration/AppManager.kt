@@ -20,7 +20,7 @@ object AppManager {
      *
      * @param activity [Activity]
      */
-    fun setCurrentActivity(activity: Activity?) {
+    internal fun setCurrentActivity(activity: Activity?) {
         currentActivity = if (activity == null) {
             null
         } else {
@@ -60,7 +60,7 @@ object AppManager {
      *
      * @param activity [Activity]
      */
-    fun addActivity(activity: Activity) {
+   internal fun addActivity(activity: Activity) {
         synchronized(AppManager::class.java) {
             mActivityStack.add(activity)
         }
@@ -71,7 +71,7 @@ object AppManager {
      *
      * @param activity [Activity]
      */
-    fun removeActivity(activity: Activity) {
+   internal fun removeActivity(activity: Activity) {
         synchronized(AppManager::class.java) {
             if (mActivityStack.contains(activity)) {
                 mActivityStack.remove(activity)
