@@ -1,6 +1,6 @@
 package com.hxw.wanandroid.mvp.login;
 
-import com.hxw.core.AbstractErrorSubscriber;
+import com.hxw.core.integration.AbstractErrorSubscriber;
 import com.hxw.core.mvp.BasePresenter;
 import com.hxw.core.utils.AppUtils;
 import com.hxw.wanandroid.Constant;
