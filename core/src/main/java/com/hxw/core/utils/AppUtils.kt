@@ -9,7 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.view.View
-import com.hxw.core.DelegatesExt
+import com.hxw.core.integration.DelegatesExt
 import com.hxw.core.integration.AppManager
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.toast

@@ -1,4 +1,4 @@
-package com.hxw.core
+package com.hxw.core.integration
 
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
