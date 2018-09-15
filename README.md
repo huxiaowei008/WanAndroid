@@ -5,7 +5,32 @@
 玩Android项目练习
 
 ## 下载
-```gradle
+在项目的build.gradle里加上
+```
+buildscript {
+    ...
+    dependencies {
+        ...
+        classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.2'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://dl.bintray.com/kodein-framework/Kodein-DI/' }
+    }
+}
+    
+    
+```
+再在项目的build.gradle里添加依赖和插件
+```
+apply plugin: 'android-aspectjx'
+```
+```
 implementation 'com.hxw.mycore:<latestVersion>'
 ```
 ## 使用
