@@ -42,7 +42,6 @@
 #指定使用了Keep注解的类和类成员都不被改变
 -keep @android.support.annotation.Keep class * {*;}
 #框架中的配置类不混淆，能在manifests中meta配置的都不能混淆
--keep public class * implements com.jess.arms.integration.ConfigModule
 #使用Gson时需要配置Gson的解析对象及变量都不混淆。不然Gson会找不到变量。
 #实体类不参与混淆
 #自定义控件不参与混淆

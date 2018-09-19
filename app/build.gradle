@@ -23,8 +23,17 @@ android {
             shrinkResources true //删除没有用到的资源
             zipAlignEnabled true //混淆后的zip优化
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
         }
     }
+
+    //统一打包输出名称
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "V${defaultConfig.versionName}_${releaseTime()}_wan_hxw.apk"
+        }
+    }
+
     //用这配置统一support依赖的版本,这里除外multidex包
     configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->
@@ -36,6 +45,10 @@ android {
             }
         }
     }
+}
+
+static def releaseTime(){
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
 }
 
 dependencies {
