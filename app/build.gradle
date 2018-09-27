@@ -41,7 +41,7 @@ android {
             def requested = details.requested
             if (requested.group == 'com.android.support') {
                 if (!requested.name.startsWith("multidex")) {
-                    details.useVersion '27.1.1' //这里改为你项目使用的版本即可
+                    details.useVersion '28.0.0' //这里改为你项目使用的版本即可
                 }
             }
         }
