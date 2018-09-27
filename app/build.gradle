@@ -5,6 +5,7 @@ apply plugin: 'kotlin-android'//用于编译Android代码
 apply plugin: 'kotlin-android-extensions'//用于扩展绑定关系,通俗讲就是直接使用xml中的id
 
 apply plugin: 'kotlin-kapt'//那些注释处理需要用这个,就是annotationProcessor替换成kapt
+
 apply plugin: 'android-aspectjx'
 android {
     compileSdkVersion config.target_sdk

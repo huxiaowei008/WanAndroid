@@ -10,7 +10,7 @@
         <!--自己建立的适配7.0,只能存在一个provider-->
         <!--authorities需要和FileProvider.getUriForFile中的第二个参数一致-->
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
