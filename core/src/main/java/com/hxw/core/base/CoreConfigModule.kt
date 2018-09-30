@@ -12,7 +12,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.kodein.di.Kodein
 import org.kodein.di.android.androidModule
-import org.kodein.di.android.support.androidSupportModule
+import org.kodein.di.android.x.androidXModule
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
@@ -31,7 +31,7 @@ import java.util.*
  */
 fun coreModule(app: Application, configModule: ConfigModule) = Kodein.Module("MyCoreConfig") {
     importOnce(androidModule(app))
-    importOnce(androidSupportModule(app))
+    importOnce(androidXModule(app))
     importOnce(jxInjectorModule)
 
     bind() from provider { configModule }

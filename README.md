@@ -34,6 +34,14 @@ apply plugin: 'android-aspectjx'
 implementation 'com.hxw.mycore:<latestVersion>'
 ```
 ## 使用
+>注意:由于使用了谷歌的[Material](https://github.com/material-components/material-components-android),
+所以在主题上要继承Material的主题。示例:
+```
+<style name="Theme.MyApp" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <!-- ... -->
+</style>
+```
+
 新建一个module继承ConfigModule接口,实现各个方法
 ```
 class GlobalConfigModule : ConfigModule {

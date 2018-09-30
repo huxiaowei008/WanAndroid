@@ -1,11 +1,12 @@
 package com.hxw.core.utils
 
-import android.support.annotation.ColorInt
+
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.BackgroundColorSpan
 import android.text.style.ForegroundColorSpan
+import androidx.annotation.ColorInt
 
 /**
  * 字符组合变换工具

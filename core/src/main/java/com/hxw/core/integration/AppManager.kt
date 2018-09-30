@@ -60,7 +60,7 @@ object AppManager {
      *
      * @param activity [Activity]
      */
-   internal fun addActivity(activity: Activity) {
+    internal fun addActivity(activity: Activity) {
         synchronized(AppManager::class.java) {
             mActivityStack.add(activity)
         }
@@ -71,7 +71,7 @@ object AppManager {
      *
      * @param activity [Activity]
      */
-   internal fun removeActivity(activity: Activity) {
+    internal fun removeActivity(activity: Activity) {
         synchronized(AppManager::class.java) {
             if (mActivityStack.contains(activity)) {
                 mActivityStack.remove(activity)
@@ -84,15 +84,33 @@ object AppManager {
      *
      * @param activityClass 指定的[Activity]类名
      */
-    fun killActivity(activityClass: Class<*>) {
+    fun killActivity(vararg activityClass: Class<*>) {
         synchronized(AppManager::class.java) {
             val iterator = mActivityStack.iterator()
             while (iterator.hasNext()) {
                 val next = iterator.next()
-                if (next.javaClass == activityClass) {
+                if (activityClass.contains(next.javaClass)) {
                     iterator.remove()
                     next.finish()
                 }
+            }
+        }
+    }
+
+    /**
+     * 关闭所有[Activity]除了指定的[Activity]
+     * @param activityClass 指定的[Activity]类名
+     */
+    fun killAllExclude(vararg activityClass: Class<*>) {
+        synchronized(AppManager::class.java) {
+            val iterator = mActivityStack.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                if (activityClass.contains(next.javaClass)) {
+                    continue
+                }
+                iterator.remove()
+                next.finish()
             }
         }
     }

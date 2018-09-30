@@ -1,11 +1,8 @@
 package com.hxw.wanandroid.binder;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.hxw.core.utils.AppUtils;
 import com.hxw.wanandroid.GlideImageLoader;
 import com.hxw.wanandroid.R;
@@ -15,10 +12,10 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
-
 import java.util.ArrayList;
 import java.util.List;
-
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import me.drakeet.multitype.ItemViewBinder;
 
 /**

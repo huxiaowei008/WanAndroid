@@ -3,6 +3,7 @@ package com.hxw.wanandroid;
 import android.content.Context;
 import android.widget.ImageView;
 
+
 import com.hxw.core.glide.GlideApp;
 import com.youth.banner.loader.ImageLoaderInterface;
 

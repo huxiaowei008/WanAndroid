@@ -1,12 +1,10 @@
 package com.hxw.core.mvp;
 
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleOwner;
-import android.support.annotation.NonNull;
-
 import com.hxw.core.utils.RxUtils;
 import com.uber.autodispose.AutoDisposeConverter;
-
+import androidx.annotation.NonNull;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;

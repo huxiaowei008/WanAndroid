@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/card_register"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         app:cardBackgroundColor="@color/colorAccent"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
@@ -32,65 +32,65 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="56dp"
                 android:layout_marginStart="56dp"
+                android:layout_marginLeft="56dp"
                 android:layout_marginTop="32dp"
                 android:text="Register"
                 android:textColor="@color/white"
                 android:textSize="@dimen/H6"
                 android:textStyle="bold" />
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="56dp"
                 android:layout_marginStart="56dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="56dp"
                 android:hint="@string/username"
                 android:textColorHint="@color/white"
                 android:theme="@style/InputLayout">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textSize="@dimen/body2" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="56dp"
                 android:layout_marginStart="56dp"
+                android:layout_marginEnd="56dp"
                 android:hint="@string/password"
                 android:textColorHint="@color/white"
                 android:theme="@style/InputLayout">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textSize="@dimen/body2" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="56dp"
                 android:layout_marginStart="56dp"
+                android:layout_marginEnd="56dp"
                 android:hint="@string/re_password"
                 android:textColorHint="@color/white"
                 android:theme="@style/InputLayout">
 
-                <android.support.design.widget.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_repeat_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textSize="@dimen/body2" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/btn_register"
@@ -104,9 +104,9 @@
                 android:textColor="@color/colorAccent"
                 tools:targetApi="lollipop" />
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fa_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -118,4 +118,4 @@
         app:layout_constraintTop_toTopOf="@+id/card_register"
         app:srcCompat="@drawable/ic_close"
         tools:targetApi="lollipop" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

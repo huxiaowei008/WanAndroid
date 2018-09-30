@@ -1,9 +1,9 @@
 package com.hxw.core.utils;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import java.util.Random;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * 十六进制转化相关工具

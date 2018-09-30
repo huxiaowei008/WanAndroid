@@ -2,7 +2,6 @@ package com.hxw.core
 
 import com.jakewharton.rxrelay2.PublishRelay
 import com.jakewharton.rxrelay2.Relay
-
 import io.reactivex.Observable
 
 /**

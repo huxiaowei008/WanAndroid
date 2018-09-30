@@ -12,9 +12,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 
 import java.util.UUID;
+
+import androidx.annotation.RequiresApi;
 
 /**
  * Ble蓝牙工具
@@ -33,7 +34,7 @@ import java.util.UUID;
  * @author hxw on 2018/5/9.
  */
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
-public class BlueToothBle {
+public final class BlueToothBle {
     private static final int REQUEST_ENABLE_BT = 1066;
     private static final String UUID_CLIENT_CHARACTERISTIC_CONFIG_DESCRIPTOR = "00002902-0000-1000-8000-00805f9b34fb";
     private static volatile BlueToothBle INSTANCE;
@@ -150,8 +151,15 @@ public class BlueToothBle {
     public void disconnect() {
         if (mBluetoothGatt != null) {
             mBluetoothGatt.disconnect();
-            mBluetoothGatt.close();
-            mBluetoothGatt = null;
+        }
+    }
+
+    /**
+     * 重新连接
+     */
+    public void reconnection() {
+        if (mBluetoothGatt != null) {
+            mBluetoothGatt.connect();
         }
     }
 

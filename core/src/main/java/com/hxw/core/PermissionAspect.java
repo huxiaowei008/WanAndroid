@@ -1,8 +1,6 @@
 package com.hxw.core;
 
-
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 
 import com.hxw.core.annotation.CheckPermission;
 import com.hxw.core.utils.PermissionUtils;
@@ -10,6 +8,8 @@ import com.hxw.core.utils.PermissionUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+
+import androidx.fragment.app.Fragment;
 
 /**
  * 权限切面声明

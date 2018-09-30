@@ -2,15 +2,12 @@ package com.hxw.wanandroid.permission
 
 import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import com.hxw.core.annotation.CheckPermission
 import com.hxw.core.base.AbstractFragment
-import com.hxw.core.utils.PermissionUtils
 import com.hxw.wanandroid.R
 import kotlinx.android.synthetic.main.fragment_permission.*
 import org.jetbrains.anko.support.v4.longToast
-import org.jetbrains.anko.support.v4.toast
 import timber.log.Timber
 
 /**

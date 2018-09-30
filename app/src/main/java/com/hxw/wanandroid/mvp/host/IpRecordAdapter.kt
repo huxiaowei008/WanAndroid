@@ -1,10 +1,10 @@
 package com.hxw.wanandroid.mvp.host
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.hxw.wanandroid.R
 
 
@@ -31,9 +31,8 @@ class IpRecordAdapter(private var data: MutableList<IpRecordEntity>) : RecyclerV
     }
 
     override fun onBindViewHolder(holder: IpRecordHolder, position: Int) {
-        holder.itemView.findViewById<TextView>(R.id.tv_description).text = data[position].description
-        holder.itemView.findViewById<TextView>(R.id.tv_ip_address)
-                .text = "${data[position].proxy}://${data[position].ip}:${data[position].port}"
+        holder.tvDescription.text = data[position].description
+        holder.tvIpAddress.text = "${data[position].proxy}://${data[position].ip}:${data[position].port}"
         holder.itemView.setOnClickListener {
             listener?.onClick(position)
         }
@@ -45,7 +44,8 @@ class IpRecordAdapter(private var data: MutableList<IpRecordEntity>) : RecyclerV
 
 
     class IpRecordHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
+        val tvDescription = itemView.findViewById<TextView>(R.id.tv_description)
+        val tvIpAddress = itemView.findViewById<TextView>(R.id.tv_ip_address)
     }
 
     interface OnItemClickListener {

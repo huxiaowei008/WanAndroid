@@ -1,8 +1,9 @@
 package com.hxw.core;
 
 import android.graphics.Bitmap;
-import android.support.annotation.IntRange;
-import android.support.annotation.Nullable;
+import androidx.annotation.IntRange;
+import androidx.annotation.Nullable;
+
 
 /**
  * 水印配置

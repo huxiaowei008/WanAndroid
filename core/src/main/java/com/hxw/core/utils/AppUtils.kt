@@ -37,7 +37,7 @@ object AppUtils {
         if (topActivity != null) {
             val view = topActivity
                     .window.decorView.findViewById<View>(android.R.id.content)
-            snackbar(view, message)
+            view.snackbar(message)
         }
     }
 

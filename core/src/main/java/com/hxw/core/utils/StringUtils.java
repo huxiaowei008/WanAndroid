@@ -1,6 +1,5 @@
 package com.hxw.core.utils;
 
-import android.support.annotation.NonNull;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,6 +9,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import androidx.annotation.NonNull;
 
 /**
  * @author hxw on 2018/5/3.
@@ -56,7 +57,7 @@ public final class StringUtils {
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
-        }catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             throw new RuntimeException("解析后数组越界,url格式有问题");
         }
         return mapRequest;

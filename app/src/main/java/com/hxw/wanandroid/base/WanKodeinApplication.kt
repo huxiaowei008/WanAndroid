@@ -1,5 +1,7 @@
 package com.hxw.wanandroid.base
 
+import android.content.Context
+import androidx.multidex.MultiDex
 import com.hxw.core.base.AbstractApplication
 import com.hxw.core.base.coreModule
 import com.hxw.wanandroid.BuildConfig
@@ -19,6 +21,11 @@ class WanKodeinApplication : AbstractApplication() {
         import(coreModule(this@WanKodeinApplication, GlobalConfigModule()))
 
         bind<WanApi>() with singleton { instance<Retrofit>().create(WanApi::class.java) }
+    }
+
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+        MultiDex.install(base)
     }
 
     override fun onCreate() {

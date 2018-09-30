@@ -1,7 +1,7 @@
 package com.hxw.wanandroid.mvp.system
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.hxw.core.integration.AbstractErrorSubscriber
 import com.hxw.core.base.AbstractFragment
 import com.hxw.core.utils.RxUtils
@@ -19,7 +19,9 @@ import me.drakeet.multitype.MultiTypeAdapter
 import org.jetbrains.anko.support.v4.toast
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
-import org.kodein.di.android.support.closestKodein
+import org.kodein.di.android.x.closestKodein
+
+
 import org.kodein.di.generic.instance
 
 /**
