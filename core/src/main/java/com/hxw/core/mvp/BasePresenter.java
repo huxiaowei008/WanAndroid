@@ -2,6 +2,7 @@ package com.hxw.core.mvp;
 
 import com.hxw.core.utils.RxUtils;
 import com.uber.autodispose.AutoDisposeConverter;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;

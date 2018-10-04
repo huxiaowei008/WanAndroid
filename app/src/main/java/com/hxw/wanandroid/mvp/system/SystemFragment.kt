@@ -11,6 +11,7 @@ import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.binder.SystemViewBinder
 import com.hxw.wanandroid.entity.BaseEntity
 import com.hxw.wanandroid.entity.TreeEntity
+import com.uber.autodispose.autoDisposable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_system.*
