@@ -1,7 +1,11 @@
 package com.hxw.core.utils;
 
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * @author hxw on 2018/5/7.
@@ -16,7 +20,7 @@ public final class EncryptUtils {
      * @param data The data.
      * @return the hex string of MD5 encryption
      */
-    public static String encryptMD5ToString(final String data) {
+    public static String encryptMD5ToString(@Nullable String data) {
         if (data == null || data.length() == 0) {
             return "";
         }
@@ -29,8 +33,11 @@ public final class EncryptUtils {
      * @param data The data.
      * @return the hex string of MD5 encryption
      */
-    public static String encryptMD5ToString(final byte[] data) {
-        return HexUtils.bytes2HexStr(encryptMD5(data));
+    public static String encryptMD5ToString(@Nullable byte[] data) {
+        if (data == null || data.length == 0) {
+            return "";
+        }
+        return HexUtils.bytes2HexStr2(encryptMD5(data));
     }
 
     /**
@@ -39,7 +46,7 @@ public final class EncryptUtils {
      * @param data The data.
      * @return the bytes of MD5 encryption
      */
-    public static byte[] encryptMD5(final byte[] data) {
+    public static byte[] encryptMD5(@NonNull byte[] data) {
         return hashTemplate(data, "MD5");
     }
 
@@ -49,7 +56,7 @@ public final class EncryptUtils {
      * @param data The data.
      * @return the hex string of SHA1 encryption
      */
-    public static String encryptSHA1ToString(final String data) {
+    public static String encryptSHA1ToString(@Nullable String data) {
         if (data == null || data.length() == 0) {
             return "";
         }
@@ -62,8 +69,11 @@ public final class EncryptUtils {
      * @param data The data.
      * @return the hex string of SHA1 encryption
      */
-    public static String encryptSHA1ToString(final byte[] data) {
-        return HexUtils.bytes2HexStr(encryptSHA1(data));
+    public static String encryptSHA1ToString(@Nullable byte[] data) {
+        if (data == null || data.length == 0) {
+            return "";
+        }
+        return HexUtils.bytes2HexStr2(encryptSHA1(data));
     }
 
     /**
@@ -72,7 +82,7 @@ public final class EncryptUtils {
      * @param data The data.
      * @return the bytes of SHA1 encryption
      */
-    public static byte[] encryptSHA1(final byte[] data) {
+    public static byte[] encryptSHA1(@NonNull byte[] data) {
         return hashTemplate(data, "SHA1");
     }
 
@@ -83,10 +93,7 @@ public final class EncryptUtils {
      * @param algorithm The name of hash encryption.
      * @return the bytes of hash encryption
      */
-    private static byte[] hashTemplate(final byte[] data, final String algorithm) {
-        if (data == null || data.length <= 0) {
-            return null;
-        }
+    private static byte[] hashTemplate(@NonNull byte[] data, final String algorithm) {
         try {
             MessageDigest md = MessageDigest.getInstance(algorithm);
             md.update(data);

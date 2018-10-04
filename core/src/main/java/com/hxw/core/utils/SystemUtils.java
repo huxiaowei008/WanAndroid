@@ -2,13 +2,14 @@ package com.hxw.core.utils;
 
 import android.os.Build;
 import android.os.Environment;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.lang.reflect.Method;
 import java.util.Properties;
+
+import androidx.annotation.Nullable;
 
 /**
  * @author hxw on 2018/5/7.
@@ -21,6 +22,7 @@ public final class SystemUtils {
     private static final String KEY_FLYME_VERSION_NAME = "ro.build.display.id";
     private static String sMiuiVersionName;
     private static String sFlymeVersionName;
+
     static {
         Properties properties = new Properties();
 
@@ -31,7 +33,7 @@ public final class SystemUtils {
                 fileInputStream = new FileInputStream(new File(Environment.getRootDirectory(), "build.prop"));
                 properties.load(fileInputStream);
             } catch (Exception e) {
-             e.printStackTrace();
+                e.printStackTrace();
             } finally {
                 FileUtils.closeIO(fileInputStream);
             }
@@ -46,9 +48,10 @@ public final class SystemUtils {
             //flyme
             sFlymeVersionName = getLowerCaseName(properties, getMethod, KEY_FLYME_VERSION_NAME);
         } catch (Exception e) {
-           e.printStackTrace();
+            e.printStackTrace();
         }
     }
+
     /**
      * 判断是否为 ZUK Z1 和 ZTK C2016。
      * 两台设备的系统虽然为 android 6.0，但不支持状态栏icon颜色改变，因此经常需要对它们进行额外判断。

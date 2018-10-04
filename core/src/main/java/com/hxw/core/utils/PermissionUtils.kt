@@ -7,13 +7,15 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
-import android.support.annotation.IntRange
-import android.support.annotation.NonNull
-import android.support.annotation.Size
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AlertDialog
+import androidx.annotation.IntRange
+import androidx.annotation.NonNull
+import androidx.annotation.Size
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+
+import com.hxw.core.PermissionAspect
 
 /**
  * 权限工具
@@ -22,6 +24,8 @@ import android.support.v7.app.AlertDialog
  */
 object PermissionUtils {
 
+    private lateinit var resultAction: PermissionAction
+
     /**
      * 检查权限
      * 有权限: PackageManager.PERMISSION_GRANTED
@@ -29,7 +33,7 @@ object PermissionUtils {
      *
      * @param context 上下文
      * @param perms   权限
-     * @return 是否有权限 `true` 有权限 `false` 无权限
+     * @return 是否有权限 `true`: 有权限 `false`: 无权限
      */
     @JvmStatic
     fun hasPermissions(context: Context, @Size(min = 1) vararg perms: String): Boolean {
@@ -51,7 +55,7 @@ object PermissionUtils {
      *
      * @param host activity或fragment
      * @param perms 权限
-     * @return 是否需要解释 `true` 需要 `false` 不需要
+     * @return 是否需要解释 `true`: 需要 `false`: 不需要
      */
     @JvmStatic
     fun shouldShowRationale(host: Any, @Size(min = 1) @NonNull vararg perms: String): Boolean {
@@ -69,6 +73,24 @@ object PermissionUtils {
             else -> throw AssertionError("host 不是activity 或 fragment")
         }
         return false
+    }
+
+    /**
+     * 请求权限的结果
+     */
+    @JvmStatic
+    fun onRequestPermissionsResult(host: Any, requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (requestCode != PermissionAspect.REQUEST_CODE) {
+            return
+        }
+        permissions.forEachIndexed { index, s ->
+            if (grantResults[index] == PackageManager.PERMISSION_DENIED) {
+                //申请失败
+                PermissionUtils.somePermissionPermanentlyDenied(host, s)
+                return
+            }
+        }
+        resultAction.doAction()
     }
 
     /**
@@ -127,6 +149,7 @@ object PermissionUtils {
                 builder.setMessage("没有此权限会导致某些功能无法使用或崩溃")
                 builder.setPositiveButton("申请权限") { dialog, _ ->
                     //申请权限
+                    resultAction = action
                     ActivityCompat.requestPermissions(host, perms, requestCode)
                     dialog.dismiss()
                 }
@@ -134,6 +157,7 @@ object PermissionUtils {
                 builder.show()
             } else {
                 //第三步:不需要就申请
+                resultAction = action
                 ActivityCompat.requestPermissions(host, perms, requestCode)
             }
         }
@@ -154,6 +178,7 @@ object PermissionUtils {
                 builder.setMessage("没有此权限会导致某些功能无法使用或崩溃")
                 builder.setPositiveButton("申请权限") { dialog, _ ->
                     //申请权限
+                    resultAction = action
                     host.requestPermissions(perms, requestCode)
                     dialog.dismiss()
                 }
@@ -161,6 +186,7 @@ object PermissionUtils {
                 builder.show()
             } else {
                 //第三步:不需要就申请
+                resultAction = action
                 host.requestPermissions(perms, requestCode)
             }
         }

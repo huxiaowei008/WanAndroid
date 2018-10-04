@@ -6,6 +6,7 @@ apply plugin: 'kotlin-android-extensions'//用于扩展绑定关系,通俗讲就
 
 apply plugin: 'kotlin-kapt'//那些注释处理需要用这个,就是annotationProcessor替换成kapt
 
+apply plugin: 'android-aspectjx'
 android {
     compileSdkVersion config.target_sdk
     defaultConfig {
@@ -16,6 +17,7 @@ android {
         versionName config.version_name
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -23,28 +25,47 @@ android {
             shrinkResources true //删除没有用到的资源
             zipAlignEnabled true //混淆后的zip优化
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
         }
     }
+
+    //统一打包输出名称
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "V${defaultConfig.versionName}_${releaseTime()}_wan_hxw.apk"
+        }
+    }
+
     //用这配置统一support依赖的版本,这里除外multidex包
     configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->
             def requested = details.requested
             if (requested.group == 'com.android.support') {
                 if (!requested.name.startsWith("multidex")) {
-                    details.useVersion '27.1.1' //这里改为你项目使用的版本即可
+                    details.useVersion '28.0.0' //这里改为你项目使用的版本即可
                 }
             }
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+static def releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+    implementation 'androidx.multidex:multidex:2.0.0'
     implementation project(':core')
 //    kapt project(':compiler')
 
@@ -56,15 +77,16 @@ dependencies {
     }
 
     //Navigation https://developer.android.google.cn/topic/libraries/architecture/navigation/navigation-implementing
-    implementation("android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha04") {
+    implementation("android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha06") {
         exclude group: 'android.arch.lifecycle'
     }
-    implementation("android.arch.navigation:navigation-ui-ktx:1.0.0-alpha04") {
+    implementation("android.arch.navigation:navigation-ui-ktx:1.0.0-alpha06") {
         exclude group: 'android.arch.lifecycle'
     }
 
     //MultiType https://github.com/drakeet/MultiType
-    implementation 'me.drakeet.multitype:multitype-kotlin:3.4.4'
+    implementation 'me.drakeet.multitype:multitype:3.5.0'
+    implementation 'me.drakeet.multitype:multitype-ktx:3.5.0'
 
     implementation 'com.youth.banner:banner:1.4.10'
 }

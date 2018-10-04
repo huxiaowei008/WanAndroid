@@ -3,7 +3,7 @@ package com.hxw.core.integration
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import android.support.v4.app.FragmentActivity
+import androidx.fragment.app.FragmentActivity
 import com.hxw.core.base.IActivity
 import timber.log.Timber
 

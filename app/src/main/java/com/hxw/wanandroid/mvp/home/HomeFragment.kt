@@ -1,7 +1,7 @@
 package com.hxw.wanandroid.mvp.home
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.hxw.core.base.AbstractFragment
 import com.hxw.wanandroid.LoadMoreListener
 import com.hxw.wanandroid.R
@@ -15,7 +15,7 @@ import me.drakeet.multitype.Items
 import me.drakeet.multitype.MultiTypeAdapter
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
-import org.kodein.di.android.support.closestKodein
+import org.kodein.di.android.x.closestKodein
 import org.kodein.di.jxinject.jx
 
 
@@ -53,11 +53,11 @@ class HomeFragment : AbstractFragment(), HomeView, KodeinAware {
     private fun initRecycler() {
         mAdapter.register(BannerListEntity::class.java, BannerViewBinder())
         mAdapter.register(ArticleData::class.java, ArticleItemViewBinder())
-        recycler_home.layoutManager = LinearLayoutManager(activity)
-        recycler_home.adapter = mAdapter
+        rv_home_article.layoutManager = LinearLayoutManager(activity)
+        rv_home_article.adapter = mAdapter
         mAdapter.items = itemData
         mAdapter.notifyDataSetChanged()
-        recycler_home.addOnScrollListener(loadMoreListener)
+        rv_home_article.addOnScrollListener(loadMoreListener)
     }
 
     override fun addArticleData(articleListEntity: ArticleListEntity<ArticleData>) {

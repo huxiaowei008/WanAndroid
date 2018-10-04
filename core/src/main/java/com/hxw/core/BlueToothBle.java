@@ -12,9 +12,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 
 import java.util.UUID;
+
+import androidx.annotation.RequiresApi;
 
 /**
  * Ble蓝牙工具
@@ -33,8 +34,8 @@ import java.util.UUID;
  * @author hxw on 2018/5/9.
  */
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
-public class BlueToothBle {
-    public static final int REQUEST_ENABLE_BT = 1066;
+public final class BlueToothBle {
+    private static final int REQUEST_ENABLE_BT = 1066;
     private static final String UUID_CLIENT_CHARACTERISTIC_CONFIG_DESCRIPTOR = "00002902-0000-1000-8000-00805f9b34fb";
     private static volatile BlueToothBle INSTANCE;
     private BluetoothManager bluetoothManager;
@@ -114,6 +115,8 @@ public class BlueToothBle {
      * 开始扫描,由于扫描耗电量大，您应遵守以下准则：
      * 1、一旦找到所需的设备，请停止扫描。
      * 2、切勿扫描循环，并在扫描上设置时间限制。之前可用的设备可能已移出范围，并继续扫描电池电量。
+     *
+     * @param callback 扫描的回调监听
      */
     public void startScan(BluetoothAdapter.LeScanCallback callback) {
         mLeScanCallback = callback;
@@ -130,8 +133,13 @@ public class BlueToothBle {
         }
     }
 
+
     /**
      * 连接设备
+     *
+     * @param context  上下文
+     * @param device   需要连接的设备
+     * @param callback 监听设备和设备通信的回调
      */
     public void connectDevice(Context context, BluetoothDevice device, BluetoothGattCallback callback) {
         this.mBluetoothGatt = device.connectGatt(context, false, callback);
@@ -143,13 +151,22 @@ public class BlueToothBle {
     public void disconnect() {
         if (mBluetoothGatt != null) {
             mBluetoothGatt.disconnect();
-            mBluetoothGatt.close();
-            mBluetoothGatt = null;
         }
     }
 
     /**
-     * 连接可读写服务通道
+     * 重新连接
+     */
+    public void reconnection() {
+        if (mBluetoothGatt != null) {
+            mBluetoothGatt.connect();
+        }
+    }
+
+    /**
+     * 连接可读写服务通道(可接受通知)
+     *
+     * @param characteristic 用于读写的通道
      */
     public boolean connectCharacteristic(BluetoothGattCharacteristic characteristic) {
         this.mCharacteristic = characteristic;
@@ -169,6 +186,8 @@ public class BlueToothBle {
 
     /**
      * 设置可写通道
+     *
+     * @param characteristic 仅能用于写的通道
      */
     public void connectWriteCharacteristic(BluetoothGattCharacteristic characteristic) {
         mCharacteristic = characteristic;
@@ -176,6 +195,8 @@ public class BlueToothBle {
 
     /**
      * 设置通知通道
+     *
+     * @param characteristic 仅能接受通知的通道
      */
     public boolean setNotification(BluetoothGattCharacteristic characteristic) {
         BluetoothGattDescriptor descriptor = characteristic

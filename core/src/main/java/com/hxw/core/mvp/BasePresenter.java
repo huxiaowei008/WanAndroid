@@ -1,17 +1,17 @@
 package com.hxw.core.mvp;
 
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleOwner;
-import android.support.annotation.NonNull;
-
 import com.hxw.core.utils.RxUtils;
 import com.uber.autodispose.AutoDisposeConverter;
-
+import androidx.annotation.NonNull;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 /**
+ * Presenter基类,自带绑定生命周期
+ *
  * @author hxw on 2018/6/22.
  */
 public class BasePresenter<V extends IView> implements IPresenter<V> {
@@ -20,6 +20,7 @@ public class BasePresenter<V extends IView> implements IPresenter<V> {
     private CompositeDisposable mCompositeDisposable;
 
     /**
+     * {@link android.app.Activity}的创建生命周期
      * 自己没事别调用
      */
     @Override
@@ -28,6 +29,7 @@ public class BasePresenter<V extends IView> implements IPresenter<V> {
     }
 
     /**
+     * {@link android.app.Activity}的销毁生命周期
      * 自己没事别调用
      */
     @Override
@@ -50,6 +52,11 @@ public class BasePresenter<V extends IView> implements IPresenter<V> {
         }
     }
 
+    /**
+     * 绑定视图,这里是使用的起点,也会自动绑定可订阅的生命周期
+     *
+     * @param view 被绑定的视图
+     */
     @Override
     public void takeView(V view) {
         this.mView = view;
@@ -58,6 +65,9 @@ public class BasePresenter<V extends IView> implements IPresenter<V> {
         }
     }
 
+    /**
+     * 销毁视图
+     */
     @Override
     public void dropView() {
         if (mCompositeDisposable != null) {
@@ -81,6 +91,11 @@ public class BasePresenter<V extends IView> implements IPresenter<V> {
         }
     }
 
+    /**
+     * 自带的解除RX订阅的方式
+     *
+     * @param disposable 可以解除订阅的对象
+     */
     protected void addDispose(Disposable disposable) {
         if (mCompositeDisposable == null) {
             mCompositeDisposable = new CompositeDisposable();

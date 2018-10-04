@@ -8,13 +8,13 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.support.v4.content.FileProvider;
-import android.util.Log;
 
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import androidx.core.content.FileProvider;
 
 /**
  * @author hxw on 2018/5/3.
@@ -52,8 +52,7 @@ public final class FileUtils {
     /**
      * 创建未存在的文件夹
      *
-     * @param file
-     * @return
+     * @param file 目标文件夹
      */
     public static void makeDirs(File file) throws FileNotFoundException {
         if (!file.exists()) {
@@ -106,7 +105,6 @@ public final class FileUtils {
      * @return 路径path
      */
     public static String getUriImagePath(Context context, Uri uri) {
-        Log.i("TAG", "handleImageOnKitKat: uri is " + uri);
         String path = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(context, uri)) {
             // 如果是document类型的Uri，则通过document id处理

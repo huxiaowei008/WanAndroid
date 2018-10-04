@@ -2,8 +2,8 @@ package com.hxw.wanandroid.mvp
 
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.ActionBarDrawerToggle
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.hxw.core.base.AbstractActivity

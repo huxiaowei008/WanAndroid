@@ -1,13 +1,10 @@
 package com.hxw.core.base;
 
 import android.app.Application;
-import android.support.v7.app.AppCompatDelegate;
-
 import com.hxw.core.integration.ActivityLifecycle;
 import com.hxw.core.utils.AppUtils;
-
-import org.kodein.di.Kodein;
 import org.kodein.di.KodeinAware;
+import androidx.appcompat.app.AppCompatDelegate;
 
 /**
  * {@link Application}加入生命周期打印的基类

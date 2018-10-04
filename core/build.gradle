@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'//用于编译Android代码
 apply plugin: 'kotlin-kapt'//那些注释处理需要用这个,就是annotationProcessor替换成kapt
+//apply plugin: 'android-aspectjx'
 android {
     compileSdkVersion config.target_sdk
 
@@ -28,14 +29,12 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
 //    api project(':annotation')
 
     //KTX https://github.com/android/android-ktx
-    api ('androidx.core:core-ktx:0.3'){
-        exclude group: 'com.android.support'
-    }
+    api 'androidx.core:core-ktx:1.0.0'
 
     //Anko Commons https://github.com/Kotlin/anko
     api "org.jetbrains.anko:anko-commons:$versions.anko_version"
@@ -57,32 +56,21 @@ dependencies {
     api "org.jetbrains.anko:anko-constraint-layout:$versions.anko_version"
 
     //support https://github.com/dandar3/android-support-library-README
-    api("com.android.support:appcompat-v7:$versions.support") {
-        exclude group: 'android.arch.lifecycle'
-    }
-    api("com.android.support:design:$versions.support") {
-        exclude group: 'android.arch.lifecycle'
-    }
-    api("com.android.support:support-v4:$versions.support") {
-        exclude group: 'android.arch.lifecycle'
-    }
-    api "com.android.support:cardview-v7:$versions.support"
-//    api "com.android.support:support-v13:$versions.support"
-//    api "com.android.support:recyclerview-v7:$versions.support"
-//    api "com.android.support:support-annotations:$versions.support"
-//    api "com.android.support:support-vector-drawable:$versions.support"
-//    api "com.android.support:animated-vector-drawable:$versions.support"
+    api "androidx.appcompat:appcompat:$versions.androidx"
+    api "com.google.android.material:material:$versions.androidx"
+    api "androidx.legacy:legacy-support-v4:$versions.androidx"
+    api "androidx.cardview:cardview:$versions.androidx"
+    api "androidx.recyclerview:recyclerview:$versions.androidx"
 
     //Lifecycle https://developer.android.google.cn/topic/libraries/architecture/lifecycle
-    api "android.arch.lifecycle:runtime:$versions.lifecycle"
-    kapt "android.arch.lifecycle:compiler:$versions.lifecycle"
+    api "androidx.lifecycle:lifecycle-runtime:$versions.lifecycle"
+    kapt "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle"
 
     //ViewModel https://developer.android.google.cn/topic/libraries/architecture/viewmodel
-//    api "android.arch.lifecycle:viewmodel:$versions.lifecycle"
-    api("android.arch.lifecycle:extensions:$versions.lifecycle") {
-        exclude module: 'livedata'
-        exclude group: 'com.android.support'
-    }
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
+
+    //LiveData https://developer.android.google.cn/topic/libraries/architecture/livedata
+    api "androidx.lifecycle:lifecycle-reactivestreams-ktx:$versions.lifecycle"
 
     //retrofit https://github.com/square/retrofit
     api("com.squareup.retrofit2:retrofit:$versions.retrofit") {
@@ -109,15 +97,19 @@ dependencies {
     api "com.squareup.okhttp3:okhttp:$versions.okhttp"
 
     //这在okhttp主页下的okhttp-logging-interceptor包中
-    api "com.squareup.okhttp3:logging-interceptor:$versions.okhttp"
+    api("com.squareup.okhttp3:logging-interceptor:$versions.okhttp") {
+        transitive = false
+    }
 
     //timber https://github.com/JakeWharton/timber
-    api 'com.jakewharton.timber:timber:4.7.0'
+    api('com.jakewharton.timber:timber:4.7.1') {
+        exclude module: 'annotation'
+    }
 
     //glide图片加载 https://github.com/bumptech/glide
     api("com.github.bumptech.glide:glide:$versions.glide") {
-        exclude group: 'android.arch.lifecycle'
-        exclude group: 'com.android.support'
+        exclude module: 'annotation'
+        exclude module: 'fragment'
     }
     api("com.github.bumptech.glide:okhttp3-integration:$versions.glide") {
         transitive = false
@@ -137,46 +129,49 @@ dependencies {
     //    }
 
     //RxKotlin https://github.com/ReactiveX/RxKotlin
-    api('io.reactivex.rxjava2:rxkotlin:2.2.0') {
+    api('io.reactivex.rxjava2:rxkotlin:2.3.0') {
         exclude module: 'rxjava'
+        exclude group: 'org.jetbrains.kotlin'
     }
 
     //RxJava https://github.com/ReactiveX/RxJava/tree/2.x
-    api 'io.reactivex.rxjava2:rxjava:2.2.0'
+    api 'io.reactivex.rxjava2:rxjava:2.2.2'
 
     //RxAndroid https://github.com/ReactiveX/RxAndroid/tree/2.x
-    api('io.reactivex.rxjava2:rxandroid:2.0.2') {
+    api('io.reactivex.rxjava2:rxandroid:2.1.0') {
         exclude module: 'rxjava'
     }
 
     //RxRelay https://github.com/JakeWharton/RxRelay
-    api ('com.jakewharton.rxrelay2:rxrelay:2.0.0'){
+    api('com.jakewharton.rxrelay2:rxrelay:2.1.0') {
         exclude module: 'rxjava'
     }
 
-    //RxLifecycle https://github.com/trello/RxLifecycle/tree/2.x
-//    api('com.trello.rxlifecycle2:rxlifecycle-android-lifecycle:2.2.1') {
-//        exclude module: 'rxjava'
-//        exclude module: 'rxandroid'
-//        exclude module: 'jsr305'
-//    }
-
     //RxBinding https://github.com/JakeWharton/RxBinding
     api("com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:$versions.rxbinding") {
+        exclude module: 'rxjava'
         exclude module: 'rxandroid'
-        exclude group: 'com.android.support'
+        exclude module: 'annotation'
+        exclude module: 'legacy-support-core-ui'
+        exclude group: 'org.jetbrains.kotlin'
     }
     api("com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:$versions.rxbinding") {
         exclude module: 'rxandroid'
-        exclude group: 'com.android.support'
+        exclude module: 'annotation'
+        exclude module: 'appcompat'
+        exclude group: 'org.jetbrains.kotlin'
     }
     api("com.jakewharton.rxbinding2:rxbinding-design-kotlin:$versions.rxbinding") {
         exclude module: 'rxandroid'
-        exclude group: 'com.android.support'
+        exclude module: 'annotation'
+        exclude module: 'material'
+        exclude group: 'org.jetbrains.kotlin'
     }
     api("com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:$versions.rxbinding") {
         exclude module: 'rxandroid'
-        exclude group: 'com.android.support'
+        exclude module: 'annotation'
+        exclude module: 'recyclerview'
+        exclude group: 'org.jetbrains.kotlin'
     }
 
     //dagger2 https://github.com/google/dagger
@@ -190,20 +185,39 @@ dependencies {
 //    kapt "com.google.dagger:dagger-android-processor:$versions.dagger"
 
     //Kodein-DI https://github.com/Kodein-Framework/Kodein-DI
-    api "org.kodein.di:kodein-di-generic-jvm:$versions.kodein"
-    api "org.kodein.di:kodein-di-framework-android-core:$versions.kodein"
-//    api 'org.kodein.di:kodein-di-framework-android-x:5.2.0'
-    api ("org.kodein.di:kodein-di-framework-android-support:$versions.kodein"){
-        exclude group: 'com.android.support'
+    api("org.kodein.di:kodein-di-generic-jvm:$versions.kodein") {
+        exclude group: 'org.jetbrains.kotlin'
     }
-    api "org.kodein.di:kodein-di-jx-inject-jvm:$versions.kodein"
+    api("org.kodein.di:kodein-di-framework-android-core:$versions.kodein") {
+        exclude group: 'org.jetbrains.kotlin'
+    }
+//    api 'org.kodein.di:kodein-di-framework-android-x:5.2.0'
+    api("org.kodein.di:kodein-di-framework-android-x:$versions.kodein") {
+        exclude group: 'org.jetbrains.kotlin'
+        exclude module: 'appcompat'
+    }
+    api("org.kodein.di:kodein-di-jx-inject-jvm:$versions.kodein") {
+        exclude group: 'org.jetbrains.kotlin'
+    }
 
     //AutoDispose https://github.com/uber/AutoDispose
-    api('com.uber.autodispose:autodispose-android-archcomponents-kotlin:0.8.0') {
-        exclude group: 'android.arch.lifecycle'
+    api('com.uber.autodispose:autodispose-ktx:1.0.0-RC2') {
+        exclude group: 'org.jetbrains.kotlin'
+        exclude module: 'rxjava'
+    }
+    api('com.uber.autodispose:autodispose-android-ktx:1.0.0-RC2') {
+        exclude group: 'org.jetbrains.kotlin'
         exclude module: 'rxjava'
         exclude module: 'rxandroid'
+        exclude module: 'annotation'
     }
+    api('com.uber.autodispose:autodispose-android-archcomponents-ktx:1.0.0-RC2') {
+        exclude module: 'rxandroid'
+        exclude module: 'annotation'
+        exclude module: 'lifecycle-runtime'
+    }
+    //AOP使用
+    api 'org.aspectj:aspectjrt:1.8.9'
 }
 //需要放在这,放上面会出问题 Error:Cause: android.compileSdkVersion is missing!
 apply from: 'bintray.gradle'

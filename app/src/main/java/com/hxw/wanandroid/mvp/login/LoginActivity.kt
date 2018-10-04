@@ -8,6 +8,7 @@ import com.hxw.core.base.AbstractActivity
 import com.hxw.core.utils.AppUtils
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.mvp.MainActivity
+import com.hxw.wanandroid.mvp.host.HostSettingActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -54,6 +55,10 @@ class LoginActivity : AbstractActivity(), LoginView, KodeinAware {
             } else {
                 AppUtils.showToast("信息未填完整")
             }
+        }
+
+        iv_setting.setOnClickListener {
+            startActivity(Intent(this@LoginActivity, HostSettingActivity::class.java))
         }
 
     }

@@ -1,4 +1,4 @@
-package com.hxw.core
+package com.hxw.core.integration
 
 import android.net.ParseException
 import com.google.gson.JsonParseException
@@ -38,6 +38,11 @@ abstract class AbstractErrorSubscriber<T> : Observer<T> {
         AppUtils.showSnackBar(msg)
     }
 
+    /**
+     * 解析一些常见HTTP错误返回
+     *
+     * @param httpException http错误
+     */
     private fun convertStatusCode(httpException: HttpException): String {
         return when (httpException.code()) {
             500 -> "服务器发生错误"

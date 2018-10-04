@@ -17,7 +17,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/location_and_contacts" />
-
+    <ImageView
+        android:id="@+id/iv_test"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        />
     <fragment
         android:id="@+id/fragment"
         android:name="com.hxw.wanandroid.permission.PermissionFragment"

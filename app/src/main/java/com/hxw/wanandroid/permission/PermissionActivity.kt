@@ -1,16 +1,14 @@
 package com.hxw.wanandroid.permission
 
 import android.Manifest
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
+import com.hxw.core.annotation.CheckPermission
 import com.hxw.core.base.AbstractActivity
-import com.hxw.core.utils.PermissionUtils
+import com.hxw.core.glide.GlideApp
 import com.hxw.wanandroid.R
 import kotlinx.android.synthetic.main.activity_permission.*
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.toast
-import timber.log.Timber
 
 /**
  * @author hxw on 2018/8/4.
@@ -30,41 +28,23 @@ class PermissionActivity : AbstractActivity() {
             cameraTask()
 //            startActivityForResult(Intent(this@PermissionActivity,TakePhotoActivity::class.java),1000)
         }
-        button_location_and_contacts.setOnClickListener { locationAndContactsTask() }
+        button_location_and_contacts.setOnClickListener { locationAndContactsTask("多任务") }
+
+        GlideApp.with(this@PermissionActivity)
+                .load("http://172.16.8.237:28182/total/survey/survey_c9ccbe5fea7a47b98fce319758d6e0fb.jpg")
+                .into(iv_test)
     }
 
+    @CheckPermission(permissions = [Manifest.permission.CAMERA])
     private fun cameraTask() {
-        PermissionUtils.checkPermissions(this@PermissionActivity, object : PermissionUtils.PermissionAction {
-            override fun doAction() {
-                longToast("TODO: Camera things")
-            }
-        }, RC_CAMERA_PERM, Manifest.permission.CAMERA)
-
+        longToast("TODO: Camera things")
     }
 
-    private fun locationAndContactsTask() {
-        PermissionUtils.checkPermissions(this@PermissionActivity, object : PermissionUtils.PermissionAction {
-            override fun doAction() {
-                longToast("TODO: Location and Contacts things")
-            }
-        }, RC_LOCATION_CONTACTS_PERM, *LOCATION_AND_CONTACTS)
+    @CheckPermission(permissions = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_CONTACTS])
+    private fun locationAndContactsTask(msg: String) {
+        longToast("TODO: Location and Contacts things")
+        toast(msg)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        permissions.forEachIndexed { index, s ->
-            if (grantResults[index] == PackageManager.PERMISSION_GRANTED) {
-                //申请成功
-                toast("申请成功 requestCode:$requestCode")
-            } else {
-                toast("申请失败 requestCode:$requestCode")
-                PermissionUtils.somePermissionPermanentlyDenied(this@PermissionActivity, s)
-            }
-        }
-    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        Timber.tag("result").i("activityResult->requestCode==$requestCode,resultCode==$resultCode")
-    }
 }

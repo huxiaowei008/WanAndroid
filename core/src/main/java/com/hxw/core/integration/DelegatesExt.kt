@@ -1,4 +1,4 @@
-package com.hxw.core
+package com.hxw.core.integration
 
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
@@ -9,9 +9,11 @@ import kotlin.reflect.KProperty
  */
 object DelegatesExt {
     fun <T> notNullSingleValue() = NotNullSingleValueVar<T>()
-
 }
 
+/**
+ * 仅能初始化一次的非空值
+ */
 class NotNullSingleValueVar<T> : ReadWriteProperty<Any?, T> {
 
     private var value: T? = null

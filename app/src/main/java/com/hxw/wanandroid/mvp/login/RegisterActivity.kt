@@ -4,13 +4,13 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
-import android.support.v4.app.ActivityCompat
 import android.transition.Transition
 import android.transition.TransitionInflater
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.animation.AccelerateInterpolator
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import com.hxw.core.base.AbstractActivity
 import com.hxw.core.utils.AppUtils
 import com.hxw.wanandroid.R

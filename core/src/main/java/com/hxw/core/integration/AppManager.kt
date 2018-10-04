@@ -1,7 +1,6 @@
 package com.hxw.core.integration
 
 import android.app.Activity
-import org.kodein.di.Kodein
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.*
@@ -16,7 +15,12 @@ object AppManager {
     private var currentActivity: WeakReference<Activity>? = null
     private val mActivityStack = LinkedList<Activity>()
 
-    fun setCurrentActivity(activity: Activity?) {
+    /**
+     * 设置处于活动中的activity
+     *
+     * @param activity [Activity]
+     */
+    internal fun setCurrentActivity(activity: Activity?) {
         currentActivity = if (activity == null) {
             null
         } else {
@@ -24,6 +28,11 @@ object AppManager {
         }
     }
 
+    /**
+     * 获取处于活动中的activity
+     *
+     * @return [Activity]
+     */
     fun getCurrentActivity(): Activity? {
         return currentActivity?.get()
     }
@@ -34,8 +43,8 @@ object AppManager {
      * 还是会返回这个最近启动的 [Activity], 因此基本不会出现 `null` 的情况
      * 比较适合大部分的使用场景, 如 startActivity
      *
-     *
      * Tips: mActivityStack 容器中的顺序仅仅是 Activity 的创建顺序, 并不能保证和 Activity 任务栈顺序一致
+     * @return [Activity]
      */
     fun getTopActivity(): Activity? {
         if (mActivityStack.isEmpty()) {
@@ -48,8 +57,10 @@ object AppManager {
 
     /**
      * 添加 [Activity] 到集合
+     *
+     * @param activity [Activity]
      */
-    fun addActivity(activity: Activity) {
+    internal fun addActivity(activity: Activity) {
         synchronized(AppManager::class.java) {
             mActivityStack.add(activity)
         }
@@ -60,7 +71,7 @@ object AppManager {
      *
      * @param activity [Activity]
      */
-    fun removeActivity(activity: Activity) {
+    internal fun removeActivity(activity: Activity) {
         synchronized(AppManager::class.java) {
             if (mActivityStack.contains(activity)) {
                 mActivityStack.remove(activity)
@@ -68,15 +79,38 @@ object AppManager {
         }
     }
 
-    fun killActivity(activityClass: Class<*>) {
+    /**
+     * 关闭指定的activity,存在多个也会一起关闭
+     *
+     * @param activityClass 指定的[Activity]类名
+     */
+    fun killActivity(vararg activityClass: Class<*>) {
         synchronized(AppManager::class.java) {
             val iterator = mActivityStack.iterator()
             while (iterator.hasNext()) {
                 val next = iterator.next()
-                if (next.javaClass == activityClass) {
+                if (activityClass.contains(next.javaClass)) {
                     iterator.remove()
                     next.finish()
                 }
+            }
+        }
+    }
+
+    /**
+     * 关闭所有[Activity]除了指定的[Activity]
+     * @param activityClass 指定的[Activity]类名
+     */
+    fun killAllExclude(vararg activityClass: Class<*>) {
+        synchronized(AppManager::class.java) {
+            val iterator = mActivityStack.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                if (activityClass.contains(next.javaClass)) {
+                    continue
+                }
+                iterator.remove()
+                next.finish()
             }
         }
     }
@@ -102,7 +136,7 @@ object AppManager {
     /**
      * 关闭所有 activity
      */
-    private fun killAll() {
+    fun killAll() {
         synchronized(AppManager::class.java) {
             val iterator = mActivityStack.iterator()
             while (iterator.hasNext()) {
@@ -112,6 +146,4 @@ object AppManager {
             }
         }
     }
-
-
 }

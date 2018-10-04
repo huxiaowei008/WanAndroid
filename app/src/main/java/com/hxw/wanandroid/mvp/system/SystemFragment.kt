@@ -1,8 +1,8 @@
 package com.hxw.wanandroid.mvp.system
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import com.hxw.core.AbstractErrorSubscriber
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.hxw.core.integration.AbstractErrorSubscriber
 import com.hxw.core.base.AbstractFragment
 import com.hxw.core.utils.RxUtils
 import com.hxw.wanandroid.Constant
@@ -19,7 +19,9 @@ import me.drakeet.multitype.MultiTypeAdapter
 import org.jetbrains.anko.support.v4.toast
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
-import org.kodein.di.android.support.closestKodein
+import org.kodein.di.android.x.closestKodein
+
+
 import org.kodein.di.generic.instance
 
 /**
@@ -40,8 +42,8 @@ class SystemFragment : AbstractFragment(), KodeinAware {
 
     private fun initRecycler() {
         mAdapter.register(TreeEntity::class.java, SystemViewBinder())
-        recycler_system.layoutManager = LinearLayoutManager(activity)
-        recycler_system.adapter = mAdapter
+        rv_system_article.layoutManager = LinearLayoutManager(activity)
+        rv_system_article.adapter = mAdapter
         mAdapter.items = itemData
         mAdapter.notifyDataSetChanged()
     }

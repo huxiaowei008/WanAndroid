@@ -1,16 +1,14 @@
 package com.hxw.wanandroid.binder;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.hxw.wanandroid.R;
 import com.hxw.wanandroid.entity.ArticleData;
-
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import me.drakeet.multitype.ItemViewBinder;
 
 /**
@@ -42,11 +40,11 @@ public class ArticleItemViewBinder extends ItemViewBinder<ArticleData, ArticleIt
         private TextView tvClassification;
         private TextView tvtitle;
         private TextView tvtime;
-        private ImageView imgfavorite;
+        private ImageView ivfavorite;
 
         ArticleHolder(@NonNull View itemView) {
             super(itemView);
-            this.imgfavorite = itemView.findViewById(R.id.img_favorite);
+            this.ivfavorite = itemView.findViewById(R.id.iv_favorite);
             this.tvtime = itemView.findViewById(R.id.tv_time);
             this.tvtitle = itemView.findViewById(R.id.tv_title);
             this.tvClassification = itemView.findViewById(R.id.tv_classification);
