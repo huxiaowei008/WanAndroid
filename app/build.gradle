@@ -27,6 +27,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
         }
+
+        debug {
+            minifyEnabled true
+            shrinkResources true //删除没有用到的资源
+            zipAlignEnabled true //混淆后的zip优化
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+        }
     }
 
     //统一打包输出名称

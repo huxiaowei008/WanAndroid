@@ -40,7 +40,7 @@
 -keepattributes SourceFile,LineNumberTable
 ################common###############
 #指定使用了Keep注解的类和类成员都不被改变
--keep @android.support.annotation.Keep class * {*;}
+-keep @androidx.annotation.Keep class * {*;}
 #框架中的配置类不混淆，能在manifests中meta配置的都不能混淆
 #使用Gson时需要配置Gson的解析对象及变量都不混淆。不然Gson会找不到变量。
 #实体类不参与混淆
@@ -105,13 +105,11 @@
     public void *(android.webkit.webView, jav.lang.String);
 }
 # 保留support下的所有类及其内部类
--keep class android.support.** { *; }
--keep interface android.support.** { *; }
--dontwarn android.support.**
+-keep class androidx.** { *; }
+-keep interface androidx.** { *; }
+-dontwarn androidx.**
 # 保留继承的
--keep public class * extends android.support.v4.**
--keep public class * extends android.support.v7.**
--keep public class * extends android.support.annotation.**
+-keep public class * extends androidx.**
 
 # 保留我们使用的四大组件，自定义的Application等等这些类不被混淆
 # 因为这些子类都有可能被外部调用
@@ -222,14 +220,20 @@
 
 -dontwarn io.reactivex.internal.util.unsafe.**
 ################retrofit###############
-# Retain generic type information for use by reflection by converters and adapters.
--keepattributes Signature
-# Retain service method parameters.
--keepclassmembernames,allowobfuscation interface * {
+# Retrofit does reflection on generic parameters and InnerClass is required to use Signature.
+-keepattributes Signature, InnerClasses
+# Retain service method parameters when optimizing.
+-keepclassmembers,allowshrinking,allowobfuscation interface * {
     @retrofit2.http.* <methods>;
 }
 # Ignore annotation used for build tooling.
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+# Ignore JSR 305 annotations for embedding nullability information.
+-dontwarn javax.annotation.**
+# Guarded by a NoClassDefFoundError try/catch and only used when on the classpath.
+-dontwarn kotlin.Unit
+# Top-level functions that can only be used by Kotlin.
+-dontwarn retrofit2.-KotlinExtensions
 ################OKhttp3###############
 -dontwarn okhttp3.**
 -dontwarn okio.**
