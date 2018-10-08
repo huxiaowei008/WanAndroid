@@ -20,6 +20,7 @@ buildscript {
 allprojects {
     repositories {
         ...
+        mavenCentral()
         maven { url 'https://dl.bintray.com/kodein-framework/Kodein-DI/' }
     }
 }
@@ -31,7 +32,7 @@ allprojects {
 apply plugin: 'android-aspectjx'
 ```
 ```
-implementation 'com.hxw.mycore:<latestVersion>'
+implementation 'com.hxw.mycore:core:<latestVersion>'
 ```
 ## 使用
 >注意:由于使用了谷歌的[Material](https://github.com/material-components/material-components-android),
