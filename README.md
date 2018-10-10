@@ -34,6 +34,7 @@ apply plugin: 'android-aspectjx'
 ```
 implementation 'com.hxw.mycore:core:<latestVersion>'
 ```
+
 ## 使用
 >注意:由于使用了谷歌的[Material](https://github.com/material-components/material-components-android),
 所以在主题上要继承Material的主题。示例:
@@ -82,6 +83,19 @@ class WanKodeinApplication : AbstractApplication() {
 }
 ```
 
+## 三方库
+[KTX](https://github.com/android/android-ktx)
+[Anko](https://github.com/Kotlin/anko)
+[Gson](https://github.com/google/gson)
+[OkHttp](https://github.com/square/okhttp)
+[Timber](https://github.com/JakeWharton/timber)
+[Glide](https://github.com/bumptech/glide)
+[RxKotlin](https://github.com/ReactiveX/RxKotlin)
+[RxJava](https://github.com/ReactiveX/RxJava/tree/2.x)
+[RxAndroid](https://github.com/ReactiveX/RxAndroid/tree/2.x)
+[RxRelay](https://github.com/JakeWharton/RxRelay)
+[RxBinding](https://github.com/JakeWharton/RxBinding)
+[AutoDispose](https://github.com/uber/AutoDispose)
 
 ## License
 ```
