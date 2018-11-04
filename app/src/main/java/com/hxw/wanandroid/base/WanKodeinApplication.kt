@@ -1,6 +1,7 @@
 package com.hxw.wanandroid.base
 
 import android.content.Context
+import androidx.multidex.MultiDex
 
 import com.hxw.core.base.AbstractApplication
 import com.hxw.core.base.coreModule
@@ -25,7 +26,7 @@ class WanKodeinApplication : AbstractApplication() {
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
-//        MultiDex.install(base)
+        MultiDex.install(base)
     }
 
     override fun onCreate() {

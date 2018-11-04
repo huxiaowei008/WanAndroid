@@ -95,7 +95,7 @@ public final class BlueToothBle {
             mBluetoothGatt = null;
         }
         if (mBluetoothAdapter != null) {
-            mBluetoothAdapter.disable();
+//            mBluetoothAdapter.disable();
             mBluetoothAdapter = null;
         }
         bluetoothManager = null;
