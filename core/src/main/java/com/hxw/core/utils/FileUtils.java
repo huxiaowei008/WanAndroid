@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 
 import java.io.Closeable;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -149,5 +150,24 @@ public final class FileUtils {
             cursor.close();
         }
         return path;
+    }
+
+    /**
+     * 获取文件内容长度
+     *
+     * @param file 文件
+     * @return 内容长度
+     */
+    public static int getFileSize(File file) {
+        FileInputStream inputStream;
+        try {
+            inputStream = new FileInputStream(file);
+            int size = inputStream.available();
+            inputStream.close();
+            return size;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

@@ -39,7 +39,7 @@ dependencies {
 //    api project(':annotation')
 
     //KTX https://github.com/android/android-ktx
-    api 'androidx.core:core-ktx:1.0.0'
+    api 'androidx.core:core-ktx:1.0.1'
 
     //Anko Commons https://github.com/Kotlin/anko
     api "org.jetbrains.anko:anko-commons:$versions.anko_version"
@@ -61,7 +61,7 @@ dependencies {
     api "org.jetbrains.anko:anko-constraint-layout:$versions.anko_version"
 
     //support https://github.com/dandar3/android-support-library-README
-    api "androidx.appcompat:appcompat:$versions.androidx"
+    api "androidx.appcompat:appcompat:1.0.2"
     api "com.google.android.material:material:$versions.androidx"
     api "androidx.legacy:legacy-support-v4:$versions.androidx"
     api "androidx.cardview:cardview:$versions.androidx"
@@ -140,7 +140,7 @@ dependencies {
     }
 
     //RxJava https://github.com/ReactiveX/RxJava/tree/2.x
-    api 'io.reactivex.rxjava2:rxjava:2.2.2'
+    api 'io.reactivex.rxjava2:rxjava:2.2.3'
 
     //RxAndroid https://github.com/ReactiveX/RxAndroid/tree/2.x
     api('io.reactivex.rxjava2:rxandroid:2.1.0') {

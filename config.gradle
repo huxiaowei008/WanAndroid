@@ -7,7 +7,7 @@ versions.glide = "4.8.0"
 versions.rxbinding = "2.2.0"
 versions.lifecycle = "2.0.0"
 versions.kodein = "5.2.0"
-versions.anko_version = '0.10.6'
+versions.anko_version = '0.10.8'
 
 def config = [:]
 config.min_sdk = 16

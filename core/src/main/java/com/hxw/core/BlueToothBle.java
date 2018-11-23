@@ -164,6 +164,17 @@ public final class BlueToothBle {
     }
 
     /**
+     * 断开连接并关闭客户端
+     */
+    public void disAndClose() {
+        if (mBluetoothGatt != null) {
+            mBluetoothGatt.disconnect();
+            mBluetoothGatt.close();
+            mBluetoothGatt = null;
+        }
+    }
+
+    /**
      * 连接可读写服务通道(可接受通知)
      *
      * @param characteristic 用于读写的通道
