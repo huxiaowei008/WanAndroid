@@ -142,7 +142,12 @@ public final class BlueToothBle {
      * @param callback 监听设备和设备通信的回调
      */
     public void connectDevice(Context context, BluetoothDevice device, BluetoothGattCallback callback) {
-        this.mBluetoothGatt = device.connectGatt(context, false, callback);
+        if (mBluetoothGatt != null) {
+            mBluetoothGatt.disconnect();
+            mBluetoothGatt.close();
+            mBluetoothGatt = null;
+        }
+        mBluetoothGatt = device.connectGatt(context, false, callback);
     }
 
     /**
