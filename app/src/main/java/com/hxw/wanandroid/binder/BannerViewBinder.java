@@ -58,12 +58,7 @@ public class BannerViewBinder extends ItemViewBinder<BannerListEntity, BannerVie
         //设置指示器位置（当banner模式中有指示器时）
         holder.banner.setIndicatorGravity(BannerConfig.CENTER);
 
-        holder.banner.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
-                AppUtils.showToast("position "+position);
-            }
-        });
+        holder.banner.setOnBannerListener(position -> AppUtils.showToast("position "+position));
         //banner设置方法全部调用完毕时最后调用
         holder.banner.start();
     }

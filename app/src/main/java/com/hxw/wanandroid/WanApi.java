@@ -2,7 +2,6 @@ package com.hxw.wanandroid;
 
 import com.hxw.wanandroid.entity.ArticleData;
 import com.hxw.wanandroid.entity.ArticleListEntity;
-import com.hxw.wanandroid.entity.BannerEntity;
 import com.hxw.wanandroid.entity.BannerListEntity;
 import com.hxw.wanandroid.entity.BaseEntity;
 import com.hxw.wanandroid.entity.CollectData;
@@ -11,6 +10,7 @@ import com.hxw.wanandroid.entity.HotKeyEntity;
 import com.hxw.wanandroid.entity.NaviEntity;
 import com.hxw.wanandroid.entity.TreeEntity;
 import com.hxw.wanandroid.entity.UserEntity;
+import com.hxw.wanandroid.entity.WXPublicEntity;
 import com.hxw.wanandroid.entity.WebEntity;
 
 import java.util.List;
@@ -64,6 +64,17 @@ public interface WanApi {
      */
     @GET("hotkey/json")
     Observable<BaseEntity<List<HotKeyEntity>>> getHotKey();
+
+    /**
+     * 1.5 最新项目
+     *
+     * @param page 页码
+     * @return 最新项目列表数据
+     */
+    @GET("article/listproject/{page}/json")
+    Observable<BaseEntity<ArticleListEntity<ArticleData>>> getLatestProject(
+            @Path("page") int page
+    );
 
     /**
      * 2. 体系
@@ -146,6 +157,14 @@ public interface WanApi {
             @Query("password") String password,
             @Query("repassword") String repassword
     );
+
+    /**
+     * 5.3 退出登录
+     *
+     * @return 退出成功与否
+     */
+    @GET("user/logout/json")
+    Observable<BaseEntity<Object>> loginOut();
 
     /**
      * 6. 收藏
@@ -270,4 +289,13 @@ public interface WanApi {
             @Query("k") String key,
             @Path("page") int page
     );
+
+    /**
+     * 9. 微信公众号
+     * 9.1 获取公众号列表
+     *
+     * @return 微信公众号列表数据
+     */
+    @GET("wxarticle/chapters/json")
+    Observable<BaseEntity<List<WXPublicEntity>>> getWXPublic();
 }
