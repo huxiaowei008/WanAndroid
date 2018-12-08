@@ -40,7 +40,9 @@ dependencies {
 
     //KTX https://github.com/android/android-ktx
     api 'androidx.core:core-ktx:1.0.1'
-
+    //kotlinx.coroutines https://github.com/Kotlin/kotlinx.coroutines
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.1'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.0.1'
     //Anko Commons https://github.com/Kotlin/anko
     api "org.jetbrains.anko:anko-commons:$versions.anko_version"
     //Anko Layouts
