@@ -71,6 +71,8 @@ dependencies {
     api "androidx.lifecycle:lifecycle-runtime:$versions.lifecycle"
     kapt "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle"
 
+    //ViewModel and LiveData
+    api "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
     //ViewModel https://developer.android.google.cn/topic/libraries/architecture/viewmodel
     api "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
 

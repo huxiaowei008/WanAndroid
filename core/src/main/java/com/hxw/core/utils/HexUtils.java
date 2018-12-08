@@ -310,9 +310,18 @@ public final class HexUtils {
         return calcCrc16(data, offset, len, 0xFFFF);
     }
 
-    public static int calcCrc16(byte[] data, int offset, int len, int preval) {
-        int ucCRCHi = (preval & 0xFF00) >> 8;
-        int ucCRCLo = preval & 0xFF;
+    /**
+     * 计算CRC16校验
+     *
+     * @param data   需要计算的数组
+     * @param offset 起始位置
+     * @param len    长度
+     * @param initValue 初始值
+     * @return CRC16校验值
+     */
+    public static int calcCrc16(byte[] data, int offset, int len, int initValue) {
+        int ucCRCHi = (initValue & 0xFF00) >> 8;
+        int ucCRCLo = initValue & 0xFF;
 
         for (int i = 0; i < len; i++) {
             int iIndex = (ucCRCLo ^ data[offset + i]) & 0xFF;
