@@ -10,12 +10,15 @@ import com.hxw.core.utils.AppUtils
 import com.hxw.core.utils.DateUtils
 import com.hxw.core.utils.EncryptUtils
 import com.hxw.core.utils.StringUtils
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.uber.autodispose.*
 import com.uber.autodispose.android.lifecycle.scope
 import io.reactivex.*
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.annotations.CheckReturnValue
 import io.reactivex.parallel.ParallelFlowable
+import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.kodein.di.Kodein
@@ -70,7 +73,8 @@ fun coreModule(app: Application, configModule: ConfigModule) = Kodein.Module("My
     bind<Retrofit>() with singleton {
         val builder = Retrofit.Builder()
                 .client(instance())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .addConverterFactory(GsonConverterFactory.create(instance()))
         configModule.configRetrofit(app, builder)
         builder.build()

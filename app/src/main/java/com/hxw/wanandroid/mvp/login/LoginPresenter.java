@@ -31,7 +31,6 @@ public class LoginPresenter extends BasePresenter<LoginView> {
 
     public void login(String username, String password) {
         wanApi.login(username, password)
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .as(this.<BaseEntity<UserEntity>>bindLifecycle())
                 .subscribe(new AbstractErrorSubscriber<BaseEntity<UserEntity>>() {
