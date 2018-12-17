@@ -22,7 +22,6 @@ buildscript {
 
 allprojects {
     repositories {
-        mavenCentral()
         google()
         jcenter()
 //        maven { url 'https://dl.bintray.com/kodein-framework/Kodein-DI/' }
