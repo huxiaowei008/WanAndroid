@@ -208,17 +208,17 @@ dependencies {
     api "org.kodein.di:kodein-di-jx-inject-jvm:5.3.0"
 
     //AutoDispose https://github.com/uber/AutoDispose
-    api('com.uber.autodispose:autodispose-ktx:1.0.0') {
+    api('com.uber.autodispose:autodispose-ktx:1.1.0') {
         exclude group: 'org.jetbrains.kotlin'
         exclude module: 'rxjava'
     }
-    api('com.uber.autodispose:autodispose-android-ktx:1.0.0') {
+    api('com.uber.autodispose:autodispose-android-ktx:1.1.0') {
         exclude group: 'org.jetbrains.kotlin'
         exclude module: 'rxjava'
         exclude module: 'rxandroid'
         exclude module: 'annotation'
     }
-    api('com.uber.autodispose:autodispose-android-archcomponents-ktx:1.0.0') {
+    api('com.uber.autodispose:autodispose-android-archcomponents-ktx:1.1.0') {
         exclude module: 'rxandroid'
         exclude module: 'annotation'
         exclude module: 'lifecycle-runtime'

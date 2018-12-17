@@ -1,6 +1,6 @@
 package com.hxw.core.mvp
 
-import androidx.lifecycle.ViewModel
+import com.hxw.core.autodispose.AutoDisposeViewModel
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
@@ -9,7 +9,8 @@ import io.reactivex.disposables.Disposable
  * @author hxw on 2018/12/6.
  *
  */
-open class BaseViewModel : ViewModel() {
+open class BaseViewModel : AutoDisposeViewModel() {
+
     private var mCompositeDisposable: CompositeDisposable? = null
 
     /**
