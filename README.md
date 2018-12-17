@@ -44,13 +44,19 @@ android{
 ```
 ## 使用
 >注意:由于使用了谷歌的[Material](https://github.com/material-components/material-components-android),
-所以在主题上要继承Material的主题。(或者在material控件上使用)示例:
+所以在主题上要继承Material的主题。示例:
 ```
 <style name="Theme.MyApp" parent="Theme.MaterialComponents.Light.NoActionBar">
     <!-- ... -->
 </style>
 ```
-
+继承上面的主题会更改一些控件样式(现在是只有按钮),如果不想改变样式就继承bridge,样式由自己控制,详细按钮参数可以查看
+[MaterialButton](https://github.com/material-components/material-components-android/blob/master/docs/components/MaterialButton.md)
+```
+<style name="Theme.MyApp" parent="Theme.MaterialComponents.Light.Bridge">
+    <!-- ... -->
+</style>
+```
 新建一个module继承ConfigModule接口,实现各个方法
 ```
 class GlobalConfigModule : ConfigModule {
