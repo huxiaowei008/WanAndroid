@@ -34,10 +34,17 @@ apply plugin: 'android-aspectjx'
 ```
 implementation 'com.hxw.mycore:core:<latestVersion>'
 ```
-
+```
+android{
+  compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
+```
 ## 使用
 >注意:由于使用了谷歌的[Material](https://github.com/material-components/material-components-android),
-所以在主题上要继承Material的主题。示例:
+所以在主题上要继承Material的主题。(或者在material控件上使用)示例:
 ```
 <style name="Theme.MyApp" parent="Theme.MaterialComponents.Light.NoActionBar">
     <!-- ... -->
