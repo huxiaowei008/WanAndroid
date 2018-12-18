@@ -99,6 +99,8 @@ class WanKodeinApplication : AbstractApplication() {
 ## 三方库
 [KTX](https://github.com/android/android-ktx)
 
+[kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+
 [Anko](https://github.com/Kotlin/anko)
 
 [Gson](https://github.com/google/gson)
@@ -119,7 +121,11 @@ class WanKodeinApplication : AbstractApplication() {
 
 [RxBinding](https://github.com/JakeWharton/RxBinding)
 
+[Kodein-DI](https://github.com/Kodein-Framework/Kodein-DI)
+
 [AutoDispose](https://github.com/uber/AutoDispose)
+
+[RxDocs](https://github.com/mcxiaoke/RxDocs)
 
 ## License
 ```
