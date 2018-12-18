@@ -26,7 +26,7 @@ class HomePresenter @Inject constructor(private val api: WanApi) : BasePresenter
                 .subscribe(object : AbstractErrorSubscriber<BaseEntity<ArticleListEntity<ArticleData>>>() {
                     override fun onNext(t: BaseEntity<ArticleListEntity<ArticleData>>) {
                         if (t.errorCode == Constant.NET_SUCCESS) {
-                            mView.addArticleData(t.data)
+                            mView?.addArticleData(t.data)
                         } else {
                             AppUtils.showToast(t.errorMsg)
                         }
@@ -43,7 +43,7 @@ class HomePresenter @Inject constructor(private val api: WanApi) : BasePresenter
                 .subscribe(object : AbstractErrorSubscriber<BannerListEntity>() {
                     override fun onNext(t: BannerListEntity) {
                         if (t.errorCode == Constant.NET_SUCCESS) {
-                            mView.addBanner(t)
+                            mView?.addBanner(t)
                         } else {
                             AppUtils.showToast(t.errorMsg)
                         }

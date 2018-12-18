@@ -5,25 +5,33 @@ import com.uber.autodispose.lifecycle.CorrespondingEventsFunction
 import com.uber.autodispose.lifecycle.LifecycleEndedException
 import com.uber.autodispose.lifecycle.LifecycleScopeProvider
 import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.BehaviorSubject
 
 /**
+ * 自带rx订阅解除的ViewModel
  * @author hxw on 2018/12/17
  */
 abstract class AutoDisposeViewModel : ViewModel(), LifecycleScopeProvider<AutoDisposeViewModel.ViewModelEvent> {
+    companion object {
+        /**
+         * Function of current event -> target disposal event. ViewModel has a very simple lifecycle.
+         * It is created and then later on cleared. So we only have two events and all subscriptions
+         * will only be disposed at [ViewModelEvent.CLEARED].
+         */
+        private val CORRESPONDING_EVENTS = CorrespondingEventsFunction<ViewModelEvent> { event ->
+            when (event) {
+                ViewModelEvent.CREATED -> ViewModelEvent.CLEARED
+                else -> throw LifecycleEndedException(
+                        "Cannot bind to ViewModel lifecycle after onCleared.")
+            }
+        }
+    }
+
     // Subject backing the auto disposing of subscriptions.
     private val lifecycleEvents = BehaviorSubject.createDefault(ViewModelEvent.CREATED)
-
-    /**
-     * The events that represent the lifecycle of a [ViewModel].
-     *
-     * The [ViewModel] lifecycle is very simple. It is created
-     * and then allows you to clean up any resources in the
-     * [ViewModel.onCleared] method before it is destroyed.
-     */
-    enum class ViewModelEvent {
-        CREATED, CLEARED
-    }
+    private val mCompositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
 
     /**
      * The observable representing the lifecycle of the [ViewModel].
@@ -55,21 +63,27 @@ abstract class AutoDisposeViewModel : ViewModel(), LifecycleScopeProvider<AutoDi
     override fun onCleared() {
         lifecycleEvents.onNext(ViewModelEvent.CLEARED)
         super.onCleared()
+        mCompositeDisposable.clear()
     }
 
-    companion object {
-        /**
-         * Function of current event -> target disposal event. ViewModel has a very simple lifecycle.
-         * It is created and then later on cleared. So we only have two events and all subscriptions
-         * will only be disposed at [ViewModelEvent.CLEARED].
-         */
-        private val CORRESPONDING_EVENTS = CorrespondingEventsFunction<ViewModelEvent> { event ->
-            when (event) {
-                ViewModelEvent.CREATED -> ViewModelEvent.CLEARED
-                else -> throw LifecycleEndedException(
-                        "Cannot bind to ViewModel lifecycle after onCleared.")
-            }
-        }
+    /**
+     * 自带的解除RX订阅的方式
+     *
+     * @param disposable 可以解除订阅的对象
+     */
+    protected fun addDispose(disposable: Disposable) {
+        mCompositeDisposable.add(disposable)
+    }
+
+    /**
+     * The events that represent the lifecycle of a [ViewModel].
+     *
+     * The [ViewModel] lifecycle is very simple. It is created
+     * and then allows you to clean up any resources in the
+     * [ViewModel.onCleared] method before it is destroyed.
+     */
+    enum class ViewModelEvent {
+        CREATED, CLEARED
     }
 
 }

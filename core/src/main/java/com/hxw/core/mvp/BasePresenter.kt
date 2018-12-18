@@ -1,9 +1,10 @@
 package com.hxw.core.mvp
 
-import com.hxw.core.utils.RxUtils
-import com.uber.autodispose.AutoDisposeConverter
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import com.uber.autodispose.AutoDispose
+import com.uber.autodispose.AutoDisposeConverter
+import com.uber.autodispose.android.lifecycle.scope
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import timber.log.Timber
@@ -16,7 +17,7 @@ import timber.log.Timber
 open class BasePresenter<V : IView> : IPresenter<V> {
 
     protected var mView: V? = null
-    private var mCompositeDisposable: CompositeDisposable? = null
+    private val mCompositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
 
     /**
      * [android.app.Activity]的创建生命周期
@@ -64,11 +65,8 @@ open class BasePresenter<V : IView> : IPresenter<V> {
      * 销毁视图
      */
     override fun dropView() {
-        if (mCompositeDisposable != null) {
-            mCompositeDisposable!!.clear()
-        }
+        mCompositeDisposable.clear()
         mView = null
-        mCompositeDisposable = null
     }
 
     /**
@@ -79,7 +77,7 @@ open class BasePresenter<V : IView> : IPresenter<V> {
             throw NullPointerException("mView == null")
         }
         return if (mView is LifecycleOwner) {
-            RxUtils.bindLifecycle(mView as LifecycleOwner?)
+            AutoDispose.autoDisposable((mView as LifecycleOwner).scope())
         } else {
             throw AssertionError("mView 不是 LifecycleOwner 的子类")
         }
@@ -91,9 +89,6 @@ open class BasePresenter<V : IView> : IPresenter<V> {
      * @param disposable 可以解除订阅的对象
      */
     protected fun addDispose(disposable: Disposable) {
-        if (mCompositeDisposable == null) {
-            mCompositeDisposable = CompositeDisposable()
-        }
-        mCompositeDisposable!!.add(disposable)
+        mCompositeDisposable.add(disposable)
     }
 }

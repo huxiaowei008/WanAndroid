@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
  */
 public final class StringUtils {
 
+    @NonNull
     public static String jsonFormat(@NonNull String json) {
         if (json.isEmpty()) {
             return "json 数据为空!";

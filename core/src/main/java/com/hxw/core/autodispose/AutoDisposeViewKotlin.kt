@@ -15,8 +15,21 @@ import io.reactivex.subjects.BehaviorSubject
  * @author hxw on 2018/12/17
  */
 abstract class AutoDisposeViewKotlin : View, LifecycleScopeProvider<AutoDisposeViewKotlin.ViewEvent> {
-    enum class ViewEvent {
-        ATTACH, DETACH
+
+    companion object {
+
+        /**
+         * This is a function of current event -> target disposal event. That is to say that if event
+         * "Attach" returns "Detach", then any stream subscribed to during Attach will autodispose on
+         * Detach.
+         */
+        private val CORRESPONDING_EVENTS = CorrespondingEventsFunction<ViewEvent> { viewEvent ->
+            when (viewEvent) {
+                ViewEvent.ATTACH -> ViewEvent.DETACH
+                else -> throw LifecycleEndedException(
+                        "Cannot bind to View lifecycle after detach.")
+            }
+        }
     }
 
     private val lifecycleEvents by lazy { BehaviorSubject.create<ViewEvent>() }
@@ -52,19 +65,8 @@ abstract class AutoDisposeViewKotlin : View, LifecycleScopeProvider<AutoDisposeV
         return lifecycleEvents.value
     }
 
-    companion object {
-
-        /**
-         * This is a function of current event -> target disposal event. That is to say that if event
-         * "Attach" returns "Detach", then any stream subscribed to during Attach will autodispose on
-         * Detach.
-         */
-        private val CORRESPONDING_EVENTS = CorrespondingEventsFunction<ViewEvent> { viewEvent ->
-            when (viewEvent) {
-                ViewEvent.ATTACH -> ViewEvent.DETACH
-                else -> throw LifecycleEndedException(
-                        "Cannot bind to View lifecycle after detach.")
-            }
-        }
+    enum class ViewEvent {
+        ATTACH, DETACH
     }
+
 }

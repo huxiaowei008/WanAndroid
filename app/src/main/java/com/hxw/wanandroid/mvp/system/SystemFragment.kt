@@ -11,6 +11,7 @@ import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.binder.SystemViewBinder
 import com.hxw.wanandroid.entity.BaseEntity
 import com.hxw.wanandroid.entity.TreeEntity
+import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -54,7 +55,7 @@ class SystemFragment : AbstractFragment(), KodeinAware {
         api.getTree()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .`as`(RxUtils.bindLifecycle<BaseEntity<List<TreeEntity>>>(this@SystemFragment))
+                .autoDisposable(this@SystemFragment.scope())
                 .subscribe(object : AbstractErrorSubscriber<BaseEntity<List<TreeEntity>>>() {
                     override fun onNext(t: BaseEntity<List<TreeEntity>>) {
                         if (t.errorCode == Constant.NET_SUCCESS) {

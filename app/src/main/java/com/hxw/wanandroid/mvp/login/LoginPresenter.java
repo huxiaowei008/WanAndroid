@@ -39,7 +39,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                     public void onNext(BaseEntity<UserEntity> userEntity) {
                         if (userEntity.getErrorCode() == Constant.NET_SUCCESS) {
                             AppUtils.showToast("登陆成功");
-                            mView.loginOrRegisterSuccess();
+                            getMView().loginOrRegisterSuccess();
                         } else {
                             AppUtils.showToast("登陆失败->" + userEntity.getErrorMsg());
                         }
