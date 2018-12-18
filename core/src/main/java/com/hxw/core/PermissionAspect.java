@@ -37,27 +37,23 @@ public class PermissionAspect {
             return;
         }
         if (object instanceof Fragment) {
-            PermissionUtils.checkPermissions((Fragment) object, new PermissionUtils.PermissionAction() {
-                @Override
-                public void doAction() {
-                    try {
-                        joinPoint.proceed();
-                    } catch (Throwable throwable) {
-                        throwable.printStackTrace();
-                    }
+            PermissionUtils.checkPermissions((Fragment) object, () -> {
+                try {
+                    joinPoint.proceed();
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
                 }
             }, REQUEST_CODE, checkPermission.permissions());
         } else if (object instanceof Activity) {
-            PermissionUtils.checkPermissions((Activity) object, new PermissionUtils.PermissionAction() {
-                @Override
-                public void doAction() {
-                    try {
-                        joinPoint.proceed();
-                    } catch (Throwable throwable) {
-                        throwable.printStackTrace();
-                    }
+            PermissionUtils.checkPermissions((Activity) object, () -> {
+                try {
+                    joinPoint.proceed();
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
                 }
             }, REQUEST_CODE, checkPermission.permissions());
+        } else {
+            throw new AssertionError("目标不是Activity或Fragment");
         }
     }
 }
