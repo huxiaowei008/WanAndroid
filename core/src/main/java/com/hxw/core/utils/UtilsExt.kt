@@ -25,3 +25,7 @@ fun String.encryptMD5() = EncryptUtils.encryptMD5(this.toByteArray())
 fun String?.encryptSHA1ToString() = EncryptUtils.encryptSHA1ToString(this)
 
 fun String.encryptSHA1() = EncryptUtils.encryptSHA1(this.toByteArray())
+
+fun String.addCharToLeft(strLength: Int, c: Char) = HexUtils.addCharToLeft(this, strLength, c)
+
+fun String.addCharToRight(strLength: Int, c: Char) = HexUtils.addCharToRight(this, strLength, c)

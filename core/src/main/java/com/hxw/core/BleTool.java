@@ -34,10 +34,10 @@ import androidx.annotation.RequiresApi;
  * @author hxw on 2018/5/9.
  */
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
-public final class BlueToothBle {
+public final class BleTool {
     private static final int REQUEST_ENABLE_BT = 1066;
-    private static final String UUID_CLIENT_CHARACTERISTIC_CONFIG_DESCRIPTOR = "00002902-0000-1000-8000-00805f9b34fb";
-    private static volatile BlueToothBle INSTANCE;
+    private static final String CLIENT_CHARACTERISTIC_CONFIG = "00002902-0000-1000-8000-00805f9b34fb";
+    private static volatile BleTool INSTANCE;
     private BluetoothManager bluetoothManager;
     private BluetoothAdapter mBluetoothAdapter;
     private BluetoothGatt mBluetoothGatt;
@@ -47,14 +47,14 @@ public final class BlueToothBle {
     private BluetoothGattCharacteristic mCharacteristic;
     private BluetoothAdapter.LeScanCallback mLeScanCallback;
 
-    private BlueToothBle() {
+    private BleTool() {
     }
 
-    public static BlueToothBle getInstance() {
+    public static BleTool getInstance() {
         if (INSTANCE == null) {
-            synchronized (BlueToothBle.class) {
+            synchronized (BleTool.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new BlueToothBle();
+                    INSTANCE = new BleTool();
                 }
             }
         }
@@ -64,14 +64,15 @@ public final class BlueToothBle {
     /**
      * 初始化蓝牙,并开启蓝牙
      *
-     * @param activity 启动时的活动
+     * @param activity 使用蓝牙的Activity
      */
     public void init(Activity activity) {
+        Context mContext = activity.getApplicationContext();
         //使用此检查来确定设备是否支持BLE,然后您可以选择性地禁用BLE相关功能
-        if (!activity.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+        if (!mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
             throw new RuntimeException("手机不支持ble");
         }
-        Context mContext = activity.getApplicationContext();
+
         //初始化蓝牙适配器
         bluetoothManager = (BluetoothManager) mContext.getSystemService(Context.BLUETOOTH_SERVICE);
         if (bluetoothManager == null) {
@@ -95,7 +96,6 @@ public final class BlueToothBle {
             mBluetoothGatt = null;
         }
         if (mBluetoothAdapter != null) {
-//            mBluetoothAdapter.disable();
             mBluetoothAdapter = null;
         }
         bluetoothManager = null;
@@ -114,11 +114,14 @@ public final class BlueToothBle {
     /**
      * 开始扫描,由于扫描耗电量大，您应遵守以下准则：
      * 1、一旦找到所需的设备，请停止扫描。
-     * 2、切勿扫描循环，并在扫描上设置时间限制。之前可用的设备可能已移出范围，并继续扫描电池电量。
+     * 2、切勿扫描循环，应该在扫描上设置时间限制。之前可用的设备可能已移出范围，继续扫描将耗尽电池电量。
      *
      * @param callback 扫描的回调监听
      */
     public void startScan(BluetoothAdapter.LeScanCallback callback) {
+        if (mLeScanCallback!=null){
+            mBluetoothAdapter.stopLeScan(mLeScanCallback);
+        }
         mLeScanCallback = callback;
         mBluetoothAdapter.startLeScan(mLeScanCallback);
     }
@@ -142,11 +145,7 @@ public final class BlueToothBle {
      * @param callback 监听设备和设备通信的回调
      */
     public void connectDevice(Context context, BluetoothDevice device, BluetoothGattCallback callback) {
-        if (mBluetoothGatt != null) {
-            mBluetoothGatt.disconnect();
-            mBluetoothGatt.close();
-            mBluetoothGatt = null;
-        }
+        disAndClose();
         mBluetoothGatt = device.connectGatt(context, false, callback);
     }
 
@@ -187,7 +186,7 @@ public final class BlueToothBle {
     public boolean connectCharacteristic(BluetoothGattCharacteristic characteristic) {
         this.mCharacteristic = characteristic;
         BluetoothGattDescriptor descriptor = characteristic
-                .getDescriptor(UUID.fromString(UUID_CLIENT_CHARACTERISTIC_CONFIG_DESCRIPTOR));
+                .getDescriptor(UUID.fromString(CLIENT_CHARACTERISTIC_CONFIG));
         if (mBluetoothGatt != null) {
             boolean result = mBluetoothGatt.setCharacteristicNotification(characteristic, true);
             if (descriptor != null) {
@@ -216,7 +215,7 @@ public final class BlueToothBle {
      */
     public boolean setNotification(BluetoothGattCharacteristic characteristic) {
         BluetoothGattDescriptor descriptor = characteristic
-                .getDescriptor(UUID.fromString(UUID_CLIENT_CHARACTERISTIC_CONFIG_DESCRIPTOR));
+                .getDescriptor(UUID.fromString(CLIENT_CHARACTERISTIC_CONFIG));
         if (mBluetoothGatt != null) {
             boolean result = mBluetoothGatt.setCharacteristicNotification(characteristic, true);
             if (descriptor != null) {

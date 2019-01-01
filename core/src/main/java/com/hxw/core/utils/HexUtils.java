@@ -265,24 +265,16 @@ public final class HexUtils {
      * @return 转化为有符号的值
      */
     public static int unSignedToSigned(String value) {
-        int length = value.length();
-        if (length <= 2) {
+        int result = Integer.parseInt(value, 16);
+        if (result > 127 && result < 256) {
             //1个字节
-            int result = Integer.parseInt(value, 16);
-            if (result > 127) {
-                return result - 256;
-            }
-            return result;
-        } else if (length <= 4) {
+            return result - 256;
+        } else if (result > 32767 && result < 65536) {
             //2个字节
-            int result = Integer.parseInt(value, 16);
-            if (result > 32767) {
-                return result - 65536;
-            }
-            return result;
+            return result - 65536;
         } else {
             //超过2个字节,确定这么大吗?要自己增加
-            return Integer.parseInt(value, 16);
+            return result;
         }
     }
 
@@ -292,7 +284,7 @@ public final class HexUtils {
      * @param s 需要校验的字符
      * @return 校验生产的结果(2字节)
      */
-    public static String calcCrc16(@Nullable String s) {
+    public static String calcCrc16(@NonNull String s) {
         byte[] data = hexStr2Bytes(s);
         int result = calcCrc16(data, 0, data.length);
         return addCharToLeft(Integer.toHexString(result), 4, '0');
@@ -313,9 +305,9 @@ public final class HexUtils {
     /**
      * 计算CRC16校验
      *
-     * @param data   需要计算的数组
-     * @param offset 起始位置
-     * @param len    长度
+     * @param data      需要计算的数组
+     * @param offset    起始位置
+     * @param len       长度
      * @param initValue 初始值
      * @return CRC16校验值
      */
