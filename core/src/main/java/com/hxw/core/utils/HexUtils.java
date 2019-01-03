@@ -286,20 +286,8 @@ public final class HexUtils {
      */
     public static String calcCrc16(@NonNull String s) {
         byte[] data = hexStr2Bytes(s);
-        int result = calcCrc16(data, 0, data.length);
+        int result = calcCrc16(data, 0, data.length,0xFFFF);
         return addCharToLeft(Integer.toHexString(result), 4, '0');
-    }
-
-    /**
-     * crc校验
-     *
-     * @param data   需要校验的数据
-     * @param offset 从数据的哪位开始校验
-     * @param len    校验多少长度
-     * @return 校验结果(2字节)
-     */
-    public static int calcCrc16(byte[] data, int offset, int len) {
-        return calcCrc16(data, offset, len, 0xFFFF);
     }
 
     /**

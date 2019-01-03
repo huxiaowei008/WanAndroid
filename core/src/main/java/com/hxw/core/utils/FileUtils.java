@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 
 /**
@@ -99,13 +100,14 @@ public final class FileUtils {
     }
 
     /**
-     * 根据uri获取图片路径
+     * 根据uri获取路径
      *
      * @param context 上下文
      * @param uri     uri
      * @return 路径path
      */
-    public static String getUriImagePath(Context context, Uri uri) {
+    @Nullable
+    public static String getUriFromPath(Context context, Uri uri) {
         String path = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(context, uri)) {
             // 如果是document类型的Uri，则通过document id处理
@@ -138,6 +140,7 @@ public final class FileUtils {
      * @param selection 过滤器
      * @return path路径
      */
+    @Nullable
     public static String getImagePath(Context context, Uri uri, String selection) {
         String path = null;
         String[] projection = {MediaStore.Images.Media.DATA};

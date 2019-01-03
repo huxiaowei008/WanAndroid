@@ -151,7 +151,7 @@ object AppUtils {
         return try {
             val info = context.packageManager
                     .getPackageInfo(context.packageName, 0)
-            if (Build.VERSION.SDK_INT >= 28) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 info.longVersionCode
             } else {
                 info.versionCode.toLong()

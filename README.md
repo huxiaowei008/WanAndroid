@@ -96,7 +96,7 @@ class WanKodeinApplication : AbstractApplication() {
 }
 ```
 
-## 三方库
+## 三方库(索引)
 [KTX](https://github.com/android/android-ktx)
 
 [kotlinx.coroutines](https://github.com/Kotlin/kotlinx.coroutines)
@@ -126,6 +126,8 @@ class WanKodeinApplication : AbstractApplication() {
 [AutoDispose](https://github.com/uber/AutoDispose)
 
 [RxDocs](https://github.com/mcxiaoke/RxDocs)
+
+[Dagger2](https://github.com/google/dagger)
 
 ## License
 ```

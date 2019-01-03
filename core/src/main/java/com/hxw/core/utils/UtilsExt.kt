@@ -14,9 +14,9 @@ fun Float.dpToPx(context: Context) = AppUtils.dpToPx(context, this)
 
 fun Float.spToPx(context: Context) = AppUtils.spToPx(context, this)
 
-fun Date.date2String(pattern: String = "yyyy-MM-dd HH:mm:ss") = DateUtils.date2String(this, pattern)
+fun Date.toStr(pattern: String = "yyyy-MM-dd HH:mm:ss") = DateUtils.date2String(this, pattern)
 
-fun String.string2Date(pattern: String = "yyyy-MM-dd HH:mm:ss") = DateUtils.string2Date(this, pattern)
+fun String.toDate(pattern: String = "yyyy-MM-dd HH:mm:ss") = DateUtils.string2Date(this, pattern)
 
 fun String?.encryptMD5ToString() = EncryptUtils.encryptMD5ToString(this)
 
@@ -26,6 +26,8 @@ fun String?.encryptSHA1ToString() = EncryptUtils.encryptSHA1ToString(this)
 
 fun String.encryptSHA1() = EncryptUtils.encryptSHA1(this.toByteArray())
 
-fun String.addCharToLeft(strLength: Int, c: Char) = HexUtils.addCharToLeft(this, strLength, c)
+fun String.addCharToLeft(strLength: Int, c: Char = '0') = HexUtils.addCharToLeft(this, strLength, c)
 
-fun String.addCharToRight(strLength: Int, c: Char) = HexUtils.addCharToRight(this, strLength, c)
+fun String.addCharToRight(strLength: Int, c: Char = '0') = HexUtils.addCharToRight(this, strLength, c)
+
+fun String.toSigned()=HexUtils.unSignedToSigned(this)
