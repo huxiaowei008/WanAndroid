@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hxw.core.integration.AbstractErrorSubscriber
 import com.hxw.core.base.AbstractFragment
-import com.hxw.core.utils.RxUtils
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi

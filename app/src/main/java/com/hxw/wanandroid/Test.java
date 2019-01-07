@@ -20,5 +20,6 @@ public class Test {
                 "00193250783278783c2d0f00820096097e";
         String crc=HexUtils.calcCrc16(s.substring(0,s.length()-4));
         System.out.print("crc->" + crc);
+        String[] permissions=new String[]{"dd","dd"};
     }
 }

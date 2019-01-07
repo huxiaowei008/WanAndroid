@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
-    android:focusableInTouchMode="true"
-    tools:context=".mvp.host.HostSettingActivity">
+    android:focusableInTouchMode="true">
 
     <TextView
         android:id="@+id/tv_host_title"
@@ -25,9 +23,9 @@
         android:id="@+id/iv_host_back"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        app:srcCompat="@drawable/ic_arrow_right"
         android:rotation="180"
-        android:tint="@color/white"/>
+        android:tint="@color/white"
+        app:srcCompat="@drawable/ic_arrow_right" />
 
     <TextView
         android:id="@+id/tv1"
@@ -46,9 +44,9 @@
         android:id="@+id/rg_host_agreement"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv1"
@@ -60,8 +58,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:text="http"
             android:checked="true"
+            android:text="http"
             android:textColor="#333333" />
 
         <RadioButton
@@ -79,21 +77,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:text="IP地址:"
         android:textSize="@dimen/body1"
         app:layout_constraintBottom_toBottomOf="@+id/et_host_ip"
         app:layout_constraintEnd_toStartOf="@+id/et_host_ip"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/et_host_ip"
-        android:layout_marginLeft="8dp" />
+        app:layout_constraintTop_toTopOf="@+id/et_host_ip" />
 
     <EditText
         android:id="@+id/et_host_ip"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/bg_et_line"
         android:digits="0123456789."
         android:padding="4dp"
@@ -107,21 +105,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:text="端口号:"
         android:textSize="@dimen/body1"
         app:layout_constraintBottom_toBottomOf="@+id/et_host_port"
         app:layout_constraintEnd_toStartOf="@+id/et_host_port"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/et_host_port"
-        android:layout_marginLeft="8dp" />
+        app:layout_constraintTop_toTopOf="@+id/et_host_port" />
 
     <EditText
         android:id="@+id/et_host_port"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/bg_et_line"
         android:inputType="number"
         android:padding="4dp"
@@ -134,49 +132,49 @@
         android:id="@+id/btn_host_save"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        app:cornerRadius="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="保存当前地址"
         android:textColor="@color/white"
         android:textSize="@dimen/body1"
         android:textStyle="bold"
+        app:cornerRadius="4dp"
         app:layout_constraintEnd_toStartOf="@+id/btn_host_sure"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_host_port"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="16dp" />
+        app:layout_constraintTop_toBottomOf="@+id/et_host_port" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_host_sure"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        app:cornerRadius="4dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:text="确定设置地址"
         android:textColor="@color/white"
         android:textSize="@dimen/body1"
         android:textStyle="bold"
+        app:cornerRadius="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_host_save"
-        app:layout_constraintTop_toBottomOf="@+id/et_host_port"
-        android:layout_marginRight="16dp"
-        android:layout_marginLeft="8dp" />
+        app:layout_constraintTop_toBottomOf="@+id/et_host_port" />
 
     <TextView
         android:id="@+id/tv4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="长按可以删除"
         android:textColor="#aaaaaa"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_host_sure"
-        android:layout_marginRight="8dp" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_host_sure" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_host_record"

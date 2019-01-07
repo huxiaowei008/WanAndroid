@@ -14,7 +14,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-
 import com.hxw.core.PermissionAspect
 
 /**
@@ -135,8 +134,8 @@ object PermissionUtils {
      * 权限请求一条龙
      */
     @JvmStatic
-    fun checkPermissions(host: Activity, action: PermissionAction, @IntRange(from = 0) requestCode: Int,
-                         @Size(min = 1) vararg perms: String) {
+    fun checkPermissions(host: Activity, perms: Array<String>, @IntRange(from = 0) requestCode: Int,
+                         action: PermissionAction) {
         //第一步:先判断是否有权限
         if (hasPermissions(host, *perms)) {
             //有权限
@@ -164,8 +163,8 @@ object PermissionUtils {
     }
 
     @JvmStatic
-    fun checkPermissions(host: Fragment, action: PermissionAction, @IntRange(from = 0) requestCode: Int,
-                         @Size(min = 1) vararg perms: String) {
+    fun checkPermissions(host: Fragment, perms: Array<String>, @IntRange(from = 0) requestCode: Int,
+                         action: PermissionAction) {
         //第一步:先判断是否有权限
         if (hasPermissions(host.activity!!, *perms)) {
             //有权限

@@ -40,11 +40,11 @@ class TakePhotoActivity : AbstractActivity(), KodeinAware {
     override fun init(savedInstanceState: Bundle?) {
         btn_camera1.setOnClickListener {
             //启动相机方式1
-            PermissionUtils.checkPermissions(this@TakePhotoActivity, object : PermissionUtils.PermissionAction {
+            PermissionUtils.checkPermissions(this@TakePhotoActivity, arrayOf(Manifest.permission.CAMERA), permissionCode, object : PermissionUtils.PermissionAction {
                 override fun doAction() {
                     openCamera()
                 }
-            }, permissionCode, Manifest.permission.CAMERA)
+            })
         }
 
         btn_camera2.setOnClickListener {

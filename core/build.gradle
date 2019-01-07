@@ -177,9 +177,9 @@ dependencies {
 //    kapt "com.google.dagger:dagger-android-processor:$versions.dagger"
 
     //Kodein-DI https://github.com/Kodein-Framework/Kodein-DI
-    api "org.kodein.di:kodein-di-generic-jvm:5.3.0"
-    api "org.kodein.di:kodein-di-framework-android-x:5.3.0"
-    api "org.kodein.di:kodein-di-jx-inject-jvm:5.3.0"
+    api "org.kodein.di:kodein-di-generic-jvm:6.0.1"
+    api "org.kodein.di:kodein-di-framework-android-x:6.0.1"
+    api "org.kodein.di:kodein-di-jxinject-jvm:6.0.1"
 
     //AutoDispose https://github.com/uber/AutoDispose
     api('com.uber.autodispose:autodispose-ktx:1.1.0') {

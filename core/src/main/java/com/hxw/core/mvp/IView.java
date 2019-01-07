@@ -5,5 +5,6 @@ package com.hxw.core.mvp;
  *
  * @author hxw on 2018/6/21.
  */
+@Deprecated
 public interface IView {
 }

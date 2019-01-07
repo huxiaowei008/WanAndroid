@@ -40,7 +40,7 @@ public final class StringUtils {
      */
     public static Map<String, String> urlRequestFormat(String str) {
         Map<String, String> mapRequest = new HashMap<String, String>();
-        String[] arrSplit = null;
+        String[] arrSplit;
 
         if (str == null) {
             return mapRequest;
@@ -51,7 +51,7 @@ public final class StringUtils {
             //每个键值为一组
             arrSplit = query.split("[&]");
             for (String strSplit : arrSplit) {
-                String[] arrSplitEqual = null;
+                String[] arrSplitEqual;
                 arrSplitEqual = strSplit.split("[=]");
                 //解析出键值
                 mapRequest.put(arrSplitEqual[0], arrSplitEqual[1]);

@@ -2,17 +2,18 @@ package com.hxw.wanandroid.base
 
 import android.content.Context
 import android.content.SharedPreferences
-
+import android.preference.PreferenceManager
 import com.bumptech.glide.GlideBuilder
 import com.google.gson.GsonBuilder
 import com.hxw.core.base.ConfigModule
 import com.hxw.core.utils.AppUtils
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.mvp.host.HostSettingActivity
-import org.kodein.di.jxinject.Jx
-
 import okhttp3.OkHttpClient
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
+import org.kodein.di.newInstance
 import retrofit2.Retrofit
 import timber.log.Timber
 
@@ -29,9 +30,9 @@ class GlobalConfigModule : ConfigModule {
     }
 
     override fun configRetrofit(context: Context, builder: Retrofit.Builder) {
-                val sp by AppUtils.kodein.instance<SharedPreferences>()
-                val str = sp.getString(HostSettingActivity.IPUSE, WanApi.BASEURL)
-                Timber.i(str)
+        val sp = PreferenceManager.getDefaultSharedPreferences(context)
+        val str = sp.getString(HostSettingActivity.IPUSE, WanApi.BASEURL)
+        Timber.i(str)
         builder.baseUrl(WanApi.BASEURL)
     }
 

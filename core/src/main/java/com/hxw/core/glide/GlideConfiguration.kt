@@ -9,7 +9,8 @@ import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.integration.okhttp3.OkHttpLibraryGlideModule
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
 import com.bumptech.glide.load.engine.bitmap_recycle.LruBitmapPool
-import com.bumptech.glide.load.engine.cache.DiskLruCacheFactory
+import com.bumptech.glide.load.engine.cache.ExternalCacheDiskCacheFactory
+import com.bumptech.glide.load.engine.cache.ExternalPreferredCacheDiskCacheFactory
 import com.bumptech.glide.load.engine.cache.LruResourceCache
 import com.bumptech.glide.load.engine.cache.MemorySizeCalculator
 import com.bumptech.glide.load.engine.executor.GlideExecutor
@@ -21,7 +22,6 @@ import okhttp3.OkHttpClient
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
-import java.io.File
 import java.io.InputStream
 
 /**
@@ -31,16 +31,14 @@ import java.io.InputStream
  */
 @Excludes(OkHttpLibraryGlideModule::class)
 @GlideModule
-class GlideConfiguration : AppGlideModule(), KodeinAware {
-    override val kodein: Kodein by lazy { AppUtils.kodein }
-
+class GlideConfiguration : AppGlideModule(),KodeinAware {
+    override val kodein: Kodein =AppUtils.kodein
     override fun isManifestParsingEnabled(): Boolean {
         return false
     }
 
     override fun applyOptions(context: Context, builder: GlideBuilder) {
-        val cache: File by instance("externalCache")
-        val configModule: ConfigModule by instance()
+        val config:ConfigModule by instance()
         //图片缓存文件最大值为100Mb
         val maxSize = (100 * 1024 * 1024).toLong()
         val calculator = MemorySizeCalculator.Builder(context)
@@ -53,12 +51,12 @@ class GlideConfiguration : AppGlideModule(), KodeinAware {
                 //Bitmap 池
                 .setBitmapPool(LruBitmapPool(calculator.bitmapPoolSize.toLong()))
                 //磁盘缓存
-                .setDiskCache(DiskLruCacheFactory(cache.parent, "Glide", maxSize))
+                .setDiskCache(ExternalPreferredCacheDiskCacheFactory(context,"Glide", maxSize))
                 .setDiskCacheExecutor(GlideExecutor
                         .newDiskCacheExecutor(GlideExecutor.UncaughtThrowableStrategy.THROW))
                 .setSourceExecutor(GlideExecutor
                         .newSourceExecutor(GlideExecutor.UncaughtThrowableStrategy.THROW))
-        configModule.applyGlideOptions(context, builder)
+        config.applyGlideOptions(context, builder)
     }
 
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {

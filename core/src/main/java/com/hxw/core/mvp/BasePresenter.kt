@@ -14,6 +14,7 @@ import timber.log.Timber
  *
  * @author hxw on 2018/6/22.
  */
+@Deprecated("不推荐使用了",ReplaceWith("ViewModel"))
 open class BasePresenter<V : IView> : IPresenter<V> {
 
     protected var mView: V? = null

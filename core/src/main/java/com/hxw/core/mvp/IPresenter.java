@@ -11,6 +11,7 @@ import androidx.lifecycle.OnLifecycleEvent;
  *
  * @author hxw on 2018/5/30.
  */
+@Deprecated()
 public interface IPresenter<V extends IView> extends LifecycleObserver {
 
     /**
