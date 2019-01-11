@@ -92,7 +92,7 @@ public final class FileUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             //转变成Content uri
             return FileProvider.getUriForFile(context,
-                    context.getPackageName() + ".provider", file);
+                    context.getPackageName() + ".fileProvider", file);
         } else {
             //file uri
             return Uri.fromFile(file);

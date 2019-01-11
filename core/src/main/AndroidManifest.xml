@@ -14,7 +14,7 @@
         <!--authorities需要和FileProvider.getUriForFile中的第二个参数一致-->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
+            android:authorities="${applicationId}.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
