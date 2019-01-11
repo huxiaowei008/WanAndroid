@@ -24,8 +24,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-//        maven { url 'https://dl.bintray.com/kodein-framework/Kodein-DI/' }
-//        maven { url "https://dl.bintray.com/kodein-framework/Kodein-DI-LGM" }
     }
 }
 

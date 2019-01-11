@@ -13,9 +13,6 @@ import com.hxw.core.base.AbstractActivity
 import com.hxw.core.utils.*
 import kotlinx.android.synthetic.main.activity_take_photo.*
 import org.jetbrains.anko.toast
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.closestKodein
 import java.io.File
 import java.util.*
 
@@ -23,14 +20,13 @@ import java.util.*
  * @author hxw on 2018/7/18.
  *
  */
-class TakePhotoActivity : AbstractActivity(), KodeinAware {
+class TakePhotoActivity : AbstractActivity() {
 
     private val permissionCode = 200
     private val cameraCode1 = 1000
     private val cameraCode2 = 1001
     private val pickCode = 1002
     private val cropCode = 1003
-    override val kodein: Kodein by closestKodein()
     private lateinit var imageUri: Uri
     private lateinit var saveUri: Uri
     override fun getLayoutId(): Int {

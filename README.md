@@ -105,6 +105,8 @@ class WanKodeinApplication : AbstractApplication() {
 
 [Gson](https://github.com/google/gson)
 
+[Retrofit](https://github.com/square/retrofit)
+
 [OkHttp](https://github.com/square/okhttp)
 
 [Timber](https://github.com/JakeWharton/timber)
@@ -121,7 +123,9 @@ class WanKodeinApplication : AbstractApplication() {
 
 [RxBinding](https://github.com/JakeWharton/RxBinding)
 
-[Kodein-DI](https://github.com/Kodein-Framework/Kodein-DI)
+~~[Kodein-DI](https://github.com/Kodein-Framework/Kodein-DI)~~
+
+[koin](https://github.com/InsertKoinIO/koin)
 
 [AutoDispose](https://github.com/uber/AutoDispose)
 
