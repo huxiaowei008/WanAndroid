@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import androidx.core.content.edit
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
@@ -16,23 +17,19 @@ import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.mvp.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_host_setting.*
 import org.jetbrains.anko.*
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.closestKodein
-import org.kodein.di.generic.instance
+import org.koin.android.ext.android.inject
 
 
-class HostSettingActivity : AbstractActivity(), KodeinAware {
+class HostSettingActivity : AbstractActivity() {
     companion object {
         val IPDATALIST = "ip_data_list"
         val IPUSE = "ip_use"
     }
 
-    override val kodein: Kodein by closestKodein()
     private val ipData = mutableListOf<IpRecordEntity>()
-    private val sp: SharedPreferences by instance()
-    private val gson: Gson by instance()
-    private val alarmManager: AlarmManager by instance()
+    private val sp: SharedPreferences by lazy { PreferenceManager.getDefaultSharedPreferences(this@HostSettingActivity) }
+    private val gson: Gson by inject()
+    private val alarmManager: AlarmManager by inject()
 
     private lateinit var mAdapter: IpRecordAdapter
     override fun getLayoutId(): Int {

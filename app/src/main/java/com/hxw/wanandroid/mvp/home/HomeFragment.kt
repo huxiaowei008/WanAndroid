@@ -13,18 +13,14 @@ import com.hxw.wanandroid.entity.BannerListEntity
 import kotlinx.android.synthetic.main.fragment_home.*
 import me.drakeet.multitype.Items
 import me.drakeet.multitype.MultiTypeAdapter
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.x.closestKodein
-import org.kodein.di.jxinject.jx
+import org.koin.android.ext.android.get
 
 
 /**
  * @author hxw on 2018/7/23
  */
-class HomeFragment : AbstractFragment(), HomeView, KodeinAware {
-    override val kodein: Kodein by closestKodein()
-    private val mPresenter: HomePresenter by lazy { kodein.jx.newInstance<HomePresenter>() }
+class HomeFragment : AbstractFragment(), HomeView {
+    private val mPresenter: HomePresenter by lazy { HomePresenter(get()) }
     private val mAdapter = MultiTypeAdapter()
     private val itemData = Items()
     private var curpage: Int = 0
@@ -41,7 +37,6 @@ class HomeFragment : AbstractFragment(), HomeView, KodeinAware {
     override fun init(savedInstanceState: Bundle?) {
         mPresenter.takeView(this)
         initRecycler()
-
     }
 
     override fun onResume() {

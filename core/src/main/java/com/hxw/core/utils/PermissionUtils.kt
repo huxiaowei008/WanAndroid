@@ -190,9 +190,4 @@ object PermissionUtils {
             }
         }
     }
-
-
-    interface PermissionAction {
-        fun doAction()
-    }
 }

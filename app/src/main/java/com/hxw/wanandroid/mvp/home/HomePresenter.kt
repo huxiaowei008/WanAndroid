@@ -11,12 +11,11 @@ import com.hxw.wanandroid.entity.BannerListEntity
 import com.hxw.wanandroid.entity.BaseEntity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
 /**
  * @author hxw on 2018/7/28
  */
-class HomePresenter @Inject constructor(private val api: WanApi) : BasePresenter<HomeView>() {
+class HomePresenter constructor(private val api: WanApi) : BasePresenter<HomeView>() {
 
     fun getHomeArticle(page: Int) {
         api.getHomeArticle(page)

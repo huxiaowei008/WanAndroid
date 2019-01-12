@@ -23,8 +23,7 @@ abstract class AutoDisposeViewModel : ViewModel(), LifecycleScopeProvider<AutoDi
         private val CORRESPONDING_EVENTS = CorrespondingEventsFunction<ViewModelEvent> { event ->
             when (event) {
                 ViewModelEvent.CREATED -> ViewModelEvent.CLEARED
-                else -> throw LifecycleEndedException(
-                        "Cannot bind to ViewModel lifecycle after onCleared.")
+                else -> throw LifecycleEndedException("Cannot bind to ViewModel lifecycle after onCleared.")
             }
         }
     }

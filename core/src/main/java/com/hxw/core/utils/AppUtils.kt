@@ -9,11 +9,12 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.view.View
-import com.hxw.core.integration.DelegatesExt
+import androidx.core.graphics.green
 import com.hxw.core.integration.AppManager
 import org.jetbrains.anko.design.snackbar
+import org.jetbrains.anko.gray
+import org.jetbrains.anko.opaque
 import org.jetbrains.anko.toast
-import org.kodein.di.Kodein
 import java.io.File
 
 
@@ -23,8 +24,6 @@ import java.io.File
  * @author hxw on 2018/5/5.
  */
 object AppUtils {
-
-    var kodein: Kodein by DelegatesExt.notNullSingleValue()
 
     /**
      * 通过SnackBar展示信息

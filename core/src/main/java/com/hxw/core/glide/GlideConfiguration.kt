@@ -9,7 +9,6 @@ import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.integration.okhttp3.OkHttpLibraryGlideModule
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
 import com.bumptech.glide.load.engine.bitmap_recycle.LruBitmapPool
-import com.bumptech.glide.load.engine.cache.ExternalCacheDiskCacheFactory
 import com.bumptech.glide.load.engine.cache.ExternalPreferredCacheDiskCacheFactory
 import com.bumptech.glide.load.engine.cache.LruResourceCache
 import com.bumptech.glide.load.engine.cache.MemorySizeCalculator
@@ -17,11 +16,9 @@ import com.bumptech.glide.load.engine.executor.GlideExecutor
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.module.AppGlideModule
 import com.hxw.core.base.ConfigModule
-import com.hxw.core.utils.AppUtils
 import okhttp3.OkHttpClient
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.generic.instance
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.get
 import java.io.InputStream
 
 /**
@@ -31,14 +28,13 @@ import java.io.InputStream
  */
 @Excludes(OkHttpLibraryGlideModule::class)
 @GlideModule
-class GlideConfiguration : AppGlideModule(),KodeinAware {
-    override val kodein: Kodein =AppUtils.kodein
+class GlideConfiguration : AppGlideModule(), KoinComponent {
     override fun isManifestParsingEnabled(): Boolean {
         return false
     }
 
     override fun applyOptions(context: Context, builder: GlideBuilder) {
-        val config:ConfigModule by instance()
+        val config: ConfigModule = get()
         //图片缓存文件最大值为100Mb
         val maxSize = (100 * 1024 * 1024).toLong()
         val calculator = MemorySizeCalculator.Builder(context)
@@ -51,7 +47,7 @@ class GlideConfiguration : AppGlideModule(),KodeinAware {
                 //Bitmap 池
                 .setBitmapPool(LruBitmapPool(calculator.bitmapPoolSize.toLong()))
                 //磁盘缓存
-                .setDiskCache(ExternalPreferredCacheDiskCacheFactory(context,"Glide", maxSize))
+                .setDiskCache(ExternalPreferredCacheDiskCacheFactory(context, "Glide", maxSize))
                 .setDiskCacheExecutor(GlideExecutor
                         .newDiskCacheExecutor(GlideExecutor.UncaughtThrowableStrategy.THROW))
                 .setSourceExecutor(GlideExecutor
@@ -62,7 +58,7 @@ class GlideConfiguration : AppGlideModule(),KodeinAware {
     override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
         //Glide默认使用HttpURLConnection做网络请求,
         //用了OkHttpUrlLoader.Factory()后会换成OKHttp请求，在这放入我们自己创建的OkHttp
-        val ok: OkHttpClient by instance()
+        val ok: OkHttpClient = get()
         registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory(ok))
     }
 }

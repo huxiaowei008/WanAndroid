@@ -10,19 +10,15 @@ import com.hxw.wanandroid.R
 import com.hxw.wanandroid.mvp.MainActivity
 import com.hxw.wanandroid.mvp.host.HostSettingActivity
 import kotlinx.android.synthetic.main.activity_login.*
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.closestKodein
-import org.kodein.di.jxinject.jx
+import org.koin.android.ext.android.get
 
 
 /**
  * @author hxw on 2018/6/2.
  *
  */
-class LoginActivity : AbstractActivity(), LoginView, KodeinAware {
-    override val kodein: Kodein by closestKodein()
-    private val mPresenter: LoginPresenter by lazy { kodein.jx.newInstance<LoginPresenter>() }
+class LoginActivity : AbstractActivity(), LoginView {
+    private val mPresenter: LoginPresenter by lazy { LoginPresenter(get()) }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_login

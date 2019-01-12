@@ -11,8 +11,6 @@ import com.hxw.wanandroid.entity.UserEntity;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -23,7 +21,6 @@ public class LoginPresenter extends BasePresenter<LoginView> {
 
     private WanApi wanApi;
 
-    @Inject
     LoginPresenter(WanApi api) {
         this.wanApi = api;
     }

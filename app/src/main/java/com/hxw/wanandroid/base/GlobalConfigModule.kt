@@ -1,19 +1,13 @@
 package com.hxw.wanandroid.base
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.bumptech.glide.GlideBuilder
 import com.google.gson.GsonBuilder
 import com.hxw.core.base.ConfigModule
-import com.hxw.core.utils.AppUtils
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.mvp.host.HostSettingActivity
 import okhttp3.OkHttpClient
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.generic.instance
-import org.kodein.di.newInstance
 import retrofit2.Retrofit
 import timber.log.Timber
 

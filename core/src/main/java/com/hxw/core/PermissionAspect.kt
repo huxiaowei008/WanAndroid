@@ -3,6 +3,7 @@ package com.hxw.core
 import android.app.Activity
 import androidx.fragment.app.Fragment
 import com.hxw.core.annotation.CheckPermission
+import com.hxw.core.utils.PermissionAction
 import com.hxw.core.utils.PermissionUtils
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
@@ -36,22 +37,20 @@ class PermissionAspect {
             return
         }
         when (host) {
-            is Fragment -> PermissionUtils.checkPermissions(host, checkPermission.permissions, REQUEST_CODE, object : PermissionUtils.PermissionAction {
-                override fun doAction() {
-                    try {
-                        joinPoint.proceed()
-                    } catch (throwable: Throwable) {
-                        throwable.printStackTrace()
-                    }
+            is Fragment -> PermissionUtils.checkPermissions(host, checkPermission.permissions,
+                    REQUEST_CODE, PermissionAction {
+                try {
+                    joinPoint.proceed()
+                } catch (throwable: Throwable) {
+                    throwable.printStackTrace()
                 }
             })
-            is Activity -> PermissionUtils.checkPermissions(host, checkPermission.permissions, REQUEST_CODE, object : PermissionUtils.PermissionAction {
-                override fun doAction() {
-                    try {
-                        joinPoint.proceed()
-                    } catch (throwable: Throwable) {
-                        throwable.printStackTrace()
-                    }
+            is Activity -> PermissionUtils.checkPermissions(host, checkPermission.permissions,
+                    REQUEST_CODE, PermissionAction {
+                try {
+                    joinPoint.proceed()
+                } catch (throwable: Throwable) {
+                    throwable.printStackTrace()
                 }
             })
             else -> throw AssertionError("目标不是Activity或Fragment")

@@ -8,14 +8,7 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.kodein.di.Kodein
-import org.kodein.di.android.androidModule
-import org.kodein.di.android.x.androidXModule
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.provider
-import org.kodein.di.generic.singleton
-import org.kodein.di.jxinject.jxInjectorModule
+import org.koin.dsl.module.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -26,45 +19,41 @@ import timber.log.Timber
  * @author hxw on 2018/7/18.
  *
  */
-fun coreModule(app: Application, configModule: ConfigModule) = Kodein.Module("MyCoreConfig") {
-    importOnce(androidModule(app))
-    importOnce(androidXModule(app))
-    importOnce(jxInjectorModule)
+val coreModule = module {
 
-    bind() from provider { configModule }
-
-    bind<Gson>() with singleton {
+    single<Gson> {
         val builder = GsonBuilder()
                 .serializeNulls()
-        configModule.configGson(app, builder)
+        get<ConfigModule>().configGson(get<Application>(), builder)
         builder.create()
     }
 
-    bind<OkHttpClient>() with singleton {
-        val logging = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
-            var str = it
-            if (it.startsWith("{") || it.startsWith("[")) {
-                str = it.jsonFormat()
+    single<OkHttpClient> {
+        val logging = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger { msg ->
+            var str = msg
+            if (msg.startsWith("{") || msg.startsWith("[")) {
+                str = msg.jsonFormat()
             }
             Timber.tag("OkHttp").i(str)
         })
-
         logging.level = HttpLoggingInterceptor.Level.BODY
         val builder = OkHttpClient.Builder()
                 .addInterceptor(logging)
-        configModule.configOkHttp(app, builder)
+        get<ConfigModule>().configOkHttp(get<Application>(), builder)
         builder.build()
     }
 
-    bind<Retrofit>() with singleton {
+    single<Retrofit> {
         val builder = Retrofit.Builder()
-                .client(instance())
+                .client(get())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
-                .addConverterFactory(GsonConverterFactory.create(instance()))
-        configModule.configRetrofit(app, builder)
+                .addConverterFactory(GsonConverterFactory.create(get()))
+        get<ConfigModule>().configRetrofit(get<Application>(), builder)
         builder.build()
     }
+
+
 }
 
 

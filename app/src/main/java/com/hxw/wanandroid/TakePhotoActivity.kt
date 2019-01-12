@@ -36,11 +36,8 @@ class TakePhotoActivity : AbstractActivity() {
     override fun init(savedInstanceState: Bundle?) {
         btn_camera1.setOnClickListener {
             //启动相机方式1
-            PermissionUtils.checkPermissions(this@TakePhotoActivity, arrayOf(Manifest.permission.CAMERA), permissionCode, object : PermissionUtils.PermissionAction {
-                override fun doAction() {
-                    openCamera()
-                }
-            })
+            PermissionUtils.checkPermissions(this@TakePhotoActivity, arrayOf(Manifest.permission.CAMERA),
+                    permissionCode, PermissionAction { openCamera() })
         }
 
         btn_camera2.setOnClickListener {

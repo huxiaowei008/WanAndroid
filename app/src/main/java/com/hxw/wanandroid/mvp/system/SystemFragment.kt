@@ -1,9 +1,10 @@
 package com.hxw.wanandroid.mvp.system
 
+
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.hxw.core.integration.AbstractErrorSubscriber
 import com.hxw.core.base.AbstractFragment
+import com.hxw.core.integration.AbstractErrorSubscriber
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi
@@ -18,19 +19,13 @@ import kotlinx.android.synthetic.main.fragment_system.*
 import me.drakeet.multitype.Items
 import me.drakeet.multitype.MultiTypeAdapter
 import org.jetbrains.anko.support.v4.toast
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.x.closestKodein
-
-
-import org.kodein.di.generic.instance
+import org.koin.android.ext.android.inject
 
 /**
  * @author hxw on 2018/7/23
  */
-class SystemFragment : AbstractFragment(), KodeinAware {
-    override val kodein: Kodein by closestKodein()
-    private val api: WanApi by instance()
+class SystemFragment : AbstractFragment() {
+    private val api: WanApi by inject()
     private val mAdapter = MultiTypeAdapter()
     private val itemData = Items()
     override fun getLayoutId(): Int {

@@ -14,7 +14,7 @@ import io.reactivex.subjects.BehaviorSubject
 /**
  * @author hxw on 2018/12/17
  */
-abstract class AutoDisposeViewKotlin : View, LifecycleScopeProvider<AutoDisposeViewKotlin.ViewEvent> {
+abstract class AutoDisposeView : View, LifecycleScopeProvider<AutoDisposeView.ViewEvent> {
 
     companion object {
 
@@ -26,8 +26,7 @@ abstract class AutoDisposeViewKotlin : View, LifecycleScopeProvider<AutoDisposeV
         private val CORRESPONDING_EVENTS = CorrespondingEventsFunction<ViewEvent> { viewEvent ->
             when (viewEvent) {
                 ViewEvent.ATTACH -> ViewEvent.DETACH
-                else -> throw LifecycleEndedException(
-                        "Cannot bind to View lifecycle after detach.")
+                else -> throw LifecycleEndedException("Cannot bind to View lifecycle after detach.")
             }
         }
     }
