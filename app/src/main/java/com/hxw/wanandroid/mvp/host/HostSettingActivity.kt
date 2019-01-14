@@ -2,6 +2,7 @@ package com.hxw.wanandroid.mvp.host
 
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -29,7 +30,7 @@ class HostSettingActivity : AbstractActivity() {
     private val ipData = mutableListOf<IpRecordEntity>()
     private val sp: SharedPreferences by inject()
     private val gson: Gson by inject()
-    private val alarmManager: AlarmManager by inject()
+    private val alarmManager: AlarmManager by lazy { getSystemService(Context.ALARM_SERVICE) as AlarmManager }
 
     private lateinit var mAdapter: IpRecordAdapter
     override fun getLayoutId(): Int {
