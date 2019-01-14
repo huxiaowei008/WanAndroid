@@ -10,10 +10,6 @@ import java.util.*
  */
 fun String.jsonFormat() = StringUtils.jsonFormat(this)
 
-fun Float.dpToPx(context: Context) = AppUtils.dpToPx(context, this)
-
-fun Float.spToPx(context: Context) = AppUtils.spToPx(context, this)
-
 fun Date.toStr(pattern: String = "yyyy-MM-dd HH:mm:ss") = DateUtils.date2String(this, pattern)
 
 fun String.toDate(pattern: String = "yyyy-MM-dd HH:mm:ss") = DateUtils.string2Date(this, pattern)

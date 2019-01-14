@@ -1,6 +1,7 @@
 package com.hxw.wanandroid.base
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.bumptech.glide.GlideBuilder
 import com.google.gson.GsonBuilder
@@ -8,13 +9,15 @@ import com.hxw.core.base.ConfigModule
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.mvp.host.HostSettingActivity
 import okhttp3.OkHttpClient
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.get
 import retrofit2.Retrofit
 import timber.log.Timber
 
 /**
  * @author hxw on 2018/7/18.
  */
-class GlobalConfigModule : ConfigModule {
+class GlobalConfigModule : ConfigModule,KoinComponent {
     override fun configGson(context: Context, builder: GsonBuilder) {
         builder.setDateFormat("yyyy-MM-dd HH:mm:ss")
     }
@@ -24,7 +27,7 @@ class GlobalConfigModule : ConfigModule {
     }
 
     override fun configRetrofit(context: Context, builder: Retrofit.Builder) {
-        val sp = PreferenceManager.getDefaultSharedPreferences(context)
+        val sp =get<SharedPreferences>()
         val str = sp.getString(HostSettingActivity.IPUSE, WanApi.BASEURL)
         Timber.i(str)
         builder.baseUrl(WanApi.BASEURL)

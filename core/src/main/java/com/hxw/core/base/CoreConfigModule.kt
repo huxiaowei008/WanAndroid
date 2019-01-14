@@ -1,6 +1,7 @@
 package com.hxw.core.base
 
 import android.app.Application
+import android.preference.PreferenceManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.hxw.core.utils.jsonFormat
@@ -53,7 +54,7 @@ val coreModule = module {
         builder.build()
     }
 
-
+    factory { PreferenceManager.getDefaultSharedPreferences(get()) }
 }
 
 

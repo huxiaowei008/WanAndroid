@@ -16,30 +16,28 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
-
-allprojects {
-    repositories {
-        ...
-        mavenCentral()
-        maven { url 'https://dl.bintray.com/kodein-framework/Kodein-DI/' }
-    }
-}
-    
-    
 ```
 再在项目的build.gradle里添加依赖和插件
 ```
 apply plugin: 'android-aspectjx'
-```
-```
-implementation 'com.hxw.mycore:core:<latestVersion>'
-```
-```
+
 android{
-  compileOptions {
+    defaultConfig {
+        ...
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        //multiDexEnabled true
+    }
+
+    compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-  }
+    }
+
+    dependencies {
+        ...
+        implementation 'com.hxw:core:<latestVersion>'
+    }
 }
 ```
 ## 使用
@@ -77,22 +75,40 @@ class GlobalConfigModule : ConfigModule {
     }
 }
 ```
-新建一个Application继承AbstractApplication,实现kodein,然后再Manifest中注册Application
->[Kodein-DI](https://github.com/Kodein-Framework/Kodein-DI) 一个kotlin方式的依赖注入
+新建一个Application继承Application,构建内部代理ApplicationDelegate并调用方法,调用startKoin方法,
+然后再Manifest中注册Application,注意一定要提供ConfigModule的实现
+>~~[Kodein-DI](https://github.com/Kodein-Framework/Kodein-DI)~~ 一个kotlin方式的依赖注入,但换成了
+>[koin](https://github.com/InsertKoinIO/koin)
 ```
-class WanKodeinApplication : AbstractApplication() {
-    override val kodein: Kodein = Kodein.lazy {
-        import(coreModule(this@WanKodeinApplication, GlobalConfigModule()))
+class WanKodeinApplication : Application() {
+    private val delegate by lazy { ApplicationDelegate() }
 
-        bind<WanApi>() with singleton { instance<Retrofit>().create(WanApi::class.java) }
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(base)
+        delegate.attachBaseContext(base)
+        MultiDex.install(base)
     }
-    
+
     override fun onCreate() {
         super.onCreate()
+        delegate.onCreate(this@WanKodeinApplication)
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
+        startKoin(this, listOf(coreModule, appModule))
     }
+
+    override fun onTerminate() {
+        super.onTerminate()
+        delegate.onTerminate(this@WanKodeinApplication)
+    }
+}
+
+val appModule= module {
+
+    single<ConfigModule> { GlobalConfigModule() }
+
+    single { get<Retrofit>().create(WanApi::class.java) }
 }
 ```
 

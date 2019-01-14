@@ -27,7 +27,7 @@ class HostSettingActivity : AbstractActivity() {
     }
 
     private val ipData = mutableListOf<IpRecordEntity>()
-    private val sp: SharedPreferences by lazy { PreferenceManager.getDefaultSharedPreferences(this@HostSettingActivity) }
+    private val sp: SharedPreferences by inject()
     private val gson: Gson by inject()
     private val alarmManager: AlarmManager by inject()
 

@@ -44,17 +44,17 @@ android {
         }
     }
 
-    //用这配置统一support依赖的版本,这里除外multidex包
-    configurations.all {
-        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-            def requested = details.requested
-            if (requested.group == 'com.android.support') {
-                if (!requested.name.startsWith("multidex")) {
-                    details.useVersion '28.0.0' //这里改为你项目使用的版本即可
-                }
-            }
-        }
-    }
+    //用这配置统一support依赖的版本,这里除外multidex包,现在换成AndroidX了,暂时用不到
+//    configurations.all {
+//        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+//            def requested = details.requested
+//            if (requested.group == 'com.android.support') {
+//                if (!requested.name.startsWith("multidex")) {
+//                    details.useVersion '28.0.0' //这里改为你项目使用的版本即可
+//                }
+//            }
+//        }
+//    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

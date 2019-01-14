@@ -12,6 +12,7 @@ import com.hxw.core.WatermarkConfig
 import com.hxw.core.base.AbstractActivity
 import com.hxw.core.utils.*
 import kotlinx.android.synthetic.main.activity_take_photo.*
+import org.jetbrains.anko.sp
 import org.jetbrains.anko.toast
 import java.io.File
 import java.util.*
@@ -90,7 +91,7 @@ class TakePhotoActivity : AbstractActivity() {
                     .Images.Media.getBitmap(contentResolver, imageUri), WatermarkConfig()
                     .setAlpha(200)
                     .setXY(0, 0)
-                    .setTextSize(AppUtils.spToPx(this@TakePhotoActivity, 100f).toFloat())
+                    .setTextSize(sp(100f).toFloat())
                     .setText(DateUtils.date2String(Date(), "yyyy-MM-dd HH:mm") + "胡晓伟高新园区32153153313212313515318513515")
                     .setRecycle(true))
 

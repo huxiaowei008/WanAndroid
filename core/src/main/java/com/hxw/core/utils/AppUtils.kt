@@ -177,28 +177,4 @@ object AppUtils {
         }
 
     }
-
-    /**
-     * dp转px
-     *
-     * @param dpValue dp值
-     * @return px值
-     */
-    @JvmStatic
-    fun dpToPx(context: Context, dpValue: Float): Int {
-        val scale = context.resources.displayMetrics.density
-        return (dpValue * scale + 0.5f).toInt()
-    }
-
-    /**
-     * sp转px
-     *
-     * @param spValue sp值
-     * @return px值
-     */
-    @JvmStatic
-    fun spToPx(context: Context, spValue: Float): Int {
-        val scale = context.resources.displayMetrics.scaledDensity
-        return (spValue * scale + 0.5f).toInt()
-    }
 }
