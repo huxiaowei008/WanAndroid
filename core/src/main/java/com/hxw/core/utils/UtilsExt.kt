@@ -1,6 +1,5 @@
 package com.hxw.core.utils
 
-import android.content.Context
 import java.util.*
 
 /**
@@ -26,4 +25,6 @@ fun String.addCharToLeft(strLength: Int, c: Char = '0') = HexUtils.addCharToLeft
 
 fun String.addCharToRight(strLength: Int, c: Char = '0') = HexUtils.addCharToRight(this, strLength, c)
 
-fun String.toSigned()=HexUtils.unSignedToSigned(this)
+fun String.toSigned() = HexUtils.unSignedToSigned(this)
+
+fun Throwable.onError() = AppUtils.onError(this)

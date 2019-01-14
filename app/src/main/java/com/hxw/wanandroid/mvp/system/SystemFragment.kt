@@ -4,12 +4,11 @@ package com.hxw.wanandroid.mvp.system
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hxw.core.base.AbstractFragment
-import com.hxw.core.integration.AbstractErrorSubscriber
+import com.hxw.core.utils.onError
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.binder.SystemViewBinder
-import com.hxw.wanandroid.entity.BaseEntity
 import com.hxw.wanandroid.entity.TreeEntity
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
@@ -50,15 +49,13 @@ class SystemFragment : AbstractFragment() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .autoDisposable(this@SystemFragment.scope())
-                .subscribe(object : AbstractErrorSubscriber<BaseEntity<List<TreeEntity>>>() {
-                    override fun onNext(t: BaseEntity<List<TreeEntity>>) {
-                        if (t.errorCode == Constant.NET_SUCCESS) {
-                            itemData.addAll(t.data)
-                            mAdapter.notifyDataSetChanged()
-                        } else {
-                            toast(t.errorMsg)
-                        }
+                .subscribe({
+                    if (it.errorCode == Constant.NET_SUCCESS) {
+                        itemData.addAll(it.data)
+                        mAdapter.notifyDataSetChanged()
+                    } else {
+                        toast(it.errorMsg)
                     }
-                })
+                }, { it.onError() })
     }
 }

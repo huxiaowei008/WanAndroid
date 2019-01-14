@@ -1,6 +1,5 @@
 package com.hxw.wanandroid.mvp.login;
 
-import com.hxw.core.integration.AbstractErrorSubscriber;
 import com.hxw.core.mvp.BasePresenter;
 import com.hxw.core.utils.AppUtils;
 import com.hxw.wanandroid.Constant;
@@ -30,19 +29,14 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         wanApi.login(username, password)
                 .observeOn(AndroidSchedulers.mainThread())
                 .as(this.<BaseEntity<UserEntity>>bindLifecycle())
-                .subscribe(new AbstractErrorSubscriber<BaseEntity<UserEntity>>() {
-
-                    @Override
-                    public void onNext(BaseEntity<UserEntity> userEntity) {
-                        if (userEntity.getErrorCode() == Constant.NET_SUCCESS) {
-                            AppUtils.showToast("登陆成功");
-                            getMView().loginOrRegisterSuccess();
-                        } else {
-                            AppUtils.showToast("登陆失败->" + userEntity.getErrorMsg());
-                        }
+                .subscribe(userEntity -> {
+                    if (userEntity.getErrorCode() == Constant.NET_SUCCESS) {
+                        AppUtils.showToast("登陆成功");
+                        getMView().loginOrRegisterSuccess();
+                    } else {
+                        AppUtils.showToast("登陆失败->" + userEntity.getErrorMsg());
                     }
-
-                });
+                }, AppUtils::onError);
 
     }
 
@@ -51,17 +45,13 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .as(this.<BaseEntity<UserEntity>>bindLifecycle())
-                .subscribe(new AbstractErrorSubscriber<BaseEntity<UserEntity>>() {
-
-                    @Override
-                    public void onNext(BaseEntity<UserEntity> userEntity) {
-                        if (userEntity.getErrorCode() == Constant.NET_SUCCESS) {
-                            AppUtils.showToast("注册成功");
-                        } else {
-                            AppUtils.showToast("注册失败->" + userEntity.getErrorMsg());
-                        }
+                .subscribe(userEntity -> {
+                    if (userEntity.getErrorCode() == Constant.NET_SUCCESS) {
+                        AppUtils.showToast("注册成功");
+                    } else {
+                        AppUtils.showToast("注册失败->" + userEntity.getErrorMsg());
                     }
-                });
+                }, AppUtils::onError);
     }
 
     public void getHotKey() {
@@ -69,13 +59,10 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .as(this.<BaseEntity<List<HotKeyEntity>>>bindLifecycle())
-                .subscribe(new AbstractErrorSubscriber<BaseEntity<List<HotKeyEntity>>>() {
-                    @Override
-                    public void onNext(BaseEntity<List<HotKeyEntity>> listBaseEntity) {
-                        if (listBaseEntity.getErrorCode() == Constant.NET_SUCCESS) {
-                            AppUtils.showToast("热词成功");
-                        }
+                .subscribe(listBaseEntity -> {
+                    if (listBaseEntity.getErrorCode() == Constant.NET_SUCCESS) {
+                        AppUtils.showToast("热词成功");
                     }
-                });
+                }, AppUtils::onError);
     }
 }

@@ -5,17 +5,24 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.ParseException
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.view.View
 import androidx.core.graphics.green
+import com.google.gson.JsonParseException
 import com.hxw.core.integration.AppManager
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.gray
 import org.jetbrains.anko.opaque
 import org.jetbrains.anko.toast
+import org.json.JSONException
+import retrofit2.HttpException
+import timber.log.Timber
 import java.io.File
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 
 /**
@@ -175,6 +182,27 @@ object AppUtils {
             e.printStackTrace()
             ""
         }
+    }
 
+    /**
+     * 错误处理
+     */
+    @JvmStatic
+    fun onError(t: Throwable){
+        Timber.tag("Catch-Error").e(t)
+        val msg = when (t) {
+            is UnknownHostException -> "网络不可用"
+            is SocketTimeoutException -> "请求网络超时"
+            is HttpException -> when (t.code()) {
+                500 -> "服务器发生错误"
+                404 -> "请求地址不存在"
+                403 -> "请求被服务器拒绝"
+                307 -> "请求被重定向到其他页面"
+                else -> t.message()
+            }
+            is JsonParseException, is ParseException, is JSONException -> "数据解析错误"
+            else -> t.message.toString()
+        }
+        AppUtils.showSnackBar(msg)
     }
 }

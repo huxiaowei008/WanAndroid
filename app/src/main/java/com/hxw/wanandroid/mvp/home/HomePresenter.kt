@@ -1,8 +1,8 @@
 package com.hxw.wanandroid.mvp.home
 
-import com.hxw.core.integration.AbstractErrorSubscriber
 import com.hxw.core.mvp.BasePresenter
 import com.hxw.core.utils.AppUtils
+import com.hxw.core.utils.onError
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.entity.ArticleData
@@ -22,15 +22,13 @@ class HomePresenter constructor(private val api: WanApi) : BasePresenter<HomeVie
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .`as`(bindLifecycle<BaseEntity<ArticleListEntity<ArticleData>>>())
-                .subscribe(object : AbstractErrorSubscriber<BaseEntity<ArticleListEntity<ArticleData>>>() {
-                    override fun onNext(t: BaseEntity<ArticleListEntity<ArticleData>>) {
-                        if (t.errorCode == Constant.NET_SUCCESS) {
-                            mView?.addArticleData(t.data)
-                        } else {
-                            AppUtils.showToast(t.errorMsg)
-                        }
+                .subscribe({
+                    if (it.errorCode == Constant.NET_SUCCESS) {
+                        mView?.addArticleData(it.data)
+                    } else {
+                        AppUtils.showToast(it.errorMsg)
                     }
-                })
+                }, { it.onError() })
 
     }
 
@@ -39,16 +37,12 @@ class HomePresenter constructor(private val api: WanApi) : BasePresenter<HomeVie
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .`as`(bindLifecycle<BannerListEntity>())
-                .subscribe(object : AbstractErrorSubscriber<BannerListEntity>() {
-                    override fun onNext(t: BannerListEntity) {
-                        if (t.errorCode == Constant.NET_SUCCESS) {
-                            mView?.addBanner(t)
-                        } else {
-                            AppUtils.showToast(t.errorMsg)
-                        }
+                .subscribe({
+                    if (it.errorCode == Constant.NET_SUCCESS) {
+                        mView?.addBanner(it)
+                    } else {
+                        AppUtils.showToast(it.errorMsg)
                     }
-
-                })
-
+                }, { AppUtils.onError(it) })
     }
 }
