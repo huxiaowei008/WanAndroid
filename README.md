@@ -1,5 +1,5 @@
 # WanAndroid
-[![Download](https://api.bintray.com/packages/huxiaowei008/maven/FrameCore/images/download.svg) ](https://bintray.com/huxiaowei008/maven/FrameCore/_latestVersion)
+[![Download](https://api.bintray.com/packages/huxiaowei008/maven/Core/images/download.svg) ](https://bintray.com/huxiaowei008/maven/Core/_latestVersion)
 [![License](http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square) ](http://www.apache.org/licenses/LICENSE-2.0)
 
 玩Android项目练习
@@ -14,6 +14,14 @@ buildscript {
         classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.2'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        maven{ url 'https://dl.bintray.com/huxiaowei008/maven/'}
+        google()
+        jcenter()
     }
 }
 ```
