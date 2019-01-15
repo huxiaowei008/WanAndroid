@@ -36,7 +36,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                     } else {
                         AppUtils.showToast("登陆失败->" + userEntity.getErrorMsg());
                     }
-                }, AppUtils::onError);
+                });
 
     }
 
@@ -51,7 +51,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                     } else {
                         AppUtils.showToast("注册失败->" + userEntity.getErrorMsg());
                     }
-                }, AppUtils::onError);
+                });
     }
 
     public void getHotKey() {
@@ -63,6 +63,6 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                     if (listBaseEntity.getErrorCode() == Constant.NET_SUCCESS) {
                         AppUtils.showToast("热词成功");
                     }
-                }, AppUtils::onError);
+                });
     }
 }

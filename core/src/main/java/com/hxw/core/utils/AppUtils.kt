@@ -10,12 +10,9 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.view.View
-import androidx.core.graphics.green
 import com.google.gson.JsonParseException
 import com.hxw.core.integration.AppManager
 import org.jetbrains.anko.design.snackbar
-import org.jetbrains.anko.gray
-import org.jetbrains.anko.opaque
 import org.jetbrains.anko.toast
 import org.json.JSONException
 import retrofit2.HttpException
@@ -188,9 +185,10 @@ object AppUtils {
      * 错误处理
      */
     @JvmStatic
-    fun onError(t: Throwable){
+    fun onError(t: Throwable?) {
         Timber.tag("Catch-Error").e(t)
         val msg = when (t) {
+            null -> "无报错信息Throwable==null"
             is UnknownHostException -> "网络不可用"
             is SocketTimeoutException -> "请求网络超时"
             is HttpException -> when (t.code()) {

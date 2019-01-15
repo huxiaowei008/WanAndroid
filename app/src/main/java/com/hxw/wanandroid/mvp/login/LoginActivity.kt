@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import androidx.core.text.buildSpannedString
 import com.hxw.core.base.AbstractActivity
 import com.hxw.core.utils.AppUtils
 import com.hxw.wanandroid.R
@@ -59,7 +60,6 @@ class LoginActivity : AbstractActivity(), LoginView {
         iv_setting.setOnClickListener {
             startActivity(Intent(this@LoginActivity, HostSettingActivity::class.java))
         }
-        longToast("$sp1")
     }
 
     override fun loginOrRegisterSuccess() {

@@ -22,13 +22,13 @@ class HomePresenter constructor(private val api: WanApi) : BasePresenter<HomeVie
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .`as`(bindLifecycle<BaseEntity<ArticleListEntity<ArticleData>>>())
-                .subscribe({
+                .subscribe {
                     if (it.errorCode == Constant.NET_SUCCESS) {
                         mView?.addArticleData(it.data)
                     } else {
                         AppUtils.showToast(it.errorMsg)
                     }
-                }, { it.onError() })
+                }
 
     }
 
@@ -37,12 +37,12 @@ class HomePresenter constructor(private val api: WanApi) : BasePresenter<HomeVie
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .`as`(bindLifecycle<BannerListEntity>())
-                .subscribe({
+                .subscribe {
                     if (it.errorCode == Constant.NET_SUCCESS) {
                         mView?.addBanner(it)
                     } else {
                         AppUtils.showToast(it.errorMsg)
                     }
-                }, { AppUtils.onError(it) })
+                }
     }
 }

@@ -134,7 +134,7 @@ object PermissionUtils {
      * 权限请求一条龙
      */
     @JvmStatic
-    fun checkPermissions(host: Activity, perms: Array<String>, @IntRange(from = 0) requestCode: Int,
+    fun checkPermissions(host: Activity, perms: Array<String>, @IntRange(from = 0) requestCode: Int = PermissionAspect.REQUEST_CODE,
                          action: PermissionAction) {
         //第一步:先判断是否有权限
         if (hasPermissions(host, *perms)) {
@@ -163,7 +163,7 @@ object PermissionUtils {
     }
 
     @JvmStatic
-    fun checkPermissions(host: Fragment, perms: Array<String>, @IntRange(from = 0) requestCode: Int,
+    fun checkPermissions(host: Fragment, perms: Array<String>, @IntRange(from = 0) requestCode: Int = PermissionAspect.REQUEST_CODE,
                          action: PermissionAction) {
         //第一步:先判断是否有权限
         if (hasPermissions(host.activity!!, *perms)) {

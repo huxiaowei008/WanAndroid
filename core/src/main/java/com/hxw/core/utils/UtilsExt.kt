@@ -27,4 +27,4 @@ fun String.addCharToRight(strLength: Int, c: Char = '0') = HexUtils.addCharToRig
 
 fun String.toSigned() = HexUtils.unSignedToSigned(this)
 
-fun Throwable.onError() = AppUtils.onError(this)
+fun Throwable?.onError() = AppUtils.onError(this)
