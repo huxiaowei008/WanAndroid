@@ -18,6 +18,7 @@ import org.json.JSONException
 import retrofit2.HttpException
 import timber.log.Timber
 import java.io.File
+import java.net.NoRouteToHostException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
@@ -189,8 +190,9 @@ object AppUtils {
         Timber.tag("Catch-Error").e(t)
         val msg = when (t) {
             null -> "无报错信息Throwable==null"
-            is UnknownHostException -> "网络不可用"
+            is UnknownHostException -> "域名解析失败,请检查网络和服务器"
             is SocketTimeoutException -> "请求网络超时"
+            is NoRouteToHostException -> "无法连接远程地址与端口"
             is HttpException -> when (t.code()) {
                 500 -> "服务器发生错误"
                 404 -> "请求地址不存在"

@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.hardware.usb.*
+import android.os.Build
 import android.os.Parcelable
 import com.hxw.core.utils.AppUtils
 import timber.log.Timber
@@ -188,7 +189,11 @@ object USBConnector {
         val byteBuffer = ByteBuffer.wrap(byteArray)
         val usbRequest = UsbRequest()
         return if (usbRequest.initialize(mDeviceConnection, usbEpIn)) {
-            usbRequest.queue(byteBuffer, inMax)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                usbRequest.queue(byteBuffer)
+            }else{
+                usbRequest.queue(byteBuffer,inMax)
+            }
             if (mDeviceConnection!!.requestWait() == usbRequest) {
                 usbRequest.close()
                 byteArray

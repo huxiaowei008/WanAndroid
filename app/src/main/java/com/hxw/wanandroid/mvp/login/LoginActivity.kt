@@ -2,19 +2,16 @@ package com.hxw.wanandroid.mvp.login
 
 import android.app.ActivityOptions
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
-import androidx.core.text.buildSpannedString
 import com.hxw.core.base.AbstractActivity
 import com.hxw.core.utils.AppUtils
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.mvp.MainActivity
 import com.hxw.wanandroid.mvp.host.HostSettingActivity
 import kotlinx.android.synthetic.main.activity_login.*
-import org.jetbrains.anko.longToast
+import org.jetbrains.anko.startActivity
 import org.koin.android.ext.android.get
-import org.koin.android.ext.android.inject
 
 
 /**
@@ -23,7 +20,6 @@ import org.koin.android.ext.android.inject
  */
 class LoginActivity : AbstractActivity(), LoginView {
     private val mPresenter: LoginPresenter by lazy { LoginPresenter(get()) }
-    private val sp1: SharedPreferences by inject()
     override fun getLayoutId(): Int {
         return R.layout.activity_login
     }
@@ -58,11 +54,11 @@ class LoginActivity : AbstractActivity(), LoginView {
         }
 
         iv_setting.setOnClickListener {
-            startActivity(Intent(this@LoginActivity, HostSettingActivity::class.java))
+            startActivity<HostSettingActivity>()
         }
     }
 
     override fun loginOrRegisterSuccess() {
-        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        startActivity<MainActivity>()
     }
 }

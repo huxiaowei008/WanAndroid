@@ -1,5 +1,6 @@
 package com.hxw.core.utils;
 
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
@@ -107,7 +108,7 @@ public final class FileUtils {
      * @return 路径path
      */
     @Nullable
-    public static String getUriFromPath(Context context, Uri uri) {
+    public static String getPathFromUri(Context context, Uri uri) {
         String path = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(context, uri)) {
             // 如果是document类型的Uri，则通过document id处理
@@ -121,7 +122,7 @@ public final class FileUtils {
                 Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
                 path = getImagePath(context, contentUri, null);
             }
-        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+        } else if (ContentResolver.SCHEME_FILE.equalsIgnoreCase(uri.getScheme())) {
             // 如果是file类型的Uri，直接获取图片路径即可
             path = uri.getPath();
         } else {
@@ -141,7 +142,7 @@ public final class FileUtils {
      * @return path路径
      */
     @Nullable
-    public static String getImagePath(Context context, Uri uri, String selection) {
+    public static String getImagePath(Context context, Uri uri, @Nullable String selection) {
         String path = null;
         String[] projection = {MediaStore.Images.Media.DATA};
         // 通过Uri和selection来获取真实的图片路径

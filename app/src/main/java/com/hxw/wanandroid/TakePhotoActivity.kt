@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import com.hxw.core.WatermarkConfig
 import com.hxw.core.base.AbstractActivity
+import com.hxw.core.glide.GlideApp
 import com.hxw.core.utils.*
 import kotlinx.android.synthetic.main.activity_take_photo.*
 import org.jetbrains.anko.sp
@@ -83,26 +84,23 @@ class TakePhotoActivity : AbstractActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == cameraCode1 && resultCode == Activity.RESULT_OK) {
-//            image_test.setImageURI(imageUri)
-//            val w = Bitmap.createBitmap(500, 500, Bitmap.Config.RGB_565)
-//            w.eraseColor(Color.RED)
 
-            val bitmap = ImageUtils.addWatermark(MediaStore
-                    .Images.Media.getBitmap(contentResolver, imageUri), WatermarkConfig()
-                    .setAlpha(200)
-                    .setXY(0, 0)
-                    .setTextSize(sp(100f).toFloat())
-                    .setText(DateUtils.date2String(Date(), "yyyy-MM-dd HH:mm") + "胡晓伟高新园区32153153313212313515318513515")
-                    .setRecycle(true))
-
-            val file = File(externalCacheDir, "${System.currentTimeMillis()}压缩.jpg")
-            ImageUtils.compressAndSave(bitmap, file, 20)
-            iv_test.setImageURI(Uri.fromFile(file))
-//            val saveFile = File(externalCacheDir, "${System.currentTimeMillis()}crop.jpg")
-//            saveUri = Uri.fromFile(saveFile)
-//            val intent = AppUtils.getCropIntent(this@TakePhotoActivity, imageUri,
-//                    saveFile)
-//            startActivityForResult(intent, cropCode)
+//            val bitmap = ImageUtils.addWatermark(MediaStore
+//                    .Images.Media.getBitmap(contentResolver, imageUri), WatermarkConfig()
+//                    .setAlpha(200)
+//                    .setXY(0, 0)
+//                    .setTextSize(sp(100f).toFloat())
+//                    .setText(DateUtils.date2String(Date(), "yyyy-MM-dd HH:mm") + "胡晓伟高新园区32153153313212313515318513515")
+//                    .setRecycle(true))
+//
+//            val file = File(externalCacheDir, "${System.currentTimeMillis()}压缩.jpg")
+//            ImageUtils.compressAndSave(bitmap, file, 20)
+//            iv_test.setImageURI(Uri.fromFile(file))
+            val saveFile = File(externalCacheDir, "${System.currentTimeMillis()}crop.jpg")
+            saveUri = Uri.fromFile(saveFile)
+            val intent = AppUtils.getCropIntent(this@TakePhotoActivity, imageUri,
+                    saveFile)
+            startActivityForResult(intent, cropCode)
         } else if (requestCode == cameraCode2 && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 val bitmap: Bitmap = data.getParcelableExtra("data")
@@ -120,7 +118,10 @@ class TakePhotoActivity : AbstractActivity() {
 //                image_test.setImageURI(uri)
             }
         } else if (requestCode == cropCode && resultCode == Activity.RESULT_OK) {
-            iv_test.setImageURI(saveUri)
+            val file=File(FileUtils.getPathFromUri(this@TakePhotoActivity,saveUri))
+           GlideApp.with(this@TakePhotoActivity)
+                   .load(file)
+                   .into(iv_test)
         }
     }
 }
