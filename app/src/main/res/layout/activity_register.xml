@@ -92,13 +92,14 @@
                     android:textSize="@dimen/body2" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_register"
                 android:layout_width="128dp"
                 android:layout_height="42dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:background="@drawable/bg_shape_white"
+                app:cornerRadius="4dp"
+                app:backgroundTint="@color/white"
                 android:stateListAnimator="@drawable/state_list_animator_z"
                 android:text="@string/register"
                 android:textColor="@color/colorAccent"

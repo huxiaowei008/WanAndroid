@@ -15,8 +15,6 @@ import com.uber.autodispose.autoDisposable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_system.*
-import me.drakeet.multitype.Items
-import me.drakeet.multitype.MultiTypeAdapter
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.ext.android.inject
 
@@ -25,8 +23,8 @@ import org.koin.android.ext.android.inject
  */
 class SystemFragment : AbstractFragment() {
     private val api: WanApi by inject()
-    private val mAdapter = MultiTypeAdapter()
-    private val itemData = Items()
+//    private val mAdapter = MultiTypeAdapter()
+//    private val itemData = Items()
     override fun getLayoutId(): Int {
         return R.layout.fragment_system
     }
@@ -36,11 +34,11 @@ class SystemFragment : AbstractFragment() {
     }
 
     private fun initRecycler() {
-        mAdapter.register(TreeEntity::class.java, SystemViewBinder())
-        rv_system_article.layoutManager = LinearLayoutManager(activity)
-        rv_system_article.adapter = mAdapter
-        mAdapter.items = itemData
-        mAdapter.notifyDataSetChanged()
+//        mAdapter.register(TreeEntity::class.java, SystemViewBinder())
+//        rv_system_article.layoutManager = LinearLayoutManager(activity)
+//        rv_system_article.adapter = mAdapter
+//        mAdapter.items = itemData
+//        mAdapter.notifyDataSetChanged()
     }
 
     override fun onResume() {
@@ -51,8 +49,8 @@ class SystemFragment : AbstractFragment() {
                 .autoDisposable(this@SystemFragment.scope())
                 .subscribe({
                     if (it.errorCode == Constant.NET_SUCCESS) {
-                        itemData.addAll(it.data)
-                        mAdapter.notifyDataSetChanged()
+//                        itemData.addAll(it.data)
+//                        mAdapter.notifyDataSetChanged()
                     } else {
                         toast(it.errorMsg)
                     }

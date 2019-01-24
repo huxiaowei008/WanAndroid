@@ -26,4 +26,12 @@
         <!--2、colorButtonNormal：设置按钮默认状态下的背景色-->
         <item name="colorControlActivated">@color/green_500</item>
     </style>
+
+    <!--透明的Window-->
+    <style name="TransparentWindow" parent="AppTheme">
+        <!--window背景透明-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--window透明-->
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
 </resources>

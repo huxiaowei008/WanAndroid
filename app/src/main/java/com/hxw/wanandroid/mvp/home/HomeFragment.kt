@@ -11,8 +11,7 @@ import com.hxw.wanandroid.entity.ArticleData
 import com.hxw.wanandroid.entity.ArticleListEntity
 import com.hxw.wanandroid.entity.BannerListEntity
 import kotlinx.android.synthetic.main.fragment_home.*
-import me.drakeet.multitype.Items
-import me.drakeet.multitype.MultiTypeAdapter
+
 import org.koin.android.ext.android.get
 
 
@@ -21,8 +20,7 @@ import org.koin.android.ext.android.get
  */
 class HomeFragment : AbstractFragment(), HomeView {
     private val mPresenter: HomePresenter by lazy { HomePresenter(get()) }
-    private val mAdapter = MultiTypeAdapter()
-    private val itemData = Items()
+
     private var curpage: Int = 0
     private val loadMoreListener = object : LoadMoreListener() {
         override fun loadMore() {
@@ -46,26 +44,26 @@ class HomeFragment : AbstractFragment(), HomeView {
     }
 
     private fun initRecycler() {
-        mAdapter.register(BannerListEntity::class.java, BannerViewBinder())
-        mAdapter.register(ArticleData::class.java, ArticleItemViewBinder())
-        rv_home_article.layoutManager = LinearLayoutManager(activity)
-        rv_home_article.adapter = mAdapter
-        mAdapter.items = itemData
-        mAdapter.notifyDataSetChanged()
-        rv_home_article.addOnScrollListener(loadMoreListener)
+//        mAdapter.register(BannerListEntity::class.java, BannerViewBinder())
+//        mAdapter.register(ArticleData::class.java, ArticleItemViewBinder())
+//        rv_home_article.layoutManager = LinearLayoutManager(activity)
+//        rv_home_article.adapter = mAdapter
+//        mAdapter.items = itemData
+//        mAdapter.notifyDataSetChanged()
+//        rv_home_article.addOnScrollListener(loadMoreListener)
     }
 
     override fun addArticleData(articleListEntity: ArticleListEntity<ArticleData>) {
-        if (articleListEntity.curPage != articleListEntity.pageCount) {
-            loadMoreListener.canLoadMore()
-        }
-        curpage = articleListEntity.curPage
-        itemData.addAll(articleListEntity.datas)
-        mAdapter.notifyDataSetChanged()
+//        if (articleListEntity.curPage != articleListEntity.pageCount) {
+//            loadMoreListener.canLoadMore()
+//        }
+//        curpage = articleListEntity.curPage
+//        itemData.addAll(articleListEntity.datas)
+//        mAdapter.notifyDataSetChanged()
     }
 
     override fun addBanner(bannerListEntity: BannerListEntity) {
-        itemData.add(0, bannerListEntity)
-        mAdapter.notifyDataSetChanged()
+//        itemData.add(0, bannerListEntity)
+//        mAdapter.notifyDataSetChanged()
     }
 }

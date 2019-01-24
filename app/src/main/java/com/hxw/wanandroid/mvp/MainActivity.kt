@@ -30,7 +30,7 @@ class MainActivity : AbstractActivity() {
         toolbar.title = "首页"
 
         val controller = findNavController(R.id.host_nav_fragment)
-        controller.addOnNavigatedListener { _, destination ->
+        controller.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.fragment_home -> {
                     toolbar.title = "首页"

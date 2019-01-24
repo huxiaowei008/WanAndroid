@@ -21,7 +21,7 @@ import androidx.annotation.NonNull;
  */
 
 public class GlideRoundTransform extends BitmapTransformation {
-    private float radius = 0f;
+    private float radius;
 
     public GlideRoundTransform() {
         this(4);

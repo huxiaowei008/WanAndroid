@@ -4,13 +4,9 @@ import android.app.Application
 import android.content.Context
 import androidx.multidex.MultiDex
 import com.hxw.core.base.ApplicationDelegate
-import com.hxw.core.base.ConfigModule
 import com.hxw.core.base.coreModule
 import com.hxw.wanandroid.BuildConfig
-import com.hxw.wanandroid.WanApi
 import org.koin.android.ext.android.startKoin
-import org.koin.dsl.module.module
-import retrofit2.Retrofit
 import timber.log.Timber
 
 /**
@@ -31,7 +27,7 @@ class WanKodeinApplication : Application() {
             Timber.plant(Timber.DebugTree())
         }
 
-        startKoin(this, listOf(coreModule, appModule))
+        startKoin(this, listOf(coreModule, appModule,viewModel))
     }
 
     override fun onTerminate() {
@@ -40,9 +36,4 @@ class WanKodeinApplication : Application() {
     }
 }
 
-val appModule= module {
 
-    single<ConfigModule> { GlobalConfigModule() }
-
-    single { get<Retrofit>().create(WanApi::class.java) }
-}

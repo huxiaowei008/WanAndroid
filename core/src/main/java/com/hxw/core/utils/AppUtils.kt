@@ -1,6 +1,5 @@
 package com.hxw.core.utils
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -54,22 +53,6 @@ object AppUtils {
     fun showToast(message: String) {
         val topActivity = AppManager.getTopActivity()
         topActivity?.toast(message)
-    }
-
-    /**
-     * 启动Activity
-     * @param intent 需要启动的意图
-     * @param withFinish 是否需要关闭当前的 [Activity]
-     */
-    @JvmStatic
-    fun startActivity(intent: Intent, withFinish: Boolean = false) {
-        val currentActivity = AppManager.getCurrentActivity()
-        if (currentActivity != null) {
-            currentActivity.startActivity(intent)
-            if (withFinish) {
-                currentActivity.finish()
-            }
-        }
     }
 
     /**

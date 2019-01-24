@@ -195,7 +195,6 @@ dependencies {
     //AutoDispose https://github.com/uber/AutoDispose
     api 'com.uber.autodispose:autodispose-ktx:1.1.0'
     api 'com.uber.autodispose:autodispose-android-ktx:1.1.0'
-    api 'com.uber.autodispose:autodispose-lifecycle-ktx:1.1.0'
     api 'com.uber.autodispose:autodispose-android-archcomponents-ktx:1.1.0'
 
     //AOP使用 https://bintray.com/bintray/jcenter/org.aspectj%3Aaspectjrt

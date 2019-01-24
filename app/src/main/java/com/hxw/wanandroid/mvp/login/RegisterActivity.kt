@@ -11,25 +11,28 @@ import android.view.ViewAnimationUtils
 import android.view.animation.AccelerateInterpolator
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Observer
 import com.hxw.core.base.AbstractActivity
 import com.hxw.core.utils.AppUtils
 import com.hxw.wanandroid.R
 import kotlinx.android.synthetic.main.activity_register.*
 import org.koin.android.ext.android.get
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 /**
  * @author hxw on 2018/6/6.
  *
  */
-class RegisterActivity : AbstractActivity(), LoginView {
-    private val mPresenter: LoginPresenter by lazy { LoginPresenter(get()) }
+class RegisterActivity : AbstractActivity() {
+    private val mViewModel by viewModel<LoginViewModel>()
 
     override fun getLayoutId(): Int {
         return R.layout.activity_register
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        mPresenter.takeView(this)
+
         fa_btn.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 animateRevealClose()
@@ -46,12 +49,16 @@ class RegisterActivity : AbstractActivity(), LoginView {
             val password = et_password.text.toString()
             val repassword = et_repeat_password.text.toString()
             if (username.isNotEmpty() && password.isNotEmpty() && repassword.isNotEmpty()) {
-                mPresenter.register(username, password, repassword)
+                mViewModel.register(username, password, repassword)
             } else {
                 AppUtils.showToast("信息未填完整")
             }
-
         }
+
+        Timber.i(mViewModel.toString())
+        mViewModel.userInfo.observe(this@RegisterActivity, Observer {
+
+        })
     }
 
     /**
@@ -67,9 +74,7 @@ class RegisterActivity : AbstractActivity(), LoginView {
      */
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun showEnterAnimation() {
-
         val transition = TransitionInflater.from(this).inflateTransition(R.transition.fab_transition)
-
         window.sharedElementEnterTransition = transition
         transition.addListener(object : Transition.TransitionListener {
             override fun onTransitionStart(transition: Transition) {
@@ -134,9 +139,5 @@ class RegisterActivity : AbstractActivity(), LoginView {
         } else {
             super.onBackPressed()
         }
-    }
-
-    override fun loginOrRegisterSuccess() {
-
     }
 }

@@ -16,7 +16,7 @@ import java.util.Date;
 /**
  * Created by hxw on 2018/10/10.
  */
-public class NullStringToEmptyAdapterFactory<T> implements TypeAdapterFactory {
+public class NullStringToEmptyAdapterFactory implements TypeAdapterFactory {
 
     @Override
     @SuppressWarnings("unchecked")
@@ -40,7 +40,9 @@ public class NullStringToEmptyAdapterFactory<T> implements TypeAdapterFactory {
                 return;
             }
             writer.value(value);
-        }        @Override
+        }
+
+        @Override
         public String read(JsonReader reader) throws IOException {
 
             if (reader.peek() == JsonToken.NULL) {

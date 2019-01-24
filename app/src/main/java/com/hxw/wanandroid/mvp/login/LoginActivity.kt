@@ -4,6 +4,7 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import com.hxw.core.base.AbstractActivity
 import com.hxw.core.utils.AppUtils
 import com.hxw.wanandroid.R
@@ -12,20 +13,22 @@ import com.hxw.wanandroid.mvp.host.HostSettingActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
 import org.koin.android.ext.android.get
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 
 /**
  * @author hxw on 2018/6/2.
  *
  */
-class LoginActivity : AbstractActivity(), LoginView {
-    private val mPresenter: LoginPresenter by lazy { LoginPresenter(get()) }
+class LoginActivity : AbstractActivity() {
+    private val mViewModel: LoginViewModel by viewModel()
+
     override fun getLayoutId(): Int {
         return R.layout.activity_login
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        mPresenter.takeView(this)
         fa_btn.setOnClickListener {
             /**
              * 过渡动画需要在5.0版本以上
@@ -47,7 +50,7 @@ class LoginActivity : AbstractActivity(), LoginView {
             val username = et_username.text.toString()
             val password = et_password.text.toString()
             if (username.isNotEmpty() && password.isNotEmpty()) {
-                mPresenter.login(username, password)
+                mViewModel.login(username, password)
             } else {
                 AppUtils.showToast("信息未填完整")
             }
@@ -56,9 +59,10 @@ class LoginActivity : AbstractActivity(), LoginView {
         iv_setting.setOnClickListener {
             startActivity<HostSettingActivity>()
         }
+        Timber.i(mViewModel.toString())
+        mViewModel.userInfo.observe(this, Observer {
+            startActivity<MainActivity>()
+        })
     }
 
-    override fun loginOrRegisterSuccess() {
-        startActivity<MainActivity>()
-    }
 }

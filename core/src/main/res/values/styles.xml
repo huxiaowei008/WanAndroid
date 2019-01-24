@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="CoreAppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
 
-    </style>
 
-    <!--透明的Window-->
-    <style name="TransparentWindow" parent="CoreAppTheme">
-        <!--window背景透明-->
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <!--window透明-->
-        <item name="android:windowIsTranslucent">true</item>
-    </style>
 </resources>
