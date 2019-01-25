@@ -1,21 +1,15 @@
 package com.hxw.wanandroid.mvp.host
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
 import androidx.core.content.edit
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.hxw.core.base.AbstractActivity
-import com.hxw.core.integration.AppManager
+import com.hxw.core.integration.HostSelectionInterceptor
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi
-import com.hxw.wanandroid.mvp.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_host_setting.*
 import org.jetbrains.anko.*
 import org.koin.android.ext.android.inject
@@ -30,7 +24,6 @@ class HostSettingActivity : AbstractActivity() {
     private val ipData = mutableListOf<IpRecordEntity>()
     private val sp: SharedPreferences by inject()
     private val gson: Gson by inject()
-    private val alarmManager: AlarmManager by lazy { getSystemService(Context.ALARM_SERVICE) as AlarmManager }
 
     private lateinit var mAdapter: IpRecordAdapter
     override fun getLayoutId(): Int {
@@ -93,7 +86,7 @@ class HostSettingActivity : AbstractActivity() {
             }
         }
 
-        btn_host_sure.setOnClickListener { _ ->
+        btn_host_sure.setOnClickListener {
             val proxy = if (rb_host_http.isChecked) {
                 "http"
             } else {
@@ -109,18 +102,8 @@ class HostSettingActivity : AbstractActivity() {
                 sp.edit {
                     putString(IPUSE, str)
                 }
-                saveListData()
-                alert("需要重起更换IP地址,将在退出app后的1秒中自动执行", "温馨提示") {
-                    yesButton {
-                        it.dismiss()
-                        val intent = Intent(this@HostSettingActivity, LoginActivity::class.java)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                        val restartIntent = PendingIntent.getActivity(this@HostSettingActivity, 0, intent, PendingIntent.FLAG_ONE_SHOT)
-                        alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 500, restartIntent) // 1秒钟后重启应用
-                        AppManager.exitApp()
-                    }
-                }.show()
-
+                HostSelectionInterceptor.setHost(str)
+                finish()
             }
         }
 

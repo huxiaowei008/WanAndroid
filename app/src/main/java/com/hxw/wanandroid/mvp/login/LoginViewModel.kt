@@ -8,6 +8,7 @@ import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.entity.UserEntity
 import com.uber.autodispose.autoDisposable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.coroutines.runBlocking
 
 /**
  * @author hxw
@@ -30,6 +31,23 @@ class LoginViewModel(private val wanApi: WanApi) : AutoDisposeViewModel() {
                     }
                 }
     }
+//    fun login(username: String, password: String) {
+//        try {
+//
+//
+//        }catch (e:Exception){
+//
+//        }
+//        val deferrd = wanApi.login(username, password)
+//        val user = deferrd.await()
+//        if (user.errorCode == Constant.NET_SUCCESS) {
+//            AppUtils.showToast("登陆成功")
+//            userInfo.value = user.data
+//        } else {
+//            AppUtils.showToast("登陆失败->" + user.errorMsg)
+//        }
+//    }
+
 
     fun register(username: String, password: String, repassword: String) {
         wanApi.register(username, password, repassword)

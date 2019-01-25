@@ -62,6 +62,7 @@ class LoginActivity : AbstractActivity() {
         Timber.i(mViewModel.toString())
         mViewModel.userInfo.observe(this, Observer {
             startActivity<MainActivity>()
+            finish()
         })
     }
 

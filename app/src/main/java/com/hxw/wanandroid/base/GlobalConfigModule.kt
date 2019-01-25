@@ -29,7 +29,7 @@ class GlobalConfigModule : ConfigModule,KoinComponent {
     override fun configRetrofit(context: Context, builder: Retrofit.Builder) {
         val sp =get<SharedPreferences>()
         val str = sp.getString(HostSettingActivity.IPUSE, WanApi.BASEURL)
-        Timber.i(str)
+        Timber.d(str)
         builder.baseUrl(WanApi.BASEURL)
     }
 

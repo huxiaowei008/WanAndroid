@@ -4,6 +4,7 @@ import android.app.Application
 import android.preference.PreferenceManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.hxw.core.integration.HostSelectionInterceptor
 import com.hxw.core.utils.jsonFormat
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import io.reactivex.schedulers.Schedulers
@@ -39,6 +40,7 @@ val coreModule = module {
         })
         logging.level = HttpLoggingInterceptor.Level.BODY
         val builder = OkHttpClient.Builder()
+                .addInterceptor(HostSelectionInterceptor)
                 .addInterceptor(logging)
         get<ConfigModule>().configOkHttp(get<Application>(), builder)
         builder.build()

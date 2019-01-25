@@ -57,7 +57,11 @@ class RegisterActivity : AbstractActivity() {
 
         Timber.i(mViewModel.toString())
         mViewModel.userInfo.observe(this@RegisterActivity, Observer {
-
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                animateRevealClose()
+            } else {
+                finishActivity()
+            }
         })
     }
 

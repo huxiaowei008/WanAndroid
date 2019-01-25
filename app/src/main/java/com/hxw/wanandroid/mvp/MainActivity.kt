@@ -27,8 +27,6 @@ class MainActivity : AbstractActivity() {
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
-        toolbar.title = "首页"
-
         val controller = findNavController(R.id.host_nav_fragment)
         controller.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
