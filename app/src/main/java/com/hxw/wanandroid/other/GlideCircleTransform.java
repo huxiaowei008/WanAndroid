@@ -14,7 +14,8 @@ import androidx.annotation.NonNull;
 
 /**
  * 将图片转化为圆形
- * Created by hxw on 2017/3/13.
+ * @author hxw
+ * @date 2017/3/13
  */
 
 public class GlideCircleTransform extends BitmapTransformation {

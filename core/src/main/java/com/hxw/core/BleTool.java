@@ -31,7 +31,8 @@ import androidx.annotation.RequiresApi;
  * <p>
  * 蓝牙操作和操作间需要时间,注意延迟操作
  *
- * @author hxw on 2018/5/9.
+ * @author hxw
+ * @date 2018/5/9
  */
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
 public final class BleTool {

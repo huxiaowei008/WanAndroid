@@ -11,7 +11,8 @@ import timber.log.Timber
  * [Application.ActivityLifecycleCallbacks] 默认实现类
  * 实现内部逻辑
  *
- * @author hxw on 2018/5/5.
+ * @author hxw
+ * @date 2018/5/5
  */
 class ActivityLifecycle : Application.ActivityLifecycleCallbacks {
 

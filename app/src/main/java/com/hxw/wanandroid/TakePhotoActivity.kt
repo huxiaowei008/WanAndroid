@@ -19,8 +19,8 @@ import java.io.File
 import java.util.*
 
 /**
- * @author hxw on 2018/7/18.
- *
+ * @author hxw
+ * @date 2018/7/18
  */
 class TakePhotoActivity : AbstractActivity() {
 

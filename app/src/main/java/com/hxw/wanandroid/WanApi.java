@@ -2,8 +2,9 @@ package com.hxw.wanandroid;
 
 import com.hxw.wanandroid.entity.ArticleData;
 import com.hxw.wanandroid.entity.ArticleListEntity;
-import com.hxw.wanandroid.entity.BannerListEntity;
+import com.hxw.wanandroid.entity.BannerEntity;
 import com.hxw.wanandroid.entity.BaseEntity;
+import com.hxw.wanandroid.entity.BaseListEntity;
 import com.hxw.wanandroid.entity.CollectData;
 import com.hxw.wanandroid.entity.FriendEntity;
 import com.hxw.wanandroid.entity.HotKeyEntity;
@@ -16,7 +17,6 @@ import com.hxw.wanandroid.entity.WebEntity;
 import java.util.List;
 
 import io.reactivex.Observable;
-import kotlinx.coroutines.Deferred;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -25,7 +25,8 @@ import retrofit2.http.Query;
 /**
  * WanAndroid的接口api
  *
- * @author hxw on 2018/6/2.
+ * @author hxw
+ * @date 2018/6/2
  */
 public interface WanApi {
     String BASEURL = "http://www.wanandroid.com/";
@@ -48,7 +49,7 @@ public interface WanApi {
      * @return Banners数据
      */
     @GET("banner/json")
-    Observable<BannerListEntity> getBanner();
+    Observable<BaseListEntity<BannerEntity>> getBanner();
 
     /**
      * 1.3 常用网站

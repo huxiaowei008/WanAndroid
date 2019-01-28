@@ -4,11 +4,13 @@ import android.os.Bundle
 import com.hxw.core.base.AbstractFragment
 import com.hxw.wanandroid.LoadMoreListener
 import com.hxw.wanandroid.R
+import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 /**
- * @author hxw on 2018/7/23
+ * @author hxw
+ * @date 2018/7/23
  */
 class HomeFragment : AbstractFragment() {
     private val mViewModel: HomeViewModel by viewModel()
@@ -26,7 +28,14 @@ class HomeFragment : AbstractFragment() {
 
     override fun init(savedInstanceState: Bundle?) {
 
+        initViewPager()
         initRecycler()
+        mViewModel.getBanner()
+    }
+
+    private fun initViewPager() {
+        vp_banner.adapter = mViewModel.bannerAdapter
+        vp_indicator.setViewPager(vp_banner)
     }
 
     private fun initRecycler() {

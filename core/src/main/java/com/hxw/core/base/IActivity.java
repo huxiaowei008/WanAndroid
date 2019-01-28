@@ -10,7 +10,8 @@ import androidx.fragment.app.FragmentManager;
 /**
  * {@link Activity} 基础接口
  *
- * @author hxw on 2018/5/5.
+ * @author hxw
+ * @date 2018/5/5
  */
 public interface IActivity {
 

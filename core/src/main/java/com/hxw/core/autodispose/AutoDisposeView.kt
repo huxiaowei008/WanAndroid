@@ -12,7 +12,8 @@ import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
 /**
- * @author hxw on 2018/12/17
+ * @author hxw
+ * @date 2018/12/17
  */
 abstract class AutoDisposeView : View, LifecycleScopeProvider<AutoDisposeView.ViewEvent> {
 

@@ -7,7 +7,8 @@ import io.reactivex.Observable
 /**
  * RxBus
  * 不推荐使用,推荐参照,在具体的地方具体使用和订阅
- * @author hxw on 2018/5/3.
+ * @author hxw
+ * @date 2018/5/3
  */
 @Deprecated("不推荐使用")
 object RxBus {

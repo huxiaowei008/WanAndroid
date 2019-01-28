@@ -14,7 +14,8 @@ import timber.log.Timber;
  * 用于解析 AndroidManifest 中的 Meta 属性
  * 现在应该不需要了
  *
- * @author hxw on 2018/5/4.
+ * @author hxw
+ * @date 2018/5/4
  */
 @Deprecated
 public final class ManifestParser {

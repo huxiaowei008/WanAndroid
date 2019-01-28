@@ -13,7 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
  * 如果继承这类使用Presenter,记得添加生命周期订阅  getLifecycle().addObserver(mPresenter);
  * (现在已经在{@link com.hxw.core.mvp.BasePresenter}中做好了,记得调用mPresenter.takeView())
  *
- * @author hxw on 2018/5/5.
+ * @author hxw
+ * @date 2018/5/5
  */
 public abstract class AbstractActivity extends AppCompatActivity implements IActivity {
 

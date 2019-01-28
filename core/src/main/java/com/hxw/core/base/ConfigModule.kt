@@ -9,8 +9,9 @@ import retrofit2.Retrofit
 
 /**
  * 可以给框架配置一些参数
- * @author hxw on 2018/7/13.
  *
+ * @author hxw
+ * @date 2018/7/13
  */
 interface ConfigModule {
     /**

@@ -11,8 +11,8 @@ import org.jetbrains.anko.support.v4.longToast
 import timber.log.Timber
 
 /**
- * @author hxw on 2018/8/4.
- *
+ * @author hxw
+ * @date 2018/8/4
  */
 class PermissionFragment : AbstractFragment() {
 

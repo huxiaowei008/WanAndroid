@@ -12,7 +12,8 @@ import java.util.Properties;
 import androidx.annotation.Nullable;
 
 /**
- * @author hxw on 2018/5/7.
+ * @author hxw
+ * @date 2018/5/7
  */
 public final class SystemUtils {
     private final static String ZTEC2016 = "zte c2016";

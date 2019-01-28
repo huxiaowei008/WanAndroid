@@ -8,7 +8,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
- * @author hxw on 2018/5/7.
+ * 加密相关工具类
+ *
+ * @author hxw
+ * @date 2018/5/7
  */
 public final class EncryptUtils {
 //    private static final char[] HEX_DIGITS =

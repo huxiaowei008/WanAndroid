@@ -12,7 +12,8 @@ import timber.log.Timber
 /**
  * Presenter基类,自带绑定生命周期
  *
- * @author hxw on 2018/6/22.
+ * @author hxw
+ * @date 2018/6/22
  */
 @Deprecated("不推荐使用了",ReplaceWith("ViewModel"))
 open class BasePresenter<V : IView> : IPresenter<V> {

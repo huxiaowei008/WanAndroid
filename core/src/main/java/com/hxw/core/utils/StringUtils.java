@@ -13,7 +13,8 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 
 /**
- * @author hxw on 2018/5/3.
+ * @author hxw
+ * @date 2018/5/3
  */
 public final class StringUtils {
 

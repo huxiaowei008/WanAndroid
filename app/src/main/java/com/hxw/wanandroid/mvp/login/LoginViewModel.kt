@@ -8,7 +8,6 @@ import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.entity.UserEntity
 import com.uber.autodispose.autoDisposable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import kotlinx.coroutines.runBlocking
 
 /**
  * @author hxw

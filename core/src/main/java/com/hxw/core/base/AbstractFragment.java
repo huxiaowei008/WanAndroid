@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.hxw.core.utils.PermissionUtils;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -15,7 +17,8 @@ import androidx.fragment.app.Fragment;
  * 如果继承这类使用Presenter,记得添加生命周期订阅  getLifecycle().addObserver(mPresenter);
  * (现在已经在{@link com.hxw.core.mvp.BasePresenter}中做好了,记得调用mPresenter.takeView())
  *
- * @author hxw on 2018/5/5.
+ * @author hxw
+ * @date 2018/5/5
  */
 public abstract class AbstractFragment extends Fragment implements IFragment {
 

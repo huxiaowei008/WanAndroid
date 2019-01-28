@@ -8,12 +8,16 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.BehaviorSubject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlin.coroutines.CoroutineContext
 
 /**
  * 自带rx订阅解除的ViewModel
- * @author hxw on 2018/12/17
+ * @author hxw
+ * @date 2018/12/17
  */
-abstract class AutoDisposeViewModel : ViewModel(), LifecycleScopeProvider<AutoDisposeViewModel.ViewModelEvent> {
+abstract class AutoDisposeViewModel : ViewModel(), LifecycleScopeProvider<AutoDisposeViewModel.ViewModelEvent>, CoroutineScope {
     companion object {
         /**
          * Function of current event -> target disposal event. ViewModel has a very simple lifecycle.
@@ -28,6 +32,8 @@ abstract class AutoDisposeViewModel : ViewModel(), LifecycleScopeProvider<AutoDi
         }
     }
 
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main
     // Subject backing the auto disposing of subscriptions.
     private val lifecycleEvents = BehaviorSubject.createDefault(ViewModelEvent.CREATED)
     private val mCompositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
@@ -63,6 +69,7 @@ abstract class AutoDisposeViewModel : ViewModel(), LifecycleScopeProvider<AutoDi
         lifecycleEvents.onNext(ViewModelEvent.CLEARED)
         super.onCleared()
         mCompositeDisposable.clear()
+
     }
 
     /**

@@ -18,8 +18,8 @@ import com.hxw.core.PermissionAspect
 
 /**
  * 权限工具
- * @author hxw on 2018/8/4.
- *
+ * @author hxw
+ * @date 2018/8/4
  */
 object PermissionUtils {
 

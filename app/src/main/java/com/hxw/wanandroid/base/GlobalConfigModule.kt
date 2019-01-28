@@ -15,7 +15,8 @@ import retrofit2.Retrofit
 import timber.log.Timber
 
 /**
- * @author hxw on 2018/7/18.
+ * @author hxw
+ * @date 2018/7/18
  */
 class GlobalConfigModule : ConfigModule,KoinComponent {
     override fun configGson(context: Context, builder: GsonBuilder) {

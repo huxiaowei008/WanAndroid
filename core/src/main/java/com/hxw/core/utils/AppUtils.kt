@@ -25,7 +25,8 @@ import java.net.UnknownHostException
 /**
  * App相关工具类
  *
- * @author hxw on 2018/5/5.
+ * @author hxw
+ * @date 2018/5/5
  */
 object AppUtils {
 

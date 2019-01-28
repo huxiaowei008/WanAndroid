@@ -1,5 +1,9 @@
 package com.hxw.wanandroid.entity
 
+/**
+ * @author hxw
+ * @date 2018/6/20
+ */
 data class BannerEntity(
         val desc: String,
         val id: Int,
@@ -9,10 +13,4 @@ data class BannerEntity(
         val title: String,
         val type: Int,
         val url: String
-)
-
-data class BannerListEntity(
-        val errorCode: Int,
-        val errorMsg: String,
-        val data: List<BannerEntity>
 )

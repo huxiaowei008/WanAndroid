@@ -11,8 +11,8 @@ import org.jetbrains.anko.longToast
 import org.jetbrains.anko.toast
 
 /**
- * @author hxw on 2018/8/4.
- *
+ * @author hxw
+ * @date 2018/8/4
  */
 class PermissionActivity : AbstractActivity() {
 

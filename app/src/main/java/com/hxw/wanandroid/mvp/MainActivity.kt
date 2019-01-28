@@ -11,6 +11,10 @@ import com.hxw.wanandroid.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_content_main.*
 
+/**
+ * @author hxw
+ * @date 2018/7/17
+ */
 class MainActivity : AbstractActivity() {
     override fun getLayoutId(): Int {
         return R.layout.activity_main

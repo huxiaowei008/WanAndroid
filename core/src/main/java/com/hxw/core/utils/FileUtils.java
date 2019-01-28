@@ -20,7 +20,8 @@ import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 
 /**
- * @author hxw on 2018/5/3.
+ * @author hxw
+ * @date 2018/5/3
  */
 public final class FileUtils {
 

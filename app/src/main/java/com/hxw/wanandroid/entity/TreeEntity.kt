@@ -1,5 +1,9 @@
 package com.hxw.wanandroid.entity
 
+/**
+ * @author hxw
+ * @date 2018/6/20
+ */
 data class TreeEntity(
         val children: MutableList<TreeEntity>?,
         val courseId: Int,

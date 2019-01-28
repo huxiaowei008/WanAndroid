@@ -24,7 +24,8 @@ import java.io.InputStream
 /**
  * [Glide]的配置类
  *
- * @author hxw on 2018/5/4.
+ * @author hxw
+ * @date 2018/5/4
  */
 @Excludes(OkHttpLibraryGlideModule::class)
 @GlideModule

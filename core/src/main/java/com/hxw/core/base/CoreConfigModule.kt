@@ -18,8 +18,9 @@ import timber.log.Timber
 
 /**
  * 框架核心Module提供
- * @author hxw on 2018/7/18.
  *
+ * @author hxw
+ * @date 2018/7/18
  */
 val coreModule = module {
 

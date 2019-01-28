@@ -4,7 +4,8 @@ import com.hxw.core.utils.EncryptUtils;
 import com.hxw.core.utils.HexUtils;
 
 /**
- * @author hxw on 2018/6/27.
+ * @author hxw
+ * @date 2018/6/27
  */
 public class Test {
     public static void main(String args[]) {

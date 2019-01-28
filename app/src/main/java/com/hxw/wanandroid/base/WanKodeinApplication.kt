@@ -10,7 +10,8 @@ import org.koin.android.ext.android.startKoin
 import timber.log.Timber
 
 /**
- * @author hxw on 2018/7/17.
+ * @author hxw
+ * @date 2018/7/17
  */
 class WanKodeinApplication : Application() {
     private val delegate by lazy { ApplicationDelegate() }

@@ -8,7 +8,8 @@ import androidx.annotation.Nullable;
 /**
  * 水印配置
  *
- * @author hxw on 2018/8/6.
+ * @author hxw
+ * @date 2018/8/6
  */
 public class WatermarkConfig {
     private int x = 0;

@@ -163,7 +163,8 @@ import java.util.Locale;
  * </pre>
  * 注意：SimpleDateFormat不是线程安全的，线程安全需用{@code ThreadLocal<SimpleDateFormat>}
  *
- * @author hxw on 2018/5/7.
+ * @author hxw
+ * @date 2018/5/7
  */
 public final class DateUtils {
 

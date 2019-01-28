@@ -8,7 +8,8 @@ import androidx.annotation.Nullable;
 /**
  * 十六进制转化相关工具
  *
- * @author hxw on 2018/6/5.
+ * @author hxw
+ * @date 2018/6/5
  */
 public final class HexUtils {
     /**

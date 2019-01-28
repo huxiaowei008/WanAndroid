@@ -11,9 +11,9 @@ import org.aspectj.lang.annotation.Aspect
 
 /**
  * 权限切面声明
- *
- * @author hxw on 2018/9/3.
  * @ Aspect：声明切面，标记类
+ * @author hxw
+ * @date 2018/9/3
  */
 @Aspect
 class PermissionAspect {

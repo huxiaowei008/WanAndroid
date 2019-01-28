@@ -14,7 +14,8 @@ import java.util.Date;
 
 
 /**
- * Created by hxw on 2018/10/10.
+ * @author hxw
+ * @date 2018/10/10
  */
 public class NullStringToEmptyAdapterFactory implements TypeAdapterFactory {
 

@@ -17,7 +17,8 @@ import androidx.annotation.NonNull;
 /**
  * 将图片转化为圆角
  * 构造中第二个参数定义半径
- * Created by hxw on 2017/3/13.
+ * @author hxw
+ * @date 2017/3/13
  */
 
 public class GlideRoundTransform extends BitmapTransformation {

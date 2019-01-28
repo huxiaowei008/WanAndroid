@@ -24,7 +24,8 @@ import androidx.annotation.NonNull;
 /**
  * 图片相关工具
  *
- * @author hxw on 2018/8/6.
+ * @author hxw
+ * @date 2018/8/6
  */
 public final class ImageUtils {
 

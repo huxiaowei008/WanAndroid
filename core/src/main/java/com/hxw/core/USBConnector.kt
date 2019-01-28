@@ -14,8 +14,8 @@ import java.nio.ByteBuffer
 
 /**
  * USB连接器
- * @author hxw on 2018/8/13.
- *
+ * @author hxw
+ * @date 2018/8/13
  */
 object USBConnector {
     val ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION"

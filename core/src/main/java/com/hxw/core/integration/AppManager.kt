@@ -9,7 +9,8 @@ import java.util.*
 /**
  * 用于管理所有 [Activity],和在前台的 [Activity]
  *
- * @author hxw on 2018/5/4.
+ * @author hxw
+ * @date 2018/5/4
  */
 object AppManager {
     private var currentActivity: WeakReference<Activity>? = null

@@ -8,7 +8,8 @@ import androidx.annotation.IntDef;
 /**
  * 时间相关常量
  *
- * @author hxw on 2018/5/7.
+ * @author hxw
+ * @date 2018/5/7
  */
 public final class TimeConstants {
 

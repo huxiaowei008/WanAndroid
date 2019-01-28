@@ -4,8 +4,8 @@ import java.util.*
 
 /**
  * 工具类在kotlin中的拓展
- * @author hxw on 2018/12/18.
- *
+ * @author hxw
+ * @date 2018/12/18
  */
 fun String.jsonFormat() = StringUtils.jsonFormat(this)
 

@@ -14,7 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 /**
- * @author hxw on 2018/5/7.
+ * @author hxw
+ * @date 2018/5/7
  */
 public final class StatusBarUtils {
     /**

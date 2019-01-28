@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 /**
  * recyclerView加载更多监听
- * @author hxw on 2018/7/28
+ * @author hxw
+ * @date 2018/7/28
  */
 abstract class LoadMoreListener : RecyclerView.OnScrollListener() {
     private var canLoadMore = false

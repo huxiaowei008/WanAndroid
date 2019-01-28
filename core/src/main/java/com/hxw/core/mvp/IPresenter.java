@@ -9,7 +9,8 @@ import androidx.lifecycle.OnLifecycleEvent;
 /**
  * 本框架的Presenter基础接口
  *
- * @author hxw on 2018/5/30.
+ * @author hxw
+ * @date 2018/5/30
  */
 @Deprecated()
 public interface IPresenter<V extends IView> extends LifecycleObserver {
