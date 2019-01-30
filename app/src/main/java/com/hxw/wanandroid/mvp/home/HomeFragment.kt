@@ -1,11 +1,13 @@
 package com.hxw.wanandroid.mvp.home
 
 import android.os.Bundle
+import androidx.viewpager.widget.ViewPager
 import com.hxw.core.base.AbstractFragment
 import com.hxw.wanandroid.LoadMoreListener
 import com.hxw.wanandroid.R
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 
 /**
@@ -36,6 +38,21 @@ class HomeFragment : AbstractFragment() {
     private fun initViewPager() {
         vp_banner.adapter = mViewModel.bannerAdapter
         vp_indicator.setViewPager(vp_banner)
+        vp_indicator.setOnPageChangeListener(object :ViewPager.OnPageChangeListener{
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                Timber.tag("ViewPager").i("$position")
+            }
+
+        })
+
     }
 
     private fun initRecycler() {
