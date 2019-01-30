@@ -1,15 +1,5 @@
 package com.hxw.wanandroid.binder;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import com.hxw.wanandroid.R;
-import com.hxw.wanandroid.entity.ArticleData;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 /**
  * @author hxw on 2018/7/28
  */
@@ -25,7 +15,7 @@ public class ArticleItemViewBinder {
 //    }
 //
 //    @Override
-//    protected void onBindViewHolder(@NonNull ArticleHolder holder, @NonNull ArticleData item) {
+//    protected void onBindViewHolder(@NonNull ArticleHolder holder, @NonNull ArticleEntity item) {
 //        holder.tvauthor.setText(item.getAuthor());
 //        holder.tvtitle.setText(item.getTitle());
 //        String classification = item.getSuperChapterName() + "/" + item.getChapterName();

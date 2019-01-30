@@ -8,21 +8,25 @@ import java.util.List;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.AsyncListDiffer;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
+ * 用于数据列表变动频繁的异步差异更新Adapter
+ *
  * @author hxw
- * @date 2019/1/28
+ * @date 2019/1/30
  */
-public class SimpleRecyclerAdapter<T> extends RecyclerView.Adapter<SimpleViewHolder> {
+public class AsyncDiffAdapter<T> extends RecyclerView.Adapter<SimpleViewHolder> {
 
-    private List<T> mData;
     private final int layoutId;
     private SimpleAdapterInitView<T> initView;
+    private final AsyncListDiffer<T> mDiffer;
 
-    public SimpleRecyclerAdapter(@LayoutRes int layoutId) {
+    public AsyncDiffAdapter(@LayoutRes int layoutId, @NonNull DiffUtil.ItemCallback<T> diffCallback) {
         this.layoutId = layoutId;
+        this.mDiffer = new AsyncListDiffer<>(this, diffCallback);
     }
 
     @NonNull
@@ -35,28 +39,21 @@ public class SimpleRecyclerAdapter<T> extends RecyclerView.Adapter<SimpleViewHol
     @Override
     public void onBindViewHolder(@NonNull SimpleViewHolder holder, int position) {
         if (initView != null) {
-            initView.initView(holder.itemView, mData.get(position), position);
+            initView.initView(holder.itemView, mDiffer.getCurrentList().get(position), position);
         }
     }
 
     @Override
     public int getItemCount() {
-        return mData == null ? 0 : mData.size();
+        return mDiffer.getCurrentList().size();
     }
 
-    public SimpleRecyclerAdapter<T> setInitView(SimpleAdapterInitView<T> initView) {
+    public AsyncDiffAdapter<T> setInitView(SimpleAdapterInitView<T> initView) {
         this.initView = initView;
         return this;
     }
 
-    public SimpleRecyclerAdapter<T> setData(@Nullable List<T> data) {
-        this.mData = data;
-        return this;
+    public void submitList(List<T> data) {
+        mDiffer.submitList(data);
     }
-
-    @Nullable
-    public List<T> getData() {
-        return mData;
-    }
-
 }

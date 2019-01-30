@@ -1,6 +1,6 @@
 package com.hxw.wanandroid;
 
-import com.hxw.wanandroid.entity.ArticleData;
+import com.hxw.wanandroid.entity.ArticleEntity;
 import com.hxw.wanandroid.entity.ArticleListEntity;
 import com.hxw.wanandroid.entity.BannerEntity;
 import com.hxw.wanandroid.entity.BaseEntity;
@@ -39,7 +39,7 @@ public interface WanApi {
      * @return 首页文章列表数据
      */
     @GET("article/list/{page}/json")
-    Observable<BaseEntity<ArticleListEntity<ArticleData>>> getHomeArticle(
+    Observable<BaseEntity<ArticleListEntity<ArticleEntity>>> getHomeArticle(
             @Path("page") int page
     );
 
@@ -74,7 +74,7 @@ public interface WanApi {
      * @return 最新项目列表数据
      */
     @GET("article/listproject/{page}/json")
-    Observable<BaseEntity<ArticleListEntity<ArticleData>>> getLatestProject(
+    Observable<BaseEntity<ArticleListEntity<ArticleEntity>>> getLatestProject(
             @Path("page") int page
     );
 
@@ -95,7 +95,7 @@ public interface WanApi {
      * @return 文章列表数据
      */
     @GET("article/list/{page}/json")
-    Observable<BaseEntity<ArticleListEntity<ArticleData>>> getTreeArticle(
+    Observable<BaseEntity<ArticleListEntity<ArticleEntity>>> getTreeArticle(
             @Query("cid") int cid,
             @Path("page") int page
     );
@@ -126,7 +126,7 @@ public interface WanApi {
      * @return 项目列表数据
      */
     @GET("project/list/{page}/json")
-    Observable<BaseEntity<ArticleListEntity<ArticleData>>> getProjectList(
+    Observable<BaseEntity<ArticleListEntity<ArticleEntity>>> getProjectList(
             @Query("cid") int cid,
             @Path("page") int page
     );
@@ -287,7 +287,7 @@ public interface WanApi {
      * @return 文章列表数据
      */
     @POST("article/query/{page}/json")
-    Observable<BaseEntity<ArticleListEntity<ArticleData>>> search(
+    Observable<BaseEntity<ArticleListEntity<ArticleEntity>>> search(
             @Query("k") String key,
             @Path("page") int page
     );

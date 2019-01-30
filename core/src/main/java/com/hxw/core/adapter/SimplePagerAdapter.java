@@ -18,7 +18,7 @@ import androidx.viewpager.widget.PagerAdapter;
 public class SimplePagerAdapter<T> extends PagerAdapter {
 
     private List<T> mData;
-    private int layoutId;
+    private final int layoutId;
     private SimpleAdapterInitView<T> initView;
     private boolean isLoop;
 
@@ -52,17 +52,11 @@ public class SimplePagerAdapter<T> extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        if (initView == null) {
-            throw new NullPointerException("PagerAdapterInitView is null");
-        }
-        if (mData == null) {
-            throw new NullPointerException("data is null");
-        }
         View view = View.inflate(container.getContext(), layoutId, null);
-
-        int realPosition = position % getRealCount();
-        initView.initView(view, mData.get(realPosition), realPosition);
-
+        if (initView != null) {
+            int realPosition = position % getRealCount();
+            initView.initView(view, mData.get(realPosition), realPosition);
+        }
         container.addView(view);
         return view;
     }

@@ -4,7 +4,7 @@ package com.hxw.wanandroid.entity
  * @author hxw
  * @date 2018/6/20
  */
-data class ArticleData(
+data class ArticleEntity(
         val apkLink: String,
         val author: String,
         val chapterId: Int,
