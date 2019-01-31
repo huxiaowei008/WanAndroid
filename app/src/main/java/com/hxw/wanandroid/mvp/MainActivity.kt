@@ -35,7 +35,7 @@ class MainActivity : AbstractActivity() {
         controller.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.fragment_home -> {
-                    toolbar.title = "首页"
+                    toolbar.title = "WanAndroid"
                 }
                 R.id.fragment_system -> {
                     toolbar.title = "体系"

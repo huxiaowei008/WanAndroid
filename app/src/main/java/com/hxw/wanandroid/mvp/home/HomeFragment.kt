@@ -3,12 +3,12 @@ package com.hxw.wanandroid.mvp.home
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager.widget.ViewPager
 import com.hxw.core.base.AbstractFragment
 import com.hxw.wanandroid.R
+import com.hxw.wanandroid.paging.NetworkState
 import kotlinx.android.synthetic.main.fragment_home.*
+import org.jetbrains.anko.support.v4.toast
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 
 /**
@@ -27,43 +27,33 @@ class HomeFragment : AbstractFragment() {
 
         initViewPager()
         initRecycler()
-        initListener()
+        initSwipeToRefresh()
         mViewModel.getBanner()
     }
 
     private fun initViewPager() {
         vp_banner.adapter = mViewModel.bannerAdapter
         vp_indicator.setViewPager(vp_banner)
-        vp_indicator.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-
-            }
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-            }
-
-            override fun onPageSelected(position: Int) {
-                Timber.tag("ViewPager").i("$position")
-            }
-
-        })
-
     }
 
     private fun initRecycler() {
-
         rv_home_article.layoutManager = LinearLayoutManager(activity)
         rv_home_article.adapter = mViewModel.articleAdapter
-        mViewModel.articleData.observe(this, Observer {
+        mViewModel.pagedList.observe(this, Observer {
             mViewModel.articleAdapter.submitList(it)
         })
     }
 
-    private fun initListener() {
+    private fun initSwipeToRefresh() {
         refresh.setOnRefreshListener {
-            mViewModel.factory.sourceLiveData.value?.invalidate()
+            mViewModel.refresh()
         }
+        mViewModel.refreshState.observe(this, Observer {
+            refresh.isRefreshing = it == NetworkState.LOADING
+            if (it.msg != null) {
+                toast(it.msg)
+            }
+        })
     }
 
 
