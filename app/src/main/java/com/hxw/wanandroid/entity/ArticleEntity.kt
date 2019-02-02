@@ -22,7 +22,7 @@ data class ArticleEntity(
         val publishTime: Long,
         val superChapterId: Int,
         val superChapterName: String,
-        val tags: List<Tag>?,
+        val tags: List<TagEntity>?,
         val title: String,
         val type: Int,
         val userId: Int,

@@ -87,4 +87,7 @@ dependencies {
     implementation 'android.arch.navigation:navigation-ui-ktx:1.0.0-alpha11'
     //Paging https://developer.android.google.cn/topic/libraries/architecture/paging/
     implementation 'androidx.paging:paging-runtime-ktx:2.1.0'
+    //AgentWeb https://github.com/Justson/AgentWeb
+    implementation 'com.just.agentweb:agentweb:4.0.2'
+
 }

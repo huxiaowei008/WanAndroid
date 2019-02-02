@@ -6,4 +6,7 @@ package com.hxw.wanandroid
  */
 object Constant {
     const val NET_SUCCESS = 0
+    const val WEB_URL="web_url"
+    const val SYSTEM_ITEM="system_item"
+    const val SUB_SYSTEM_ITEM="sub_system"
 }

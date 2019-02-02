@@ -4,6 +4,7 @@ import com.hxw.core.base.ConfigModule
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.mvp.home.HomeViewModel
 import com.hxw.wanandroid.mvp.login.LoginViewModel
+import com.hxw.wanandroid.mvp.system.SystemViewModel
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 import retrofit2.Retrofit
@@ -24,4 +25,5 @@ val viewModel= module {
     viewModel { LoginViewModel(get()) }
 
     viewModel { HomeViewModel(get()) }
+
 }

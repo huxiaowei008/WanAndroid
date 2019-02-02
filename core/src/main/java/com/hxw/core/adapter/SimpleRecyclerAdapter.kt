@@ -8,6 +8,8 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 
 /**
+ * RecyclerView的Adapter简单封装
+ *
  * @author hxw
  * @date 2019/1/28
  */

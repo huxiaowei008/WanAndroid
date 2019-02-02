@@ -85,19 +85,20 @@ public interface WanApi {
      * @return 体系导航的树状结构数据
      */
     @GET("tree/json")
-    Observable<BaseEntity<List<TreeEntity>>> getTree();
+    Observable<BaseListEntity<TreeEntity>> getTree();
 
     /**
      * 2.2 知识体系下的文章
      *
-     * @param cid  分类的id,上述二级目录的id
      * @param page 页码,从0开始
+     * @param cid  分类的id,上述二级目录的id
      * @return 文章列表数据
      */
     @GET("article/list/{page}/json")
     Observable<BaseEntity<ArticleListEntity<ArticleEntity>>> getTreeArticle(
-            @Query("cid") int cid,
-            @Path("page") int page
+            @Path("page") int page,
+            @Query("cid") int cid
+
     );
 
     /**
