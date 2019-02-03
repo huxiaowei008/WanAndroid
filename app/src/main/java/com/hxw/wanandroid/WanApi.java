@@ -108,7 +108,7 @@ public interface WanApi {
      * @return 导航列表数据
      */
     @GET("navi/json")
-    Observable<BaseEntity<List<NaviEntity>>> getNavi();
+    Observable<BaseListEntity<NaviEntity>> getNavi();
 
     /**
      * 4. 项目
