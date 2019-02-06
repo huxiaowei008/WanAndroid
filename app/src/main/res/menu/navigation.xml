@@ -17,4 +17,8 @@
         android:id="@+id/fragment_project"
         android:icon="@drawable/ic_project"
         android:title="@string/project" />
+    <item
+        android:id="@+id/fragment_wx_article"
+        android:icon="@drawable/ic_wx"
+        android:title="@string/wx_article" />
 </menu>

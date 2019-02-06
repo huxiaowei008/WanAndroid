@@ -6,6 +6,7 @@ import com.hxw.wanandroid.mvp.home.HomeViewModel
 import com.hxw.wanandroid.mvp.login.LoginViewModel
 import com.hxw.wanandroid.mvp.project.ProjectMoreViewModel
 import com.hxw.wanandroid.mvp.project.ProjectViewModel
+import com.hxw.wanandroid.mvp.wxarticle.WXArticleViewModel
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
 import retrofit2.Retrofit
@@ -31,4 +32,5 @@ val viewModel= module {
 
     viewModel { ProjectMoreViewModel(get()) }
 
+    viewModel { WXArticleViewModel(get()) }
 }

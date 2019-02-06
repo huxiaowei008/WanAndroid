@@ -35,4 +35,8 @@
         android:id="@+id/fragment_project"
         android:name="com.hxw.wanandroid.mvp.project.ProjectFragment"
         tools:layout="@layout/fragment_project" />
+    <fragment
+        android:id="@+id/fragment_wx_article"
+        android:name="com.hxw.wanandroid.mvp.wxarticle.WXArticleFragment"
+        tools:layout="@layout/fragment_wx_article"/>
 </navigation>

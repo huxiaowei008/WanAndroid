@@ -13,6 +13,6 @@ data class TreeEntity(
         val name: String,
         val order: Int,
         val parentChapterId: Int,
-        val userControlSetTop:Boolean,
+        val userControlSetTop: Boolean,
         val visible: Int
-):Serializable
+) : Serializable

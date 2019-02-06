@@ -5,13 +5,12 @@ import com.hxw.wanandroid.entity.ArticleListEntity;
 import com.hxw.wanandroid.entity.BannerEntity;
 import com.hxw.wanandroid.entity.BaseEntity;
 import com.hxw.wanandroid.entity.BaseListEntity;
-import com.hxw.wanandroid.entity.CollectData;
+import com.hxw.wanandroid.entity.CollectEntity;
 import com.hxw.wanandroid.entity.FriendEntity;
 import com.hxw.wanandroid.entity.HotKeyEntity;
 import com.hxw.wanandroid.entity.NaviEntity;
 import com.hxw.wanandroid.entity.TreeEntity;
 import com.hxw.wanandroid.entity.UserEntity;
-import com.hxw.wanandroid.entity.WXPublicEntity;
 import com.hxw.wanandroid.entity.WebEntity;
 
 import java.util.List;
@@ -177,7 +176,7 @@ public interface WanApi {
      * @return 收藏的文章列表数据
      */
     @GET("lg/collect/list/{page}/json")
-    Observable<BaseEntity<ArticleListEntity<CollectData>>> getCollectList(
+    Observable<BaseEntity<ArticleListEntity<CollectEntity>>> getCollectList(
             @Path("page") int page
     );
 
@@ -300,5 +299,20 @@ public interface WanApi {
      * @return 微信公众号列表数据
      */
     @GET("wxarticle/chapters/json")
-    Observable<BaseEntity<List<WXPublicEntity>>> getWXPublic();
+    Observable<BaseListEntity<TreeEntity>> getWXPublic();
+
+    /**
+     * 9.2 获取公众号文章
+     *
+     * @param id   公众号ID
+     * @param page 页码,从1开始
+     * @param key  搜索关键字
+     */
+    @GET("wxarticle/list/{id}/{page}/json")
+    Observable<BaseEntity<ArticleListEntity<ArticleEntity>>> getWxArticle(
+            @Path("id") int id,
+            @Path("page") int page,
+            @Query("k") String key
+    );
+
 }

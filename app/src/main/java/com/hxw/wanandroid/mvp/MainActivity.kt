@@ -34,21 +34,17 @@ class MainActivity : AbstractActivity() {
         val controller = findNavController(R.id.host_nav_fragment)
         controller.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.fragment_home -> {
-                    toolbar.title = "WanAndroid"
-                }
-                R.id.fragment_system -> {
-                    toolbar.title = "体系"
-                }
-                R.id.fragment_navigation -> {
-                    toolbar.title = "导航"
-                }
-                R.id.fragment_project -> {
-                    toolbar.title = "项目"
-                }
-                else -> {
-                    toolbar.title = "WanAndroid"
-                }
+                R.id.fragment_home -> toolbar.title = "WanAndroid"
+
+                R.id.fragment_system -> toolbar.title = "体系"
+
+                R.id.fragment_navigation -> toolbar.title = "导航"
+
+                R.id.fragment_project -> toolbar.title = "项目"
+
+                R.id.fragment_wx_article -> toolbar.title = "公众号"
+                else -> toolbar.title = "WanAndroid"
+
             }
         }
         bottom_navigation.setupWithNavController(controller)

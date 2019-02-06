@@ -4,7 +4,7 @@ package com.hxw.wanandroid.entity
  * @author hxw
  * @date 2018/6/20
  */
-data class CollectData(
+data class CollectEntity(
         val author: String,
         val chapterId: Int,
         val chapterName: String,
