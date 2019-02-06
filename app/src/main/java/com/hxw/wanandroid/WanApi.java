@@ -70,7 +70,7 @@ public interface WanApi {
     /**
      * 1.5 最新项目
      *
-     * @param page 页码
+     * @param page 页码,从0开始
      * @return 最新项目列表数据
      */
     @GET("article/listproject/{page}/json")
@@ -117,19 +117,19 @@ public interface WanApi {
      * @return 项目的分类数据
      */
     @GET("project/tree/json")
-    Observable<BaseEntity<List<TreeEntity>>> getProjectTree();
+    Observable<BaseListEntity<TreeEntity>> getProjectTree();
 
     /**
      * 4.2 项目列表数据
      *
-     * @param cid  分类的id,上面项目分类接口
      * @param page 页码,从1开始
+     * @param cid  分类的id,上面项目分类接口
      * @return 项目列表数据
      */
     @GET("project/list/{page}/json")
     Observable<BaseEntity<ArticleListEntity<ArticleEntity>>> getProjectList(
-            @Query("cid") int cid,
-            @Path("page") int page
+            @Path("page") int page,
+            @Query("cid") int cid
     );
 
     /**

@@ -1,4 +1,4 @@
-package com.hxw.wanandroid.mvp.system
+package com.hxw.wanandroid.mvp.project
 
 import android.annotation.SuppressLint
 import androidx.paging.PageKeyedDataSource
@@ -14,13 +14,13 @@ import timber.log.Timber
  * @author hxw
  * @date 2019/1/30
  */
-class SystemDataSource(private val wanApi: WanApi, private val cid: Int) : BasePageDataSource<Int, ArticleEntity>() {
+class ProjectDataSource(private val wanApi: WanApi) : BasePageDataSource<Int, ArticleEntity>() {
 
     @SuppressLint("CheckResult")
     override fun loadInitial(params: PageKeyedDataSource.LoadInitialParams<Int>, callback: PageKeyedDataSource.LoadInitialCallback<Int, ArticleEntity>) {
         Timber.i("loadInitial-> ")
         refreshState.postValue(NetworkState.LOADING)
-        wanApi.getTreeArticle(0, cid)
+        wanApi.getLatestProject(0)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError {
                     refreshState.postValue(NetworkState.error(it.message ?: "unknown err"))
@@ -45,7 +45,7 @@ class SystemDataSource(private val wanApi: WanApi, private val cid: Int) : BaseP
             return
         }
         networkState.postValue(NetworkState.LOADING)
-        wanApi.getTreeArticle(params.key,cid)
+        wanApi.getLatestProject(params.key)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError {
                     networkState.postValue(NetworkState.error(it.message ?: "unknown err"))
@@ -67,7 +67,7 @@ class SystemDataSource(private val wanApi: WanApi, private val cid: Int) : BaseP
     override fun loadAfter(params: PageKeyedDataSource.LoadParams<Int>, callback: PageKeyedDataSource.LoadCallback<Int, ArticleEntity>) {
         Timber.i("loadAfter->${params.key}")
         networkState.postValue(NetworkState.LOADING)
-        wanApi.getTreeArticle(params.key,cid)
+        wanApi.getLatestProject(params.key)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError {
                     networkState.postValue(NetworkState.error(it.message ?: "unknown err"))

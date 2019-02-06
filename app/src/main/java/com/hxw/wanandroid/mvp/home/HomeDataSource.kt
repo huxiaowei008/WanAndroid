@@ -20,7 +20,6 @@ class HomeDataSource(private val wanApi: WanApi) : BasePageDataSource<Int, Artic
     override fun loadInitial(params: PageKeyedDataSource.LoadInitialParams<Int>, callback: PageKeyedDataSource.LoadInitialCallback<Int, ArticleEntity>) {
         Timber.i("loadInitial-> ")
         refreshState.postValue(NetworkState.LOADING)
-
         wanApi.getHomeArticle(0)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError {

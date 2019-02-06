@@ -10,34 +10,74 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.hxw.core.base.AbstractFragment
+import com.google.android.material.tabs.TabLayout
+import com.hxw.core.base.AbstractActivity
 import com.hxw.core.glide.GlideApp
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
+import com.hxw.wanandroid.WanApi
+import com.hxw.wanandroid.entity.TreeEntity
 import com.hxw.wanandroid.mvp.web.AgentWebActivity
 import com.hxw.wanandroid.paging.NetworkState
-import kotlinx.android.synthetic.main.fragment_project.*
-import org.jetbrains.anko.support.v4.startActivity
-import org.jetbrains.anko.support.v4.toast
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.autoDisposable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.android.synthetic.main.activtiy_project_more.*
+import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
- * @author hxw on 2018/7/23
+ * @author hxw
+ * @date 2019/2/5
  */
-class ProjectFragment : AbstractFragment() {
-    private val mViewModel: ProjectViewModel by viewModel()
-
+class ProjectMoreActivity : AbstractActivity() {
+    private val api: WanApi by inject()
+    private val mViewModel: ProjectMoreViewModel by viewModel()
     override fun getLayoutId(): Int {
-        return R.layout.fragment_project
+        return R.layout.activtiy_project_more
     }
 
     override fun init(savedInstanceState: Bundle?) {
+        setSupportActionBar(tool_title)
+        tool_title.setNavigationOnClickListener { finish() }
+        api.projectTree
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(this@ProjectMoreActivity.scope())
+                .subscribe {
+                    if (it.errorCode == Constant.NET_SUCCESS) {
+                        initTab(it.data)
+                    } else {
+                        toast(it.errorMsg)
+                    }
+                }
 
-        initRecyclerView()
         initSwipeToRefresh()
-        fab_more.setOnClickListener {
-            startActivity<ProjectMoreActivity>()
+        initRecyclerView()
+    }
+
+    private fun initTab(data: MutableList<TreeEntity>) {
+        data.forEach {
+            tab_layout.addTab(tab_layout.newTab().setText(it.name))
         }
+        mViewModel.changeCid(data[0].id)
+        tool_title.title=data[0].name
+        tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(p0: TabLayout.Tab) {
+
+            }
+
+            override fun onTabUnselected(p0: TabLayout.Tab) {
+
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                mViewModel.changeCid(data[tab.position].id)
+                tool_title.title=data[tab.position].name
+            }
+
+        })
     }
 
     private fun initRecyclerView() {
@@ -58,7 +98,7 @@ class ProjectFragment : AbstractFragment() {
             }
         }
 
-        rv_project.layoutManager = LinearLayoutManager(activity)
+        rv_project.layoutManager = LinearLayoutManager(this)
         rv_project.addItemDecoration(object : RecyclerView.ItemDecoration() {
             override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
                 outRect.set(0, 0, 0, 1)
@@ -77,7 +117,6 @@ class ProjectFragment : AbstractFragment() {
         mViewModel.pagedList.observe(this, Observer {
             mViewModel.projectAdapter.submitList(it)
         })
-
     }
 
     private fun initSwipeToRefresh() {
@@ -92,4 +131,8 @@ class ProjectFragment : AbstractFragment() {
         })
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        tab_layout.clearOnTabSelectedListeners()
+    }
 }

@@ -118,8 +118,8 @@ class SystemListActivity : AbstractActivity() {
             }
         }
 
-        rv_list.layoutManager = LinearLayoutManager(this)
-        rv_list.adapter = mViewModel.articleAdapter
+        rv_system.layoutManager = LinearLayoutManager(this)
+        rv_system.adapter = mViewModel.articleAdapter
         mViewModel.pagedList.observe(this, Observer {
             mViewModel.articleAdapter.submitList(it)
         })

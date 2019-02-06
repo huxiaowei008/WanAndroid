@@ -51,6 +51,7 @@
         <activity android:name=".mvp.host.HostSettingActivity"/>
         <activity android:name=".mvp.web.AgentWebActivity"/>
         <activity android:name=".mvp.system.SystemListActivity"/>
+        <activity android:name=".mvp.project.ProjectMoreActivity"/>
     </application>
 
 </manifest>

@@ -11,7 +11,7 @@ data class BaseEntity<T>(
 ) {}
 
 data class BaseListEntity<T>(
-        val data: List<T>,
+        val data: MutableList<T>,
         val errorCode: Int,
         val errorMsg: String
 ){}
