@@ -37,7 +37,7 @@ class AsyncDiffAdapter<T>(@param:LayoutRes private val layoutId: Int, diffCallba
         return this
     }
 
-    fun submitList(data: List<T>) {
+    fun submitList(data: List<T>?) {
         mDiffer.submitList(data)
     }
 }
