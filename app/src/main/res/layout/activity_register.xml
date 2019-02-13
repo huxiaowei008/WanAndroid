@@ -8,6 +8,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_register"
+        style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_marginStart="8dp"
@@ -100,10 +101,10 @@
                 android:layout_marginTop="8dp"
                 app:cornerRadius="4dp"
                 app:backgroundTint="@color/white"
-                android:stateListAnimator="@drawable/state_list_animator_z"
+                android:stateListAnimator="@animator/state_list_animator_z"
                 android:text="@string/register"
                 android:textColor="@color/colorAccent"
-                tools:targetApi="lollipop" />
+               style="@style/Widget.MaterialComponents.Button" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

@@ -49,7 +49,7 @@ class SystemFragment : AbstractFragment() {
     }
 
     private fun initRecycler() {
-        mAdapter.setInitView { view, data, position ->
+        mAdapter.setInitView { view, data, _ ->
             view.findViewById<TextView>(R.id.tv_name).text = data.name
             val flow = view.findViewById<FlowLayout>(R.id.flow_layout)
             data.children.forEachIndexed { index, treeEntity ->

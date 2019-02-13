@@ -34,6 +34,7 @@ class PermissionAspect {
     fun check(joinPoint: ProceedingJoinPoint, checkPermission: CheckPermission?) {
         val host = joinPoint.getThis()
         if (checkPermission == null) {
+            joinPoint.proceed()
             return
         }
         when (host) {

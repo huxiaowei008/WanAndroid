@@ -18,9 +18,9 @@ abstract class BasePageViewModel<Key, Value> : AutoDisposeViewModel() {
     //要观察的数据
     abstract val pagedList: LiveData<PagedList<Value>>
     //网络加载状态
-    val networkState by lazy { switchMap(sourceFactory.sourceLivaData) { it.networkState }!! }
+    val networkState by lazy { switchMap(sourceFactory.sourceLivaData) { it.networkState } }
     //刷新状态
-    val refreshState by lazy { switchMap(sourceFactory.sourceLivaData) { it.refreshState }!! }
+    val refreshState by lazy { switchMap(sourceFactory.sourceLivaData) { it.refreshState } }
 
     /**
      * 执行刷新操作

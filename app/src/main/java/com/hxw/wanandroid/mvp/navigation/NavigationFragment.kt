@@ -99,7 +99,7 @@ class NavigationFragment : AbstractFragment() {
                 ContextCompat.getColor(activity!!, R.color.indigo_500),
                 ContextCompat.getColor(activity!!, R.color.purple_500)
         )
-        mAdapter.setInitView { view, data, position ->
+        mAdapter.setInitView { view, data, _ ->
             view.findViewById<TextView>(R.id.tv_name).text = data.name
             val flow = view.findViewById<FlowLayout>(R.id.flow_layout)
             data.articles.forEach {

@@ -7,6 +7,7 @@ import com.bumptech.glide.GlideBuilder
 import com.google.gson.GsonBuilder
 import com.hxw.core.base.ConfigModule
 import com.hxw.wanandroid.WanApi
+import com.hxw.wanandroid.base.cookies.CookiesManager
 import com.hxw.wanandroid.mvp.host.HostSettingActivity
 import okhttp3.OkHttpClient
 import org.koin.standalone.KoinComponent
@@ -24,7 +25,7 @@ class GlobalConfigModule : ConfigModule,KoinComponent {
     }
 
     override fun configOkHttp(context: Context, builder: OkHttpClient.Builder) {
-
+            builder.cookieJar(CookiesManager(context))
     }
 
     override fun configRetrofit(context: Context, builder: Retrofit.Builder) {

@@ -10,4 +10,9 @@ object Constant {
     const val SYSTEM_ITEM="system_item"
     const val SUB_SYSTEM_ITEM="sub_system"
     const val CID="cid"
+
+    const val USERNAME="username"
+    const val ICON="icon"
+    const val EMAIL="email"
+    const val USERID="user_id"
 }

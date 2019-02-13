@@ -2,7 +2,6 @@ package com.hxw.wanandroid.base
 
 import android.app.Application
 import android.content.Context
-import androidx.multidex.MultiDex
 import com.hxw.core.base.ApplicationDelegate
 import com.hxw.core.base.coreModule
 import com.hxw.wanandroid.BuildConfig
@@ -18,7 +17,7 @@ class WanKodeinApplication : Application() {
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
         delegate.attachBaseContext(base)
-        MultiDex.install(base)
+//        MultiDex.install(base)
     }
 
     override fun onCreate() {
@@ -28,7 +27,7 @@ class WanKodeinApplication : Application() {
             Timber.plant(Timber.DebugTree())
         }
 
-        startKoin(this, listOf(coreModule, appModule,viewModel))
+        startKoin(this, listOf(coreModule, appModule, viewModel))
     }
 
     override fun onTerminate() {
