@@ -56,7 +56,7 @@ android{
     <!-- ... -->
 </style>
 ```
-继承上面的主题会更改一些控件样式(现在是只有按钮),如果不想改变样式就继承bridge,样式由自己控制,详细按钮参数可以查看
+继承上面的主题会更改一些控件样式,如果不想改变样式就继承bridge,样式由自己控制,详细按钮参数可以查看
 [MaterialButton](https://github.com/material-components/material-components-android/blob/master/docs/components/MaterialButton.md)
 ```
 <style name="Theme.MyApp" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">

@@ -2,6 +2,7 @@ package com.hxw.wanandroid.base
 
 import com.hxw.core.base.ConfigModule
 import com.hxw.wanandroid.WanApi
+import com.hxw.wanandroid.mvp.CommonViewModel
 import com.hxw.wanandroid.mvp.home.HomeViewModel
 import com.hxw.wanandroid.mvp.login.LoginViewModel
 import com.hxw.wanandroid.mvp.project.ProjectMoreViewModel
@@ -33,4 +34,6 @@ val viewModel= module {
     viewModel { ProjectMoreViewModel(get()) }
 
     viewModel { WXArticleViewModel(get()) }
+
+    viewModel { CommonViewModel(get()) }
 }

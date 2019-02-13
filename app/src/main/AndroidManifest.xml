@@ -21,7 +21,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".mvp.MainActivity"/>
+        <activity android:name=".mvp.MainActivity"
+            android:launchMode="singleTask"/>
 
         <activity android:name=".mvp.login.LoginActivity">
             <intent-filter>

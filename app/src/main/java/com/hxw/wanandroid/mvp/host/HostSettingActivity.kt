@@ -121,7 +121,7 @@ class HostSettingActivity : AbstractActivity() {
                     yesButton {
                         ipData.removeAt(position)
                         mAdapter.notifyItemRemoved(position)
-                        mAdapter.notifyItemRangeChanged(position, ipData.size)
+                        mAdapter.notifyItemRangeChanged(position, ipData.size - position)
                         it.dismiss()
                     }
                     noButton { it.dismiss() }
@@ -129,6 +129,7 @@ class HostSettingActivity : AbstractActivity() {
             }
 
             override fun onClick(position: Int) {
+                toast("$position")
                 val item = ipData[position]
                 if (item.proxy == "http") {
                     rb_host_http.isChecked = true

@@ -1,8 +1,11 @@
 package com.hxw.wanandroid.mvp.home
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.text.buildSpannedString
 import androidx.core.text.color
 import androidx.lifecycle.Observer
@@ -11,6 +14,7 @@ import com.hxw.core.base.AbstractFragment
 import com.hxw.core.glide.GlideApp
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
+import com.hxw.wanandroid.mvp.CommonViewModel
 import com.hxw.wanandroid.mvp.web.AgentWebActivity
 import com.hxw.wanandroid.paging.NetworkState
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -25,7 +29,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class HomeFragment : AbstractFragment() {
     private val mViewModel: HomeViewModel by viewModel()
-
+    private val mCommonViewModel: CommonViewModel by viewModel()
     override fun getLayoutId(): Int {
         return R.layout.fragment_home
     }
@@ -70,6 +74,16 @@ class HomeFragment : AbstractFragment() {
                 color(Color.BLACK) {
                     append("${data.superChapterName}/${data.chapterName}")
                 }
+            }
+            view.findViewById<ImageView>(R.id.iv_favorite).apply {
+                imageTintList = ColorStateList.valueOf(ContextCompat
+                        .getColor(activity!!, if (data.collect) {
+                            R.color.colorPrimary
+                        } else {
+                            R.color.grey_500
+                        }))
+            }.setOnClickListener {
+                mCommonViewModel.collectArticle(data.id)
             }
             view.setOnClickListener {
                 startActivity<AgentWebActivity>(

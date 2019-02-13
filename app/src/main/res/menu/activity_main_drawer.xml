@@ -7,9 +7,9 @@
         android:id="@+id/g1"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_collect"
             android:icon="@drawable/ic_add"
-            android:title="Import" />
+            android:title="@string/collection" />
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_add"
@@ -34,9 +34,9 @@
             android:icon="@drawable/ic_add"
             android:title="Share" />
         <item
-            android:id="@+id/nav_send"
+            android:id="@+id/nav_out"
             android:icon="@drawable/ic_add"
-            android:title="Send" />
+            android:title="@string/login_out" />
     </group>
 
 

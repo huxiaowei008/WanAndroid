@@ -63,7 +63,7 @@ class MainActivity : AbstractActivity() {
         nav_view.setNavigationItemSelectedListener {
 
             when (it.itemId) {
-                R.id.nav_camera -> {
+                R.id.nav_out -> {
                     api.loginOut()
                             .observeOn(AndroidSchedulers.mainThread())
                             .autoDisposable(this@MainActivity.scope())
