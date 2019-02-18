@@ -1,11 +1,16 @@
 package com.hxw.wanandroid.base.cookies;
 
+import com.hxw.core.utils.HexUtils;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import okhttp3.Cookie;
+import timber.log.Timber;
 
 /**
  * @author hxw
@@ -53,8 +58,54 @@ public class SerializableOkHttpCookies implements Serializable {
                 .expiresAt(expiresAt)
                 .path(path);
         builder = hostOnly ? builder.hostOnlyDomain(domain) : builder.domain(domain);
-        builder = secure ? builder.secure() : builder;
-        builder = httpOnly ? builder.httpOnly() : builder;
+        if (secure) {
+            builder.secure();
+        }
+        if (httpOnly) {
+            builder.httpOnly();
+        }
         clientCookies = builder.build();
+    }
+
+    /**
+     * cookies 序列化成 string
+     *
+     * @param cookie 要序列化的cookie
+     * @return 序列化之后的string
+     */
+    public static String encodeCookie(SerializableOkHttpCookies cookie) {
+        if (cookie == null) {
+            return null;
+        }
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        try {
+            ObjectOutputStream outputStream = new ObjectOutputStream(os);
+            outputStream.writeObject(cookie);
+        } catch (IOException e) {
+            Timber.e(e, "IOException in encodeCookie");
+            return null;
+        }
+        return HexUtils.bytes2HexStr2(os.toByteArray());
+    }
+
+    /**
+     * 将字符串反序列化成cookies
+     *
+     * @param cookieString cookies string
+     * @return cookie object
+     */
+    public static Cookie decodeCookie(String cookieString) {
+        byte[] bytes = HexUtils.hexStr2Bytes(cookieString);
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
+        Cookie cookie = null;
+        try {
+            ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+            cookie = ((SerializableOkHttpCookies) objectInputStream.readObject()).getCookies();
+        } catch (IOException e) {
+            Timber.e(e, "IOException in decodeCookie");
+        } catch (ClassNotFoundException e) {
+            Timber.e(e, "ClassNotFoundException in decodeCookie");
+        }
+        return cookie;
     }
 }
