@@ -149,13 +149,15 @@ val appModule= module {
 
 ~~[Kodein-DI](https://github.com/Kodein-Framework/Kodein-DI)~~
 
+~~[Dagger2](https://github.com/google/dagger)~~
+
 [koin](https://github.com/InsertKoinIO/koin)
 
 [AutoDispose](https://github.com/uber/AutoDispose)
 
 [RxDocs](https://github.com/mcxiaoke/RxDocs)
 
-[Dagger2](https://github.com/google/dagger)
+[Aspectj](https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx)
 
 ## License
 ```
