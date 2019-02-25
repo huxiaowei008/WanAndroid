@@ -1,9 +1,12 @@
 package com.hxw.wanandroid.mvp.wxarticle
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.core.text.buildSpannedString
 import androidx.core.text.color
 import androidx.lifecycle.Observer
@@ -13,6 +16,7 @@ import com.hxw.core.base.AbstractFragment
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.entity.TreeEntity
+import com.hxw.wanandroid.mvp.CommonViewModel
 import com.hxw.wanandroid.mvp.web.AgentWebActivity
 import com.hxw.wanandroid.paging.NetworkState
 import kotlinx.android.synthetic.main.fragment_wx_article.*
@@ -27,6 +31,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class WXArticleFragment : AbstractFragment() {
 
     private val mViewModel: WXArticleViewModel by viewModel()
+    private val mCommonViewModel: CommonViewModel by viewModel()
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_wx_article
@@ -84,7 +89,7 @@ class WXArticleFragment : AbstractFragment() {
     }
 
     private fun initRecyclerView() {
-        mViewModel.wxAdapter.setInitView { view, data, _ ->
+        mViewModel.wxAdapter.setInitView { view, data, position ->
             view.findViewById<TextView>(R.id.tv_title).text = data.title
             view.findViewById<TextView>(R.id.tv_time).text = data.niceDate
             view.findViewById<TextView>(R.id.tv_author).text = buildSpannedString {
@@ -99,6 +104,27 @@ class WXArticleFragment : AbstractFragment() {
                     append("${data.superChapterName}/${data.chapterName}")
                 }
             }
+            view.findViewById<ImageView>(R.id.iv_favorite).apply {
+                imageTintList = ColorStateList.valueOf(ContextCompat
+                        .getColor(activity!!, if (data.collect) {
+                            R.color.colorPrimary
+                        } else {
+                            R.color.grey_500
+                        }))
+            }.setOnClickListener {
+                        if (data.collect) {
+                            mCommonViewModel.unCollectArticle(data.id) {
+                                data.collect = false
+                                mViewModel.wxAdapter.notifyItemChanged(position)
+                            }
+                        } else {
+                            mCommonViewModel.collectArticle(data.id) {
+                                data.collect = true
+                                mViewModel.wxAdapter.notifyItemChanged(position)
+                            }
+                        }
+
+                    }
             view.setOnClickListener {
                 startActivity<AgentWebActivity>(
                         Constant.WEB_URL to data.link

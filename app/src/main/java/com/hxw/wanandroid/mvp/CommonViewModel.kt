@@ -15,26 +15,28 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 class CommonViewModel(private val api: WanApi) : AutoDisposeViewModel() {
 
 
-    fun collectArticle(id: Int) {
+    fun collectArticle(id: Int, action: () -> Unit) {
         api.collect(id)
                 .observeOn(AndroidSchedulers.mainThread())
                 .autoDisposable(this)
                 .subscribe {
                     if (it.errorCode == Constant.NET_SUCCESS) {
                         AppUtils.showToast("收藏成功")
+                        action.invoke()
                     } else {
                         AppUtils.showToast(it.errorMsg)
                     }
                 }
     }
 
-    fun unCollectArticle(id: Int){
+    fun unCollectArticle(id: Int,action: () -> Unit) {
         api.unCollect(id)
                 .observeOn(AndroidSchedulers.mainThread())
                 .autoDisposable(this)
                 .subscribe {
                     if (it.errorCode == Constant.NET_SUCCESS) {
                         AppUtils.showToast("取消收藏")
+                        action.invoke()
                     } else {
                         AppUtils.showToast(it.errorMsg)
                     }

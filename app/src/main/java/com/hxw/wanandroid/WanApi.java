@@ -213,7 +213,7 @@ public interface WanApi {
      * @param id 列表中文章的id
      * @return 基础格式, 用于判断取消收藏成功与否
      */
-    @POST("lg/uncollect/{id}/json")
+    @POST("lg/uncollect_originId/{id}/json")
     Observable<BaseEntity> unCollect(
             @Path("id") int id
     );

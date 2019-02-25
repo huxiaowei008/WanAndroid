@@ -22,15 +22,15 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity android:name=".mvp.MainActivity"
-            android:launchMode="singleTask"/>
-
-        <activity android:name=".mvp.login.LoginActivity">
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".mvp.login.LoginActivity"/>
         <activity
             android:name=".mvp.login.RegisterActivity"
             android:theme="@style/TransparentWindow" />

@@ -41,16 +41,16 @@ class NavigationFragment : AbstractFragment() {
     override fun init(savedInstanceState: Bundle?) {
         initRecycler()
         api.navi.observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(this@NavigationFragment.scope())
-                .subscribe {
-                    if (it.errorCode == Constant.NET_SUCCESS) {
-                        initTabLayout(it.data)
-                        mAdapter.setData(it.data)
-                        mAdapter.notifyDataSetChanged()
-                    } else {
-                        toast(it.errorMsg)
-                    }
+            .autoDisposable(this@NavigationFragment.scope())
+            .subscribe {
+                if (it.errorCode == Constant.NET_SUCCESS) {
+                    initTabLayout(it.data)
+                    mAdapter.setData(it.data)
+                    mAdapter.notifyDataSetChanged()
+                } else {
+                    toast(it.errorMsg)
                 }
+            }
     }
 
     private fun initTabLayout(data: List<NaviEntity>) {
@@ -91,13 +91,14 @@ class NavigationFragment : AbstractFragment() {
     }
 
     private fun initRecycler() {
-        val color = intArrayOf(ContextCompat.getColor(activity!!, R.color.red_500),
-                ContextCompat.getColor(activity!!, R.color.orange_500),
-                ContextCompat.getColor(activity!!, R.color.amber_500),
-                ContextCompat.getColor(activity!!, R.color.green_500),
-                ContextCompat.getColor(activity!!, R.color.blue_500),
-                ContextCompat.getColor(activity!!, R.color.indigo_500),
-                ContextCompat.getColor(activity!!, R.color.purple_500)
+        val color = intArrayOf(
+            ContextCompat.getColor(activity!!, R.color.red_500),
+            ContextCompat.getColor(activity!!, R.color.orange_500),
+            ContextCompat.getColor(activity!!, R.color.amber_500),
+            ContextCompat.getColor(activity!!, R.color.green_500),
+            ContextCompat.getColor(activity!!, R.color.blue_500),
+            ContextCompat.getColor(activity!!, R.color.indigo_500),
+            ContextCompat.getColor(activity!!, R.color.purple_500)
         )
         mAdapter.setInitView { view, data, _ ->
             view.findViewById<TextView>(R.id.tv_name).text = data.name
@@ -109,9 +110,9 @@ class NavigationFragment : AbstractFragment() {
                 textView.setPadding(size * 2, size, size * 2, size)
                 textView.text = it.title
                 textView.setTextColor(color[Random.nextInt(7)])
-                textView.setOnClickListener { v->
+                textView.setOnClickListener { v ->
                     startActivity<AgentWebActivity>(
-                            Constant.WEB_URL to it.link
+                        Constant.WEB_URL to it.link
                     )
                 }
                 flow.addView(textView)

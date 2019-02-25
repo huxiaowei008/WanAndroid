@@ -1,5 +1,6 @@
 package com.hxw.core
 
+import android.app.AlertDialog
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -7,7 +8,11 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.hardware.usb.*
 import android.os.Build
-import android.os.Parcelable
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.OnLifecycleEvent
 import com.hxw.core.utils.AppUtils
 import timber.log.Timber
 import java.nio.ByteBuffer
@@ -17,132 +22,126 @@ import java.nio.ByteBuffer
  * @author hxw
  * @date 2018/8/13
  */
-object USBConnector {
-    val ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION"
-    val ACTION_USB_DETACHED = "android.hardware.usb.action.USB_DEVICE_DETACHED"
-    private var mUsbManager: UsbManager? = null
+object USBTool : LifecycleObserver {
+    private val ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION"
+    private lateinit var mUsbManager: UsbManager
     private var mInterface: UsbInterface? = null
     private var mDeviceConnection: UsbDeviceConnection? = null
     private var usbEpIn: UsbEndpoint? = null  //代表一个接口的某个节点的类:读数据节点
     private var usbEpOut: UsbEndpoint? = null  //代表一个接口的某个节点的类:写数据节点
-    private var onInterface: OnInterface? = null
+    //返回true的话就不会执行内部的逻辑了
+    private lateinit var mAction: ((deviceConnection: UsbDeviceConnection) -> Boolean)
     private val mUsbReceiver = object : BroadcastReceiver() {
-
         override fun onReceive(context: Context, intent: Intent) {
             val action = intent.action
-            if (ACTION_USB_PERMISSION == action) {
-                synchronized(this) {
-                    val device = intent.getParcelableExtra<Parcelable>(UsbManager.EXTRA_DEVICE) as UsbDevice?
+            when {
+                ACTION_USB_PERMISSION == action -> synchronized(this) {
+                    val device: UsbDevice? = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE)
                     if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
-                        if (device != null) {
-                            //call method to set up device communication
+                        device?.let {
                             prepareCommunication(device)
                         }
                     } else {
                         Timber.i("设备 $device 权限请求被拒绝")
                     }
                 }
-            } else if (ACTION_USB_DETACHED == action) {
-                AppUtils.showToast("USB拔出")
+                UsbManager.ACTION_USB_DEVICE_DETACHED == action -> Timber.i("USB拔出")
+                UsbManager.ACTION_USB_DEVICE_ATTACHED == action -> Timber.i("USB插入")
             }
         }
     }
 
-    /**
-     * 先初始话
-     */
-    fun init(usbManager: UsbManager, context: Context) {
-        this.mUsbManager = usbManager
+    fun onCreate(activity: AppCompatActivity) {
+        activity.lifecycle.addObserver(this)
+        mUsbManager = activity.getSystemService(Context.USB_SERVICE) as UsbManager
         //注册USB设备权限管理广播
         val filter = IntentFilter(ACTION_USB_PERMISSION)
-        filter.addAction(ACTION_USB_DETACHED)
-        context.registerReceiver(mUsbReceiver, filter)
+        filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED)
+        filter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED)
+        activity.registerReceiver(mUsbReceiver, filter)
     }
 
-    fun connection(context: Context, productId: Int, vendorId: Int) {
-        val deviceList = mUsbManager!!.deviceList
-        var device: UsbDevice? = null
-        val deviceIterator = deviceList.values.iterator()
-        while (deviceIterator.hasNext()) {
-            val dd = deviceIterator.next()
-            if (dd.productId == productId && dd.vendorId == vendorId) {
-                device = dd
-            }
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    fun onDestroy(owner: LifecycleOwner) {
+        if (owner is Context) {
+            owner.unregisterReceiver(mUsbReceiver)
         }
-        if (device != null) {
-            openDevice(context, device)
-        } else {
-            AppUtils.showToast("没有设备或设备不匹配")
-        }
+        owner.lifecycle.removeObserver(this)
+        closeDevice()
     }
 
     /**
      * 打开设备
      */
-    fun openDevice(context: Context, device: UsbDevice) {
+    fun openDevice(
+        context: Context,
+        device: UsbDevice,
+        action: ((deviceConnection: UsbDeviceConnection) -> Boolean)
+    ) {
+        mAction = action
+        // 判断系统是否支持USB HOST
+        if (!context.packageManager.hasSystemFeature("android.hardware.usb.host")) {
+            val dialog = AlertDialog.Builder(context)
+                .setTitle("提示")
+                .setMessage("您的手机不支持USB HOST，请更换其他手机再试！")
+                .setPositiveButton("确认") { arg0, arg1 -> System.exit(0) }.create()
+            dialog.setCanceledOnTouchOutside(false)
+            dialog.show()
+        }
         // 向用户请求连接设备权限的对话框
-        if (!mUsbManager!!.hasPermission(device)) {
+        if (mUsbManager.hasPermission(device)) {
+            prepareCommunication(device)
+        } else {
             //权限判断
             val mPermissionIntent = PendingIntent
-                    .getBroadcast(context, 0,
-                            Intent(ACTION_USB_PERMISSION), 0)
-            mUsbManager!!.requestPermission(device, mPermissionIntent)
-        } else {
-            prepareCommunication(device)
+                .getBroadcast(
+                    context, 0,
+                    Intent(ACTION_USB_PERMISSION), 0
+                )
+            mUsbManager.requestPermission(device, mPermissionIntent)
         }
     }
 
     private fun prepareCommunication(device: UsbDevice) {
-        if (mDeviceConnection != null) {
-            if (mInterface != null) {
-                mDeviceConnection?.releaseInterface(mInterface)
-            }
-            mDeviceConnection?.close()
-            mDeviceConnection = null
-            mInterface = null
-        }
-        mDeviceConnection = mUsbManager!!.openDevice(device)
+        //先关闭之前的设备
+        closeDevice()
+        mDeviceConnection = mUsbManager.openDevice(device)
         if (mDeviceConnection == null) {
-            AppUtils.showToast("mDeviceConnection ->null")
-            return
+            throw NullPointerException("mDeviceConnection==null,请检查是否申请权限")
         }
-        if (onInterface != null) {
-            onInterface!!.chooseInterface(device)
+        if (!mAction.invoke(mDeviceConnection!!)) {
+            if (!setInterface(device.getInterface(0))) {
+                Timber.i("没有找到 USB 设备接口")
+            }
         }
-    }
-
-    fun setOnInterface(onInterface: OnInterface) {
-        this.onInterface = onInterface
     }
 
     fun setInterface(usbInterface: UsbInterface): Boolean {
         mInterface = usbInterface
-        for (i in 0 until mInterface!!.endpointCount) {
-            val ep = mInterface!!.getEndpoint(i)
+        for (i in 0 until usbInterface.endpointCount) {
+            val ep = usbInterface.getEndpoint(i)
             if (ep.type == UsbConstants.USB_ENDPOINT_XFER_BULK) {
-                if (ep.direction == UsbConstants.USB_DIR_OUT) {
-                    usbEpOut = ep
-                } else {
-                    usbEpIn = ep
+                when (ep.direction) {
+                    UsbConstants.USB_DIR_OUT -> usbEpOut = ep
+                    UsbConstants.USB_DIR_IN -> usbEpIn = ep
+                    else -> {
+
+                    }
                 }
             }
         }
-        return mDeviceConnection!!.claimInterface(mInterface, true)
+        return mDeviceConnection?.claimInterface(usbInterface, true) ?: false
     }
 
-    fun closeDevice(context: Context) {
-        context.unregisterReceiver(mUsbReceiver)
+    fun closeDevice() {
         usbEpOut = null
         usbEpIn = null
-        onInterface = null
-        mUsbManager = null
         if (mInterface != null) {
             mDeviceConnection?.releaseInterface(mInterface)
         }
         mDeviceConnection?.close()
         mDeviceConnection = null
         mInterface = null
-
     }
 
     /**
@@ -191,8 +190,8 @@ object USBConnector {
         return if (usbRequest.initialize(mDeviceConnection, usbEpIn)) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 usbRequest.queue(byteBuffer)
-            }else{
-                usbRequest.queue(byteBuffer,inMax)
+            } else {
+                usbRequest.queue(byteBuffer, inMax)
             }
             if (mDeviceConnection!!.requestWait() == usbRequest) {
                 usbRequest.close()
@@ -217,7 +216,11 @@ object USBConnector {
         val byteBuffer = ByteBuffer.wrap(data)
         val usbRequest = UsbRequest()
         return if (usbRequest.initialize(mDeviceConnection, usbEpOut)) {
-            usbRequest.queue(byteBuffer, data.size)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                usbRequest.queue(byteBuffer)
+            } else {
+                usbRequest.queue(byteBuffer, data.size)
+            }
             if (mDeviceConnection!!.requestWait() == usbRequest) {
                 usbRequest.close()
                 true
@@ -230,7 +233,4 @@ object USBConnector {
         }
     }
 
-    interface OnInterface {
-        fun chooseInterface(device: UsbDevice)
-    }
 }

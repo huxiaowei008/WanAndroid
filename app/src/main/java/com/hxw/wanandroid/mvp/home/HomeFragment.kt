@@ -60,7 +60,7 @@ class HomeFragment : AbstractFragment() {
     }
 
     private fun initRecycler() {
-        mViewModel.articleAdapter.setInitView { view, data, _ ->
+        mViewModel.articleAdapter.setInitView { view, data, position ->
             view.findViewById<TextView>(R.id.tv_title).text = data.title
             view.findViewById<TextView>(R.id.tv_time).text = data.niceDate
             view.findViewById<TextView>(R.id.tv_author).text = buildSpannedString {
@@ -83,7 +83,18 @@ class HomeFragment : AbstractFragment() {
                             R.color.grey_500
                         }))
             }.setOnClickListener {
-                mCommonViewModel.collectArticle(data.id)
+                if (data.collect) {
+                    mCommonViewModel.unCollectArticle(data.id) {
+                        data.collect = false
+                        mViewModel.articleAdapter.notifyItemChanged(position)
+                    }
+                } else {
+                    mCommonViewModel.collectArticle(data.id) {
+                        data.collect = true
+                        mViewModel.articleAdapter.notifyItemChanged(position)
+                    }
+                }
+
             }
             view.setOnClickListener {
                 startActivity<AgentWebActivity>(

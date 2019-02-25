@@ -3,6 +3,7 @@ package com.hxw.wanandroid.mvp
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
@@ -12,12 +13,13 @@ import com.hxw.core.base.AbstractActivity
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi
+import com.hxw.wanandroid.mvp.login.LoginActivity
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_content_main.*
-import kotlinx.android.synthetic.main.nav_header_main.*
+import org.jetbrains.anko.startActivity
 import org.koin.android.ext.android.inject
 
 /**
@@ -25,8 +27,8 @@ import org.koin.android.ext.android.inject
  * @date 2018/7/17
  */
 class MainActivity : AbstractActivity() {
-    private val api:WanApi by inject()
-    private val sp:SharedPreferences by inject()
+    private val api: WanApi by inject()
+    private val sp: SharedPreferences by inject()
     override fun getLayoutId(): Int {
         return R.layout.activity_main
     }
@@ -78,9 +80,14 @@ class MainActivity : AbstractActivity() {
             return@setNavigationItemSelectedListener true
         }
 
-        nav_view.getHeaderView(0)
-                .findViewById<TextView>(R.id.tv_username)
-                .text=sp.getString(Constant.USERNAME,"Android Studio")
+        nav_view.getHeaderView(0).let {
+            it.findViewById<TextView>(R.id.tv_username)
+                    .text = sp.getString(Constant.USERNAME, "Android Studio")
+            it.findViewById<ImageView>(R.id.iv_head).setOnClickListener {
+                startActivity<LoginActivity>()
+            }
+        }
+
 
     }
 
