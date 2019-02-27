@@ -188,13 +188,13 @@ public final class HexUtils {
         if (data == null || data.length <= 0) {
             return "";
         }
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(data.length);
         for (byte item : data) {
-            String str = Integer.toHexString(item & 0xFF);
-            if (str.length() == 1) {
-                builder.append('0');
-            }
-            builder.append(str);
+//            String str = Integer.toHexString(item & 0xFF);
+//            if (str.length() == 1) {
+//                builder.append('0');
+//            }
+            builder.append(String.format("%02x", item));
         }
         return builder.toString();
     }

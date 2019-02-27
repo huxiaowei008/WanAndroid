@@ -1,21 +1,18 @@
 package com.hxw.core;
 
 import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattCallback;
-import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattDescriptor;
-import android.bluetooth.BluetoothManager;
+import android.bluetooth.*;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-
-import java.util.UUID;
-
 import androidx.annotation.RequiresApi;
+import androidx.lifecycle.MutableLiveData;
+import com.hxw.core.utils.HexUtils;
+import timber.log.Timber;
+
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * Ble蓝牙工具
@@ -38,8 +35,14 @@ import androidx.annotation.RequiresApi;
 public final class BleTool {
     private static final int REQUEST_ENABLE_BT = 1066;
     private static final String CLIENT_CHARACTERISTIC_CONFIG = "00002902-0000-1000-8000-00805f9b34fb";
+    private static final UUID UUID_HEART_RATE_MEASUREMENT = UUID.fromString("00002a37-0000-1000-8000-00805f9b34fb");
     private static volatile BleTool INSTANCE;
-    private BluetoothManager bluetoothManager;
+    public static final String CONNECT_S = "CONNECT_S";
+    public static final String CONNECT_F = "CONNECT_F";
+    public static final String SERVICES_S = "SERVICES_S";
+    public static final String SERVICES_F = "SERVICES_F";
+    public static final String WRITE_S = "WRITE_S";
+    public static final String WRITE_F = "WRITE_F";
     private BluetoothAdapter mBluetoothAdapter;
     private BluetoothGatt mBluetoothGatt;
     /**
@@ -47,6 +50,87 @@ public final class BleTool {
      */
     private BluetoothGattCharacteristic mCharacteristic;
     private BluetoothAdapter.LeScanCallback mLeScanCallback;
+
+    final MutableLiveData<byte[]> notify = new MutableLiveData<>();
+    final MutableLiveData<String> result = new MutableLiveData<>();
+    private BluetoothGattCallback mGattCallback = new BluetoothGattCallback() {
+        @Override
+        public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
+            super.onConnectionStateChange(gatt, status, newState);
+            if (newState == BluetoothProfile.STATE_CONNECTED) {
+                Timber.i("连接成功");
+                result.postValue(CONNECT_S);
+            } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
+                Timber.i("连接失败");
+                result.postValue(CONNECT_F);
+            } else {
+                Timber.i("还有其他连接状态?->" + newState);
+            }
+        }
+
+        @Override
+        public void onServicesDiscovered(BluetoothGatt gatt, int status) {
+            super.onServicesDiscovered(gatt, status);
+            if (status == BluetoothGatt.GATT_SUCCESS) {
+                Timber.i("搜索服务成功");
+                result.postValue(SERVICES_S);
+            } else {
+                Timber.i("搜索服务失败");
+                result.postValue(SERVICES_F);
+            }
+        }
+
+        @Override
+        public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+            super.onCharacteristicWrite(gatt, characteristic, status);
+            if (status == BluetoothGatt.GATT_SUCCESS) {
+                Timber.i("write->" + HexUtils.bytes2HexStr1(characteristic.getValue()));
+                result.postValue(WRITE_S);
+            } else {
+                Timber.i("写入失败");
+                result.postValue(WRITE_F);
+            }
+        }
+
+        @Override
+        public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+            super.onCharacteristicRead(gatt, characteristic, status);
+            if (status == BluetoothGatt.GATT_SUCCESS) {
+                Timber.i("read->" + HexUtils.bytes2HexStr1(characteristic.getValue()));
+            } else {
+                Timber.i("读取失败");
+            }
+        }
+
+        @Override
+        public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+            super.onCharacteristicChanged(gatt, characteristic);
+            if (UUID_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
+                int flag = characteristic.getProperties();
+                int format;
+                if ((flag & 0x01) != 0) {
+                    format = BluetoothGattCharacteristic.FORMAT_UINT16;
+                    Timber.i("Heart rate format UINT16.");
+                } else {
+                    format = BluetoothGattCharacteristic.FORMAT_UINT8;
+                    Timber.i("Heart rate format UINT8.");
+                }
+                final int heartRate = characteristic.getIntValue(format, 1);
+                Timber.i(String.format(Locale.CHINA, "Received heart rate: %d", heartRate));
+                return;
+            }
+            final byte[] data = characteristic.getValue();
+            if (data != null && data.length > 0) {
+                final StringBuilder stringBuilder = new StringBuilder(data.length);
+                for (byte byteChar : data) {
+                    stringBuilder.append(String.format("%02X ", byteChar));
+                }
+                Timber.i(stringBuilder.toString());
+                notify.postValue(data);
+            }
+
+        }
+    };
 
     private BleTool() {
     }
@@ -63,11 +147,14 @@ public final class BleTool {
     }
 
     /**
-     * 初始化蓝牙,并开启蓝牙
+     * 初始化蓝牙,并开启蓝牙,调用一次就够了
      *
      * @param activity 使用蓝牙的Activity
      */
     public void init(Activity activity) {
+        if (mBluetoothAdapter != null) {
+            return;
+        }
         Context mContext = activity.getApplicationContext();
         //使用此检查来确定设备是否支持BLE,然后您可以选择性地禁用BLE相关功能
         if (!mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
@@ -75,10 +162,7 @@ public final class BleTool {
         }
 
         //初始化蓝牙适配器
-        bluetoothManager = (BluetoothManager) mContext.getSystemService(Context.BLUETOOTH_SERVICE);
-        if (bluetoothManager == null) {
-            throw new NullPointerException("该手机不支持蓝牙");
-        }
+        BluetoothManager bluetoothManager = (BluetoothManager) mContext.getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
         //确保蓝牙在设备上可用并且已启用。如果没有显示一个对话框，请求用户启用蓝牙的权限
         if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
@@ -89,19 +173,19 @@ public final class BleTool {
     }
 
     /**
-     * 蓝牙结束
+     * 蓝牙设备关闭
      */
-    public void closeBluetooth() {
+    public void close() {
         if (mBluetoothGatt != null) {
             mBluetoothGatt.close();
             mBluetoothGatt = null;
         }
-        if (mBluetoothAdapter != null) {
-            mBluetoothAdapter = null;
+        if (mLeScanCallback != null) {
+            mBluetoothAdapter.stopLeScan(mLeScanCallback);
+            mLeScanCallback = null;
         }
-        bluetoothManager = null;
         mCharacteristic = null;
-        mLeScanCallback = null;
+
     }
 
     /**
@@ -120,9 +204,7 @@ public final class BleTool {
      * @param callback 扫描的回调监听
      */
     public void startScan(BluetoothAdapter.LeScanCallback callback) {
-        if (mLeScanCallback!=null){
-            mBluetoothAdapter.stopLeScan(mLeScanCallback);
-        }
+        stopScan();
         mLeScanCallback = callback;
         mBluetoothAdapter.startLeScan(mLeScanCallback);
     }
@@ -141,13 +223,16 @@ public final class BleTool {
     /**
      * 连接设备
      *
-     * @param context  上下文
-     * @param device   需要连接的设备
-     * @param callback 监听设备和设备通信的回调
+     * @param context 上下文
+     * @param device  需要连接的设备
      */
-    public void connectDevice(Context context, BluetoothDevice device, BluetoothGattCallback callback) {
+    public void connectDevice(Context context, BluetoothDevice device) {
         disAndClose();
-        mBluetoothGatt = device.connectGatt(context, false, callback);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mBluetoothGatt = device.connectGatt(context, false, mGattCallback, BluetoothDevice.TRANSPORT_LE);
+        } else {
+            mBluetoothGatt = device.connectGatt(context, false, mGattCallback);
+        }
     }
 
     /**
@@ -205,7 +290,7 @@ public final class BleTool {
      *
      * @param characteristic 仅能用于写的通道
      */
-    public void connectWriteCharacteristic(BluetoothGattCharacteristic characteristic) {
+    public void setWriteCharacteristic(BluetoothGattCharacteristic characteristic) {
         mCharacteristic = characteristic;
     }
 
@@ -235,20 +320,19 @@ public final class BleTool {
      *
      * @param value string.getBytes()
      */
-    public boolean writeCharacteristic(byte[] value) {
+    public void writeCharacteristic(byte[] value) {
         if (mCharacteristic != null && mBluetoothGatt != null) {
             mCharacteristic.setValue(value);
-            return mBluetoothGatt.writeCharacteristic(mCharacteristic);
+            mBluetoothGatt.writeCharacteristic(mCharacteristic);
         }
-        return false;
     }
 
     /**
-     * 判断是否已连接
+     * 判断是否已关闭Gatt
      *
-     * @return true 已连接
+     * @return true 未关闭
      */
-    public boolean isConnecting() {
+    public boolean isCloseGatt() {
         return mBluetoothGatt != null;
     }
 

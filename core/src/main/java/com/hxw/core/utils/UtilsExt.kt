@@ -27,4 +27,10 @@ fun String.addCharToRight(strLength: Int, c: Char = '0') = HexUtils.addCharToRig
 
 fun String.toSigned() = HexUtils.unSignedToSigned(this)
 
+fun String.hexToInt() = Integer.parseInt(this, 16)
+
+fun ByteArray.toHexStr() = HexUtils.bytes2HexStr2(this)
+
+fun String.hexToBytes() = HexUtils.hexStr2Bytes(this)
+
 fun Throwable?.onError() = AppUtils.onError(this)
