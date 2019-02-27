@@ -1,4 +1,4 @@
-package com.hxw.core
+package com.hxw.wanandroid
 
 import android.app.AlertDialog
 import android.app.PendingIntent

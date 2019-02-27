@@ -1,21 +1,33 @@
-package com.hxw.core;
+package com.hxw.wanandroid.ble;
 
 import android.app.Activity;
-import android.bluetooth.*;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothGattCallback;
+import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattDescriptor;
+import android.bluetooth.BluetoothManager;
+import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import androidx.annotation.RequiresApi;
-import androidx.lifecycle.MutableLiveData;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+
 import com.hxw.core.utils.HexUtils;
-import timber.log.Timber;
 
 import java.util.Locale;
 import java.util.UUID;
 
+import androidx.annotation.RequiresApi;
+import androidx.lifecycle.MutableLiveData;
+import timber.log.Timber;
+
 /**
- * Ble蓝牙工具
+ * Ble蓝牙工具,可以作为参考或简单使用,复杂还是用开源框架比较好,如FastBLE,要么再自定义
  * 需要权限蓝牙权限
  * <uses-permission android:name="android.permission.BLUETOOTH"/>
  * <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
@@ -37,12 +49,6 @@ public final class BleTool {
     private static final String CLIENT_CHARACTERISTIC_CONFIG = "00002902-0000-1000-8000-00805f9b34fb";
     private static final UUID UUID_HEART_RATE_MEASUREMENT = UUID.fromString("00002a37-0000-1000-8000-00805f9b34fb");
     private static volatile BleTool INSTANCE;
-    public static final String CONNECT_S = "CONNECT_S";
-    public static final String CONNECT_F = "CONNECT_F";
-    public static final String SERVICES_S = "SERVICES_S";
-    public static final String SERVICES_F = "SERVICES_F";
-    public static final String WRITE_S = "WRITE_S";
-    public static final String WRITE_F = "WRITE_F";
     private BluetoothAdapter mBluetoothAdapter;
     private BluetoothGatt mBluetoothGatt;
     /**
@@ -50,21 +56,62 @@ public final class BleTool {
      */
     private BluetoothGattCharacteristic mCharacteristic;
     private BluetoothAdapter.LeScanCallback mLeScanCallback;
+    private BleConnectCallBack mConnectCallBack;
 
-    final MutableLiveData<byte[]> notify = new MutableLiveData<>();
-    final MutableLiveData<String> result = new MutableLiveData<>();
+    public final MutableLiveData<byte[]> notify = new MutableLiveData<>();
+
+    private Handler mMainHandler = new Handler(Looper.myLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case BleMsg.MSG_OUT_TIME:
+                    close();
+                    if (mConnectCallBack != null) {
+                        mConnectCallBack.onFail("连接超时");
+                    }
+                    break;
+                case BleMsg.MSG_DISCOVER_SERVICES:
+                    if (mBluetoothGatt != null) {
+                        mBluetoothGatt.discoverServices();
+                    }
+                    break;
+                case BleMsg.MSG_CONNECT_S:
+                    if (mConnectCallBack != null) {
+                        mConnectCallBack.onSuccess(mBluetoothGatt);
+                    }
+                    break;
+                case BleMsg.MSG_CONNECT_F:
+                    if (mConnectCallBack != null) {
+                        mConnectCallBack.onFail("断开连接");
+                    }
+                    break;
+                case BleMsg.MSG_SERVICES_FAIL:
+                    if (mConnectCallBack != null) {
+                        mConnectCallBack.onFail("搜索服务失败");
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
     private BluetoothGattCallback mGattCallback = new BluetoothGattCallback() {
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             super.onConnectionStateChange(gatt, status, newState);
+            mMainHandler.removeMessages(BleMsg.MSG_OUT_TIME);
+
             if (newState == BluetoothProfile.STATE_CONNECTED) {
                 Timber.i("连接成功");
-                result.postValue(CONNECT_S);
+                Message message = mMainHandler.obtainMessage();
+                message.what = BleMsg.MSG_DISCOVER_SERVICES;
+                mMainHandler.sendMessageDelayed(message, 500);
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-                Timber.i("连接失败");
-                result.postValue(CONNECT_F);
-            } else {
-                Timber.i("还有其他连接状态?->" + newState);
+                Timber.i("断开连接");
+                Message message = mMainHandler.obtainMessage();
+                message.what = BleMsg.MSG_CONNECT_F;
+                mMainHandler.sendMessage(message);
             }
         }
 
@@ -73,10 +120,14 @@ public final class BleTool {
             super.onServicesDiscovered(gatt, status);
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 Timber.i("搜索服务成功");
-                result.postValue(SERVICES_S);
+                Message message = mMainHandler.obtainMessage();
+                message.what = BleMsg.MSG_CONNECT_S;
+                mMainHandler.sendMessage(message);
             } else {
                 Timber.i("搜索服务失败");
-                result.postValue(SERVICES_F);
+                Message message = mMainHandler.obtainMessage();
+                message.what = BleMsg.MSG_SERVICES_FAIL;
+                mMainHandler.sendMessage(message);
             }
         }
 
@@ -84,11 +135,9 @@ public final class BleTool {
         public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
             super.onCharacteristicWrite(gatt, characteristic, status);
             if (status == BluetoothGatt.GATT_SUCCESS) {
-                Timber.i("write->" + HexUtils.bytes2HexStr1(characteristic.getValue()));
-                result.postValue(WRITE_S);
+                Timber.i("write->" + HexUtils.bytes2HexStr2(characteristic.getValue()));
             } else {
                 Timber.i("写入失败");
-                result.postValue(WRITE_F);
             }
         }
 
@@ -125,7 +174,7 @@ public final class BleTool {
                 for (byte byteChar : data) {
                     stringBuilder.append(String.format("%02X ", byteChar));
                 }
-                Timber.i(stringBuilder.toString());
+                Timber.i("changed->"+stringBuilder.toString());
                 notify.postValue(data);
             }
 
@@ -226,13 +275,18 @@ public final class BleTool {
      * @param context 上下文
      * @param device  需要连接的设备
      */
-    public void connectDevice(Context context, BluetoothDevice device) {
-        disAndClose();
+    public void connectDevice(Context context, BluetoothDevice device, BleConnectCallBack connectCallBack) {
+        close();
+        this.mConnectCallBack = connectCallBack;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             mBluetoothGatt = device.connectGatt(context, false, mGattCallback, BluetoothDevice.TRANSPORT_LE);
         } else {
             mBluetoothGatt = device.connectGatt(context, false, mGattCallback);
         }
+
+        Message message = mMainHandler.obtainMessage();
+        message.what = BleMsg.MSG_OUT_TIME;
+        mMainHandler.sendMessageDelayed(message, 10000);
     }
 
     /**
@@ -250,17 +304,6 @@ public final class BleTool {
     public void reconnection() {
         if (mBluetoothGatt != null) {
             mBluetoothGatt.connect();
-        }
-    }
-
-    /**
-     * 断开连接并关闭客户端
-     */
-    public void disAndClose() {
-        if (mBluetoothGatt != null) {
-            mBluetoothGatt.disconnect();
-            mBluetoothGatt.close();
-            mBluetoothGatt = null;
         }
     }
 

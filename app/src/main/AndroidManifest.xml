@@ -49,6 +49,13 @@
                 <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
+        <activity android:name=".BleActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
         <activity android:name=".mvp.host.HostSettingActivity"/>
         <activity android:name=".mvp.web.AgentWebActivity"/>
         <activity android:name=".mvp.system.SystemListActivity"/>
