@@ -23,14 +23,14 @@ public class Test {
                 "00193250783278783c2d0f00820096097e";
         String crc=HexUtils.calcCrc16(s.substring(0,s.length()-4));
         System.out.println("crc->" + crc);
-        final byte[] data={-5,0x12,0x13};
+        final byte[] data={1,0x12,0x13};
         final StringBuilder stringBuilder = new StringBuilder(data.length);
         for (byte byteChar : data) {
             stringBuilder.append(String.format("%02X ", byteChar));
         }
 
         System.out.println(new String(data) + "\n" + stringBuilder.toString());
-        byte[] f={-5};
-        System.out.println(HexUtils.bytes2HexStr2(f));
+        byte[] f={1};
+        System.out.println(HexUtils.bytes2HexStr1(f));
     }
 }

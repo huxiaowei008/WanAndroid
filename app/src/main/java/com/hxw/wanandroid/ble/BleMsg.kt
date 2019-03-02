@@ -11,4 +11,5 @@ object BleMsg {
     const val MSG_CONNECT_F=3
     const val MSG_DISCOVER_SERVICES=4
     const val MSG_SERVICES_FAIL=5
+    const val MSG_WRITE_S=6
 }

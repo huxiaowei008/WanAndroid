@@ -19,7 +19,9 @@ import android.os.Message;
 
 import com.hxw.core.utils.HexUtils;
 
+import java.util.LinkedList;
 import java.util.Locale;
+import java.util.Queue;
 import java.util.UUID;
 
 import androidx.annotation.RequiresApi;
@@ -57,7 +59,7 @@ public final class BleTool {
     private BluetoothGattCharacteristic mCharacteristic;
     private BluetoothAdapter.LeScanCallback mLeScanCallback;
     private BleConnectCallBack mConnectCallBack;
-
+    private Queue<byte[]> mDataQueue = new LinkedList<>();
     public final MutableLiveData<byte[]> notify = new MutableLiveData<>();
 
     private Handler mMainHandler = new Handler(Looper.myLooper()) {
@@ -89,6 +91,9 @@ public final class BleTool {
                     if (mConnectCallBack != null) {
                         mConnectCallBack.onFail("搜索服务失败");
                     }
+                    break;
+                case BleMsg.MSG_WRITE_S:
+                    writeQueue();
                     break;
                 default:
                     break;
@@ -136,6 +141,9 @@ public final class BleTool {
             super.onCharacteristicWrite(gatt, characteristic, status);
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 Timber.i("write->" + HexUtils.bytes2HexStr2(characteristic.getValue()));
+                Message message = mMainHandler.obtainMessage();
+                message.what = BleMsg.MSG_WRITE_S;
+                mMainHandler.sendMessage(message);
             } else {
                 Timber.i("写入失败");
             }
@@ -174,7 +182,7 @@ public final class BleTool {
                 for (byte byteChar : data) {
                     stringBuilder.append(String.format("%02X ", byteChar));
                 }
-                Timber.i("changed->"+stringBuilder.toString());
+                Timber.i("changed->" + stringBuilder.toString());
                 notify.postValue(data);
             }
 
@@ -364,6 +372,25 @@ public final class BleTool {
      * @param value string.getBytes()
      */
     public void writeCharacteristic(byte[] value) {
+        //参考,这里给大于20的分包,如果设置过MTU,这里就不是20了
+        if (value.length > 20) {
+            mDataQueue = splitByte(value, 20);
+            writeQueue();
+        } else {
+            write(value);
+        }
+
+    }
+
+    private void writeQueue() {
+        if (mDataQueue.peek() == null) {
+            return;
+        }
+        byte[] data = mDataQueue.poll();
+        write(data);
+    }
+
+    private void write(byte[] value) {
         if (mCharacteristic != null && mBluetoothGatt != null) {
             mCharacteristic.setValue(value);
             mBluetoothGatt.writeCharacteristic(mCharacteristic);
@@ -379,4 +406,24 @@ public final class BleTool {
         return mBluetoothGatt != null;
     }
 
+    private static Queue<byte[]> splitByte(byte[] data, int count) {
+        Queue<byte[]> byteQueue = new LinkedList<>();
+        int pkgCount;
+        if (data.length % count == 0) {
+            pkgCount = data.length / count;
+        } else {
+            pkgCount = data.length / count + 1;
+        }
+        for (int i = 0; i < pkgCount; i++) {
+            byte[] dataPkg;
+            if (pkgCount == 1 || i == pkgCount - 1) {
+                int j = data.length - (i * count);
+                System.arraycopy(data, i * count, dataPkg = new byte[j], 0, j);
+            } else {
+                System.arraycopy(data, i * count, dataPkg = new byte[count], 0, count);
+            }
+            byteQueue.offer(dataPkg);
+        }
+        return byteQueue;
+    }
 }
