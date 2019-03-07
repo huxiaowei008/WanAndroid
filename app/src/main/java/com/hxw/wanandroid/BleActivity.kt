@@ -2,20 +2,25 @@ package com.hxw.wanandroid
 
 import android.bluetooth.BluetoothGatt
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import com.hxw.core.base.AbstractActivity
 import com.hxw.wanandroid.ble.BleConnectCallBack
 import com.hxw.wanandroid.ble.BleTool
 import com.hxw.core.utils.HexUtils
+import com.hxw.core.utils.hexToInt
+import com.hxw.core.utils.toHexStr
 import kotlinx.android.synthetic.main.activity_ble.*
 import timber.log.Timber
 import java.util.*
+
 
 /**
  * @author hxw
  * @date 2019/2/27
  */
 class BleActivity : AbstractActivity() {
-
+    private var mCmdSize = 0
+    private val mCmdList = mutableListOf<String>()
     private val random= HexUtils.randomHex(12)
     override fun getLayoutId(): Int {
         return R.layout.activity_ble
@@ -58,8 +63,22 @@ class BleActivity : AbstractActivity() {
             val cmd = str + HexUtils.calcCrc16(str)
             BleTool.getInstance()
                     .writeCharacteristic(HexUtils.hexStr2Bytes("fe$cmd"))
-            BleTool.getInstance()
-                    .writeCharacteristic(HexUtils.hexStr2Bytes("fe$cmd"))
         }
+
+        BleTool.getInstance().notify.observe(this, Observer {
+            val value=it.toHexStr()
+            if (value.substring(0, 2) == "fe") {
+                mCmdList.clear()
+                val l = value.substring(4, 8).hexToInt() + 6
+                mCmdSize = if (l % 20 == 0) {
+                    l / 20
+                } else {
+                    l / 20 + 1
+                }
+            }
+            if (!mCmdList.contains(value)) {
+                mCmdList.add(value)
+            }
+        })
     }
 }

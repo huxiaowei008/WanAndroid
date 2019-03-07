@@ -43,7 +43,6 @@ dependencies {
     api 'androidx.collection:collection-ktx:1.1.0-alpha02'
     //kotlinx.coroutines https://github.com/Kotlin/kotlinx.coroutines
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'
-    api 'org.jetbrains.kotlinx:kotlinx-coroutines-rx2:1.1.1'
 
     //Anko Commons https://github.com/Kotlin/anko
     api "org.jetbrains.anko:anko-commons:$anko_version"

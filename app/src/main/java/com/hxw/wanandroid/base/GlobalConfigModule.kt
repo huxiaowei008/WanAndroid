@@ -14,6 +14,7 @@ import org.koin.standalone.KoinComponent
 import org.koin.standalone.get
 import retrofit2.Retrofit
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 /**
  * @author hxw
@@ -26,6 +27,9 @@ class GlobalConfigModule : ConfigModule,KoinComponent {
 
     override fun configOkHttp(context: Context, builder: OkHttpClient.Builder) {
             builder.cookieJar(CookiesManager(context))
+                .connectTimeout(60,TimeUnit.SECONDS)
+                .writeTimeout(60,TimeUnit.SECONDS)
+                .readTimeout(60,TimeUnit.SECONDS)
     }
 
     override fun configRetrofit(context: Context, builder: Retrofit.Builder) {

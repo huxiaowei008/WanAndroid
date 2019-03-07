@@ -16,6 +16,8 @@ import com.hxw.wanandroid.entity.WebEntity;
 import java.util.List;
 
 import io.reactivex.Observable;
+import kotlinx.coroutines.Deferred;
+import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -143,6 +145,12 @@ public interface WanApi {
     Observable<BaseEntity<UserEntity>> login(
             @Query("username") String username,
             @Query("password") String password
+    );
+
+    @POST("http://172.29.6.149:28182/engineering/address/getProjectId")
+    Deferred<BaseEntity<Object>> loginDeferred(
+            @Query("loginToken") String token,
+            @Query("projectId") String projectId
     );
 
     /**

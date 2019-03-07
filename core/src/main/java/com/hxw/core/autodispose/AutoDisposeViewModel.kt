@@ -1,6 +1,7 @@
 package com.hxw.core.autodispose
 
 import androidx.lifecycle.ViewModel
+import com.hxw.core.utils.onError
 import com.uber.autodispose.lifecycle.CorrespondingEventsFunction
 import com.uber.autodispose.lifecycle.LifecycleEndedException
 import com.uber.autodispose.lifecycle.LifecycleScopeProvider
@@ -8,8 +9,8 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.BehaviorSubject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
+import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -17,7 +18,8 @@ import kotlin.coroutines.CoroutineContext
  * @author hxw
  * @date 2018/12/17
  */
-abstract class AutoDisposeViewModel : ViewModel(), LifecycleScopeProvider<AutoDisposeViewModel.ViewModelEvent>, CoroutineScope {
+abstract class AutoDisposeViewModel : ViewModel(),
+    LifecycleScopeProvider<AutoDisposeViewModel.ViewModelEvent>, CoroutineScope {
     companion object {
         /**
          * Function of current event -> target disposal event. ViewModel has a very simple lifecycle.
@@ -32,8 +34,9 @@ abstract class AutoDisposeViewModel : ViewModel(), LifecycleScopeProvider<AutoDi
         }
     }
 
+    private val job: Job = Job()
     override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main
+        get() = Dispatchers.Main + job
     // Subject backing the auto disposing of subscriptions.
     private val lifecycleEvents = BehaviorSubject.createDefault(ViewModelEvent.CREATED)
     private val mCompositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
@@ -69,7 +72,7 @@ abstract class AutoDisposeViewModel : ViewModel(), LifecycleScopeProvider<AutoDi
         lifecycleEvents.onNext(ViewModelEvent.CLEARED)
         super.onCleared()
         mCompositeDisposable.clear()
-
+        job.cancel()
     }
 
     /**
@@ -92,4 +95,17 @@ abstract class AutoDisposeViewModel : ViewModel(), LifecycleScopeProvider<AutoDi
         CREATED, CLEARED
     }
 
+    fun <T> Deferred<T>.subscribe(
+        success: (result: T) -> Unit,
+        error: (t: Throwable) -> Unit = { it.onError() }
+    ) {
+        launch {
+            try {
+                val result = this@subscribe.await()
+                success.invoke(result)
+            } catch (t: Throwable) {
+                error.invoke(t)
+            }
+        }
+    }
 }
