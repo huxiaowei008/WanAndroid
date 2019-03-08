@@ -7,12 +7,10 @@ import com.google.gson.GsonBuilder
 import com.hxw.core.integration.HostSelectionInterceptor
 import com.hxw.core.utils.jsonFormat
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module.module
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 
@@ -26,7 +24,7 @@ val coreModule = module {
 
     single<Gson> {
         val builder = GsonBuilder()
-                .serializeNulls()
+            .serializeNulls()
         get<ConfigModule>().configGson(get<Application>(), builder)
         builder.create()
     }
@@ -41,18 +39,18 @@ val coreModule = module {
         })
         logging.level = HttpLoggingInterceptor.Level.BODY
         val builder = OkHttpClient.Builder()
-                .addInterceptor(HostSelectionInterceptor)
-                .addInterceptor(logging)
+            .addInterceptor(HostSelectionInterceptor)
+            .addInterceptor(logging)
         get<ConfigModule>().configOkHttp(get<Application>(), builder)
         builder.build()
     }
 
     single<Retrofit> {
         val builder = Retrofit.Builder()
-                .client(get())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-                .addCallAdapterFactory(CoroutineCallAdapterFactory())
-                .addConverterFactory(GsonConverterFactory.create(get()))
+            .client(get())
+//                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .addConverterFactory(GsonConverterFactory.create(get()))
         get<ConfigModule>().configRetrofit(get<Application>(), builder)
         builder.build()
     }

@@ -4,8 +4,6 @@ import com.hxw.core.autodispose.AutoDisposeViewModel
 import com.hxw.core.utils.AppUtils
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.WanApi
-import com.uber.autodispose.autoDisposable
-import io.reactivex.android.schedulers.AndroidSchedulers
 
 /**
  * 通用操作的ViewModel
@@ -17,30 +15,26 @@ class CommonViewModel(private val api: WanApi) : AutoDisposeViewModel() {
 
     fun collectArticle(id: Int, action: () -> Unit) {
         api.collect(id)
-                .observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(this)
-                .subscribe {
-                    if (it.errorCode == Constant.NET_SUCCESS) {
-                        AppUtils.showToast("收藏成功")
-                        action.invoke()
-                    } else {
-                        AppUtils.showToast(it.errorMsg)
-                    }
+            .subscribe({
+                if (it.errorCode == Constant.NET_SUCCESS) {
+                    AppUtils.showToast("收藏成功")
+                    action.invoke()
+                } else {
+                    AppUtils.showToast(it.errorMsg)
                 }
+            })
     }
 
-    fun unCollectArticle(id: Int,action: () -> Unit) {
+    fun unCollectArticle(id: Int, action: () -> Unit) {
         api.unCollect(id)
-                .observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(this)
-                .subscribe {
-                    if (it.errorCode == Constant.NET_SUCCESS) {
-                        AppUtils.showToast("取消收藏")
-                        action.invoke()
-                    } else {
-                        AppUtils.showToast(it.errorMsg)
-                    }
+            .subscribe({
+                if (it.errorCode == Constant.NET_SUCCESS) {
+                    AppUtils.showToast("取消收藏")
+                    action.invoke()
+                } else {
+                    AppUtils.showToast(it.errorMsg)
                 }
+            })
     }
 
 }

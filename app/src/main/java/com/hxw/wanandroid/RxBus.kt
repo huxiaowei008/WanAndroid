@@ -1,4 +1,4 @@
-package com.hxw.core
+package com.hxw.wanandroid
 
 import com.jakewharton.rxrelay2.PublishRelay
 import com.jakewharton.rxrelay2.Relay

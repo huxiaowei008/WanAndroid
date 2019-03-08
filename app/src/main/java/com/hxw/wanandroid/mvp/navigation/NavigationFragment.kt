@@ -9,15 +9,14 @@ import com.google.android.material.internal.FlowLayout
 import com.google.android.material.tabs.TabLayout
 import com.hxw.core.adapter.SimpleRecyclerAdapter
 import com.hxw.core.base.AbstractFragment
+import com.hxw.core.utils.onError
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.entity.NaviEntity
 import com.hxw.wanandroid.mvp.web.AgentWebActivity
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_navigation.*
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.support.v4.dip
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
@@ -40,17 +39,22 @@ class NavigationFragment : AbstractFragment() {
 
     override fun init(savedInstanceState: Bundle?) {
         initRecycler()
-        api.navi.observeOn(AndroidSchedulers.mainThread())
-            .autoDisposable(this@NavigationFragment.scope())
-            .subscribe {
-                if (it.errorCode == Constant.NET_SUCCESS) {
-                    initTabLayout(it.data)
-                    mAdapter.setData(it.data)
+
+        launch {
+            val deferred = api.navi
+            try {
+                val result = deferred.await()
+                if (result.errorCode == Constant.NET_SUCCESS) {
+                    initTabLayout(result.data)
+                    mAdapter.setData(result.data)
                     mAdapter.notifyDataSetChanged()
                 } else {
-                    toast(it.errorMsg)
+                    toast(result.errorMsg)
                 }
+            } catch (t: Throwable) {
+                t.onError()
             }
+        }
     }
 
     private fun initTabLayout(data: List<NaviEntity>) {

@@ -14,54 +14,58 @@ import com.hxw.wanandroid.entity.BannerEntity
 import com.hxw.wanandroid.paging.BasePageViewModel
 import com.hxw.wanandroid.paging.PageSourceFactory
 import com.hxw.wanandroid.paging.SimplePagedListAdapter
-import com.uber.autodispose.autoDisposable
-import io.reactivex.android.schedulers.AndroidSchedulers
 
 /**
  * @author hxw
  * @date 2019/1/25
  */
 class HomeViewModel(private val wanApi: WanApi) :
-        BasePageViewModel<Int, ArticleEntity>() {
+    BasePageViewModel<Int, ArticleEntity>() {
     override val sourceFactory: PageSourceFactory<Int, ArticleEntity> = PageSourceFactory {
         HomeDataSource(wanApi)
     }
 
     override val pagedList: LiveData<PagedList<ArticleEntity>> = sourceFactory
-            .toLiveData(20)
+        .toLiveData(20)
 
     private val bannerData = mutableListOf<BannerEntity>()
 
     val bannerAdapter: SimplePagerAdapter<BannerEntity> by lazy {
         SimplePagerAdapter<BannerEntity>(R.layout.item_banner)
-                .setData(bannerData)
-                .setLoop(true)
+            .setData(bannerData)
+            .setLoop(true)
     }
 
     val articleAdapter: SimplePagedListAdapter<ArticleEntity> by lazy {
-        SimplePagedListAdapter(R.layout.item_article, object : DiffUtil.ItemCallback<ArticleEntity>() {
-            override fun areItemsTheSame(oldItem: ArticleEntity, newItem: ArticleEntity): Boolean {
-                return oldItem.id == newItem.id
-            }
+        SimplePagedListAdapter(
+            R.layout.item_article,
+            object : DiffUtil.ItemCallback<ArticleEntity>() {
+                override fun areItemsTheSame(
+                    oldItem: ArticleEntity,
+                    newItem: ArticleEntity
+                ): Boolean {
+                    return oldItem.id == newItem.id
+                }
 
-            override fun areContentsTheSame(oldItem: ArticleEntity, newItem: ArticleEntity): Boolean {
-                return oldItem == newItem
-            }
+                override fun areContentsTheSame(
+                    oldItem: ArticleEntity,
+                    newItem: ArticleEntity
+                ): Boolean {
+                    return oldItem == newItem
+                }
 
-        })
+            })
     }
 
     fun getBanner() {
         wanApi.banner
-                .observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(this@HomeViewModel)
-                .subscribe {
-                    if (it.errorCode == Constant.NET_SUCCESS) {
-                        bannerData.addAll(it.data)
-                        bannerAdapter.notifyDataSetChanged()
-                    } else {
-                        AppUtils.showToast(it.errorMsg)
-                    }
+            .subscribe({
+                if (it.errorCode == Constant.NET_SUCCESS) {
+                    bannerData.addAll(it.data)
+                    bannerAdapter.notifyDataSetChanged()
+                } else {
+                    AppUtils.showToast(it.errorMsg)
                 }
+            })
     }
 }

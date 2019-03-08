@@ -7,14 +7,7 @@ import com.hxw.core.utils.onError
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.entity.UserEntity
-import com.uber.autodispose.autoDisposable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import timber.log.Timber
-import kotlin.coroutines.CoroutineContext
 
 /**
  * @author hxw
@@ -23,21 +16,18 @@ import kotlin.coroutines.CoroutineContext
 class LoginViewModel(private val wanApi: WanApi) : AutoDisposeViewModel() {
 
 
-
     val userInfo = MutableLiveData<UserEntity>()
 
     fun login(username: String, password: String) {
         wanApi.login(username, password)
-            .observeOn(AndroidSchedulers.mainThread())
-            .autoDisposable(this@LoginViewModel)
-            .subscribe {
+            .subscribe({
                 if (it.errorCode == Constant.NET_SUCCESS) {
                     AppUtils.showToast("登陆成功")
                     userInfo.value = it.data
                 } else {
                     AppUtils.showToast("登陆失败->" + it.errorMsg)
                 }
-            }
+            })
     }
 
     fun loginDeferred(username: String, password: String) {
@@ -50,7 +40,7 @@ class LoginViewModel(private val wanApi: WanApi) : AutoDisposeViewModel() {
                 } else {
                     AppUtils.showToast("登陆失败->")
                 }
-            },{
+            }, {
                 it.onError()
                 Timber.i("onError in thread ${Thread.currentThread().name}")
             })
@@ -58,15 +48,13 @@ class LoginViewModel(private val wanApi: WanApi) : AutoDisposeViewModel() {
 
     fun register(username: String, password: String, repassword: String) {
         wanApi.register(username, password, repassword)
-            .observeOn(AndroidSchedulers.mainThread())
-            .autoDisposable(this@LoginViewModel)
-            .subscribe {
+            .subscribe({
                 if (it.errorCode == Constant.NET_SUCCESS) {
                     AppUtils.showToast("注册成功")
                     userInfo.value = it.data
                 } else {
                     AppUtils.showToast("注册失败->" + it.errorMsg)
                 }
-            }
+            })
     }
 }

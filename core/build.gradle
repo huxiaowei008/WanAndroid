@@ -11,7 +11,7 @@ android {
         versionName config.version_name
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
@@ -47,30 +47,31 @@ dependencies {
     //Anko Commons https://github.com/Kotlin/anko
     api "org.jetbrains.anko:anko-commons:$anko_version"
     //Anko Layouts
-    api "org.jetbrains.anko:anko-sdk25:$anko_version"
-    api "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
+//    api "org.jetbrains.anko:anko-sdk25:$anko_version"
+//    api "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
     //Coroutine listeners for Anko Layouts
-    api "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version"
-    api "org.jetbrains.anko:anko-appcompat-v7-coroutines:$anko_version"
+//    api "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version"
+//    api "org.jetbrains.anko:anko-appcompat-v7-coroutines:$anko_version"
     // Appcompat-v7 (Anko Layouts)
-    api "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
-    api "org.jetbrains.anko:anko-coroutines:$anko_version"
+    implementation "org.jetbrains.anko:anko-appcompat-v7-commons:$anko_version"
+//    api "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
+//    api "org.jetbrains.anko:anko-coroutines:$anko_version"
     //CardView-v7
-    api "org.jetbrains.anko:anko-cardview-v7:$anko_version"
+//    api "org.jetbrains.anko:anko-cardview-v7:$anko_version"
     //Design
     api "org.jetbrains.anko:anko-design:$anko_version"
-    api "org.jetbrains.anko:anko-design-coroutines:$anko_version"
-    // Support-v4 (Anko Layouts)
-    api "org.jetbrains.anko:anko-support-v4:$anko_version"
+//    api "org.jetbrains.anko:anko-design-coroutines:$anko_version"
+    // Support-v4 (only Anko Commons)
+    api "org.jetbrains.anko:anko-support-v4-commons:$anko_version"
     //RecyclerView-v7
-    api "org.jetbrains.anko:anko-recyclerview-v7:$anko_version"
-    api "org.jetbrains.anko:anko-recyclerview-v7-coroutines:$anko_version"
+//    api "org.jetbrains.anko:anko-recyclerview-v7:$anko_version"
+//    api "org.jetbrains.anko:anko-recyclerview-v7-coroutines:$anko_version"
     //ConstraintLayout
-    api "org.jetbrains.anko:anko-constraint-layout:$anko_version"
+//    api "org.jetbrains.anko:anko-constraint-layout:$anko_version"
 
     //support https://github.com/dandar3/android-support-library-README
     api 'androidx.appcompat:appcompat:1.0.2'
-    api 'com.google.android.material:material:1.1.0-alpha03'
+    api 'com.google.android.material:material:1.1.0-alpha04'
     api 'androidx.cardview:cardview:1.0.0'
     api 'androidx.recyclerview:recyclerview:1.1.0-alpha02'
 
@@ -82,19 +83,19 @@ dependencies {
     //ViewModel https://developer.android.google.cn/topic/libraries/architecture/viewmodel
     api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0-alpha02'
     //LiveData https://developer.android.google.cn/topic/libraries/architecture/livedata
-    api 'androidx.lifecycle:lifecycle-reactivestreams-ktx:2.1.0-alpha02'
+//    api 'androidx.lifecycle:lifecycle-reactivestreams-ktx:2.1.0-alpha02'
 
     //retrofit https://github.com/square/retrofit
     api('com.squareup.retrofit2:retrofit:2.5.0') {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
         exclude module: 'okio'
     }
-    implementation('com.squareup.retrofit2:adapter-rxjava2:2.5.0') {
-        exclude module: 'rxjava'
-        exclude module: 'okhttp'
-        exclude module: 'retrofit'
-        exclude module: 'okio'
-    }
+//    implementation('com.squareup.retrofit2:adapter-rxjava2:2.5.0') {
+//        exclude module: 'rxjava'
+//        exclude module: 'okhttp'
+//        exclude module: 'retrofit'
+//        exclude module: 'okio'
+//    }
     implementation('com.squareup.retrofit2:converter-gson:2.5.0') {
         exclude module: 'gson'
         exclude module: 'okhttp'
@@ -142,23 +143,23 @@ dependencies {
     //    }
 
     //RxKotlin https://github.com/ReactiveX/RxKotlin
-    api('io.reactivex.rxjava2:rxkotlin:2.3.0') {
-        exclude module: 'rxjava'
-        exclude group: 'org.jetbrains.kotlin'
-    }
+//    api('io.reactivex.rxjava2:rxkotlin:2.3.0') {
+//        exclude module: 'rxjava'
+//        exclude group: 'org.jetbrains.kotlin'
+//    }
 
     //RxJava https://github.com/ReactiveX/RxJava/tree/2.x
-    api 'io.reactivex.rxjava2:rxjava:2.2.5'
+//    api 'io.reactivex.rxjava2:rxjava:2.2.6'
 
     //RxAndroid https://github.com/ReactiveX/RxAndroid/tree/2.x
-    api('io.reactivex.rxjava2:rxandroid:2.1.0') {
-        exclude module: 'rxjava'
-    }
+//    api('io.reactivex.rxjava2:rxandroid:2.1.0') {
+//        exclude module: 'rxjava'
+//    }
 
     //RxRelay https://github.com/JakeWharton/RxRelay
-    api('com.jakewharton.rxrelay2:rxrelay:2.1.0') {
-        exclude module: 'rxjava'
-    }
+//    api('com.jakewharton.rxrelay2:rxrelay:2.1.0') {
+//        exclude module: 'rxjava'
+//    }
 
     //RxBinding https://github.com/JakeWharton/RxBinding
 //    api 'com.jakewharton.rxbinding3:rxbinding-core:3.0.0-alpha1'
@@ -190,9 +191,9 @@ dependencies {
     api 'org.koin:koin-androidx-viewmodel:1.0.2'
 
     //AutoDispose https://github.com/uber/AutoDispose
-    api 'com.uber.autodispose:autodispose-ktx:1.1.0'
-    api 'com.uber.autodispose:autodispose-android-ktx:1.1.0'
-    api 'com.uber.autodispose:autodispose-android-archcomponents-ktx:1.1.0'
+//    api 'com.uber.autodispose:autodispose-ktx:1.1.0'
+//    api 'com.uber.autodispose:autodispose-android-ktx:1.1.0'
+//    api 'com.uber.autodispose:autodispose-android-archcomponents-ktx:1.1.0'
 
     //AOP使用 https://bintray.com/bintray/jcenter/org.aspectj%3Aaspectjrt
     api 'org.aspectj:aspectjrt:1.9.2'

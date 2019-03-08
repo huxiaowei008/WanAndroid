@@ -2,11 +2,6 @@ package com.hxw.core.mvp
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import com.uber.autodispose.AutoDispose
-import com.uber.autodispose.AutoDisposeConverter
-import com.uber.autodispose.android.lifecycle.scope
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import timber.log.Timber
 
 /**
@@ -15,11 +10,10 @@ import timber.log.Timber
  * @author hxw
  * @date 2018/6/22
  */
-@Deprecated("不推荐使用了",ReplaceWith("ViewModel"))
+@Deprecated("不推荐使用了", ReplaceWith("ViewModel"))
 open class BasePresenter<V : IView> : IPresenter<V> {
 
     protected var mView: V? = null
-    private val mCompositeDisposable: CompositeDisposable by lazy { CompositeDisposable() }
 
     /**
      * [android.app.Activity]的创建生命周期
@@ -67,30 +61,6 @@ open class BasePresenter<V : IView> : IPresenter<V> {
      * 销毁视图
      */
     override fun dropView() {
-        mCompositeDisposable.clear()
         mView = null
-    }
-
-    /**
-     * 通过AutoDispose绑定生命周期
-     */
-    protected fun <T> bindLifecycle(): AutoDisposeConverter<T> {
-        if (mView == null) {
-            throw NullPointerException("mView == null")
-        }
-        return if (mView is LifecycleOwner) {
-            AutoDispose.autoDisposable((mView as LifecycleOwner).scope())
-        } else {
-            throw AssertionError("mView 不是 LifecycleOwner 的子类")
-        }
-    }
-
-    /**
-     * 自带的解除RX订阅的方式
-     *
-     * @param disposable 可以解除订阅的对象
-     */
-    protected fun addDispose(disposable: Disposable) {
-        mCompositeDisposable.add(disposable)
     }
 }

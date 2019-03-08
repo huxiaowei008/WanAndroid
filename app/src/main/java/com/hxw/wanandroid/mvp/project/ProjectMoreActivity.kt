@@ -13,16 +13,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.hxw.core.base.AbstractActivity
 import com.hxw.core.glide.GlideApp
+import com.hxw.core.utils.onError
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.entity.TreeEntity
 import com.hxw.wanandroid.mvp.web.AgentWebActivity
 import com.hxw.wanandroid.paging.NetworkState
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activtiy_project_more.*
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
@@ -42,16 +41,20 @@ class ProjectMoreActivity : AbstractActivity() {
     override fun init(savedInstanceState: Bundle?) {
         setSupportActionBar(tool_title)
         tool_title.setNavigationOnClickListener { finish() }
-        api.projectTree
-                .observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(this@ProjectMoreActivity.scope())
-                .subscribe {
-                    if (it.errorCode == Constant.NET_SUCCESS) {
-                        initTab(it.data)
-                    } else {
-                        toast(it.errorMsg)
-                    }
+        launch {
+            val deferred = api.projectTree
+            try {
+                val result = deferred.await()
+
+                if (result.errorCode == Constant.NET_SUCCESS) {
+                    initTab(result.data)
+                } else {
+                    toast(result.errorMsg)
                 }
+            } catch (t: Throwable) {
+                t.onError()
+            }
+        }
 
         initSwipeToRefresh()
         initRecyclerView()
@@ -62,7 +65,7 @@ class ProjectMoreActivity : AbstractActivity() {
             tab_layout.addTab(tab_layout.newTab().setText(it.name))
         }
         mViewModel.changeCid(data[0].id)
-        tool_title.title=data[0].name
+        tool_title.title = data[0].name
         tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(p0: TabLayout.Tab) {
 
@@ -74,7 +77,7 @@ class ProjectMoreActivity : AbstractActivity() {
 
             override fun onTabSelected(tab: TabLayout.Tab) {
                 mViewModel.changeCid(data[tab.position].id)
-                tool_title.title=data[tab.position].name
+                tool_title.title = data[tab.position].name
             }
 
         })
@@ -83,24 +86,29 @@ class ProjectMoreActivity : AbstractActivity() {
     private fun initRecyclerView() {
         mViewModel.projectAdapter.setInitView { view, data, _ ->
             GlideApp.with(view)
-                    .load(data.envelopePic)
-                    .placeholder(R.drawable.ic_placeholder)
-                    .error(R.drawable.ic_error)
-                    .into(view.findViewById(R.id.iv_project))
+                .load(data.envelopePic)
+                .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.ic_error)
+                .into(view.findViewById(R.id.iv_project))
             view.findViewById<TextView>(R.id.tv_title).text = data.title
             view.findViewById<TextView>(R.id.tv_des).text = data.desc
             view.findViewById<TextView>(R.id.tv_author).text = data.author
             view.findViewById<TextView>(R.id.tv_time).text = data.niceDate
             view.setOnClickListener {
                 startActivity<AgentWebActivity>(
-                        Constant.WEB_URL to data.link
+                    Constant.WEB_URL to data.link
                 )
             }
         }
 
         rv_project.layoutManager = LinearLayoutManager(this)
         rv_project.addItemDecoration(object : RecyclerView.ItemDecoration() {
-            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+            override fun getItemOffsets(
+                outRect: Rect,
+                view: View,
+                parent: RecyclerView,
+                state: RecyclerView.State
+            ) {
                 outRect.set(0, 0, 0, 1)
             }
 

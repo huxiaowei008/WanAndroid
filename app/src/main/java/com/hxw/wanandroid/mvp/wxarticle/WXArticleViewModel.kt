@@ -14,8 +14,6 @@ import com.hxw.wanandroid.entity.TreeEntity
 import com.hxw.wanandroid.paging.BasePageViewModel
 import com.hxw.wanandroid.paging.PageSourceFactory
 import com.hxw.wanandroid.paging.SimplePagedListAdapter
-import com.uber.autodispose.autoDisposable
-import io.reactivex.android.schedulers.AndroidSchedulers
 
 /**
  * @author hxw
@@ -30,18 +28,26 @@ class WXArticleViewModel(private val wanApi: WanApi) : BasePageViewModel<Int, Ar
     }
 
     override val pagedList: LiveData<PagedList<ArticleEntity>> = sourceFactory
-            .toLiveData(20)
+        .toLiveData(20)
 
     val wxAdapter: SimplePagedListAdapter<ArticleEntity> by lazy {
-        SimplePagedListAdapter(R.layout.item_article, object : DiffUtil.ItemCallback<ArticleEntity>() {
-            override fun areItemsTheSame(oldItem: ArticleEntity, newItem: ArticleEntity): Boolean {
-                return oldItem.id == newItem.id
-            }
+        SimplePagedListAdapter(
+            R.layout.item_article,
+            object : DiffUtil.ItemCallback<ArticleEntity>() {
+                override fun areItemsTheSame(
+                    oldItem: ArticleEntity,
+                    newItem: ArticleEntity
+                ): Boolean {
+                    return oldItem.id == newItem.id
+                }
 
-            override fun areContentsTheSame(oldItem: ArticleEntity, newItem: ArticleEntity): Boolean {
-                return oldItem == newItem
-            }
-        })
+                override fun areContentsTheSame(
+                    oldItem: ArticleEntity,
+                    newItem: ArticleEntity
+                ): Boolean {
+                    return oldItem == newItem
+                }
+            })
     }
 
     fun changeId(id: Int) {
@@ -56,14 +62,12 @@ class WXArticleViewModel(private val wanApi: WanApi) : BasePageViewModel<Int, Ar
 
     fun getWxPublish() {
         wanApi.wxPublic
-                .observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(this)
-                .subscribe {
-                    if (it.errorCode == Constant.NET_SUCCESS) {
-                        treeData.value = it.data
-                    } else {
-                        AppUtils.showToast(it.errorMsg)
-                    }
+            .subscribe({
+                if (it.errorCode == Constant.NET_SUCCESS) {
+                    treeData.value = it.data
+                } else {
+                    AppUtils.showToast(it.errorMsg)
                 }
+            })
     }
 }

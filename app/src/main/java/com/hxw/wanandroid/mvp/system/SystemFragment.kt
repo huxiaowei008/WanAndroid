@@ -7,18 +7,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.internal.FlowLayout
 import com.hxw.core.adapter.SimpleRecyclerAdapter
 import com.hxw.core.base.AbstractFragment
+import com.hxw.core.utils.onError
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.entity.TreeEntity
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_system.*
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.support.v4.dip
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.ext.android.inject
+import timber.log.Timber
 
 /**
  * @author hxw on 2018/7/23
@@ -35,17 +35,22 @@ class SystemFragment : AbstractFragment() {
 
     override fun init(savedInstanceState: Bundle?) {
         initRecycler()
-        api.getTree()
-                .observeOn(AndroidSchedulers.mainThread())
-                .autoDisposable(this@SystemFragment.scope())
-                .subscribe {
-                    if (it.errorCode == Constant.NET_SUCCESS) {
-                        mAdapter.setData(it.data)
-                        mAdapter.notifyDataSetChanged()
-                    } else {
-                        toast(it.errorMsg)
-                    }
+        launch {
+            try {
+                val deferred = api.getTree()
+                val result = deferred.await()
+                Timber.i("result in thread ${Thread.currentThread().name}")
+                if (result.errorCode == Constant.NET_SUCCESS) {
+                    mAdapter.setData(result.data)
+                    mAdapter.notifyDataSetChanged()
+                } else {
+                    toast(result.errorMsg)
                 }
+            } catch (t: Throwable) {
+                Timber.i("error in thread ${Thread.currentThread().name}")
+                t.onError()
+            }
+        }
     }
 
     private fun initRecycler() {
@@ -60,8 +65,8 @@ class SystemFragment : AbstractFragment() {
                 textView.text = treeEntity.name
                 textView.setOnClickListener {
                     startActivity<SystemListActivity>(
-                            Constant.SYSTEM_ITEM to data,
-                            Constant.SUB_SYSTEM_ITEM to index
+                        Constant.SYSTEM_ITEM to data,
+                        Constant.SUB_SYSTEM_ITEM to index
                     )
                 }
                 flow.addView(textView)
@@ -69,7 +74,7 @@ class SystemFragment : AbstractFragment() {
 
             view.setOnClickListener {
                 startActivity<SystemListActivity>(
-                        Constant.SYSTEM_ITEM to data
+                    Constant.SYSTEM_ITEM to data
                 )
             }
         }

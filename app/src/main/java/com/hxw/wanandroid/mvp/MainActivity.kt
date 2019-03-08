@@ -10,15 +10,14 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.hxw.core.base.AbstractActivity
+import com.hxw.core.utils.onError
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.mvp.login.LoginActivity
-import com.uber.autodispose.android.lifecycle.scope
-import com.uber.autodispose.autoDisposable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_content_main.*
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.startActivity
 import org.koin.android.ext.android.inject
 
@@ -39,8 +38,10 @@ class MainActivity : AbstractActivity() {
         }
         setSupportActionBar(toolbar)
         //侧滑菜单在toolbar上的动画效果
-        val toggle = ActionBarDrawerToggle(this, drawer_layout, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        val toggle = ActionBarDrawerToggle(
+            this, drawer_layout, toolbar,
+            R.string.navigation_drawer_open, R.string.navigation_drawer_close
+        )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -66,12 +67,14 @@ class MainActivity : AbstractActivity() {
 
             when (it.itemId) {
                 R.id.nav_out -> {
-                    api.loginOut()
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .autoDisposable(this@MainActivity.scope())
-                            .subscribe {
-
-                            }
+                    launch {
+                        val deferred = api.loginOut()
+                        try {
+                            deferred.await()
+                        } catch (t: Throwable) {
+                            t.onError()
+                        }
+                    }
                 }
                 else -> {
 
@@ -82,7 +85,7 @@ class MainActivity : AbstractActivity() {
 
         nav_view.getHeaderView(0).let {
             it.findViewById<TextView>(R.id.tv_username)
-                    .text = sp.getString(Constant.USERNAME, "Android Studio")
+                .text = sp.getString(Constant.USERNAME, "Android Studio")
             it.findViewById<ImageView>(R.id.iv_head).setOnClickListener {
                 startActivity<LoginActivity>()
             }

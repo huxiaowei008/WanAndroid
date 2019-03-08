@@ -4,10 +4,6 @@ import android.app.Application
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import com.hxw.core.integration.ActivityLifecycle
-import com.hxw.core.utils.onError
-import io.reactivex.exceptions.OnErrorNotImplementedException
-import io.reactivex.exceptions.UndeliverableException
-import io.reactivex.plugins.RxJavaPlugins
 
 /**
  * [Application] 的内部实现代理
@@ -26,13 +22,13 @@ class ApplicationDelegate : IApplication {
         //注册框架内部已实现的 Activity 生命周期逻辑
         application.registerActivityLifecycleCallbacks(mActivityLifecycle)
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
-        RxJavaPlugins.setErrorHandler {
-            if (it is OnErrorNotImplementedException || it is UndeliverableException) {
-                it.cause.onError()
-            } else {
-                it.onError()
-            }
-        }
+//        RxJavaPlugins.setErrorHandler {
+//            if (it is OnErrorNotImplementedException || it is UndeliverableException) {
+//                it.cause.onError()
+//            } else {
+//                it.onError()
+//            }
+//        }
     }
 
     override fun onTerminate(application: Application) {

@@ -12,7 +12,8 @@ import com.hxw.core.adapter.SimpleViewHolder
  * @author hxw
  * @date 2019/1/30
  */
-class SimplePagedListAdapter<T>(@param:LayoutRes private val layoutId: Int, diffCallback: DiffUtil.ItemCallback<T>) : PagedListAdapter<T, SimpleViewHolder>(diffCallback) {
+class SimplePagedListAdapter<T>(@param:LayoutRes private val layoutId: Int, diffCallback: DiffUtil.ItemCallback<T>) :
+    PagedListAdapter<T, SimpleViewHolder>(diffCallback) {
     private var initView: ((view: View, data: T, position: Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SimpleViewHolder {
@@ -21,7 +22,8 @@ class SimplePagedListAdapter<T>(@param:LayoutRes private val layoutId: Int, diff
     }
 
     override fun onBindViewHolder(holder: SimpleViewHolder, position: Int) {
-        initView?.invoke(holder.itemView, getItem(position)!!, position)
+        val data= getItem(position) ?: return
+        initView?.invoke(holder.itemView, data, position)
     }
 
     fun setInitView(initView: (view: View, data: T, position: Int) -> Unit): SimplePagedListAdapter<T> {

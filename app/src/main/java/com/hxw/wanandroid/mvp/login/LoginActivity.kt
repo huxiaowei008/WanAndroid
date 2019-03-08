@@ -53,7 +53,7 @@ class LoginActivity : AbstractActivity() {
             val username = et_username.text.toString()
             val password = et_password.text.toString()
             if (username.isNotEmpty() && password.isNotEmpty()) {
-                mViewModel.loginDeferred(username, password)
+                mViewModel.login(username, password)
             } else {
                 AppUtils.showToast("信息未填完整")
             }
