@@ -67,9 +67,8 @@ class HostSettingActivity : AbstractActivity() {
                 alert {
                     title = "请填写保存名称"
                     customView {
-                        val et = editText()
                         yesButton {
-                            val des = et.text.toString()
+                            val des = "测试,实际使用需要加入输入"
                             ipData.add(0, IpRecordEntity(des, proxy, ip, port))
                             mAdapter.notifyItemInserted(0)
                             rv_host_record.scrollToPosition(0)

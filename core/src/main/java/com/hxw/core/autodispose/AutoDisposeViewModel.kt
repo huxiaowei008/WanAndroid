@@ -24,21 +24,22 @@ abstract class AutoDisposeViewModel : ViewModel(), CoroutineScope {
         super.onCleared()
         job.cancel()
     }
+}
 
-    fun <T> Deferred<T>.subscribe(
-        success: (result: T) -> Unit,
-        error: (t: Throwable) -> Unit = { it.onError() },
-        complete: () -> Unit = {}
-    ) {
-        launch {
-            try {
-                val result = this@subscribe.await()
-                success.invoke(result)
-            } catch (t: Throwable) {
-                error.invoke(t)
-            } finally {
-                complete.invoke()
-            }
+fun <T> Deferred<T>.subscribe(
+    scope: CoroutineScope,
+    success: (result: T) -> Unit,
+    error: (t: Throwable) -> Unit = { it.onError() },
+    complete: () -> Unit = {}
+) {
+    scope.launch {
+        try {
+            val result = this@subscribe.await()
+            success.invoke(result)
+        } catch (t: Throwable) {
+            error.invoke(t)
+        } finally {
+            complete.invoke()
         }
     }
 }

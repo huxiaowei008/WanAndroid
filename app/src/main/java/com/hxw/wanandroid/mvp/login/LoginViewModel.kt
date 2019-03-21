@@ -2,6 +2,7 @@ package com.hxw.wanandroid.mvp.login
 
 import androidx.lifecycle.MutableLiveData
 import com.hxw.core.autodispose.AutoDisposeViewModel
+import com.hxw.core.autodispose.subscribe
 import com.hxw.core.utils.AppUtils
 import com.hxw.core.utils.onError
 import com.hxw.wanandroid.Constant
@@ -20,7 +21,7 @@ class LoginViewModel(private val wanApi: WanApi) : AutoDisposeViewModel() {
 
     fun login(username: String, password: String) {
         wanApi.login(username, password)
-            .subscribe({
+            .subscribe(this, {
                 if (it.errorCode == Constant.NET_SUCCESS) {
                     AppUtils.showToast("登陆成功")
                     userInfo.value = it.data
@@ -30,25 +31,9 @@ class LoginViewModel(private val wanApi: WanApi) : AutoDisposeViewModel() {
             })
     }
 
-    fun loginDeferred(username: String, password: String) {
-        wanApi.loginDeferred("1_4eac7652-dede-4df9-93df-aa52e9b82e68", "1")
-            .subscribe({
-                Timber.i("result in thread ${Thread.currentThread().name}")
-                if (it.data != null) {
-                    AppUtils.showToast("登陆成功")
-//                    userInfo.value = user.data
-                } else {
-                    AppUtils.showToast("登陆失败->")
-                }
-            }, {
-                it.onError()
-                Timber.i("onError in thread ${Thread.currentThread().name}")
-            })
-    }
-
     fun register(username: String, password: String, repassword: String) {
         wanApi.register(username, password, repassword)
-            .subscribe({
+            .subscribe(this, {
                 if (it.errorCode == Constant.NET_SUCCESS) {
                     AppUtils.showToast("注册成功")
                     userInfo.value = it.data

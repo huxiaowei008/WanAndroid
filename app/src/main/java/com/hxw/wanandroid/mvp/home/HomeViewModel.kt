@@ -5,6 +5,7 @@ import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import androidx.recyclerview.widget.DiffUtil
 import com.hxw.core.adapter.SimplePagerAdapter
+import com.hxw.core.autodispose.subscribe
 import com.hxw.core.utils.AppUtils
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
@@ -59,7 +60,7 @@ class HomeViewModel(private val wanApi: WanApi) :
 
     fun getBanner() {
         wanApi.banner
-            .subscribe({
+            .subscribe(this, {
                 if (it.errorCode == Constant.NET_SUCCESS) {
                     bannerData.addAll(it.data)
                     bannerAdapter.notifyDataSetChanged()

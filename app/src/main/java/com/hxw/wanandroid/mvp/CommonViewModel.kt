@@ -1,6 +1,7 @@
 package com.hxw.wanandroid.mvp
 
 import com.hxw.core.autodispose.AutoDisposeViewModel
+import com.hxw.core.autodispose.subscribe
 import com.hxw.core.utils.AppUtils
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.WanApi
@@ -15,7 +16,7 @@ class CommonViewModel(private val api: WanApi) : AutoDisposeViewModel() {
 
     fun collectArticle(id: Int, action: () -> Unit) {
         api.collect(id)
-            .subscribe({
+            .subscribe(this, {
                 if (it.errorCode == Constant.NET_SUCCESS) {
                     AppUtils.showToast("收藏成功")
                     action.invoke()
@@ -27,7 +28,7 @@ class CommonViewModel(private val api: WanApi) : AutoDisposeViewModel() {
 
     fun unCollectArticle(id: Int, action: () -> Unit) {
         api.unCollect(id)
-            .subscribe({
+            .subscribe(this,{
                 if (it.errorCode == Constant.NET_SUCCESS) {
                     AppUtils.showToast("取消收藏")
                     action.invoke()

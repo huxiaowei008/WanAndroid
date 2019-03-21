@@ -28,7 +28,7 @@ import retrofit2.http.Query;
  * @date 2018/6/2
  */
 public interface WanApi {
-    String BASEURL = "http://www.wanandroid.com/";
+    String BASEURL = "https://www.wanandroid.com/";
 
     /**
      * 1. 首页相关

@@ -82,6 +82,7 @@ object AppManager {
 
     /**
      * 关闭指定的activity,存在多个也会一起关闭
+     * 不要使用foreach循环进行元素add/remove操作（阿里java规范）
      *
      * @param activityClass 指定的[Activity]类名
      */

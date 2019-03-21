@@ -29,7 +29,7 @@ class BleActivity : AbstractActivity() {
     override fun init(savedInstanceState: Bundle?) {
         BleTool.getInstance().init(this)
         btn_scan.setOnClickListener {
-            BleTool.getInstance().startScan { device, rssi, scanRecord ->
+            BleTool.getInstance().startScan { device, _, _ ->
                 if (device.name == "1600000310046235") {
                     BleTool.getInstance().stopScan()
                     BleTool.getInstance().connectDevice(this, device, object : BleConnectCallBack {

@@ -78,25 +78,32 @@
         android:layout_marginStart="8dp"
         android:text="IP地址:"
         android:textSize="@dimen/body1"
-        app:layout_constraintBottom_toBottomOf="@+id/et_host_ip"
-        app:layout_constraintEnd_toStartOf="@+id/et_host_ip"
+        app:layout_constraintBottom_toBottomOf="@+id/tl_host_ip"
+        app:layout_constraintEnd_toStartOf="@+id/tl_host_ip"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/et_host_ip" />
+        app:layout_constraintTop_toTopOf="@+id/tl_host_ip" />
 
-    <EditText
-        android:id="@+id/et_host_ip"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tl_host_ip"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/bg_et_line"
-        android:digits="0123456789."
-        android:padding="4dp"
-        android:textSize="@dimen/body1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv2"
-        app:layout_constraintTop_toBottomOf="@+id/rg_host_agreement" />
+        app:layout_constraintTop_toBottomOf="@+id/rg_host_agreement">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_host_ip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:digits="0123456789."
+            android:padding="4dp"
+            android:textSize="@dimen/body1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <TextView
         android:id="@+id/tv3"
@@ -105,25 +112,33 @@
         android:layout_marginStart="8dp"
         android:text="端口号:"
         android:textSize="@dimen/body1"
-        app:layout_constraintBottom_toBottomOf="@+id/et_host_port"
-        app:layout_constraintEnd_toStartOf="@+id/et_host_port"
+        app:layout_constraintBottom_toBottomOf="@+id/tl_host_port"
+        app:layout_constraintEnd_toStartOf="@+id/tl_host_port"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/et_host_port" />
+        app:layout_constraintTop_toTopOf="@+id/tl_host_port" />
 
-    <EditText
-        android:id="@+id/et_host_port"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tl_host_port"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/bg_et_line"
-        android:inputType="number"
-        android:padding="4dp"
-        android:textSize="@dimen/body1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv3"
-        app:layout_constraintTop_toBottomOf="@+id/et_host_ip" />
+        app:layout_constraintTop_toBottomOf="@+id/tl_host_ip">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_host_port"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:padding="4dp"
+            android:textSize="@dimen/body1"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_host_save"
@@ -140,7 +155,7 @@
         app:cornerRadius="4dp"
         app:layout_constraintEnd_toStartOf="@+id/btn_host_sure"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_host_port" />
+        app:layout_constraintTop_toBottomOf="@+id/tl_host_port" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_host_sure"
@@ -157,7 +172,7 @@
         app:cornerRadius="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btn_host_save"
-        app:layout_constraintTop_toBottomOf="@+id/et_host_port" />
+        app:layout_constraintTop_toBottomOf="@+id/tl_host_port" />
 
     <TextView
         android:id="@+id/tv4"

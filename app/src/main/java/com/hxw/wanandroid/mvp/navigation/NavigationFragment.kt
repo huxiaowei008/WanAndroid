@@ -114,7 +114,7 @@ class NavigationFragment : AbstractFragment() {
                 textView.setPadding(size * 2, size, size * 2, size)
                 textView.text = it.title
                 textView.setTextColor(color[Random.nextInt(7)])
-                textView.setOnClickListener { v ->
+                textView.setOnClickListener { _ ->
                     startActivity<AgentWebActivity>(
                         Constant.WEB_URL to it.link
                     )
