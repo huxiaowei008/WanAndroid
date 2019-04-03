@@ -32,5 +32,9 @@ public class Test {
         System.out.println(new String(data) + "\n" + stringBuilder.toString());
         byte[] f={1};
         System.out.println(HexUtils.bytes2HexStr1(f));
+
+        String d="fe11000c";
+        byte[] e=HexUtils.hexStr2Bytes(d);
+        System.out.println(d);
     }
 }

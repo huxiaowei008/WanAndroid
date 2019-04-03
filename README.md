@@ -1,6 +1,8 @@
 # WanAndroid
 [![Download](https://api.bintray.com/packages/huxiaowei008/maven/Core/images/download.svg) ](https://bintray.com/huxiaowei008/maven/Core/_latestVersion)
 [![License](http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square) ](http://www.apache.org/licenses/LICENSE-2.0)
+[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
+[![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
 
 玩Android项目练习
 

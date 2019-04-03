@@ -71,7 +71,7 @@ dependencies {
 
     //support https://github.com/dandar3/android-support-library-README
     api 'androidx.appcompat:appcompat:1.0.2'
-    api 'com.google.android.material:material:1.1.0-alpha04'
+    api 'com.google.android.material:material:1.1.0-alpha05'
     api 'androidx.cardview:cardview:1.0.0'
     api 'androidx.recyclerview:recyclerview:1.1.0-alpha03'
 
