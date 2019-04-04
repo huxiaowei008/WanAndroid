@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.Gravity
 import com.hxw.core.WatermarkConfig
 import com.hxw.core.base.AbstractActivity
 import com.hxw.core.glide.GlideApp
@@ -38,8 +39,10 @@ class TakePhotoActivity : AbstractActivity() {
     override fun init(savedInstanceState: Bundle?) {
         btn_camera1.setOnClickListener {
             //启动相机方式1
-            PermissionUtils.checkPermissions(this@TakePhotoActivity, arrayOf(Manifest.permission.CAMERA),
-                    permissionCode, PermissionAction { openCamera() })
+            PermissionUtils.checkPermissions(this@TakePhotoActivity,
+                arrayOf(Manifest.permission.CAMERA),
+                permissionCode,
+                PermissionAction { openCamera() })
         }
 
         btn_camera2.setOnClickListener {
@@ -58,7 +61,11 @@ class TakePhotoActivity : AbstractActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == permissionCode) {
             permissions.forEachIndexed { index, s ->
@@ -75,8 +82,10 @@ class TakePhotoActivity : AbstractActivity() {
     }
 
     private fun openCamera() {
-        imageUri = FileUtils.getUriFormFile(this@TakePhotoActivity,
-                File(externalCacheDir, "${System.currentTimeMillis()}image.jpg"))
+        imageUri = FileUtils.getUriFormFile(
+            this@TakePhotoActivity,
+            File(externalCacheDir, "${System.currentTimeMillis()}image.jpg")
+        )
         val intent = AppUtils.getOpenCameraIntent(imageUri)
         startActivityForResult(intent, cameraCode1)
     }
@@ -85,22 +94,32 @@ class TakePhotoActivity : AbstractActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == cameraCode1 && resultCode == Activity.RESULT_OK) {
 
-//            val bitmap = ImageUtils.addWatermark(MediaStore
-//                    .Images.Media.getBitmap(contentResolver, imageUri), WatermarkConfig()
-//                    .setAlpha(200)
-//                    .setXY(0, 0)
-//                    .setTextSize(sp(100f).toFloat())
-//                    .setText(DateUtils.date2String(Date(), "yyyy-MM-dd HH:mm") + "胡晓伟高新园区32153153313212313515318513515")
-//                    .setRecycle(true))
-//
-//            val file = File(externalCacheDir, "${System.currentTimeMillis()}压缩.jpg")
-//            ImageUtils.compressAndSave(bitmap, file, 20)
-//            iv_test.setImageURI(Uri.fromFile(file))
-            val saveFile = File(externalCacheDir, "${System.currentTimeMillis()}crop.jpg")
-            saveUri = Uri.fromFile(saveFile)
-            val intent = AppUtils.getCropIntent(this@TakePhotoActivity, imageUri,
-                    saveFile)
-            startActivityForResult(intent, cropCode)
+            val bitmap = ImageUtils.addWatermark(
+                MediaStore
+                    .Images.Media.getBitmap(contentResolver, imageUri), WatermarkConfig()
+                    .setAlpha(200)
+                    .setMargin(16)
+                    .setGravity(Gravity.TOP)
+                    .setTextSize(sp(100f).toFloat())
+                    .setText(
+                        DateUtils.date2String(
+                            Date(),
+                            "yyyy-MM-dd HH:mm"
+                        ) + "\n胡晓伟\n高新园区"
+                    )
+                    .setRecycle(true)
+            )
+
+            val file = File(externalCacheDir, "${System.currentTimeMillis()}压缩.jpg")
+            ImageUtils.compressAndSave(bitmap, file, 20)
+            GlideApp.with(this@TakePhotoActivity)
+                .load(file)
+                .into(iv_test)
+//            val saveFile = File(externalCacheDir, "${System.currentTimeMillis()}crop.jpg")
+//            saveUri = Uri.fromFile(saveFile)
+//            val intent = AppUtils.getCropIntent(this@TakePhotoActivity, imageUri,
+//                    saveFile)
+//            startActivityForResult(intent, cropCode)
         } else if (requestCode == cameraCode2 && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 val bitmap: Bitmap = data.getParcelableExtra("data")
@@ -112,16 +131,18 @@ class TakePhotoActivity : AbstractActivity() {
                 val uri = data.data
                 val saveFile = File(externalCacheDir, "${System.currentTimeMillis()}crop.jpg")
                 saveUri = Uri.fromFile(saveFile)
-                val intent = AppUtils.getCropIntent(this@TakePhotoActivity, uri!!,
-                        saveFile)
+                val intent = AppUtils.getCropIntent(
+                    this@TakePhotoActivity, uri!!,
+                    saveFile
+                )
                 startActivityForResult(intent, cropCode)
 //                image_test.setImageURI(uri)
             }
         } else if (requestCode == cropCode && resultCode == Activity.RESULT_OK) {
-            val file=File(FileUtils.getPathFromUri(this@TakePhotoActivity,saveUri))
-           GlideApp.with(this@TakePhotoActivity)
-                   .load(file)
-                   .into(iv_test)
+            val file = File(FileUtils.getPathFromUri(this@TakePhotoActivity, saveUri))
+            GlideApp.with(this@TakePhotoActivity)
+                .load(file)
+                .into(iv_test)
         }
     }
 }

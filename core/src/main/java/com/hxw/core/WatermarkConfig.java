@@ -1,6 +1,8 @@
 package com.hxw.core;
 
 import android.graphics.Bitmap;
+import android.view.Gravity;
+
 import androidx.annotation.IntRange;
 import androidx.annotation.Nullable;
 
@@ -12,8 +14,6 @@ import androidx.annotation.Nullable;
  * @date 2018/8/6
  */
 public class WatermarkConfig {
-    private int x = 0;
-    private int y = 0;
     private String text = "";
     private float textSize = 80;
     @IntRange(from = 0, to = 255)
@@ -21,26 +21,8 @@ public class WatermarkConfig {
     private boolean recycle = true;
     @Nullable
     private Bitmap watermark = null;
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    /**
-     * 设置起点坐标
-     *
-     * @param x 坐标x轴
-     * @param y 坐标y轴
-     */
-    public WatermarkConfig setXY(int x, int y) {
-        this.x = x;
-        this.y = y;
-        return this;
-    }
+    private int gravity = Gravity.TOP;
+    private int margin = 0;
 
     public String getText() {
         return text;
@@ -110,6 +92,34 @@ public class WatermarkConfig {
      */
     public WatermarkConfig setWatermark(Bitmap watermark) {
         this.watermark = watermark;
+        return this;
+    }
+
+    public int getGravity() {
+        return gravity;
+    }
+
+    /**
+     * 水印位置
+     *
+     * @param gravity {@link Gravity}方位信息
+     */
+    public WatermarkConfig setGravity(int gravity) {
+        this.gravity = gravity;
+        return this;
+    }
+
+    public int getMargin() {
+        return margin;
+    }
+
+    /**
+     * 水印距整体图片边界的距离
+     *
+     * @param margin 距离
+     */
+    public WatermarkConfig setMargin(int margin) {
+        this.margin = margin;
         return this;
     }
 }
