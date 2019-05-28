@@ -36,8 +36,9 @@ val coreModule = module {
                 str = msg.jsonFormat()
             }
             Timber.tag("OkHttp").i(str)
-        })
-        logging.level = HttpLoggingInterceptor.Level.BODY
+        }).apply {
+            level=HttpLoggingInterceptor.Level.BODY
+        }
         val builder = OkHttpClient.Builder()
             .addInterceptor(HostSelectionInterceptor)
             .addInterceptor(logging)
