@@ -5,7 +5,10 @@ import android.content.Context
 import com.hxw.core.base.ApplicationDelegate
 import com.hxw.core.base.coreModule
 import com.hxw.wanandroid.BuildConfig
-import org.koin.android.ext.android.startKoin
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidFileProperties
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 import timber.log.Timber
 
 /**
@@ -27,7 +30,12 @@ class WanKodeinApplication : Application() {
             Timber.plant(Timber.DebugTree())
         }
 
-        startKoin(this, listOf(coreModule, appModule, viewModel))
+        startKoin {
+            androidContext(this@WanKodeinApplication)
+            modules(listOf(coreModule, appModule, viewModel))
+            androidFileProperties()
+            androidLogger()
+        }
     }
 
     override fun onTerminate() {

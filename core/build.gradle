@@ -33,16 +33,16 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 //    api project(':annotation')
 
     //KTX https://github.com/android/android-ktx
     api 'androidx.core:core-ktx:1.2.0-alpha01'
-    api 'androidx.fragment:fragment-ktx:1.1.0-alpha09'
-    api 'androidx.collection:collection-ktx:1.1.0-rc01'
+    api 'androidx.fragment:fragment-ktx:1.1.0-beta01'
+    api 'androidx.collection:collection-ktx:1.1.0'
     //kotlinx.coroutines https://github.com/Kotlin/kotlinx.coroutines
-    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.0'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1'
 
     //Anko Commons https://github.com/Kotlin/anko
     api "org.jetbrains.anko:anko-commons:$anko_version"
@@ -71,9 +71,9 @@ dependencies {
 
     //support https://github.com/dandar3/android-support-library-README
     api 'androidx.appcompat:appcompat:1.0.2'
-    api 'com.google.android.material:material:1.1.0-alpha06'
+    api 'com.google.android.material:material:1.1.0-alpha07'
     api 'androidx.cardview:cardview:1.0.0'
-    api 'androidx.recyclerview:recyclerview:1.1.0-alpha05'
+    api 'androidx.recyclerview:recyclerview:1.1.0-alpha06'
 
     //Lifecycle https://developer.android.google.cn/topic/libraries/architecture/lifecycle
     api 'androidx.lifecycle:lifecycle-runtime:2.2.0-alpha01'
@@ -121,14 +121,14 @@ dependencies {
     }
 
     //Glide图片加载 https://github.com/bumptech/glide
-    api('com.github.bumptech.glide:glide:4.8.0') {
+    api('com.github.bumptech.glide:glide:4.9.0') {
         exclude module: 'annotation'
         exclude module: 'fragment'
     }
-    api('com.github.bumptech.glide:okhttp3-integration:4.8.0') {
+    api('com.github.bumptech.glide:okhttp3-integration:4.9.0') {
         transitive = false
     }
-    kapt 'com.github.bumptech.glide:compiler:4.8.0'
+    kapt 'com.github.bumptech.glide:compiler:4.9.0'
 
     //    示例代码：
     //    为了更好地控制，你也可以从 okhttp-integration 库中排除过渡依赖：
@@ -186,9 +186,9 @@ dependencies {
 //    api "org.kodein.di:kodein-di-jxinject-jvm:6.0.1"
 
     //koin https://github.com/InsertKoinIO/koin
-    api 'org.koin:koin-android:1.0.2'
-    api 'org.koin:koin-androidx-scope:1.0.2'
-    api 'org.koin:koin-androidx-viewmodel:1.0.2'
+//    api "org.koin:koin-androidx-ext:2.0.1"
+    api 'org.koin:koin-androidx-scope:2.0.1'
+    api 'org.koin:koin-androidx-viewmodel:2.0.1'
 
     //AutoDispose https://github.com/uber/AutoDispose
 //    api 'com.uber.autodispose:autodispose-ktx:1.1.0'

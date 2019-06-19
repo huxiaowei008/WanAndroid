@@ -36,5 +36,9 @@ public class Test {
         String d="fe11000c";
         byte[] e=HexUtils.hexStr2Bytes(d);
         System.out.println(d);
+
+        String g="FE1100107666151A6F2B0C6608B042E3DC663AEDEB88";
+        String crcrc=HexUtils.calcCrc16(g);
+        System.out.println("crc->"+crcrc);
     }
 }

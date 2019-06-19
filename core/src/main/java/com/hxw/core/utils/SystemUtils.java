@@ -19,10 +19,12 @@ public final class SystemUtils {
     private final static String ZTEC2016 = "zte c2016";
     private final static String ZUKZ1 = "zuk z1";
     private final static String FLYME = "flyme";
+    private final static String MEIZUBOARD[] = {"m9", "M9", "mx", "MX"};
     private final static String KEY_MIUI_VERSION_NAME = "ro.miui.ui.version.name";
     private static final String KEY_FLYME_VERSION_NAME = "ro.build.display.id";
     private static String sMiuiVersionName;
     private static String sFlymeVersionName;
+    private static final String BRAND = Build.BRAND.toLowerCase();
 
     static {
         Properties properties = new Properties();
@@ -79,6 +81,43 @@ public final class SystemUtils {
      */
     public static boolean isFlyme() {
         return !TextUtils.isEmpty(sFlymeVersionName) && sFlymeVersionName.contains(FLYME);
+    }
+
+    public static boolean isMeizu() {
+        return isPhone(MEIZUBOARD) || isFlyme();
+    }
+
+    public static boolean isXiaomi() {
+        return Build.MANUFACTURER.toLowerCase().equals("xiaomi");
+    }
+
+    public static boolean isVivo() {
+        return BRAND.contains("vivo") || BRAND.contains("bbk");
+    }
+
+    public static boolean isOppo() {
+        return BRAND.contains("oppo");
+    }
+
+    public static boolean isHuawei() {
+        return BRAND.contains("huawei") || BRAND.contains("honor");
+    }
+
+    public static boolean isEssentialPhone(){
+        return BRAND.contains("essential");
+    }
+
+    private static boolean isPhone(String[] boards) {
+        final String board = android.os.Build.BOARD;
+        if (board == null) {
+            return false;
+        }
+        for (String board1 : boards) {
+            if (board.equals(board1)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Nullable

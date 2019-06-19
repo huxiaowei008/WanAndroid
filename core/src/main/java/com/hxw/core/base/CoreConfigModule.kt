@@ -9,7 +9,7 @@ import com.hxw.core.utils.jsonFormat
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.dsl.module.module
+import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
@@ -37,7 +37,7 @@ val coreModule = module {
             }
             Timber.tag("OkHttp").i(str)
         }).apply {
-            level=HttpLoggingInterceptor.Level.BODY
+            level = HttpLoggingInterceptor.Level.BODY
         }
         val builder = OkHttpClient.Builder()
             .addInterceptor(HostSelectionInterceptor)

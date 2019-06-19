@@ -17,8 +17,9 @@ import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.module.AppGlideModule
 import com.hxw.core.base.ConfigModule
 import okhttp3.OkHttpClient
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.get
+import org.koin.core.KoinComponent
+import org.koin.core.get
+
 import java.io.InputStream
 
 /**

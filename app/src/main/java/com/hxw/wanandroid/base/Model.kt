@@ -12,22 +12,22 @@ import com.hxw.wanandroid.mvp.wxarticle.WXArticleViewModel
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.koin.viewModel
-import org.koin.dsl.module.module
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 import retrofit2.Retrofit
 
 /**
  * @author hxw
  * @date 2019/1/24
  */
-val appModule= module {
+val appModule = module {
 
     single<ConfigModule> { GlobalConfigModule() }
 
     single { get<Retrofit>().create(WanApi::class.java) }
 }
 
-val viewModel= module {
+val viewModel = module {
 
     viewModel { LoginViewModel(get()) }
 

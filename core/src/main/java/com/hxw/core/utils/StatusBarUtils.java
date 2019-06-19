@@ -1,5 +1,6 @@
 package com.hxw.core.utils;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
@@ -12,26 +13,106 @@ import java.lang.reflect.Method;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.view.ViewCompat;
 
 /**
  * @author hxw
  * @date 2018/5/7
  */
 public final class StatusBarUtils {
+
+    private static boolean supportTranslucent() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
+                // Essential Phone 在 Android 8 之前沉浸式做得不全，系统不从状态栏顶部开始布局却会下发 WindowInsets
+                && !(SystemUtils.isEssentialPhone() && Build.VERSION.SDK_INT < 26);
+    }
+
     /**
      * 沉浸式状态栏
      */
+    @TargetApi(19)
     public static void noStatusBar(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
-            activity.getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+        if (!supportTranslucent()) {
+            // 版本小于4.4，绝对不考虑沉浸式
+            return;
+        }
+        Window window = activity.getWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            handleDisplayCutoutMode(window);
+        }
+
+        // 小米和魅族4.4 以上版本支持沉浸式
+        // 小米 Android 6.0 ，开发版 7.7.13 及以后版本设置黑色字体又需要 clear FLAG_TRANSLUCENT_STATUS, 因此还原为官方模式
+        if (SystemUtils.isMeizu() || (SystemUtils.isMIUI() && Build.VERSION.SDK_INT < Build.VERSION_CODES.M)) {
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            return;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && supportTransclentStatusBar6()) {
+                // android 6以后可以改状态栏字体颜色，因此可以自行设置为透明
+                // ZUK Z1是个另类，自家应用可以实现字体颜色变色，但没开放接口
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(Color.TRANSPARENT);
+            } else {
+                // android 5不能修改状态栏字体颜色，因此直接用FLAG_TRANSLUCENT_STATUS，nexus表现为半透明
+                // 魅族和小米的表现如何？
+                // update: 部分手机运用FLAG_TRANSLUCENT_STATUS时背景不是半透明而是没有背景了。。。。。
+//                window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+                // 采取setStatusBarColor的方式，部分机型不支持，那就纯黑了，保证状态栏图标可见
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(0x40000000);
+            }
         }
         //这是把状态栏顶上去,轻触下拉时会下来的,一些效果上可以参考
 //        activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+    }
+
+    /**
+     * 检测 Android 6.0 是否可以启用 window.setStatusBarColor(Color.TRANSPARENT)。
+     */
+    public static boolean supportTransclentStatusBar6() {
+        return !(SystemUtils.isZUKZ1() || SystemUtils.isZTKC2016());
+    }
+
+    @TargetApi(28)
+    private static void handleDisplayCutoutMode(final Window window) {
+        View decorView = window.getDecorView();
+        if (decorView != null) {
+            if (ViewCompat.isAttachedToWindow(decorView)) {
+                realHandleDisplayCutoutMode(window, decorView);
+            } else {
+                decorView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+                    @Override
+                    public void onViewAttachedToWindow(View v) {
+                        v.removeOnAttachStateChangeListener(this);
+                        realHandleDisplayCutoutMode(window, v);
+                    }
+
+                    @Override
+                    public void onViewDetachedFromWindow(View v) {
+
+                    }
+                });
+            }
+        }
+    }
+
+    @TargetApi(28)
+    private static void realHandleDisplayCutoutMode(Window window, View decorView) {
+        if (decorView.getRootWindowInsets() != null &&
+                decorView.getRootWindowInsets().getDisplayCutout() != null) {
+            WindowManager.LayoutParams params = window.getAttributes();
+            params.layoutInDisplayCutoutMode = WindowManager.LayoutParams
+                    .LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+            window.setAttributes(params);
+        }
     }
 
     /**
@@ -44,6 +125,25 @@ public final class StatusBarUtils {
         window.setAttributes(attrs);
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
         window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+    }
+
+    /**
+     * 设置全屏
+     */
+    public static void setFullScreen(Activity activity) {
+        Window window = activity.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+    }
+
+    /**
+     * 取消全屏
+     */
+    public static void cancelFullScreen(Activity activity) {
+        Window window = activity.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }
 
     /**
@@ -83,7 +183,7 @@ public final class StatusBarUtils {
      * @param dark   是否把状态栏字体及图标颜色设置为深色
      * @return boolean 成功执行返回true
      */
-    @RequiresApi(api = Build.VERSION_CODES.M)
+    @TargetApi(Build.VERSION_CODES.M)
     private static boolean setAndroid6StatusBarDarkMode(@NonNull Window window, boolean dark) {
         View decorView = window.getDecorView();
         int vis = decorView.getSystemUiVisibility();
