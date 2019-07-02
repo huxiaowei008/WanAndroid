@@ -38,9 +38,8 @@ class SystemListActivity : AbstractActivity() {
 
     private lateinit var mViewModel: SystemViewModel
 
-    override fun getLayoutId(): Int {
-        return R.layout.activity_system_list
-    }
+    override val layoutId: Int
+        get() = R.layout.activity_system_list
 
     override fun init(savedInstanceState: Bundle?) {
         setSupportActionBar(tool_title)
@@ -117,12 +116,16 @@ class SystemListActivity : AbstractActivity() {
                 }
             }
             view.findViewById<ImageView>(R.id.iv_favorite).apply {
-                imageTintList = ColorStateList.valueOf(ContextCompat
-                        .getColor(this@SystemListActivity, if (data.collect) {
-                            R.color.colorPrimary
-                        } else {
-                            R.color.grey_500
-                        }))
+                imageTintList = ColorStateList.valueOf(
+                    ContextCompat
+                        .getColor(
+                            this@SystemListActivity, if (data.collect) {
+                                R.color.colorPrimary
+                            } else {
+                                R.color.grey_500
+                            }
+                        )
+                )
             }.setOnClickListener {
                 if (data.collect) {
                     mCommonViewModel.unCollectArticle(data.id) {
@@ -139,7 +142,7 @@ class SystemListActivity : AbstractActivity() {
             }
             view.setOnClickListener {
                 startActivity<AgentWebActivity>(
-                        Constant.WEB_URL to data.link
+                    Constant.WEB_URL to data.link
                 )
             }
         }

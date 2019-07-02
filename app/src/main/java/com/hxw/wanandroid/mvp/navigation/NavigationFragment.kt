@@ -33,9 +33,8 @@ class NavigationFragment : AbstractFragment() {
     }
     private val mManager by lazy { LinearLayoutManager(activity) }
     private var needScroll = false
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_navigation
-    }
+    override val layoutId: Int
+        get() = R.layout.fragment_navigation
 
     override fun init(savedInstanceState: Bundle?) {
         initRecycler()

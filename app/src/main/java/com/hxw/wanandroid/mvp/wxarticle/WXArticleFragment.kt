@@ -33,9 +33,8 @@ class WXArticleFragment : AbstractFragment() {
     private val mViewModel: WXArticleViewModel by viewModel()
     private val mCommonViewModel: CommonViewModel by viewModel()
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_wx_article
-    }
+    override val layoutId: Int
+        get() = R.layout.fragment_wx_article
 
     override fun init(savedInstanceState: Bundle?) {
         mViewModel.treeData.observe(this, Observer {

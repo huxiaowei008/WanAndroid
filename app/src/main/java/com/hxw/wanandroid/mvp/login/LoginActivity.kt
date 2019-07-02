@@ -27,9 +27,8 @@ import timber.log.Timber
 class LoginActivity : AbstractActivity() {
     private val mViewModel: LoginViewModel by viewModel()
     private val sp: SharedPreferences by inject()
-    override fun getLayoutId(): Int {
-        return R.layout.activity_login
-    }
+    override val layoutId: Int
+        get() = R.layout.activity_login
 
     override fun init(savedInstanceState: Bundle?) {
         fa_btn.setOnClickListener {

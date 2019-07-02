@@ -5,8 +5,14 @@ import android.preference.PreferenceManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.hxw.core.integration.HostSelectionInterceptor
+import com.hxw.core.utils.AppUtils
 import com.hxw.core.utils.jsonFormat
+import com.hxw.core.utils.onError
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -59,4 +65,25 @@ val coreModule = module {
     factory { PreferenceManager.getDefaultSharedPreferences(get()) }
 }
 
+val exceptionHandler = CoroutineExceptionHandler{ _, throwable ->
+        AppUtils.onError(throwable)
+}
+
+fun <T> Deferred<T>.subscribe(
+    scope: CoroutineScope,
+    success: (result: T) -> Unit,
+    error: (t: Throwable) -> Unit = { it.onError() },
+    complete: () -> Unit = {}
+) {
+    scope.launch(exceptionHandler) {
+        try {
+            val result = this@subscribe.await()
+            success.invoke(result)
+        } catch (t: Throwable) {
+            error.invoke(t)
+        } finally {
+            complete.invoke()
+        }
+    }
+}
 

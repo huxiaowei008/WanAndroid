@@ -32,9 +32,8 @@ class TakePhotoActivity : AbstractActivity() {
     private val cropCode = 1003
     private lateinit var imageUri: Uri
     private lateinit var saveUri: Uri
-    override fun getLayoutId(): Int {
-        return R.layout.activity_take_photo
-    }
+    override val layoutId: Int
+        get() = R.layout.activity_take_photo
 
     override fun init(savedInstanceState: Bundle?) {
         btn_camera1.setOnClickListener {

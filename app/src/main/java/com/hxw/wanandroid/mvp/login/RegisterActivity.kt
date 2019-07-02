@@ -27,9 +27,8 @@ import timber.log.Timber
 class RegisterActivity : AbstractActivity() {
     private val mViewModel by viewModel<LoginViewModel>()
 
-    override fun getLayoutId(): Int {
-        return R.layout.activity_register
-    }
+    override val layoutId: Int
+        get() = R.layout.activity_register
 
     override fun init(savedInstanceState: Bundle?) {
 

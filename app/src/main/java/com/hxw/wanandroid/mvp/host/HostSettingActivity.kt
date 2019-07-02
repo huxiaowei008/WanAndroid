@@ -26,9 +26,9 @@ class HostSettingActivity : AbstractActivity() {
     private val gson: Gson by inject()
 
     private lateinit var mAdapter: IpRecordAdapter
-    override fun getLayoutId(): Int {
-        return R.layout.activity_host_setting
-    }
+
+    override val layoutId: Int
+        get() = R.layout.activity_host_setting
 
     override fun init(savedInstanceState: Bundle?) {
         //获取解析记录数据

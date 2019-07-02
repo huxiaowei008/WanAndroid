@@ -1,6 +1,8 @@
 package com.hxw.core.autodispose
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.hxw.core.base.exceptionHandler
 import com.hxw.core.utils.onError
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -10,11 +12,8 @@ import kotlin.coroutines.CoroutineContext
  * @author hxw
  * @date 2018/12/17
  */
-abstract class AutoDisposeViewModel : ViewModel(), CoroutineScope {
+abstract class AutoDisposeViewModel : ViewModel() {
 
-    private val job: Job = Job()
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
 
     /**
      * Emit the [ViewModelEvent.CLEARED] event to
@@ -22,24 +21,5 @@ abstract class AutoDisposeViewModel : ViewModel(), CoroutineScope {
      */
     override fun onCleared() {
         super.onCleared()
-        job.cancel()
-    }
-}
-
-fun <T> Deferred<T>.subscribe(
-    scope: CoroutineScope,
-    success: (result: T) -> Unit,
-    error: (t: Throwable) -> Unit = { it.onError() },
-    complete: () -> Unit = {}
-) {
-    scope.launch {
-        try {
-            val result = this@subscribe.await()
-            success.invoke(result)
-        } catch (t: Throwable) {
-            error.invoke(t)
-        } finally {
-            complete.invoke()
-        }
     }
 }

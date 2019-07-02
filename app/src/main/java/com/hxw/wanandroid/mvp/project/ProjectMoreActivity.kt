@@ -34,9 +34,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ProjectMoreActivity : AbstractActivity() {
     private val api: WanApi by inject()
     private val mViewModel: ProjectMoreViewModel by viewModel()
-    override fun getLayoutId(): Int {
-        return R.layout.activtiy_project_more
-    }
+
+    override val layoutId: Int
+        get() = R.layout.activtiy_project_more
 
     override fun init(savedInstanceState: Bundle?) {
         setSupportActionBar(tool_title)

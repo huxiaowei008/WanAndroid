@@ -29,9 +29,8 @@ class SystemFragment : AbstractFragment() {
         SimpleRecyclerAdapter<TreeEntity>(R.layout.item_system)
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_system
-    }
+    override val layoutId: Int
+        get() = R.layout.fragment_system
 
     override fun init(savedInstanceState: Bundle?) {
         initRecycler()

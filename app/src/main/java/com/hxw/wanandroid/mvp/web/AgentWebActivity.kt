@@ -22,9 +22,8 @@ class AgentWebActivity : AbstractActivity() {
 
     private lateinit var mAgent: AgentWeb
     private val link: String? by lazy { intent.getStringExtra(Constant.WEB_URL) }
-    override fun getLayoutId(): Int {
-        return R.layout.activity_web
-    }
+    override val layoutId: Int
+        get() = R.layout.activity_web
 
     override fun init(savedInstanceState: Bundle?) {
         setSupportActionBar(tool_title)

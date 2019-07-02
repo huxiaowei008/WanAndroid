@@ -187,6 +187,6 @@ object AppUtils {
             is JsonParseException, is ParseException, is JSONException -> "数据解析错误"
             else -> t.message.toString()
         }
-        AppUtils.showSnackBar(msg)
+        showSnackBar(msg)
     }
 }

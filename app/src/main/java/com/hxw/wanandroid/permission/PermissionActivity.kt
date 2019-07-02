@@ -19,9 +19,8 @@ class PermissionActivity : AbstractActivity() {
     private val LOCATION_AND_CONTACTS = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_CONTACTS)
     private val RC_CAMERA_PERM = 123
     private val RC_LOCATION_CONTACTS_PERM = 124
-    override fun getLayoutId(): Int {
-        return R.layout.activity_permission
-    }
+    override val layoutId: Int
+        get() = R.layout.activity_permission
 
     override fun init(savedInstanceState: Bundle?) {
         button_camera.setOnClickListener {

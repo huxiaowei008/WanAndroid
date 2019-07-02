@@ -1,14 +1,13 @@
 package com.hxw.wanandroid.mvp.login
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.hxw.core.autodispose.AutoDisposeViewModel
-import com.hxw.core.autodispose.subscribe
+import com.hxw.core.base.subscribe
 import com.hxw.core.utils.AppUtils
-import com.hxw.core.utils.onError
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.entity.UserEntity
-import timber.log.Timber
 
 /**
  * @author hxw
@@ -21,7 +20,7 @@ class LoginViewModel(private val wanApi: WanApi) : AutoDisposeViewModel() {
 
     fun login(username: String, password: String) {
         wanApi.login(username, password)
-            .subscribe(this, {
+            .subscribe(viewModelScope, {
                 if (it.errorCode == Constant.NET_SUCCESS) {
                     AppUtils.showToast("登陆成功")
                     userInfo.value = it.data
@@ -33,7 +32,7 @@ class LoginViewModel(private val wanApi: WanApi) : AutoDisposeViewModel() {
 
     fun register(username: String, password: String, repassword: String) {
         wanApi.register(username, password, repassword)
-            .subscribe(this, {
+            .subscribe(viewModelScope, {
                 if (it.errorCode == Constant.NET_SUCCESS) {
                     AppUtils.showToast("注册成功")
                     userInfo.value = it.data

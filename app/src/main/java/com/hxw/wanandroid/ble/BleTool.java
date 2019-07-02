@@ -9,6 +9,8 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
+import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,6 +22,7 @@ import android.os.Message;
 import com.hxw.core.utils.HexUtils;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Queue;
 import java.util.UUID;
@@ -264,6 +267,22 @@ public final class BleTool {
         stopScan();
         mLeScanCallback = callback;
         mBluetoothAdapter.startLeScan(mLeScanCallback);
+//        mBluetoothAdapter.getBluetoothLeScanner().startScan(new ScanCallback() {
+//            @Override
+//            public void onScanResult(int callbackType, ScanResult result) {
+//                super.onScanResult(callbackType, result);
+//            }
+//
+//            @Override
+//            public void onBatchScanResults(List<ScanResult> results) {
+//                super.onBatchScanResults(results);
+//            }
+//
+//            @Override
+//            public void onScanFailed(int errorCode) {
+//                super.onScanFailed(errorCode);
+//            }
+//        });
     }
 
     /**
@@ -353,13 +372,13 @@ public final class BleTool {
     public boolean setNotification(BluetoothGattCharacteristic characteristic) {
         BluetoothGattDescriptor descriptor = characteristic
                 .getDescriptor(UUID.fromString(CLIENT_CHARACTERISTIC_CONFIG));
-        if (mBluetoothGatt != null) {
+        if (mBluetoothGatt != null && descriptor != null) {
             boolean result = mBluetoothGatt.setCharacteristicNotification(characteristic, true);
-            if (descriptor != null) {
-                descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-                mBluetoothGatt.writeDescriptor(descriptor);
-            }
-            return result;
+
+            descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+            boolean success = mBluetoothGatt.writeDescriptor(descriptor);
+
+            return result & success;
         } else {
             throw new NullPointerException("mBluetoothGatt or descriptor is null.");
         }
@@ -379,7 +398,6 @@ public final class BleTool {
         } else {
             write(value);
         }
-
     }
 
     private void writeQueue() {

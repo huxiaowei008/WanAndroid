@@ -38,11 +38,11 @@ dependencies {
 //    api project(':annotation')
 
     //KTX https://github.com/android/android-ktx
-    api 'androidx.core:core-ktx:1.2.0-alpha01'
+    api 'androidx.core:core-ktx:1.2.0-alpha02'
     api 'androidx.fragment:fragment-ktx:1.1.0-beta01'
     api 'androidx.collection:collection-ktx:1.1.0'
     //kotlinx.coroutines https://github.com/Kotlin/kotlinx.coroutines
-    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0-M2'
 
     //Anko Commons https://github.com/Kotlin/anko
     api "org.jetbrains.anko:anko-commons:$anko_version"
@@ -86,7 +86,7 @@ dependencies {
 //    api 'androidx.lifecycle:lifecycle-reactivestreams-ktx:2.1.0-alpha02'
 
     //retrofit https://github.com/square/retrofit
-    api('com.squareup.retrofit2:retrofit:2.5.0') {
+    api('com.squareup.retrofit2:retrofit:2.6.0') {
         exclude group: 'com.squareup.okhttp3', module: 'okhttp'
         exclude module: 'okio'
     }
@@ -96,7 +96,7 @@ dependencies {
 //        exclude module: 'retrofit'
 //        exclude module: 'okio'
 //    }
-    implementation('com.squareup.retrofit2:converter-gson:2.5.0') {
+    implementation('com.squareup.retrofit2:converter-gson:2.6.0') {
         exclude module: 'gson'
         exclude module: 'okhttp'
         exclude module: 'okio'

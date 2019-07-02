@@ -27,10 +27,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class ProjectFragment : AbstractFragment() {
     private val mViewModel: ProjectViewModel by viewModel()
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_project
-    }
-
+    override val layoutId: Int
+        get() =  R.layout.fragment_project
     override fun init(savedInstanceState: Bundle?) {
 
         initRecyclerView()

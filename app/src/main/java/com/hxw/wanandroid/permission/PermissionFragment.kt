@@ -18,9 +18,8 @@ class PermissionFragment : AbstractFragment() {
 
     private val RC_SMS_PERM = 122
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_permission
-    }
+    override val layoutId: Int
+        get() = R.layout.fragment_permission
 
     override fun init(savedInstanceState: Bundle?) {
         button_sms.setOnClickListener {

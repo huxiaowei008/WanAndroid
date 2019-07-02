@@ -3,7 +3,17 @@ package com.hxw.wanandroid;
 import com.hxw.core.utils.EncryptUtils;
 import com.hxw.core.utils.HexUtils;
 
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Random;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 /**
  * @author hxw
@@ -37,8 +47,44 @@ public class Test {
         byte[] e=HexUtils.hexStr2Bytes(d);
         System.out.println(d);
 
-        String g="FE1100107666151A6F2B0C6608B042E3DC663AEDEB88";
+        String g="20000101";
         String crcrc=HexUtils.calcCrc16(g);
         System.out.println("crc->"+crcrc);
+//
+//        String i="AA013300000001efeb2b5d3e6bd641000000002017090510112520170906101125efeb2b5d3e6bd6410102030405060708010101010101010101010101010101010102030405060708091011121308DF";
+//        String h=EncryptUtils.encryptAES2HexString(i.getBytes(),"11223344556677aa".getBytes(),"AES/CBC/NoPadding","mplock1234567890".getBytes());
+//
+//        String initVector="mplock1234567890";
+//        String key="11223344556677aa";
+//        IvParameterSpec iv = new IvParameterSpec(initVector.getBytes());
+//        SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes(),
+//                "AES");
+//
+//        Cipher cipher = null;
+//        try {
+//            cipher = Cipher.getInstance("AES/CBC/NoPadding");
+//        } catch (NoSuchAlgorithmException e1) {
+//            e1.printStackTrace();
+//        } catch (NoSuchPaddingException e1) {
+//            e1.printStackTrace();
+//        }
+//        try {
+//            cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
+//        } catch (InvalidAlgorithmParameterException e1) {
+//            e1.printStackTrace();
+//        } catch (InvalidKeyException e1) {
+//            e1.printStackTrace();
+//        }
+//
+//        byte[] encrypted = new byte[0];
+//        try {
+//            encrypted = cipher.doFinal(i.getBytes());
+//        } catch (BadPaddingException e1) {
+//            e1.printStackTrace();
+//        } catch (IllegalBlockSizeException e1) {
+//            e1.printStackTrace();
+//        }
+//        System.out.println("aes->"+HexUtils.bytes2HexStr1(encrypted));
+
     }
 }

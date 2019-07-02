@@ -30,9 +30,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class HomeFragment : AbstractFragment() {
     private val mViewModel: HomeViewModel by viewModel()
     private val mCommonViewModel: CommonViewModel by viewModel()
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_home
-    }
+    override val layoutId: Int
+        get() = R.layout.fragment_home
 
     override fun init(savedInstanceState: Bundle?) {
 
@@ -45,13 +44,13 @@ class HomeFragment : AbstractFragment() {
     private fun initViewPager() {
         mViewModel.bannerAdapter.setInitView { view, data, _ ->
             GlideApp.with(view)
-                    .load(data.imagePath)
-                    .placeholder(R.drawable.ic_placeholder)
-                    .error(R.drawable.ic_error)
-                    .into(view.findViewById(R.id.iv_banner))
+                .load(data.imagePath)
+                .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.ic_error)
+                .into(view.findViewById(R.id.iv_banner))
             view.setOnClickListener {
                 startActivity<AgentWebActivity>(
-                        Constant.WEB_URL to data.url
+                    Constant.WEB_URL to data.url
                 )
             }
         }
@@ -76,12 +75,16 @@ class HomeFragment : AbstractFragment() {
                 }
             }
             view.findViewById<ImageView>(R.id.iv_favorite).apply {
-                imageTintList = ColorStateList.valueOf(ContextCompat
-                        .getColor(activity!!, if (data.collect) {
-                            R.color.colorPrimary
-                        } else {
-                            R.color.grey_500
-                        }))
+                imageTintList = ColorStateList.valueOf(
+                    ContextCompat
+                        .getColor(
+                            activity!!, if (data.collect) {
+                                R.color.colorPrimary
+                            } else {
+                                R.color.grey_500
+                            }
+                        )
+                )
             }.setOnClickListener {
                 if (data.collect) {
                     mCommonViewModel.unCollectArticle(data.id) {
@@ -98,7 +101,7 @@ class HomeFragment : AbstractFragment() {
             }
             view.setOnClickListener {
                 startActivity<AgentWebActivity>(
-                        Constant.WEB_URL to data.link
+                    Constant.WEB_URL to data.link
                 )
             }
         }

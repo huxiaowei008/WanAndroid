@@ -26,11 +26,9 @@ import org.koin.android.ext.android.inject
  * @date 2018/7/17
  */
 class MainActivity : AbstractActivity() {
+    override val layoutId: Int = R.layout.activity_main
     private val api: WanApi by inject()
     private val sp: SharedPreferences by inject()
-    override fun getLayoutId(): Int {
-        return R.layout.activity_main
-    }
 
     override fun init(savedInstanceState: Bundle?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
