@@ -24,7 +24,7 @@ import com.hxw.wanandroid.paging.SimplePagedListAdapter
 class HomeViewModel(private val wanApi: WanApi) :
     BasePageViewModel<Int, ArticleEntity>() {
     override val sourceFactory: PageSourceFactory<Int, ArticleEntity> = PageSourceFactory {
-        HomeDataSource(wanApi)
+        HomeDataSource(wanApi, viewModelScope)
     }
 
     override val pagedList: LiveData<PagedList<ArticleEntity>> = sourceFactory

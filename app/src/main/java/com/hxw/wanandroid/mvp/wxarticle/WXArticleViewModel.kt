@@ -27,7 +27,7 @@ class WXArticleViewModel(private val wanApi: WanApi) : BasePageViewModel<Int, Ar
     private var key: String = ""
     val treeData = MutableLiveData<MutableList<TreeEntity>>()
     override val sourceFactory: PageSourceFactory<Int, ArticleEntity> = PageSourceFactory {
-        WXArticleDataSource(wanApi, id, key)
+        WXArticleDataSource(wanApi, id, key, viewModelScope)
     }
 
     override val pagedList: LiveData<PagedList<ArticleEntity>> = sourceFactory

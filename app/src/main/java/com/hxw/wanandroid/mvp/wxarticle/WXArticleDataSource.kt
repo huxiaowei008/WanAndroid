@@ -1,12 +1,13 @@
 package com.hxw.wanandroid.mvp.wxarticle
 
 import androidx.paging.PageKeyedDataSource
+import com.hxw.core.base.subscribe
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.WanApi
-import com.hxw.wanandroid.base.subscribe
 import com.hxw.wanandroid.entity.ArticleEntity
 import com.hxw.wanandroid.paging.BasePageDataSource
 import com.hxw.wanandroid.paging.NetworkState
+import kotlinx.coroutines.CoroutineScope
 import timber.log.Timber
 
 /**
@@ -16,7 +17,8 @@ import timber.log.Timber
 class WXArticleDataSource(
     private val wanApi: WanApi,
     private val cid: Int,
-    private val key: String
+    private val key: String,
+    private val scope: CoroutineScope
 ) : BasePageDataSource<Int, ArticleEntity>() {
 
     override fun loadInitial(
@@ -26,7 +28,7 @@ class WXArticleDataSource(
         Timber.i("loadInitial-> ")
         refreshState.postValue(NetworkState.LOADING)
         wanApi.getWxArticle(cid, 1, key)
-            .subscribe({
+            .subscribe(scope, {
                 if (it.errorCode == Constant.NET_SUCCESS) {
                     refreshState.postValue(NetworkState.SUCCESS)
                     retry = null
@@ -51,7 +53,7 @@ class WXArticleDataSource(
         }
         networkState.postValue(NetworkState.LOADING)
         wanApi.getWxArticle(cid, params.key, key)
-            .subscribe({
+            .subscribe(scope, {
                 if (it.errorCode == Constant.NET_SUCCESS) {
                     networkState.postValue(NetworkState.SUCCESS)
                     retry = null
@@ -73,7 +75,7 @@ class WXArticleDataSource(
         Timber.i("loadAfter->${params.key}")
         networkState.postValue(NetworkState.LOADING)
         wanApi.getWxArticle(cid, params.key, key)
-            .subscribe({
+            .subscribe(scope, {
                 if (it.errorCode == Constant.NET_SUCCESS) {
                     networkState.postValue(NetworkState.SUCCESS)
                     retry = null

@@ -101,7 +101,7 @@ class HostSettingActivity : AbstractActivity() {
                 sp.edit {
                     putString(IPUSE, str)
                 }
-                HostSelectionInterceptor.setHost(str)
+                HostSelectionInterceptor.setBaseUrl(str)
                 finish()
             }
         }

@@ -1,6 +1,7 @@
 package com.hxw.wanandroid.mvp.system
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import androidx.recyclerview.widget.DiffUtil
@@ -16,25 +17,33 @@ import com.hxw.wanandroid.paging.SimplePagedListAdapter
  * @date 2019/2/2
  */
 class SystemViewModel(wanApi: WanApi, private var cid: Int) :
-        BasePageViewModel<Int, ArticleEntity>() {
+    BasePageViewModel<Int, ArticleEntity>() {
     override val sourceFactory: PageSourceFactory<Int, ArticleEntity> = PageSourceFactory {
-        SystemDataSource(wanApi, cid)
+        SystemDataSource(wanApi, cid, viewModelScope)
     }
 
     override val pagedList: LiveData<PagedList<ArticleEntity>> = sourceFactory
-            .toLiveData(20)
+        .toLiveData(20)
 
     val articleAdapter: SimplePagedListAdapter<ArticleEntity> by lazy {
-        SimplePagedListAdapter(R.layout.item_article, object : DiffUtil.ItemCallback<ArticleEntity>() {
-            override fun areItemsTheSame(oldItem: ArticleEntity, newItem: ArticleEntity): Boolean {
-                return oldItem.id == newItem.id
-            }
+        SimplePagedListAdapter(
+            R.layout.item_article,
+            object : DiffUtil.ItemCallback<ArticleEntity>() {
+                override fun areItemsTheSame(
+                    oldItem: ArticleEntity,
+                    newItem: ArticleEntity
+                ): Boolean {
+                    return oldItem.id == newItem.id
+                }
 
-            override fun areContentsTheSame(oldItem: ArticleEntity, newItem: ArticleEntity): Boolean {
-                return oldItem == newItem
-            }
+                override fun areContentsTheSame(
+                    oldItem: ArticleEntity,
+                    newItem: ArticleEntity
+                ): Boolean {
+                    return oldItem == newItem
+                }
 
-        })
+            })
     }
 
     fun change(cid: Int) {

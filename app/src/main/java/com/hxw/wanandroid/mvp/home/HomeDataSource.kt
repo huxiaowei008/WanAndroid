@@ -1,19 +1,21 @@
 package com.hxw.wanandroid.mvp.home
 
 import androidx.paging.PageKeyedDataSource
+import com.hxw.core.base.subscribe
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.WanApi
-import com.hxw.wanandroid.base.subscribe
 import com.hxw.wanandroid.entity.ArticleEntity
 import com.hxw.wanandroid.paging.BasePageDataSource
 import com.hxw.wanandroid.paging.NetworkState
+import kotlinx.coroutines.CoroutineScope
 import timber.log.Timber
 
 /**
  * @author hxw
  * @date 2019/1/30
  */
-class HomeDataSource(private val wanApi: WanApi) : BasePageDataSource<Int, ArticleEntity>() {
+class HomeDataSource(private val wanApi: WanApi, private val scope: CoroutineScope) :
+    BasePageDataSource<Int, ArticleEntity>() {
 
 
     override fun loadInitial(
@@ -23,7 +25,7 @@ class HomeDataSource(private val wanApi: WanApi) : BasePageDataSource<Int, Artic
         Timber.i("loadInitial-> ")
         refreshState.postValue(NetworkState.LOADING)
         wanApi.getHomeArticle(0)
-            .subscribe({
+            .subscribe(scope, {
                 if (it.errorCode == Constant.NET_SUCCESS) {
                     refreshState.postValue(NetworkState.SUCCESS)
                     retry = null
@@ -48,7 +50,7 @@ class HomeDataSource(private val wanApi: WanApi) : BasePageDataSource<Int, Artic
         }
         networkState.postValue(NetworkState.LOADING)
         wanApi.getHomeArticle(params.key)
-            .subscribe({
+            .subscribe(scope, {
                 if (it.errorCode == Constant.NET_SUCCESS) {
                     networkState.postValue(NetworkState.SUCCESS)
                     retry = null
@@ -70,7 +72,7 @@ class HomeDataSource(private val wanApi: WanApi) : BasePageDataSource<Int, Artic
         Timber.i("loadAfter->${params.key}")
         networkState.postValue(NetworkState.LOADING)
         wanApi.getHomeArticle(params.key)
-            .subscribe({
+            .subscribe(scope, {
                 if (it.errorCode == Constant.NET_SUCCESS) {
                     networkState.postValue(NetworkState.SUCCESS)
                     retry = null

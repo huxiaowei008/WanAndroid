@@ -41,20 +41,3 @@ val viewModel = module {
 
     viewModel { CommonViewModel(get()) }
 }
-
-fun <T> Deferred<T>.subscribe(
-    success: (result: T) -> Unit,
-    error: (t: Throwable) -> Unit = { it.onError() },
-    complete: () -> Unit = {}
-) {
-    GlobalScope.launch {
-        try {
-            val result = this@subscribe.await()
-            success.invoke(result)
-        } catch (t: Throwable) {
-            error.invoke(t)
-        } finally {
-            complete.invoke()
-        }
-    }
-}

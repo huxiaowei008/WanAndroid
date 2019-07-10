@@ -1,5 +1,6 @@
 package com.hxw.core.integration
 
+import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -11,22 +12,27 @@ import okhttp3.Response
 object HostSelectionInterceptor : Interceptor {
 
     @Volatile
-    private var host: String? = null
+    private var baseUrl: HttpUrl? = null
 
-    fun setHost(host: String) {
-        this.host = host
+    fun setBaseUrl(baseUrl: String) {
+        this.baseUrl = HttpUrl.get(baseUrl)
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()
-        if (host != null && host != request.url().host()) {
+        val host = request.url().host()
+        val scheme = request.url().scheme()
+        val port = request.url().port()
+        if (baseUrl != null && "${baseUrl?.scheme()}://${baseUrl?.host()}:${baseUrl?.port()}/" != "$scheme://$host:$port/") {
             val newUrl = request.url().newBuilder()
-                    .host(host!!)
-                    .build()
+                .scheme(baseUrl!!.scheme())
+                .host(baseUrl!!.host())
+                .port(baseUrl!!.port())
+                .build()
 
             request = request.newBuilder()
-                    .url(newUrl)
-                    .build()
+                .url(newUrl)
+                .build()
         }
         return chain.proceed(request)
     }
