@@ -31,6 +31,26 @@ class NavigationFragment : AbstractFragment() {
     private val mAdapter by lazy {
         SimpleRecyclerAdapter<NaviEntity>(R.layout.item_navigation)
     }
+    private val scrollListener = object : RecyclerView.OnScrollListener() {
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                val first = mManager.findFirstVisibleItemPosition()
+                val tab = tab_layout.getTabAt(first)
+                if (tab?.isSelected != true) {
+                    tab?.select()
+                }
+            }
+        }
+
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            if (needScroll) {
+                needScroll = false
+                scrollToPosition(tab_layout.selectedTabPosition)
+            }
+        }
+    }
     private val mManager by lazy { LinearLayoutManager(activity) }
     private var needScroll = false
     override val layoutId: Int
@@ -124,30 +144,12 @@ class NavigationFragment : AbstractFragment() {
 
         rv_list.layoutManager = mManager
         rv_list.adapter = mAdapter
-        rv_list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    val first = mManager.findFirstVisibleItemPosition()
-                    val tab = tab_layout.getTabAt(first)
-                    if (tab?.isSelected != true) {
-                        tab?.select()
-                    }
-                }
-            }
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                if (needScroll) {
-                    needScroll = false
-                    scrollToPosition(tab_layout.selectedTabPosition)
-                }
-            }
-        })
+        rv_list.addOnScrollListener(scrollListener)
 
     }
 
     override fun onDestroyView() {
+        rv_list.removeOnScrollListener(scrollListener)
         tab_layout.clearOnTabSelectedListeners()
         super.onDestroyView()
     }

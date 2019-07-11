@@ -35,13 +35,15 @@ val coreModule = module {
         builder.create()
     }
 
-    single<OkHttpClient> {
-        val logging = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger { msg ->
-            var str = msg
-            if (msg.startsWith("{") || msg.startsWith("[")) {
-                str = msg.jsonFormat()
+    single {
+        val logging = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
+            override fun log(message: String) {
+                var str = message
+                if (message.startsWith("{") || message.startsWith("[")) {
+                    str = message.jsonFormat()
+                }
+                Timber.tag("OkHttp").i(str)
             }
-            Timber.tag("OkHttp").i(str)
         }).apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
@@ -65,8 +67,8 @@ val coreModule = module {
     factory { PreferenceManager.getDefaultSharedPreferences(get()) }
 }
 
-val exceptionHandler = CoroutineExceptionHandler{ _, throwable ->
-        AppUtils.onError(throwable)
+val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+    AppUtils.onError(throwable)
 }
 
 fun <T> Deferred<T>.subscribe(

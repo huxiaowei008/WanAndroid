@@ -7,6 +7,9 @@
 玩Android项目练习
 
 ## 下载
+```gradle
+implementation 'com.hxw.kjm:core:<latestVersion>'
+```
 在项目的build.gradle里加上
 ```
 buildscript {

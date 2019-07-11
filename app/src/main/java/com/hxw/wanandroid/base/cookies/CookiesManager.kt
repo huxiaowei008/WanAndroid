@@ -16,6 +16,7 @@ import java.util.concurrent.ConcurrentHashMap
  */
 class CookiesManager(context: Context) : CookieJar {
 
+
     private val cookiePrefs = context.getSharedPreferences("Cookies_Prefs", Context.MODE_PRIVATE)
     private val cookiesMap: HashMap<String, ConcurrentHashMap<String, Cookie>> = hashMapOf()
 
@@ -40,19 +41,22 @@ class CookiesManager(context: Context) : CookieJar {
         }
     }
 
-    override fun saveFromResponse(url: HttpUrl, cookies: MutableList<Cookie>) {
+    override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
 //        for (item in cookiesMap) {
 //            cookieStore.add(url, item)
 //        }
         cookies.forEach {
             val name = getCookieToken(it)
-            if (!cookiesMap.containsKey(url.host())) {
-                cookiesMap[url.host()] = ConcurrentHashMap()
+            if (!cookiesMap.containsKey(url.host)) {
+                cookiesMap[url.host] = ConcurrentHashMap()
             }
-            cookiesMap[url.host()]!![name] = it
+            cookiesMap[url.host]!![name] = it
             cookiePrefs.edit {
-                putString(url.host(), TextUtils.join(",", cookiesMap[url.host()]!!.keys))
-                putString(name, SerializableOkHttpCookies.encodeCookie(SerializableOkHttpCookies(it)))
+                putString(url.host, TextUtils.join(",", cookiesMap[url.host]!!.keys))
+                putString(
+                    name,
+                    SerializableOkHttpCookies.encodeCookie(SerializableOkHttpCookies(it))
+                )
             }
         }
     }
@@ -60,14 +64,14 @@ class CookiesManager(context: Context) : CookieJar {
     override fun loadForRequest(url: HttpUrl): MutableList<Cookie> {
 //        return cookieStore.get(url)
         val ret = mutableListOf<Cookie>()
-        if (cookiesMap.containsKey(url.host())) {
-            ret.addAll(cookiesMap[url.host()]!!.values)
+        if (cookiesMap.containsKey(url.host)) {
+            ret.addAll(cookiesMap[url.host]!!.values)
         }
         return ret
     }
 
     private fun getCookieToken(cookie: Cookie): String {
-        return cookie.domain() + "@" + cookie.name()
+        return cookie.domain + "@" + cookie.name
     }
 
 }
