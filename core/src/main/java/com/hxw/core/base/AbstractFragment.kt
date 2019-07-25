@@ -4,13 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import com.hxw.core.utils.PermissionUtils
 import androidx.fragment.app.Fragment
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlin.coroutines.CoroutineContext
+import com.hxw.core.utils.PermissionUtils
 
 
 /**
@@ -21,11 +16,7 @@ import kotlin.coroutines.CoroutineContext
  * @author hxw
  * @date 2018/5/5
  */
-abstract class AbstractFragment : Fragment(), IFragment,CoroutineScope {
-
-    private val job: Job = Job()
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
+abstract class AbstractFragment : Fragment(), IFragment {
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -48,10 +39,4 @@ abstract class AbstractFragment : Fragment(), IFragment,CoroutineScope {
         super.onActivityCreated(savedInstanceState)
         init(savedInstanceState)
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        job.cancel()
-    }
-
 }

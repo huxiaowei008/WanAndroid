@@ -7,18 +7,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.hxw.core.base.AbstractActivity
-import com.hxw.core.utils.onError
+import com.hxw.core.base.subscribe
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.mvp.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_content_main.*
-import kotlinx.coroutines.launch
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 
 /**
@@ -62,17 +63,16 @@ class MainActivity : AbstractActivity() {
         bottom_navigation.setupWithNavController(controller)
 
         nav_view.setNavigationItemSelectedListener {
-
             when (it.itemId) {
                 R.id.nav_out -> {
-                    launch {
-                        val deferred = api.loginOut()
-                        try {
-                            deferred.await()
-                        } catch (t: Throwable) {
-                            t.onError()
-                        }
-                    }
+                    api.loginOut()
+                        .subscribe(lifecycle.coroutineScope, { resutl ->
+                            if (resutl.errorCode == Constant.NET_SUCCESS) {
+                                toast("登出成功")
+                            } else {
+                                toast(resutl.errorMsg)
+                            }
+                        })
                 }
                 else -> {
 

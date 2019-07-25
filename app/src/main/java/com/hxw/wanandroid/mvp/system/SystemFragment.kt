@@ -3,17 +3,18 @@ package com.hxw.wanandroid.mvp.system
 
 import android.os.Bundle
 import android.widget.TextView
+import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.internal.FlowLayout
 import com.hxw.core.adapter.SimpleRecyclerAdapter
 import com.hxw.core.base.AbstractFragment
+import com.hxw.core.base.subscribe
 import com.hxw.core.utils.onError
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.entity.TreeEntity
 import kotlinx.android.synthetic.main.fragment_system.*
-import kotlinx.coroutines.launch
 import org.jetbrains.anko.support.v4.dip
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
@@ -34,10 +35,8 @@ class SystemFragment : AbstractFragment() {
 
     override fun init(savedInstanceState: Bundle?) {
         initRecycler()
-        launch {
-            try {
-                val deferred = api.getTree()
-                val result = deferred.await()
+        api.getTree()
+            .subscribe(lifecycle.coroutineScope, { result ->
                 Timber.i("result in thread ${Thread.currentThread().name}")
                 if (result.errorCode == Constant.NET_SUCCESS) {
                     mAdapter.setData(result.data)
@@ -45,11 +44,10 @@ class SystemFragment : AbstractFragment() {
                 } else {
                     toast(result.errorMsg)
                 }
-            } catch (t: Throwable) {
+            }, {
                 Timber.i("error in thread ${Thread.currentThread().name}")
-                t.onError()
-            }
-        }
+                it.onError()
+            })
     }
 
     private fun initRecycler() {

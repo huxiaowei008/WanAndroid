@@ -8,12 +8,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.lifecycle.Observer
+import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.hxw.core.base.AbstractActivity
+import com.hxw.core.base.subscribe
 import com.hxw.core.glide.GlideApp
-import com.hxw.core.utils.onError
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi
@@ -21,7 +22,6 @@ import com.hxw.wanandroid.entity.TreeEntity
 import com.hxw.wanandroid.mvp.web.AgentWebActivity
 import com.hxw.wanandroid.paging.NetworkState
 import kotlinx.android.synthetic.main.activtiy_project_more.*
-import kotlinx.coroutines.launch
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
@@ -41,20 +41,15 @@ class ProjectMoreActivity : AbstractActivity() {
     override fun init(savedInstanceState: Bundle?) {
         setSupportActionBar(tool_title)
         tool_title.setNavigationOnClickListener { finish() }
-        launch {
-            val deferred = api.projectTree
-            try {
-                val result = deferred.await()
 
+        api.projectTree
+            .subscribe(lifecycle.coroutineScope, { result ->
                 if (result.errorCode == Constant.NET_SUCCESS) {
                     initTab(result.data)
                 } else {
                     toast(result.errorMsg)
                 }
-            } catch (t: Throwable) {
-                t.onError()
-            }
-        }
+            })
 
         initSwipeToRefresh()
         initRecyclerView()

@@ -266,15 +266,38 @@ public final class HexUtils {
      * @return 转化为有符号的值
      */
     public static int unSignedToSigned(String value) {
+        int length = value.length();
         int result = Integer.parseInt(value, 16);
-        if (result > 127 && result < 256) {
+        if (length <= 2) {
             //1个字节
-            return result - 256;
-        } else if (result > 32767 && result < 65536) {
+            if (result > 127 && result < 256) {
+                return result - 256;
+            }
+        } else if (length <= 4) {
             //2个字节
-            return result - 65536;
+            if (result > 32767 && result < 65536) {
+                return result - 65536;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 把无符号的十六进制转化成有符号的整型
+     * (1个字节是-128~127)
+     * (2个字节是-32768~32767)
+     *
+     * @param value 无符号的十六进制值
+     * @return 转化为有符号的值
+     */
+    public static int unSignedToSigned2(String value) {
+        int length = value.length();
+        int result = Integer.parseInt(value, 16);
+        if (length <= 2) {
+            return (byte) result;
+        } else if (length <= 4) {
+            return (short) result;
         } else {
-            //超过2个字节,确定这么大吗?要自己增加
             return result;
         }
     }
@@ -287,7 +310,7 @@ public final class HexUtils {
      */
     public static String calcCrc16(@NonNull String s) {
         byte[] data = hexStr2Bytes(s);
-        int result = calcCrc16(data, 0, data.length,0xFFFF);
+        int result = calcCrc16(data, 0, data.length, 0xFFFF);
         return addCharToLeft(Integer.toHexString(result), 4, '0');
     }
 

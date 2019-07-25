@@ -2,8 +2,8 @@ package com.hxw.wanandroid.paging
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations.switchMap
+import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
-import com.hxw.core.autodispose.AutoDisposeViewModel
 
 /**
  * 使用paging的ViewModel基类
@@ -11,7 +11,7 @@ import com.hxw.core.autodispose.AutoDisposeViewModel
  * @author hxw
  * @date 2019/1/31
  */
-abstract class BasePageViewModel<Key, Value> : AutoDisposeViewModel() {
+abstract class BasePageViewModel<Key, Value> : ViewModel() {
 
     abstract val sourceFactory: PageSourceFactory<Key, Value>
 

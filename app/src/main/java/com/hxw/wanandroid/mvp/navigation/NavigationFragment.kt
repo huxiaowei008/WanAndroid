@@ -3,20 +3,20 @@ package com.hxw.wanandroid.mvp.navigation
 import android.os.Bundle
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.internal.FlowLayout
 import com.google.android.material.tabs.TabLayout
 import com.hxw.core.adapter.SimpleRecyclerAdapter
 import com.hxw.core.base.AbstractFragment
-import com.hxw.core.utils.onError
+import com.hxw.core.base.subscribe
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.entity.NaviEntity
 import com.hxw.wanandroid.mvp.web.AgentWebActivity
 import kotlinx.android.synthetic.main.fragment_navigation.*
-import kotlinx.coroutines.launch
 import org.jetbrains.anko.support.v4.dip
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
@@ -59,21 +59,16 @@ class NavigationFragment : AbstractFragment() {
     override fun init(savedInstanceState: Bundle?) {
         initRecycler()
 
-        launch {
-            val deferred = api.navi
-            try {
-                val result = deferred.await()
-                if (result.errorCode == Constant.NET_SUCCESS) {
-                    initTabLayout(result.data)
-                    mAdapter.setData(result.data)
+        api.navi
+            .subscribe(lifecycle.coroutineScope, {
+                if (it.errorCode == Constant.NET_SUCCESS) {
+                    initTabLayout(it.data)
+                    mAdapter.setData(it.data)
                     mAdapter.notifyDataSetChanged()
                 } else {
-                    toast(result.errorMsg)
+                    toast(it.errorMsg)
                 }
-            } catch (t: Throwable) {
-                t.onError()
-            }
-        }
+            })
     }
 
     private fun initTabLayout(data: List<NaviEntity>) {

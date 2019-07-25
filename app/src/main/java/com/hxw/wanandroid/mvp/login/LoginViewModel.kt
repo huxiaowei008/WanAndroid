@@ -1,8 +1,8 @@
 package com.hxw.wanandroid.mvp.login
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hxw.core.autodispose.AutoDisposeViewModel
 import com.hxw.core.base.subscribe
 import com.hxw.core.utils.AppUtils
 import com.hxw.wanandroid.Constant
@@ -13,7 +13,7 @@ import com.hxw.wanandroid.entity.UserEntity
  * @author hxw
  * @date 2019/1/24
  */
-class LoginViewModel(private val wanApi: WanApi) : AutoDisposeViewModel() {
+class LoginViewModel(private val wanApi: WanApi) : ViewModel() {
 
 
     val userInfo = MutableLiveData<UserEntity>()

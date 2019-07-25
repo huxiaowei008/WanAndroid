@@ -2,6 +2,8 @@ package com.hxw.core.base
 
 import android.app.Application
 import android.preference.PreferenceManager
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.hxw.core.integration.HostSelectionInterceptor
@@ -19,6 +21,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
+import kotlin.coroutines.CoroutineContext
 
 /**
  * 框架核心Module提供
@@ -88,4 +91,3 @@ fun <T> Deferred<T>.subscribe(
         }
     }
 }
-

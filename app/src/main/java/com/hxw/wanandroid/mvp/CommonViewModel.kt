@@ -1,7 +1,7 @@
 package com.hxw.wanandroid.mvp
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hxw.core.autodispose.AutoDisposeViewModel
 import com.hxw.core.base.subscribe
 
 import com.hxw.core.utils.AppUtils
@@ -13,7 +13,7 @@ import com.hxw.wanandroid.WanApi
  * @author hxw
  * @date 2019/2/13
  */
-class CommonViewModel(private val api: WanApi) : AutoDisposeViewModel() {
+class CommonViewModel(private val api: WanApi) : ViewModel() {
 
 
     fun collectArticle(id: Int, action: () -> Unit) {
