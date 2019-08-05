@@ -85,7 +85,7 @@ object PermissionUtils {
         permissions.forEachIndexed { index, s ->
             if (grantResults[index] == PackageManager.PERMISSION_DENIED) {
                 //申请失败
-                PermissionUtils.somePermissionPermanentlyDenied(host, s)
+                somePermissionPermanentlyDenied(host, s)
                 return
             }
         }

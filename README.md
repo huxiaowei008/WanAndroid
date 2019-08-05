@@ -108,7 +108,12 @@ class WanKodeinApplication : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
-        startKoin(this, listOf(coreModule, appModule))
+        startKoin {
+            androidContext(this@WanKodeinApplication)
+            modules(listOf(coreModule, appModule, viewModel))
+            androidFileProperties()
+            androidLogger()
+        }
     }
 
     override fun onTerminate() {

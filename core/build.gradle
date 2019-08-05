@@ -53,7 +53,7 @@ dependencies {
 //    api "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version"
 //    api "org.jetbrains.anko:anko-appcompat-v7-coroutines:$anko_version"
     // Appcompat-v7 (Anko Layouts)
-    implementation "org.jetbrains.anko:anko-appcompat-v7-commons:$anko_version"
+    api "org.jetbrains.anko:anko-appcompat-v7-commons:$anko_version"
 //    api "org.jetbrains.anko:anko-appcompat-v7:$anko_version"
 //    api "org.jetbrains.anko:anko-coroutines:$anko_version"
     //CardView-v7
@@ -71,7 +71,7 @@ dependencies {
 
     //support https://github.com/dandar3/android-support-library-README
     api 'androidx.appcompat:appcompat:1.0.2'
-    api 'com.google.android.material:material:1.1.0-alpha07'
+    api 'com.google.android.material:material:1.1.0-alpha09'
     api 'androidx.cardview:cardview:1.0.0'
     api 'androidx.recyclerview:recyclerview:1.1.0-beta01'
 
