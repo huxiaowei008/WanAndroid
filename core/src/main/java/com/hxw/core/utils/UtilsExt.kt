@@ -13,13 +13,13 @@ fun Date.toStr(pattern: String = "yyyy-MM-dd HH:mm:ss") = date2String(this, patt
 
 fun String.toDate(pattern: String = "yyyy-MM-dd HH:mm:ss") = string2Date(this, pattern)
 
-fun String?.encryptMD5ToString() = encryptMD5ToString(this?.toByteArray())
+fun String?.encryptMD5ToString() = EncryptUtils.encryptMD5ToString(this?.toByteArray())
 
-fun String.encryptMD5() = encryptMD5(this.toByteArray())
+fun String.encryptMD5() = EncryptUtils.encryptMD5(this.toByteArray())
 
-fun String?.encryptSHA1ToString() = encryptSHA1ToString(this?.toByteArray())
+fun String?.encryptSHA1ToString() = EncryptUtils.encryptSHA1ToString(this?.toByteArray())
 
-fun String.encryptSHA1() = encryptSHA1(this.toByteArray())
+fun String.encryptSHA1() = EncryptUtils.encryptSHA1(this.toByteArray())
 
 fun String.addCharToLeft(strLength: Int, c: Char = '0') = HexUtils.addCharToLeft(this, strLength, c)
 
