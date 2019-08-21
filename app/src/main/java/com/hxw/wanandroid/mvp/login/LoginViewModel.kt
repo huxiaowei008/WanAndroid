@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hxw.core.base.subscribe
-import com.hxw.core.utils.AppUtils
+import com.hxw.core.utils.showToast
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.entity.UserEntity
@@ -22,10 +22,10 @@ class LoginViewModel(private val wanApi: WanApi) : ViewModel() {
         wanApi.login(username, password)
             .subscribe(viewModelScope, {
                 if (it.errorCode == Constant.NET_SUCCESS) {
-                    AppUtils.showToast("登陆成功")
+                    showToast("登陆成功")
                     userInfo.value = it.data
                 } else {
-                    AppUtils.showToast("登陆失败->" + it.errorMsg)
+                    showToast("登陆失败->" + it.errorMsg)
                 }
             })
     }
@@ -34,10 +34,10 @@ class LoginViewModel(private val wanApi: WanApi) : ViewModel() {
         wanApi.register(username, password, repassword)
             .subscribe(viewModelScope, {
                 if (it.errorCode == Constant.NET_SUCCESS) {
-                    AppUtils.showToast("注册成功")
+                    showToast("注册成功")
                     userInfo.value = it.data
                 } else {
-                    AppUtils.showToast("注册失败->" + it.errorMsg)
+                    showToast("注册失败->" + it.errorMsg)
                 }
             })
     }

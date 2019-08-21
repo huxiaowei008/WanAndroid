@@ -1,9 +1,8 @@
-package com.hxw.core.utils;
+package com.hxw.core.utils
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * 时间相关工具类
@@ -166,34 +165,36 @@ import java.util.Locale;
  * @author hxw
  * @date 2018/5/7
  */
-public final class DateUtils {
 
-    /**
-     * 将Date类型转为时间字符串
-     * <p>格式为pattern</p>
-     *
-     * @param date    Date类型时间
-     * @param pattern 时间格式
-     * @return 时间字符串
-     */
-    public static String date2String(Date date, String pattern) {
-        return new SimpleDateFormat(pattern, Locale.CHINA).format(date);
-    }
 
-    /**
-     * 将时间字符串转为Date类型
-     * <p>time格式为pattern</p>
-     *
-     * @param time    时间字符串
-     * @param pattern 时间格式
-     * @return Date类型
-     */
-    public static Date string2Date(String time, String pattern) {
-        try {
-            return new SimpleDateFormat(pattern, Locale.CHINA).parse(time);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+/**
+ * 将Date类型转为时间字符串
+ *
+ * 格式为pattern
+ *
+ * @param date    Date类型时间
+ * @param pattern 时间格式
+ * @return 时间字符串
+ */
+fun date2String(date: Date, pattern: String): String {
+    return SimpleDateFormat(pattern, Locale.CHINA).format(date)
 }
+
+/**
+ * 将时间字符串转为Date类型
+ *
+ * time格式为pattern
+ *
+ * @param time    时间字符串
+ * @param pattern 时间格式
+ * @return Date类型
+ */
+fun string2Date(time: String, pattern: String): Date? = try {
+    SimpleDateFormat(pattern, Locale.CHINA).parse(time)
+} catch (e: ParseException) {
+    e.printStackTrace()
+    null
+}
+
+
+

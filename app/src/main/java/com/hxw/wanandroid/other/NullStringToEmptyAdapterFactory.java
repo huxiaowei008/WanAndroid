@@ -7,10 +7,11 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-import com.hxw.core.utils.DateUtils;
 
 import java.io.IOException;
 import java.util.Date;
+
+import static com.hxw.core.utils.DateUtilsKt.string2Date;
 
 
 /**
@@ -67,7 +68,7 @@ public class NullStringToEmptyAdapterFactory implements TypeAdapterFactory {
         public Date read(JsonReader in) throws IOException {
             String d = in.nextString();
             d = d.replace("T", " ").replace("Z", "").substring(0, 19);
-            return DateUtils.string2Date(d, "yyyy-MM-dd HH:mm:ss");
+            return string2Date(d, "yyyy-MM-dd HH:mm:ss");
         }
     }
 }

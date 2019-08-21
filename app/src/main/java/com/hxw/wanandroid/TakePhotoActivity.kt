@@ -85,7 +85,7 @@ class TakePhotoActivity : AbstractActivity() {
             this@TakePhotoActivity,
             File(externalCacheDir, "${System.currentTimeMillis()}image.jpg")
         )
-        val intent = AppUtils.getOpenCameraIntent(imageUri)
+        val intent = getOpenCameraIntent(imageUri)
         startActivityForResult(intent, cameraCode1)
     }
 
@@ -101,7 +101,7 @@ class TakePhotoActivity : AbstractActivity() {
                     .setGravity(Gravity.TOP)
                     .setTextSize(sp(100f).toFloat())
                     .setText(
-                        DateUtils.date2String(
+                        date2String(
                             Date(),
                             "yyyy-MM-dd HH:mm"
                         ) + "\n胡晓伟\n高新园区"
@@ -130,7 +130,7 @@ class TakePhotoActivity : AbstractActivity() {
                 val uri = data.data
                 val saveFile = File(externalCacheDir, "${System.currentTimeMillis()}crop.jpg")
                 saveUri = Uri.fromFile(saveFile)
-                val intent = AppUtils.getCropIntent(
+                val intent = getCropIntent(
                     this@TakePhotoActivity, uri!!,
                     saveFile
                 )

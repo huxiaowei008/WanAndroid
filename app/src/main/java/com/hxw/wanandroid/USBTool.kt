@@ -13,7 +13,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
-import com.hxw.core.utils.AppUtils
+import com.hxw.core.utils.showToast
+
 import timber.log.Timber
 import java.nio.ByteBuffer
 
@@ -149,7 +150,7 @@ object USBTool : LifecycleObserver {
      */
     fun readData(): ByteArray {
         if (usbEpIn == null || mDeviceConnection == null) {
-            AppUtils.showToast("usbEpIn or mDeviceConnection == null")
+            showToast("usbEpIn or mDeviceConnection == null")
             return ByteArray(0)
         }
         val inMax = usbEpIn!!.maxPacketSize
@@ -170,7 +171,7 @@ object USBTool : LifecycleObserver {
             val ret = mDeviceConnection!!.bulkTransfer(usbEpOut, data, data.size, 3000)
             ret >= 0
         } else {
-            AppUtils.showToast("mDeviceConnection == null")
+            showToast("mDeviceConnection == null")
             false
         }
     }
@@ -180,7 +181,7 @@ object USBTool : LifecycleObserver {
      */
     fun readDataAsync(): ByteArray {
         if (usbEpIn == null || mDeviceConnection == null) {
-            AppUtils.showToast("usbEpIn or mDeviceConnection == null")
+            showToast("usbEpIn or mDeviceConnection == null")
             return ByteArray(0)
         }
         val inMax = usbEpIn!!.maxPacketSize
@@ -200,7 +201,7 @@ object USBTool : LifecycleObserver {
                 ByteArray(0)
             }
         } else {
-            AppUtils.showToast("异步读取 usbRequest 初始化失败")
+            showToast("异步读取 usbRequest 初始化失败")
             ByteArray(0)
         }
     }
@@ -210,7 +211,7 @@ object USBTool : LifecycleObserver {
      */
     fun writeDataAsync(data: ByteArray): Boolean {
         if (usbEpOut == null || mDeviceConnection == null) {
-            AppUtils.showToast("usbEpOut or mDeviceConnection == null")
+            showToast("usbEpOut or mDeviceConnection == null")
             return false
         }
         val byteBuffer = ByteBuffer.wrap(data)
@@ -228,7 +229,7 @@ object USBTool : LifecycleObserver {
                 false
             }
         } else {
-            AppUtils.showToast("异步写入 usbRequest 初始化失败")
+            showToast("异步写入 usbRequest 初始化失败")
             false
         }
     }

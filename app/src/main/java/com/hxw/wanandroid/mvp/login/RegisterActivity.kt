@@ -13,7 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import com.hxw.core.base.AbstractActivity
-import com.hxw.core.utils.AppUtils
+import com.hxw.core.utils.showToast
 import com.hxw.wanandroid.R
 import kotlinx.android.synthetic.main.activity_register.*
 import org.koin.android.ext.android.get
@@ -50,7 +50,7 @@ class RegisterActivity : AbstractActivity() {
             if (username.isNotEmpty() && password.isNotEmpty() && repassword.isNotEmpty()) {
                 mViewModel.register(username, password, repassword)
             } else {
-                AppUtils.showToast("信息未填完整")
+                showToast("信息未填完整")
             }
         }
 

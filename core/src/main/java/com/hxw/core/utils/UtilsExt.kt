@@ -9,17 +9,17 @@ import java.util.*
  */
 fun String.jsonFormat() = StringUtils.jsonFormat(this)
 
-fun Date.toStr(pattern: String = "yyyy-MM-dd HH:mm:ss") = DateUtils.date2String(this, pattern)
+fun Date.toStr(pattern: String = "yyyy-MM-dd HH:mm:ss") = date2String(this, pattern)
 
-fun String.toDate(pattern: String = "yyyy-MM-dd HH:mm:ss") = DateUtils.string2Date(this, pattern)
+fun String.toDate(pattern: String = "yyyy-MM-dd HH:mm:ss") = string2Date(this, pattern)
 
-fun String?.encryptMD5ToString() = EncryptUtils.encryptMD5ToString(this)
+fun String?.encryptMD5ToString() = encryptMD5ToString(this?.toByteArray())
 
-fun String.encryptMD5() = EncryptUtils.encryptMD5(this.toByteArray())
+fun String.encryptMD5() = encryptMD5(this.toByteArray())
 
-fun String?.encryptSHA1ToString() = EncryptUtils.encryptSHA1ToString(this)
+fun String?.encryptSHA1ToString() = encryptSHA1ToString(this?.toByteArray())
 
-fun String.encryptSHA1() = EncryptUtils.encryptSHA1(this.toByteArray())
+fun String.encryptSHA1() = encryptSHA1(this.toByteArray())
 
 fun String.addCharToLeft(strLength: Int, c: Char = '0') = HexUtils.addCharToLeft(this, strLength, c)
 
@@ -33,4 +33,4 @@ fun ByteArray.toHexStr() = HexUtils.bytes2HexStr2(this)
 
 fun String.hexToBytes() = HexUtils.hexStr2Bytes(this)
 
-fun Throwable?.onError() = AppUtils.onError(this)
+fun Throwable?.onError() = onError(this)

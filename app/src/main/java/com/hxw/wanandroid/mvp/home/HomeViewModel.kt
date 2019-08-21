@@ -7,7 +7,7 @@ import androidx.paging.toLiveData
 import androidx.recyclerview.widget.DiffUtil
 import com.hxw.core.adapter.SimplePagerAdapter
 import com.hxw.core.base.subscribe
-import com.hxw.core.utils.AppUtils
+import com.hxw.core.utils.showToast
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi
@@ -66,7 +66,7 @@ class HomeViewModel(private val wanApi: WanApi) :
                     bannerData.addAll(it.data)
                     bannerAdapter.notifyDataSetChanged()
                 } else {
-                    AppUtils.showToast(it.errorMsg)
+                    showToast(it.errorMsg)
                 }
             })
     }

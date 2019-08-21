@@ -94,7 +94,7 @@ class GlobalConfigModule : ConfigModule {
 >[koin](https://github.com/InsertKoinIO/koin)
 ```
 class WanKodeinApplication : Application() {
-    private val delegate by lazy { ApplicationDelegate() }
+    private val delegate by lazy { ApplicationDelegate(listOf(coreModule, appModule, viewModel)) }
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
@@ -105,15 +105,6 @@ class WanKodeinApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         delegate.onCreate(this@WanKodeinApplication)
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        }
-        startKoin {
-            androidContext(this@WanKodeinApplication)
-            modules(listOf(coreModule, appModule, viewModel))
-            androidFileProperties()
-            androidLogger()
-        }
     }
 
     override fun onTerminate() {

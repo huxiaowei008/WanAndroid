@@ -22,7 +22,6 @@ import com.hxw.core.PermissionAspect
  * @date 2018/8/4
  */
 object PermissionUtils {
-
     private lateinit var resultAction: PermissionAction
 
     /**

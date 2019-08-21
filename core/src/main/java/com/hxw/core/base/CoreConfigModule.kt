@@ -5,7 +5,6 @@ import android.preference.PreferenceManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.hxw.core.integration.HostSelectionInterceptor
-import com.hxw.core.utils.AppUtils
 import com.hxw.core.utils.jsonFormat
 import com.hxw.core.utils.onError
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -69,7 +68,7 @@ val coreModule = module {
 }
 
 val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-    AppUtils.onError(throwable)
+    onError(throwable)
 }
 
 fun <T> Deferred<T>.subscribe(

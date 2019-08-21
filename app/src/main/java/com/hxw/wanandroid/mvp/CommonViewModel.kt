@@ -3,8 +3,9 @@ package com.hxw.wanandroid.mvp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hxw.core.base.subscribe
+import com.hxw.core.utils.showToast
 
-import com.hxw.core.utils.AppUtils
+
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.WanApi
 
@@ -20,10 +21,10 @@ class CommonViewModel(private val api: WanApi) : ViewModel() {
         api.collect(id)
             .subscribe(viewModelScope, {
                 if (it.errorCode == Constant.NET_SUCCESS) {
-                    AppUtils.showToast("收藏成功")
+                    showToast("收藏成功")
                     action.invoke()
                 } else {
-                    AppUtils.showToast(it.errorMsg)
+                    showToast(it.errorMsg)
                 }
             })
     }
@@ -32,10 +33,10 @@ class CommonViewModel(private val api: WanApi) : ViewModel() {
         api.unCollect(id)
             .subscribe(viewModelScope, {
                 if (it.errorCode == Constant.NET_SUCCESS) {
-                    AppUtils.showToast("取消收藏")
+                    showToast("取消收藏")
                     action.invoke()
                 } else {
-                    AppUtils.showToast(it.errorMsg)
+                    showToast(it.errorMsg)
                 }
             })
     }

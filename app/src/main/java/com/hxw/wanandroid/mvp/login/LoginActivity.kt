@@ -8,7 +8,8 @@ import android.os.Bundle
 import androidx.core.content.edit
 import androidx.lifecycle.Observer
 import com.hxw.core.base.AbstractActivity
-import com.hxw.core.utils.AppUtils
+import com.hxw.core.utils.showToast
+
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.mvp.MainActivity
@@ -54,7 +55,7 @@ class LoginActivity : AbstractActivity() {
             if (username.isNotEmpty() && password.isNotEmpty()) {
                 mViewModel.login(username, password)
             } else {
-                AppUtils.showToast("信息未填完整")
+                showToast("信息未填完整")
             }
         }
 

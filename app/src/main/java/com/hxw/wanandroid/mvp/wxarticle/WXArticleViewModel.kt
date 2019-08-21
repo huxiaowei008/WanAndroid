@@ -7,8 +7,7 @@ import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import androidx.recyclerview.widget.DiffUtil
 import com.hxw.core.base.subscribe
-
-import com.hxw.core.utils.AppUtils
+import com.hxw.core.utils.showToast
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi
@@ -69,7 +68,7 @@ class WXArticleViewModel(private val wanApi: WanApi) : BasePageViewModel<Int, Ar
                 if (it.errorCode == Constant.NET_SUCCESS) {
                     treeData.value = it.data
                 } else {
-                    AppUtils.showToast(it.errorMsg)
+                    showToast(it.errorMsg)
                 }
             })
     }
