@@ -9,10 +9,7 @@ import android.content.IntentFilter
 import android.hardware.usb.*
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.*
 import com.hxw.core.utils.showToast
 
 import timber.log.Timber
@@ -23,7 +20,7 @@ import java.nio.ByteBuffer
  * @author hxw
  * @date 2018/8/13
  */
-object USBTool : LifecycleObserver {
+object USBTool : LifecycleObserver,DefaultLifecycleObserver {
     private val ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION"
     private lateinit var mUsbManager: UsbManager
     private var mInterface: UsbInterface? = null
@@ -62,8 +59,9 @@ object USBTool : LifecycleObserver {
         activity.registerReceiver(mUsbReceiver, filter)
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun onDestroy(owner: LifecycleOwner) {
+
+    override fun onDestroy(owner: LifecycleOwner) {
+        super.onDestroy(owner)
         if (owner is Context) {
             owner.unregisterReceiver(mUsbReceiver)
         }

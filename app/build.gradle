@@ -94,6 +94,12 @@ dependencies {
     implementation 'androidx.paging:paging-runtime-ktx:2.1.0'
     //AgentWeb https://github.com/Justson/AgentWeb
     implementation 'com.just.agentweb:agentweb:4.0.2'
-
     implementation'com.jakewharton.rxrelay2:rxrelay:2.1.0'
+
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }

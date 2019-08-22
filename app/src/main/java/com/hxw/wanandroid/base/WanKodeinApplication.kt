@@ -2,9 +2,13 @@ package com.hxw.wanandroid.base
 
 import android.app.Application
 import android.content.Context
+import coil.Coil
+import coil.ImageLoader
 import com.hxw.core.base.ApplicationDelegate
 import com.hxw.core.base.coreModule
 import com.hxw.wanandroid.BuildConfig
+import okhttp3.OkHttpClient
+import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidFileProperties
 import org.koin.android.ext.koin.androidLogger
@@ -26,6 +30,11 @@ class WanKodeinApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         delegate.onCreate(this@WanKodeinApplication)
+
+        Coil.setDefaultImageLoader(ImageLoader(this){
+            okHttpClient(get<OkHttpClient>())
+            crossfade(true)
+        })
     }
 
     override fun onTerminate() {
