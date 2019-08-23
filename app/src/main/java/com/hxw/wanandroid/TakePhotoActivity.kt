@@ -9,9 +9,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Gravity
+import coil.api.load
 import com.hxw.core.WatermarkConfig
 import com.hxw.core.base.AbstractActivity
-import com.hxw.core.glide.GlideApp
 import com.hxw.core.utils.*
 import kotlinx.android.synthetic.main.activity_take_photo.*
 import org.jetbrains.anko.sp
@@ -111,9 +111,7 @@ class TakePhotoActivity : AbstractActivity() {
 
             val file = File(externalCacheDir, "${System.currentTimeMillis()}压缩.jpg")
             ImageUtils.compressAndSave(bitmap, file, 20)
-            GlideApp.with(this@TakePhotoActivity)
-                .load(file)
-                .into(iv_test)
+            iv_test.load(file)
 //            val saveFile = File(externalCacheDir, "${System.currentTimeMillis()}crop.jpg")
 //            saveUri = Uri.fromFile(saveFile)
 //            val intent = AppUtils.getCropIntent(this@TakePhotoActivity, imageUri,
@@ -139,9 +137,7 @@ class TakePhotoActivity : AbstractActivity() {
             }
         } else if (requestCode == cropCode && resultCode == Activity.RESULT_OK) {
             val file = File(FileUtils.getPathFromUri(this@TakePhotoActivity, saveUri))
-            GlideApp.with(this@TakePhotoActivity)
-                .load(file)
-                .into(iv_test)
+            iv_test.load(file)
         }
     }
 }

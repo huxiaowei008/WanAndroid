@@ -122,15 +122,15 @@ dependencies {
     }
 
     //Glide图片加载 https://github.com/bumptech/glide
-    api('com.github.bumptech.glide:glide:4.9.0') {
-        exclude module: 'annotation'
-        exclude module: 'fragment'
-    }
-    api('com.github.bumptech.glide:okhttp3-integration:4.9.0') {
-        transitive = false
-    }
-    kapt 'com.github.bumptech.glide:compiler:4.9.0'
-
+//    api('com.github.bumptech.glide:glide:4.9.0') {
+//        exclude module: 'annotation'
+//        exclude module: 'fragment'
+//    }
+//    api('com.github.bumptech.glide:okhttp3-integration:4.9.0') {
+//        transitive = false
+//    }
+//    kapt 'com.github.bumptech.glide:compiler:4.9.0'
+    //Coil图片加载 https://github.com/coil-kt/coil
     api 'io.coil-kt:coil:0.6.1'
 
     //    示例代码：

@@ -6,12 +6,13 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.hxw.core.base.AbstractFragment
-import com.hxw.core.glide.GlideApp
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.mvp.web.AgentWebActivity
@@ -28,7 +29,8 @@ class ProjectFragment : AbstractFragment() {
     private val mViewModel: ProjectViewModel by viewModel()
 
     override val layoutId: Int
-        get() =  R.layout.fragment_project
+        get() = R.layout.fragment_project
+
     override fun init(savedInstanceState: Bundle?) {
 
         initRecyclerView()
@@ -40,25 +42,26 @@ class ProjectFragment : AbstractFragment() {
 
     private fun initRecyclerView() {
         mViewModel.projectAdapter.setInitView { view, data, _ ->
-            GlideApp.with(view)
-                    .load(data.envelopePic)
-                    .placeholder(R.drawable.ic_placeholder)
-                    .error(R.drawable.ic_error)
-                    .into(view.findViewById(R.id.iv_project))
+            view.findViewById<ImageView>(R.id.iv_project).load(data.envelopePic)
             view.findViewById<TextView>(R.id.tv_title).text = data.title
             view.findViewById<TextView>(R.id.tv_des).text = data.desc
             view.findViewById<TextView>(R.id.tv_author).text = data.author
             view.findViewById<TextView>(R.id.tv_time).text = data.niceDate
             view.setOnClickListener {
                 startActivity<AgentWebActivity>(
-                        Constant.WEB_URL to data.link
+                    Constant.WEB_URL to data.link
                 )
             }
         }
 
         rv_project.layoutManager = LinearLayoutManager(activity)
         rv_project.addItemDecoration(object : RecyclerView.ItemDecoration() {
-            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+            override fun getItemOffsets(
+                outRect: Rect,
+                view: View,
+                parent: RecyclerView,
+                state: RecyclerView.State
+            ) {
                 outRect.set(0, 0, 0, 1)
             }
 

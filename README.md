@@ -105,6 +105,12 @@ class WanKodeinApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         delegate.onCreate(this@WanKodeinApplication)
+        Coil.setDefaultImageLoader(ImageLoader(this){
+            okHttpClient(get<OkHttpClient>())
+            crossfade(true)
+            placeholder(R.drawable.ic_placeholder)
+            error(R.drawable.ic_error)
+        })
     }
 
     override fun onTerminate() {

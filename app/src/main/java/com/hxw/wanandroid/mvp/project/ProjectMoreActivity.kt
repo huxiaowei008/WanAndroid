@@ -6,15 +6,16 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import com.google.android.material.tabs.TabLayout
 import com.hxw.core.base.AbstractActivity
 import com.hxw.core.base.subscribe
-import com.hxw.core.glide.GlideApp
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi
@@ -80,11 +81,10 @@ class ProjectMoreActivity : AbstractActivity() {
 
     private fun initRecyclerView() {
         mViewModel.projectAdapter.setInitView { view, data, _ ->
-            GlideApp.with(view)
-                .load(data.envelopePic)
-                .placeholder(R.drawable.ic_placeholder)
-                .error(R.drawable.ic_error)
-                .into(view.findViewById(R.id.iv_project))
+            view.findViewById<ImageView>(R.id.iv_project).load(data.envelopePic) {
+                placeholder(R.drawable.ic_placeholder)
+                error(R.drawable.ic_error)
+            }
             view.findViewById<TextView>(R.id.tv_title).text = data.title
             view.findViewById<TextView>(R.id.tv_des).text = data.desc
             view.findViewById<TextView>(R.id.tv_author).text = data.author

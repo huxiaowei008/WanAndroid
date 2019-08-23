@@ -10,8 +10,8 @@ import androidx.core.text.buildSpannedString
 import androidx.core.text.color
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil.api.load
 import com.hxw.core.base.AbstractFragment
-import com.hxw.core.glide.GlideApp
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.mvp.CommonViewModel
@@ -43,11 +43,10 @@ class HomeFragment : AbstractFragment() {
 
     private fun initViewPager() {
         mViewModel.bannerAdapter.setInitView { view, data, _ ->
-            GlideApp.with(view)
-                .load(data.imagePath)
-                .placeholder(R.drawable.ic_placeholder)
-                .error(R.drawable.ic_error)
-                .into(view.findViewById(R.id.iv_banner))
+            view.findViewById<ImageView>(R.id.iv_banner).load(data.imagePath) {
+                placeholder(R.drawable.ic_placeholder)
+                error(R.drawable.ic_error)
+            }
             view.setOnClickListener {
                 startActivity<AgentWebActivity>(
                     Constant.WEB_URL to data.url

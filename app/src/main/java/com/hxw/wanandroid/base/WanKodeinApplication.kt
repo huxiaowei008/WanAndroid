@@ -4,9 +4,11 @@ import android.app.Application
 import android.content.Context
 import coil.Coil
 import coil.ImageLoader
+import coil.util.CoilLogger
 import com.hxw.core.base.ApplicationDelegate
 import com.hxw.core.base.coreModule
 import com.hxw.wanandroid.BuildConfig
+import com.hxw.wanandroid.R
 import okhttp3.OkHttpClient
 import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
@@ -30,10 +32,11 @@ class WanKodeinApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         delegate.onCreate(this@WanKodeinApplication)
-
         Coil.setDefaultImageLoader(ImageLoader(this){
             okHttpClient(get<OkHttpClient>())
             crossfade(true)
+            placeholder(R.drawable.ic_placeholder)
+            error(R.drawable.ic_error)
         })
     }
 

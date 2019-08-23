@@ -2,9 +2,15 @@ package com.hxw.core.base
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
+import coil.Coil
+import coil.ImageLoader
+import coil.util.CoilLogger
 import com.hxw.core.BuildConfig
 import com.hxw.core.integration.ActivityLifecycle
+import okhttp3.OkHttpClient
+import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidFileProperties
 import org.koin.android.ext.koin.androidLogger
@@ -31,6 +37,8 @@ class ApplicationDelegate(private val modules: List<Module>) : IApplication {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
+            CoilLogger.setEnabled(true)
+            CoilLogger.setLevel(Log.VERBOSE)
         }
 
         startKoin {

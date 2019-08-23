@@ -2,7 +2,6 @@ package com.hxw.wanandroid.base
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.bumptech.glide.GlideBuilder
 import com.google.gson.GsonBuilder
 import com.hxw.core.base.ConfigModule
 import com.hxw.wanandroid.WanApi
@@ -36,9 +35,5 @@ class GlobalConfigModule : ConfigModule, KoinComponent {
         val str = sp.getString(HostSettingActivity.IPUSE, WanApi.BASEURL)
         Timber.d(str)
         builder.baseUrl(WanApi.BASEURL)
-    }
-
-    override fun applyGlideOptions(context: Context, builder: GlideBuilder) {
-
     }
 }
