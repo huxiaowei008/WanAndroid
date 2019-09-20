@@ -47,11 +47,18 @@ android{
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    dependencies {
-        ...
-        implementation 'com.hxw.kjm:core:<latestVersion>'
+}
+dependencies {
+    ...
+    implementation 'com.hxw.kjm:core:<latestVersion>'
+}
+    
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
+
 ```
 ## 使用
 >注意:由于使用了谷歌的[Material](https://github.com/material-components/material-components-android),
@@ -81,10 +88,6 @@ class GlobalConfigModule : ConfigModule {
 
     override fun configRetrofit(context: Context, builder: Retrofit.Builder) {
         builder.baseUrl(WanApi.BASEURL)
-    }
-
-    override fun applyGlideOptions(context: Context, builder: GlideBuilder) {
-
     }
 }
 ```

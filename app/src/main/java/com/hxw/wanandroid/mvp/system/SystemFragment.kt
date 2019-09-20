@@ -8,17 +8,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.internal.FlowLayout
 import com.hxw.core.adapter.SimpleRecyclerAdapter
 import com.hxw.core.base.AbstractFragment
-import com.hxw.core.base.subscribe
-import com.hxw.core.utils.onError
+import com.hxw.core.base.exceptionHandler
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.entity.TreeEntity
 import kotlinx.android.synthetic.main.fragment_system.*
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.support.v4.dip
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.ext.android.inject
+import retrofit2.await
 import timber.log.Timber
 
 /**
@@ -35,19 +36,16 @@ class SystemFragment : AbstractFragment() {
 
     override fun init(savedInstanceState: Bundle?) {
         initRecycler()
-        api.getTree()
-            .subscribe(lifecycle.coroutineScope, { result ->
-                Timber.i("result in thread ${Thread.currentThread().name}")
-                if (result.errorCode == Constant.NET_SUCCESS) {
-                    mAdapter.setData(result.data)
-                    mAdapter.notifyDataSetChanged()
-                } else {
-                    toast(result.errorMsg)
-                }
-            }, {
-                Timber.i("error in thread ${Thread.currentThread().name}")
-                it.onError()
-            })
+        lifecycle.coroutineScope.launch(exceptionHandler) {
+            val result = api.tree.await()
+            Timber.i("result in thread ${Thread.currentThread().name}")
+            if (result.errorCode == Constant.NET_SUCCESS) {
+                mAdapter.setData(result.data)
+                mAdapter.notifyDataSetChanged()
+            } else {
+                toast(result.errorMsg)
+            }
+        }
     }
 
     private fun initRecycler() {

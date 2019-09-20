@@ -2,12 +2,14 @@ package com.hxw.wanandroid.mvp
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hxw.core.base.subscribe
+import com.hxw.core.base.exceptionHandler
 import com.hxw.core.utils.showToast
 
 
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.WanApi
+import kotlinx.coroutines.launch
+import retrofit2.await
 
 /**
  * 通用操作的ViewModel
@@ -16,29 +18,28 @@ import com.hxw.wanandroid.WanApi
  */
 class CommonViewModel(private val api: WanApi) : ViewModel() {
 
-
     fun collectArticle(id: Int, action: () -> Unit) {
-        api.collect(id)
-            .subscribe(viewModelScope, {
-                if (it.errorCode == Constant.NET_SUCCESS) {
-                    showToast("收藏成功")
-                    action.invoke()
-                } else {
-                    showToast(it.errorMsg)
-                }
-            })
+        viewModelScope.launch(exceptionHandler) {
+            val result = api.collect(id).await()
+            if (result.errorCode == Constant.NET_SUCCESS) {
+                showToast("收藏成功")
+                action.invoke()
+            } else {
+                showToast(result.errorMsg)
+            }
+        }
     }
 
     fun unCollectArticle(id: Int, action: () -> Unit) {
-        api.unCollect(id)
-            .subscribe(viewModelScope, {
-                if (it.errorCode == Constant.NET_SUCCESS) {
-                    showToast("取消收藏")
-                    action.invoke()
-                } else {
-                    showToast(it.errorMsg)
-                }
-            })
+        viewModelScope.launch(exceptionHandler) {
+            val result = api.unCollect(id).await()
+            if (result.errorCode == Constant.NET_SUCCESS) {
+                showToast("取消收藏")
+                action.invoke()
+            } else {
+                showToast(result.errorMsg)
+            }
+        }
     }
 
 }

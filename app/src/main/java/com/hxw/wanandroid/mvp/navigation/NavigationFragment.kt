@@ -10,17 +10,19 @@ import com.google.android.material.internal.FlowLayout
 import com.google.android.material.tabs.TabLayout
 import com.hxw.core.adapter.SimpleRecyclerAdapter
 import com.hxw.core.base.AbstractFragment
-import com.hxw.core.base.subscribe
+import com.hxw.core.base.exceptionHandler
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.entity.NaviEntity
 import com.hxw.wanandroid.mvp.web.AgentWebActivity
 import kotlinx.android.synthetic.main.fragment_navigation.*
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.support.v4.dip
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.ext.android.inject
+import retrofit2.await
 import kotlin.random.Random
 
 /**
@@ -58,17 +60,16 @@ class NavigationFragment : AbstractFragment() {
 
     override fun init(savedInstanceState: Bundle?) {
         initRecycler()
-
-        api.navi
-            .subscribe(lifecycle.coroutineScope, {
-                if (it.errorCode == Constant.NET_SUCCESS) {
-                    initTabLayout(it.data)
-                    mAdapter.setData(it.data)
-                    mAdapter.notifyDataSetChanged()
-                } else {
-                    toast(it.errorMsg)
-                }
-            })
+        lifecycle.coroutineScope.launch(exceptionHandler) {
+            val result = api.navi.await()
+            if (result.errorCode == Constant.NET_SUCCESS) {
+                initTabLayout(result.data)
+                mAdapter.setData(result.data)
+                mAdapter.notifyDataSetChanged()
+            } else {
+                toast(result.errorMsg)
+            }
+        }
     }
 
     private fun initTabLayout(data: List<NaviEntity>) {

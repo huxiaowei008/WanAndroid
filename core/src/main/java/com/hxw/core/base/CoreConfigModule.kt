@@ -2,16 +2,14 @@ package com.hxw.core.base
 
 import android.app.Application
 import android.preference.PreferenceManager
+import coil.util.CoilUtils
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.hxw.core.integration.HostSelectionInterceptor
 import com.hxw.core.utils.jsonFormat
 import com.hxw.core.utils.onError
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -50,6 +48,7 @@ val coreModule = module {
         val builder = OkHttpClient.Builder()
             .addInterceptor(HostSelectionInterceptor)
             .addInterceptor(logging)
+            .cache((CoilUtils.createDefaultCache(get<Application>())))
         get<ConfigModule>().configOkHttp(get<Application>(), builder)
         builder.build()
     }
@@ -57,8 +56,8 @@ val coreModule = module {
     single<Retrofit> {
         val builder = Retrofit.Builder()
             .client(get())
-//                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+//            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+//            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .addConverterFactory(GsonConverterFactory.create(get()))
         get<ConfigModule>().configRetrofit(get<Application>(), builder)
         builder.build()
@@ -68,23 +67,6 @@ val coreModule = module {
 }
 
 val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
+    Timber.i("error in thread ${Thread.currentThread().name}")
     onError(throwable)
-}
-
-fun <T> Deferred<T>.subscribe(
-    scope: CoroutineScope,
-    success: (result: T) -> Unit,
-    error: (t: Throwable) -> Unit = { it.onError() },
-    complete: () -> Unit = {}
-) {
-    scope.launch(exceptionHandler) {
-        try {
-            val result = this@subscribe.await()
-            success.invoke(result)
-        } catch (t: Throwable) {
-            error.invoke(t)
-        } finally {
-            complete.invoke()
-        }
-    }
 }

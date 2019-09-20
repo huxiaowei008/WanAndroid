@@ -6,7 +6,7 @@ import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import androidx.recyclerview.widget.DiffUtil
 import com.hxw.core.adapter.SimplePagerAdapter
-import com.hxw.core.base.subscribe
+import com.hxw.core.base.exceptionHandler
 import com.hxw.core.utils.showToast
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
@@ -16,6 +16,8 @@ import com.hxw.wanandroid.entity.BannerEntity
 import com.hxw.wanandroid.paging.BasePageViewModel
 import com.hxw.wanandroid.paging.PageSourceFactory
 import com.hxw.wanandroid.paging.SimplePagedListAdapter
+import kotlinx.coroutines.launch
+import retrofit2.await
 
 /**
  * @author hxw
@@ -60,14 +62,14 @@ class HomeViewModel(private val wanApi: WanApi) :
     }
 
     fun getBanner() {
-        wanApi.banner
-            .subscribe(viewModelScope, {
-                if (it.errorCode == Constant.NET_SUCCESS) {
-                    bannerData.addAll(it.data)
-                    bannerAdapter.notifyDataSetChanged()
-                } else {
-                    showToast(it.errorMsg)
-                }
-            })
+        viewModelScope.launch(exceptionHandler) {
+            val result = wanApi.banner.await()
+            if (result.errorCode == Constant.NET_SUCCESS) {
+                bannerData.addAll(result.data)
+                bannerAdapter.notifyDataSetChanged()
+            } else {
+                showToast(result.errorMsg)
+            }
+        }
     }
 }

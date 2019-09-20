@@ -11,16 +11,18 @@ import androidx.lifecycle.coroutineScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.hxw.core.base.AbstractActivity
-import com.hxw.core.base.subscribe
+import com.hxw.core.base.exceptionHandler
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.mvp.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.include_content_main.*
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
+import retrofit2.await
 
 /**
  * @author hxw
@@ -65,14 +67,14 @@ class MainActivity : AbstractActivity() {
         nav_view.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_out -> {
-                    api.loginOut()
-                        .subscribe(lifecycle.coroutineScope, { resutl ->
-                            if (resutl.errorCode == Constant.NET_SUCCESS) {
-                                toast("登出成功")
-                            } else {
-                                toast(resutl.errorMsg)
-                            }
-                        })
+                    lifecycle.coroutineScope.launch(exceptionHandler) {
+                        val result = api.loginOut().await()
+                        if (result.errorCode == Constant.NET_SUCCESS) {
+                            toast("登出成功")
+                        } else {
+                            toast(result.errorMsg)
+                        }
+                    }
                 }
                 else -> {
 

@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import androidx.recyclerview.widget.DiffUtil
-import com.hxw.core.base.subscribe
+import com.hxw.core.base.exceptionHandler
 import com.hxw.core.utils.showToast
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
@@ -16,6 +16,8 @@ import com.hxw.wanandroid.entity.TreeEntity
 import com.hxw.wanandroid.paging.BasePageViewModel
 import com.hxw.wanandroid.paging.PageSourceFactory
 import com.hxw.wanandroid.paging.SimplePagedListAdapter
+import kotlinx.coroutines.launch
+import retrofit2.await
 
 /**
  * @author hxw
@@ -63,13 +65,13 @@ class WXArticleViewModel(private val wanApi: WanApi) : BasePageViewModel<Int, Ar
     }
 
     fun getWxPublish() {
-        wanApi.wxPublic
-            .subscribe(viewModelScope, {
-                if (it.errorCode == Constant.NET_SUCCESS) {
-                    treeData.value = it.data
-                } else {
-                    showToast(it.errorMsg)
-                }
-            })
+        viewModelScope.launch(exceptionHandler) {
+            val result = wanApi.wxPublic.await()
+            if (result.errorCode == Constant.NET_SUCCESS) {
+                treeData.value = result.data
+            } else {
+                showToast(result.errorMsg)
+            }
+        }
     }
 }

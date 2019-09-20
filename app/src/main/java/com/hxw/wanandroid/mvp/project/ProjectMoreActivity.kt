@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.google.android.material.tabs.TabLayout
 import com.hxw.core.base.AbstractActivity
-import com.hxw.core.base.subscribe
+import com.hxw.core.base.exceptionHandler
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi
@@ -23,10 +23,12 @@ import com.hxw.wanandroid.entity.TreeEntity
 import com.hxw.wanandroid.mvp.web.AgentWebActivity
 import com.hxw.wanandroid.paging.NetworkState
 import kotlinx.android.synthetic.main.activtiy_project_more.*
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import retrofit2.await
 
 /**
  * @author hxw
@@ -42,15 +44,14 @@ class ProjectMoreActivity : AbstractActivity() {
     override fun init(savedInstanceState: Bundle?) {
         setSupportActionBar(tool_title)
         tool_title.setNavigationOnClickListener { finish() }
-
-        api.projectTree
-            .subscribe(lifecycle.coroutineScope, { result ->
-                if (result.errorCode == Constant.NET_SUCCESS) {
-                    initTab(result.data)
-                } else {
-                    toast(result.errorMsg)
-                }
-            })
+        lifecycle.coroutineScope.launch(exceptionHandler) {
+            val result = api.projectTree.await()
+            if (result.errorCode == Constant.NET_SUCCESS) {
+                initTab(result.data)
+            } else {
+                toast(result.errorMsg)
+            }
+        }
 
         initSwipeToRefresh()
         initRecyclerView()

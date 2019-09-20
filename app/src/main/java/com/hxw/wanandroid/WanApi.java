@@ -15,7 +15,7 @@ import com.hxw.wanandroid.entity.WebEntity;
 
 import java.util.List;
 
-import kotlinx.coroutines.Deferred;
+import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -38,7 +38,7 @@ public interface WanApi {
      * @return 首页文章列表数据
      */
     @GET("article/list/{page}/json")
-    Deferred<BaseEntity<ArticleListEntity<ArticleEntity>>> getHomeArticle(
+    Call<BaseEntity<ArticleListEntity<ArticleEntity>>> getHomeArticle(
             @Path("page") int page
     );
 
@@ -48,7 +48,7 @@ public interface WanApi {
      * @return Banners数据
      */
     @GET("banner/json")
-    Deferred<BaseListEntity<BannerEntity>> getBanner();
+    Call<BaseListEntity<BannerEntity>> getBanner();
 
     /**
      * 1.3 常用网站
@@ -56,7 +56,7 @@ public interface WanApi {
      * @return 常用网站列表数据
      */
     @GET("friend/json")
-    Deferred<BaseEntity<List<FriendEntity>>> getFriend();
+    Call<BaseEntity<List<FriendEntity>>> getFriend();
 
     /**
      * 1.4 搜索热词
@@ -64,7 +64,7 @@ public interface WanApi {
      * @return 热词列表数据
      */
     @GET("hotkey/json")
-    Deferred<BaseEntity<List<HotKeyEntity>>> getHotKey();
+    Call<BaseEntity<List<HotKeyEntity>>> getHotKey();
 
     /**
      * 1.5 最新项目
@@ -73,7 +73,7 @@ public interface WanApi {
      * @return 最新项目列表数据
      */
     @GET("article/listproject/{page}/json")
-    Deferred<BaseEntity<ArticleListEntity<ArticleEntity>>> getLatestProject(
+    Call<BaseEntity<ArticleListEntity<ArticleEntity>>> getLatestProject(
             @Path("page") int page
     );
 
@@ -84,7 +84,7 @@ public interface WanApi {
      * @return 体系导航的树状结构数据
      */
     @GET("tree/json")
-    Deferred<BaseListEntity<TreeEntity>> getTree();
+    Call<BaseListEntity<TreeEntity>> getTree();
 
     /**
      * 2.2 知识体系下的文章
@@ -94,7 +94,7 @@ public interface WanApi {
      * @return 文章列表数据
      */
     @GET("article/list/{page}/json")
-    Deferred<BaseEntity<ArticleListEntity<ArticleEntity>>> getTreeArticle(
+    Call<BaseEntity<ArticleListEntity<ArticleEntity>>> getTreeArticle(
             @Path("page") int page,
             @Query("cid") int cid
 
@@ -107,7 +107,7 @@ public interface WanApi {
      * @return 导航列表数据
      */
     @GET("navi/json")
-    Deferred<BaseListEntity<NaviEntity>> getNavi();
+    Call<BaseListEntity<NaviEntity>> getNavi();
 
     /**
      * 4. 项目
@@ -116,7 +116,7 @@ public interface WanApi {
      * @return 项目的分类数据
      */
     @GET("project/tree/json")
-    Deferred<BaseListEntity<TreeEntity>> getProjectTree();
+    Call<BaseListEntity<TreeEntity>> getProjectTree();
 
     /**
      * 4.2 项目列表数据
@@ -126,7 +126,7 @@ public interface WanApi {
      * @return 项目列表数据
      */
     @GET("project/list/{page}/json")
-    Deferred<BaseEntity<ArticleListEntity<ArticleEntity>>> getProjectList(
+    Call<BaseEntity<ArticleListEntity<ArticleEntity>>> getProjectList(
             @Path("page") int page,
             @Query("cid") int cid
     );
@@ -140,13 +140,13 @@ public interface WanApi {
      * @return 用户信息数据
      */
     @POST("user/login")
-    Deferred<BaseEntity<UserEntity>> login(
+    Call<BaseEntity<UserEntity>> login(
             @Query("username") String username,
             @Query("password") String password
     );
 
     @POST("http://172.29.6.149:28182/engineering/address/getProjectId")
-    Deferred<BaseEntity<Object>> loginDeferred(
+    Call<BaseEntity<Object>> loginDeferred(
             @Query("loginToken") String token,
             @Query("projectId") String projectId
     );
@@ -160,7 +160,7 @@ public interface WanApi {
      * @return 用户信息数据
      */
     @POST("user/register")
-    Deferred<BaseEntity<UserEntity>> register(
+    Call<BaseEntity<UserEntity>> register(
             @Query("username") String username,
             @Query("password") String password,
             @Query("repassword") String repassword
@@ -172,7 +172,7 @@ public interface WanApi {
      * @return 退出成功与否
      */
     @GET("user/logout/json")
-    Deferred<BaseEntity<Object>> loginOut();
+    Call<BaseEntity<Object>> loginOut();
 
     /**
      * 6. 收藏
@@ -182,7 +182,7 @@ public interface WanApi {
      * @return 收藏的文章列表数据
      */
     @GET("lg/collect/list/{page}/json")
-    Deferred<BaseEntity<ArticleListEntity<CollectEntity>>> getCollectList(
+    Call<BaseEntity<ArticleListEntity<CollectEntity>>> getCollectList(
             @Path("page") int page
     );
 
@@ -193,7 +193,7 @@ public interface WanApi {
      * @return 基础格式, 用于判断收藏成功与否
      */
     @POST("lg/collect/{id}/json")
-    Deferred<BaseEntity> collect(
+    Call<BaseEntity> collect(
             @Path("id") int id
     );
 
@@ -206,7 +206,7 @@ public interface WanApi {
      * @return 基础格式, 用于判断收藏成功与否
      */
     @POST("lg/collect/add/json")
-    Deferred<BaseEntity> collect(
+    Call<BaseEntity> collect(
             @Query("title") String title,
             @Query("author") String author,
             @Query("link") String link
@@ -220,7 +220,7 @@ public interface WanApi {
      * @return 基础格式, 用于判断取消收藏成功与否
      */
     @POST("lg/uncollect_originId/{id}/json")
-    Deferred<BaseEntity> unCollect(
+    Call<BaseEntity> unCollect(
             @Path("id") int id
     );
 
@@ -232,7 +232,7 @@ public interface WanApi {
      * @return 基础格式, 用于判断取消收藏成功与否
      */
     @POST("lg/uncollect_{originId}/{id}/json")
-    Deferred<BaseEntity> unCollect(
+    Call<BaseEntity> unCollect(
             @Path("id") int id,
             @Path("originId") int originId
     );
@@ -243,7 +243,7 @@ public interface WanApi {
      * @return 收藏的网站列表数据
      */
     @GET("lg/collect/usertools/json")
-    Deferred<BaseEntity<List<WebEntity>>> getCollectWeb();
+    Call<BaseEntity<List<WebEntity>>> getCollectWeb();
 
     /**
      * 6.6 收藏网址
@@ -253,7 +253,7 @@ public interface WanApi {
      * @return 基础格式, 用于判断收藏成功与否
      */
     @POST("lg/collect/addtool/json")
-    Deferred<BaseEntity<WebEntity>> collectWeb(
+    Call<BaseEntity<WebEntity>> collectWeb(
             @Query("name") String name,
             @Query("link") String link
     );
@@ -267,7 +267,7 @@ public interface WanApi {
      * @return 基础格式, 用于判断编辑成功与否
      */
     @POST("lg/collect/updatetool/json")
-    Deferred<BaseEntity<WebEntity>> updateWeb(
+    Call<BaseEntity<WebEntity>> updateWeb(
             @Query("id") int id,
             @Query("name") String name,
             @Query("link") String link
@@ -280,7 +280,7 @@ public interface WanApi {
      * @return 基础格式, 用于判断删除成功与否
      */
     @POST("lg/collect/deletetool/json")
-    Deferred<BaseEntity> deleteWeb(
+    Call<BaseEntity> deleteWeb(
             @Query("id") int id
     );
 
@@ -293,7 +293,7 @@ public interface WanApi {
      * @return 文章列表数据
      */
     @POST("article/query/{page}/json")
-    Deferred<BaseEntity<ArticleListEntity<ArticleEntity>>> search(
+    Call<BaseEntity<ArticleListEntity<ArticleEntity>>> search(
             @Query("k") String key,
             @Path("page") int page
     );
@@ -305,7 +305,7 @@ public interface WanApi {
      * @return 微信公众号列表数据
      */
     @GET("wxarticle/chapters/json")
-    Deferred<BaseListEntity<TreeEntity>> getWXPublic();
+    Call<BaseListEntity<TreeEntity>> getWXPublic();
 
     /**
      * 9.2 获取公众号文章
@@ -315,7 +315,7 @@ public interface WanApi {
      * @param key  搜索关键字
      */
     @GET("wxarticle/list/{id}/{page}/json")
-    Deferred<BaseEntity<ArticleListEntity<ArticleEntity>>> getWxArticle(
+    Call<BaseEntity<ArticleListEntity<ArticleEntity>>> getWxArticle(
             @Path("id") int id,
             @Path("page") int page,
             @Query("k") String key
