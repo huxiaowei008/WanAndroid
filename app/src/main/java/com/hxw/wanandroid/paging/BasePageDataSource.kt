@@ -5,6 +5,7 @@ import androidx.paging.PageKeyedDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlin.concurrent.thread
 
 /**
  * @author hxw
@@ -29,9 +30,9 @@ abstract class BasePageDataSource<Key, Value> : PageKeyedDataSource<Key, Value>(
         val prevRetry = retry
         retry = null
         prevRetry?.let {
-            GlobalScope.launch(Dispatchers.IO) {
-                it.invoke()
-            }
+           thread {
+               it.invoke()
+           }
         }
     }
 }

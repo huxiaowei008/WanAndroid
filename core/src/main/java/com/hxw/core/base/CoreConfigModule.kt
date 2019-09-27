@@ -8,7 +8,6 @@ import com.google.gson.GsonBuilder
 import com.hxw.core.integration.HostSelectionInterceptor
 import com.hxw.core.utils.jsonFormat
 import com.hxw.core.utils.onError
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
