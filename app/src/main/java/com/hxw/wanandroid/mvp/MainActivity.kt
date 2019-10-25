@@ -1,5 +1,6 @@
 package com.hxw.wanandroid.mvp
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
@@ -77,7 +78,8 @@ class MainActivity : AbstractActivity() {
                     }
                 }
                 else -> {
-
+                    val intent= Intent("xixun.intent.action.TEMPERATURE_HUMIDITY")
+                    sendBroadcast(intent)
                 }
             }
             return@setNavigationItemSelectedListener true
@@ -90,8 +92,6 @@ class MainActivity : AbstractActivity() {
                 startActivity<LoginActivity>()
             }
         }
-
-
     }
 
     override fun onSupportNavigateUp(): Boolean {

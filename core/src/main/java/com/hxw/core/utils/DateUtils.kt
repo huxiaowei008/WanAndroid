@@ -172,25 +172,23 @@ import java.util.*
  *
  * 格式为pattern
  *
- * @param date    Date类型时间
  * @param pattern 时间格式
  * @return 时间字符串
  */
-fun date2String(date: Date, pattern: String): String {
-    return SimpleDateFormat(pattern, Locale.CHINA).format(date)
+fun Date.toStr(pattern: String = "yyyy-MM-dd HH:mm:ss"): String {
+    return SimpleDateFormat(pattern, Locale.CHINA).format(this)
 }
 
 /**
  * 将时间字符串转为Date类型
  *
- * time格式为pattern
+ * 字符串格式为pattern
  *
- * @param time    时间字符串
  * @param pattern 时间格式
  * @return Date类型
  */
-fun string2Date(time: String, pattern: String): Date? = try {
-    SimpleDateFormat(pattern, Locale.CHINA).parse(time)
+fun String.toDate(pattern: String = "yyyy-MM-dd HH:mm:ss"): Date? = try {
+    SimpleDateFormat(pattern, Locale.CHINA).parse(this)
 } catch (e: ParseException) {
     e.printStackTrace()
     null

@@ -1,7 +1,6 @@
 package com.hxw.wanandroid.base
 
 import com.hxw.core.base.ConfigModule
-import com.hxw.core.utils.onError
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.mvp.CommonViewModel
 import com.hxw.wanandroid.mvp.home.HomeViewModel
@@ -9,9 +8,6 @@ import com.hxw.wanandroid.mvp.login.LoginViewModel
 import com.hxw.wanandroid.mvp.project.ProjectMoreViewModel
 import com.hxw.wanandroid.mvp.project.ProjectViewModel
 import com.hxw.wanandroid.mvp.wxarticle.WXArticleViewModel
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit

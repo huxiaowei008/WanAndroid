@@ -101,10 +101,8 @@ class TakePhotoActivity : AbstractActivity() {
                     .setGravity(Gravity.TOP)
                     .setTextSize(sp(100f).toFloat())
                     .setText(
-                        date2String(
-                            Date(),
-                            "yyyy-MM-dd HH:mm"
-                        ) + "\n胡晓伟\n高新园区"
+                        Date().toStr("yyyy-MM-dd HH:mm")
+                                + "\n胡晓伟\n高新园区"
                     )
                     .setRecycle(true)
             )

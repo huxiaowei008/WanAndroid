@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 public final class EncryptUtils {
 //    private static final char[] HEX_DIGITS =
 //            {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+
     /**
      * Return the hex string of MD5 encryption.
      *
@@ -93,33 +94,68 @@ public final class EncryptUtils {
      *
      * @param data           The data.
      * @param key            The key.
-     * @param transformation The name of the transformation, e.g., <i>DES/CBC/PKCS5Padding</i>.
+     * @param transformation The name of the transformation, e.g., <i>DES/CBC/PKCS5Padding</i><i>AES/ECB/NoPadding</i>.
      * @param initVector     The buffer with the IV. The contents of the
      *                       buffer are copied to protect against subsequent modification.
      * @return the hex string of AES encryption
      */
-    public static String encryptAES2HexString(final byte[] data,
-                                              final byte[] key,
-                                              final String transformation,
-                                              final byte[] initVector) {
+    public static String encryptAES2HexString(byte[] data,
+                                              byte[] key,
+                                              String transformation,
+                                              byte[] initVector) {
         return HexUtils.bytes2HexStr1(encryptAES(data, key, transformation, initVector));
     }
+
+    /**
+     * Return the bytes of AES decryption for hex string.
+     *
+     * @param data           The data.
+     * @param key            The key.
+     * @param transformation The name of the transformation, e.g., <i>DES/CBC/PKCS5Padding</i><i>AES/ECB/NoPadding</i>.
+     * @param iv             The buffer with the IV. The contents of the
+     *                       buffer are copied to protect against subsequent modification.
+     * @return the bytes of AES decryption for hex string
+     */
+    public static byte[] decryptHexStringAES(String data,
+                                             byte[] key,
+                                             String transformation,
+                                             byte[] iv) {
+        return decryptAES(HexUtils.hexStr2Bytes(data), key, transformation, iv);
+    }
+
 
     /**
      * Return the bytes of AES encryption.
      *
      * @param data           The data.
      * @param key            The key.
-     * @param transformation The name of the transformation, e.g., <i>DES/CBC/PKCS5Padding</i>.
+     * @param transformation The name of the transformation, e.g., <i>DES/CBC/PKCS5Padding</i><i>AES/ECB/NoPadding</i>.
      * @param initVector     The buffer with the IV. The contents of the
      *                       buffer are copied to protect against subsequent modification.
      * @return the bytes of AES encryption
      */
-    public static byte[] encryptAES(final byte[] data,
-                                    final byte[] key,
-                                    final String transformation,
-                                    final byte[] initVector) {
+    public static byte[] encryptAES(byte[] data,
+                                    byte[] key,
+                                    String transformation,
+                                    byte[] initVector) {
         return symmetricTemplate(data, key, "AES", transformation, initVector, true);
+    }
+
+    /**
+     * Return the bytes of AES decryption.
+     *
+     * @param data           The data.
+     * @param key            The key.
+     * @param transformation The name of the transformation, e.g., <i>DES/CBC/PKCS5Padding</i><i>AES/ECB/NoPadding</i>.
+     * @param iv             The buffer with the IV. The contents of the
+     *                       buffer are copied to protect against subsequent modification.
+     * @return the bytes of AES decryption
+     */
+    public static byte[] decryptAES(byte[] data,
+                                    byte[] key,
+                                    String transformation,
+                                    byte[] iv) {
+        return symmetricTemplate(data, key, "AES", transformation, iv, false);
     }
 
     /**
@@ -128,18 +164,18 @@ public final class EncryptUtils {
      * @param data           The data.
      * @param key            The key.
      * @param algorithm      The name of algorithm.
-     * @param transformation The name of the transformation, e.g., <i>DES/CBC/PKCS5Padding</i>.
+     * @param transformation The name of the transformation, e.g., <i>DES/CBC/PKCS5Padding</i><i>AES/ECB/NoPadding</i>.
      * @param isEncrypt      True to encrypt, false otherwise.
      * @return the bytes of symmetric encryption or decryption
      */
-    private static byte[] symmetricTemplate(final byte[] data,
-                                            final byte[] key,
-                                            final String algorithm,
-                                            final String transformation,
-                                            final byte[] initVector,
-                                            final boolean isEncrypt) {
-        if (data == null || data.length == 0 || key == null || key.length == 0) {
-            return null;
+    private static byte[] symmetricTemplate(@NonNull byte[] data,
+                                            @NonNull byte[] key,
+                                            String algorithm,
+                                            String transformation,
+                                            byte[] initVector,
+                                            boolean isEncrypt) {
+        if (data.length == 0 || key.length == 0) {
+            return new byte[0];
         }
         try {
             SecretKey secretKey;
@@ -160,7 +196,7 @@ public final class EncryptUtils {
             return cipher.doFinal(data);
         } catch (Throwable e) {
             e.printStackTrace();
-            return null;
+            return new byte[0];
         }
     }
 }

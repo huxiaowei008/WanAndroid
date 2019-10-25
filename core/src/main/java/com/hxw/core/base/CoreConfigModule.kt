@@ -8,7 +8,7 @@ import com.google.gson.GsonBuilder
 import com.hxw.core.integration.HostSelectionInterceptor
 import com.hxw.core.utils.jsonFormat
 import com.hxw.core.utils.onError
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineExceptionHandler
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -67,5 +67,5 @@ val coreModule = module {
 
 val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
     Timber.i("error in thread ${Thread.currentThread().name}")
-    onError(throwable)
+    throwable.onError()
 }

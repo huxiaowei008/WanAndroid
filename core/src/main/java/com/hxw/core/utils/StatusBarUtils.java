@@ -12,7 +12,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.core.view.ViewCompat;
 
 /**
@@ -52,7 +51,7 @@ public final class StatusBarUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && supportTransclentStatusBar6()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && supportTransparentStatusBar6()) {
                 // android 6以后可以改状态栏字体颜色，因此可以自行设置为透明
                 // ZUK Z1是个另类，自家应用可以实现字体颜色变色，但没开放接口
                 window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -77,30 +76,28 @@ public final class StatusBarUtils {
     /**
      * 检测 Android 6.0 是否可以启用 window.setStatusBarColor(Color.TRANSPARENT)。
      */
-    public static boolean supportTransclentStatusBar6() {
+    public static boolean supportTransparentStatusBar6() {
         return !(SystemUtils.isZUKZ1() || SystemUtils.isZTKC2016());
     }
 
     @TargetApi(28)
     private static void handleDisplayCutoutMode(final Window window) {
         View decorView = window.getDecorView();
-        if (decorView != null) {
-            if (ViewCompat.isAttachedToWindow(decorView)) {
-                realHandleDisplayCutoutMode(window, decorView);
-            } else {
-                decorView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
-                    @Override
-                    public void onViewAttachedToWindow(View v) {
-                        v.removeOnAttachStateChangeListener(this);
-                        realHandleDisplayCutoutMode(window, v);
-                    }
+        if (ViewCompat.isAttachedToWindow(decorView)) {
+            realHandleDisplayCutoutMode(window, decorView);
+        } else {
+            decorView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+                @Override
+                public void onViewAttachedToWindow(View v) {
+                    v.removeOnAttachStateChangeListener(this);
+                    realHandleDisplayCutoutMode(window, v);
+                }
 
-                    @Override
-                    public void onViewDetachedFromWindow(View v) {
+                @Override
+                public void onViewDetachedFromWindow(View v) {
 
-                    }
-                });
-            }
+                }
+            });
         }
     }
 

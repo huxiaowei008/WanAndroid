@@ -55,10 +55,10 @@ fun showToast(message: String) {
  * 获取版本号
  */
 
-fun getVersionCode(context: Context): Long {
+fun Context.getVersionCode(): Long {
     return try {
-        val info = context.packageManager
-            .getPackageInfo(context.packageName, 0)
+        val info = this.packageManager
+            .getPackageInfo(this.packageName, 0)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             info.longVersionCode
         } else {
@@ -75,10 +75,10 @@ fun getVersionCode(context: Context): Long {
  * 获取版本名
  */
 
-fun getVersionName(context: Context): String {
+fun Context.getVersionName(): String {
     return try {
-        val info = context.packageManager
-            .getPackageInfo(context.packageName, 0)
+        val info = this.packageManager
+            .getPackageInfo(this.packageName, 0)
         info.versionName
     } catch (e: PackageManager.NameNotFoundException) {
         e.printStackTrace()
@@ -90,22 +90,22 @@ fun getVersionName(context: Context): String {
  * 错误处理
  */
 
-fun onError(t: Throwable?) {
-    Timber.tag("Catch-Error").e(t)
-    val msg = when (t) {
+fun Throwable?.onError() {
+    Timber.tag("Catch-Error").e(this)
+    val msg = when (this) {
         null -> "无报错信息Throwable==null"
         is UnknownHostException -> "域名解析失败,请检查网络和服务器"
         is SocketTimeoutException -> "请求网络超时"
         is NoRouteToHostException -> "无法连接远程地址与端口"
-        is HttpException -> when (t.code()) {
+        is HttpException -> when (this.code()) {
             500 -> "服务器发生错误"
             404 -> "请求地址不存在"
             403 -> "请求被服务器拒绝"
             307 -> "请求被重定向到其他页面"
-            else -> t.message()
+            else -> this.message()
         }
         is JsonParseException, is ParseException, is JSONException -> "数据解析错误"
-        else -> t.message.toString()
+        else -> this.message.toString()
     }
     showSnackBar(msg)
 }
