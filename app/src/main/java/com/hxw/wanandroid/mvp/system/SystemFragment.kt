@@ -9,7 +9,6 @@ import com.google.android.material.internal.FlowLayout
 import com.hxw.core.adapter.SimpleRecyclerAdapter
 import com.hxw.core.base.AbstractFragment
 import com.hxw.core.base.exceptionHandler
-import com.hxw.core.integration.Timber
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi
@@ -21,6 +20,7 @@ import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.ext.android.inject
 import retrofit2.await
+import timber.log.Timber
 
 
 /**

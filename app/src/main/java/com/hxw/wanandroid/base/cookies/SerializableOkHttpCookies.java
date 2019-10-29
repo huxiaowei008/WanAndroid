@@ -1,6 +1,5 @@
 package com.hxw.wanandroid.base.cookies;
 
-import com.hxw.core.integration.Timber;
 import com.hxw.core.utils.HexUtils;
 
 import java.io.ByteArrayInputStream;
@@ -11,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import okhttp3.Cookie;
+import timber.log.Timber;
 
 /**
  * @author hxw
@@ -19,6 +19,7 @@ import okhttp3.Cookie;
 public class SerializableOkHttpCookies implements Serializable {
     private transient final Cookie cookies;
     private transient Cookie clientCookies;
+
     SerializableOkHttpCookies(Cookie cookies) {
         this.cookies = cookies;
     }

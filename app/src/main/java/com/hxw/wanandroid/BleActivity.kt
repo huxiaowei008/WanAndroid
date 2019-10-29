@@ -4,13 +4,13 @@ import android.bluetooth.BluetoothGatt
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.hxw.core.base.AbstractActivity
-import com.hxw.core.integration.Timber
 import com.hxw.core.utils.HexUtils
 import com.hxw.core.utils.hexToInt
 import com.hxw.core.utils.toHexStr
 import com.hxw.wanandroid.ble.BleConnectCallBack
 import com.hxw.wanandroid.ble.BleTool
 import kotlinx.android.synthetic.main.activity_ble.*
+import timber.log.Timber
 import java.util.*
 
 

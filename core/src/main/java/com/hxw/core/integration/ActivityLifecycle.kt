@@ -5,6 +5,7 @@ import android.app.Application
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import com.hxw.core.base.IActivity
+import timber.log.Timber
 
 
 /**
@@ -25,7 +26,7 @@ class ActivityLifecycle : Application.ActivityLifecycleCallbacks {
         val useFragment = activity is IActivity && (activity as IActivity).useFragment()
         if (activity is FragmentActivity && useFragment) {
             activity.supportFragmentManager
-                    .registerFragmentLifecycleCallbacks(mFragmentLifecycle, true)
+                .registerFragmentLifecycleCallbacks(mFragmentLifecycle, true)
         }
     }
 

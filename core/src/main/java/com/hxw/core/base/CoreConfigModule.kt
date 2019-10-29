@@ -6,7 +6,6 @@ import coil.util.CoilUtils
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.hxw.core.integration.HostSelectionInterceptor
-import com.hxw.core.integration.Timber
 import com.hxw.core.utils.jsonFormat
 import com.hxw.core.utils.onError
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -15,6 +14,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import timber.log.Timber
 
 
 /**

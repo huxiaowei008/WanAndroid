@@ -1,6 +1,7 @@
 package com.hxw.core.integration
 
 import android.app.Activity
+import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.*
 

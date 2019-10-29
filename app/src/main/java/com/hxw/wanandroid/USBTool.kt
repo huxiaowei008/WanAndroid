@@ -1,5 +1,6 @@
 package com.hxw.wanandroid
 
+
 import android.app.AlertDialog
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
@@ -9,11 +10,11 @@ import android.content.IntentFilter
 import android.hardware.usb.*
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.*
-import com.hxw.core.integration.Timber
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import com.hxw.core.utils.showToast
-
-
+import timber.log.Timber
 import java.nio.ByteBuffer
 
 /**
@@ -21,7 +22,7 @@ import java.nio.ByteBuffer
  * @author hxw
  * @date 2018/8/13
  */
-object USBTool : LifecycleObserver,DefaultLifecycleObserver {
+object USBTool : LifecycleObserver, DefaultLifecycleObserver {
     private val ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION"
     private lateinit var mUsbManager: UsbManager
     private var mInterface: UsbInterface? = null

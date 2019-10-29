@@ -9,8 +9,6 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
-import android.bluetooth.le.ScanCallback;
-import android.bluetooth.le.ScanResult;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,17 +17,16 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
-import com.hxw.core.integration.Timber;
 import com.hxw.core.utils.HexUtils;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Queue;
 import java.util.UUID;
 
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
+import timber.log.Timber;
 
 /**
  * Ble蓝牙工具,可以作为参考或简单使用,复杂还是用开源框架比较好,如FastBLE,要么再自定义
