@@ -16,9 +16,8 @@ import com.hxw.core.base.AbstractActivity
 import com.hxw.core.utils.showToast
 import com.hxw.wanandroid.R
 import kotlinx.android.synthetic.main.activity_register.*
-import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
+
 
 /**
  * @author hxw on 2018/6/6.
@@ -54,7 +53,6 @@ class RegisterActivity : AbstractActivity() {
             }
         }
 
-        Timber.i(mViewModel.toString())
         mViewModel.userInfo.observe(this@RegisterActivity, Observer {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 animateRevealClose()
@@ -77,7 +75,8 @@ class RegisterActivity : AbstractActivity() {
      */
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun showEnterAnimation() {
-        val transition = TransitionInflater.from(this).inflateTransition(R.transition.fab_transition)
+        val transition =
+            TransitionInflater.from(this).inflateTransition(R.transition.fab_transition)
         window.sharedElementEnterTransition = transition
         transition.addListener(object : Transition.TransitionListener {
             override fun onTransitionStart(transition: Transition) {
@@ -107,8 +106,10 @@ class RegisterActivity : AbstractActivity() {
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun animateRevealShow() {
-        val mAnimator = ViewAnimationUtils.createCircularReveal(card_register, card_register.width / 2,
-                0, (fa_btn.width / 2).toFloat(), card_register.height.toFloat())
+        val mAnimator = ViewAnimationUtils.createCircularReveal(
+            card_register, card_register.width / 2,
+            0, (fa_btn.width / 2).toFloat(), card_register.height.toFloat()
+        )
         mAnimator.duration = 500
         mAnimator.interpolator = AccelerateInterpolator()
         mAnimator.addListener(object : AnimatorListenerAdapter() {
@@ -122,8 +123,10 @@ class RegisterActivity : AbstractActivity() {
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun animateRevealClose() {
-        val mAnimator = ViewAnimationUtils.createCircularReveal(card_register, card_register.width / 2,
-                0, card_register.height.toFloat(), (fa_btn.width / 2).toFloat())
+        val mAnimator = ViewAnimationUtils.createCircularReveal(
+            card_register, card_register.width / 2,
+            0, card_register.height.toFloat(), (fa_btn.width / 2).toFloat()
+        )
         mAnimator.duration = 500
         mAnimator.interpolator = AccelerateInterpolator()
         mAnimator.addListener(object : AnimatorListenerAdapter() {

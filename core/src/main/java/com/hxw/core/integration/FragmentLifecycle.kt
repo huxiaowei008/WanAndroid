@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import timber.log.Timber
 
 /**
  * [FragmentManager.FragmentLifecycleCallbacks] 默认实现类

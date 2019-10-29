@@ -1,5 +1,6 @@
 package com.hxw.wanandroid.base.cookies;
 
+import com.hxw.core.integration.Timber;
 import com.hxw.core.utils.HexUtils;
 
 import java.io.ByteArrayInputStream;
@@ -10,7 +11,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import okhttp3.Cookie;
-import timber.log.Timber;
 
 /**
  * @author hxw

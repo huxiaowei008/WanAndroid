@@ -5,7 +5,7 @@ import android.app.Application
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import com.hxw.core.base.IActivity
-import timber.log.Timber
+
 
 /**
  * [Application.ActivityLifecycleCallbacks] 默认实现类

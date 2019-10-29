@@ -7,15 +7,11 @@ import com.hxw.core.base.exceptionHandler
 import com.hxw.core.utils.showToast
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.WanApi
-import com.hxw.wanandroid.entity.BaseEntity
 import com.hxw.wanandroid.entity.UserEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.await
-import timber.log.Timber
+
 
 /**
  * @author hxw

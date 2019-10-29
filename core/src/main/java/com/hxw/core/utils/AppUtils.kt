@@ -7,11 +7,11 @@ import android.os.Build
 import android.view.View
 import com.google.gson.JsonParseException
 import com.hxw.core.integration.AppManager
+import com.hxw.core.integration.Timber
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.toast
 import org.json.JSONException
 import retrofit2.HttpException
-import timber.log.Timber
 import java.net.NoRouteToHostException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException

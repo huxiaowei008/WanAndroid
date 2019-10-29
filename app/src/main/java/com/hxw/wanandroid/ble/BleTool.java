@@ -19,6 +19,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
+import com.hxw.core.integration.Timber;
 import com.hxw.core.utils.HexUtils;
 
 import java.util.LinkedList;
@@ -29,7 +30,6 @@ import java.util.UUID;
 
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
-import timber.log.Timber;
 
 /**
  * Ble蓝牙工具,可以作为参考或简单使用,复杂还是用开源框架比较好,如FastBLE,要么再自定义

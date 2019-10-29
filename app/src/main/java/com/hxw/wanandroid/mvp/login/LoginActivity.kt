@@ -9,7 +9,6 @@ import androidx.core.content.edit
 import androidx.lifecycle.Observer
 import com.hxw.core.base.AbstractActivity
 import com.hxw.core.utils.showToast
-
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.mvp.MainActivity
@@ -18,7 +17,6 @@ import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 
 /**
@@ -42,7 +40,7 @@ class LoginActivity : AbstractActivity() {
              */
             val options = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 ActivityOptions
-                        .makeSceneTransitionAnimation(this, fa_btn, fa_btn.transitionName)
+                    .makeSceneTransitionAnimation(this, fa_btn, fa_btn.transitionName)
             } else {
                 null
             }
@@ -62,7 +60,6 @@ class LoginActivity : AbstractActivity() {
         iv_setting.setOnClickListener {
             startActivity<HostSettingActivity>()
         }
-        Timber.i(mViewModel.toString())
         mViewModel.userInfo.observe(this, Observer {
             sp.edit {
                 putString(Constant.USERNAME, it.username)

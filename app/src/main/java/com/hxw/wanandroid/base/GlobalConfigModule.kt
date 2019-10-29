@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.GsonBuilder
 import com.hxw.core.base.ConfigModule
+import com.hxw.core.integration.Timber
 import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.base.cookies.CookiesManager
 import com.hxw.wanandroid.mvp.host.HostSettingActivity
@@ -11,7 +12,6 @@ import okhttp3.OkHttpClient
 import org.koin.core.KoinComponent
 import org.koin.core.get
 import retrofit2.Retrofit
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 /**

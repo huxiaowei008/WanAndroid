@@ -9,7 +9,6 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import retrofit2.await
-import timber.log.Timber
 
 /**
  * @author hxw
@@ -23,7 +22,6 @@ class HomeDataSource(private val wanApi: WanApi, private val scope: CoroutineSco
         params: LoadInitialParams<Int>,
         callback: LoadInitialCallback<Int, ArticleEntity>
     ) {
-        Timber.i("loadInitial-> ")
         refreshState.postValue(NetworkState.LOADING)
         scope.launch(CoroutineExceptionHandler { _, throwable ->
             refreshState.postValue(NetworkState.error(throwable.message ?: "unknown err"))
@@ -45,7 +43,6 @@ class HomeDataSource(private val wanApi: WanApi, private val scope: CoroutineSco
         params: LoadParams<Int>,
         callback: LoadCallback<Int, ArticleEntity>
     ) {
-        Timber.i("loadBefore->${params.key} ")
         if (params.key < 0) {
             return
         }
@@ -70,7 +67,6 @@ class HomeDataSource(private val wanApi: WanApi, private val scope: CoroutineSco
         params: LoadParams<Int>,
         callback: LoadCallback<Int, ArticleEntity>
     ) {
-        Timber.i("loadAfter->${params.key}")
         networkState.postValue(NetworkState.LOADING)
         scope.launch(CoroutineExceptionHandler { _, throwable ->
             networkState.postValue(NetworkState.error(throwable.message ?: "unknown err"))

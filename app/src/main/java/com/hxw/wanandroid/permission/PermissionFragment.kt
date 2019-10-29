@@ -8,7 +8,7 @@ import com.hxw.core.base.AbstractFragment
 import com.hxw.wanandroid.R
 import kotlinx.android.synthetic.main.fragment_permission.*
 import org.jetbrains.anko.support.v4.longToast
-import timber.log.Timber
+
 
 /**
  * @author hxw
@@ -33,9 +33,4 @@ class PermissionFragment : AbstractFragment() {
         longToast("TODO: SMS things")
     }
 
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        Timber.tag("result").i("fragmentResult->requestCode==$requestCode,resultCode==$resultCode")
-    }
 }

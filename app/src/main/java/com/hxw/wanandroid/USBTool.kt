@@ -10,9 +10,10 @@ import android.hardware.usb.*
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.*
+import com.hxw.core.integration.Timber
 import com.hxw.core.utils.showToast
 
-import timber.log.Timber
+
 import java.nio.ByteBuffer
 
 /**

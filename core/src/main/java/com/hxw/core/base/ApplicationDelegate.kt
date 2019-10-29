@@ -4,19 +4,15 @@ import android.app.Application
 import android.content.Context
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
-import coil.Coil
-import coil.ImageLoader
 import coil.util.CoilLogger
 import com.hxw.core.BuildConfig
 import com.hxw.core.integration.ActivityLifecycle
-import okhttp3.OkHttpClient
-import org.koin.android.ext.android.get
+import com.hxw.core.integration.Timber
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidFileProperties
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
-import timber.log.Timber
 
 /**
  * [Application] 的内部实现代理

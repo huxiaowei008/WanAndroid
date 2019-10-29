@@ -117,9 +117,9 @@ dependencies {
     }
 
     //Timber https://github.com/JakeWharton/timber
-    api('com.jakewharton.timber:timber:4.7.1') {
-        exclude module: 'annotation'
-    }
+//    api('com.jakewharton.timber:timber:4.7.1') {
+//        exclude module: 'annotation'
+//    }
 
     //Glide图片加载 https://github.com/bumptech/glide
 //    api('com.github.bumptech.glide:glide:4.9.0') {
