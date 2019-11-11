@@ -79,6 +79,7 @@ class MainActivity : AbstractActivity() {
                 }
                 else -> {
                     val intent= Intent("xixun.intent.action.TEMPERATURE_HUMIDITY")
+                    intent.setPackage("add.xixun.www.testcard")
                     sendBroadcast(intent)
                 }
             }

@@ -145,7 +145,9 @@ val appModule= module {
 
 [Timber](https://github.com/JakeWharton/timber)
 
-[Glide](https://github.com/bumptech/glide)
+~~[Glide](https://github.com/bumptech/glide)~~
+
+[Coil](https://github.com/coil-kt/coil)
 
 [RxKotlin](https://github.com/ReactiveX/RxKotlin)
 
