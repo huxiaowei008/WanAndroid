@@ -12,7 +12,6 @@ import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
@@ -25,6 +24,9 @@ public final class EncryptUtils {
 //    private static final char[] HEX_DIGITS =
 //            {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
+    private EncryptUtils() {
+    }
+
     /**
      * Return the hex string of MD5 encryption.
      *
@@ -32,9 +34,6 @@ public final class EncryptUtils {
      * @return the hex string of MD5 encryption
      */
     public static String encryptMD5ToString(@Nullable byte[] data) {
-        if (data == null || data.length == 0) {
-            return "";
-        }
         return HexUtils.bytes2HexStr2(encryptMD5(data));
     }
 
@@ -44,7 +43,7 @@ public final class EncryptUtils {
      * @param data The data.
      * @return the bytes of MD5 encryption
      */
-    public static byte[] encryptMD5(@NonNull byte[] data) {
+    public static byte[] encryptMD5(@Nullable byte[] data) {
         return hashTemplate(data, "MD5");
     }
 
@@ -55,9 +54,6 @@ public final class EncryptUtils {
      * @return the hex string of SHA1 encryption
      */
     public static String encryptSHA1ToString(@Nullable byte[] data) {
-        if (data == null || data.length == 0) {
-            return "";
-        }
         return HexUtils.bytes2HexStr2(encryptSHA1(data));
     }
 
@@ -67,7 +63,7 @@ public final class EncryptUtils {
      * @param data The data.
      * @return the bytes of SHA1 encryption
      */
-    public static byte[] encryptSHA1(@NonNull byte[] data) {
+    public static byte[] encryptSHA1(@Nullable byte[] data) {
         return hashTemplate(data, "SHA1");
     }
 
@@ -78,7 +74,10 @@ public final class EncryptUtils {
      * @param algorithm The name of hash encryption.
      * @return the bytes of hash encryption
      */
-    private static byte[] hashTemplate(@NonNull byte[] data, final String algorithm) {
+    private static byte[] hashTemplate(@Nullable byte[] data, final String algorithm) {
+        if (data == null || data.length == 0) {
+            return new byte[0];
+        }
         try {
             MessageDigest md = MessageDigest.getInstance(algorithm);
             md.update(data);
@@ -168,13 +167,13 @@ public final class EncryptUtils {
      * @param isEncrypt      True to encrypt, false otherwise.
      * @return the bytes of symmetric encryption or decryption
      */
-    private static byte[] symmetricTemplate(@NonNull byte[] data,
-                                            @NonNull byte[] key,
+    private static byte[] symmetricTemplate(@Nullable byte[] data,
+                                            @Nullable byte[] key,
                                             String algorithm,
                                             String transformation,
                                             byte[] initVector,
                                             boolean isEncrypt) {
-        if (data.length == 0 || key.length == 0) {
+        if (data == null || key == null || data.length == 0 || key.length == 0) {
             return new byte[0];
         }
         try {

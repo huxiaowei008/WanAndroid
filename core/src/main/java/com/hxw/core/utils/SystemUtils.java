@@ -55,6 +55,9 @@ public final class SystemUtils {
         }
     }
 
+    private SystemUtils() {
+    }
+
     /**
      * 判断是否为 ZUK Z1 和 ZTK C2016。
      * 两台设备的系统虽然为 android 6.0，但不支持状态栏icon颜色改变，因此经常需要对它们进行额外判断。
@@ -103,7 +106,7 @@ public final class SystemUtils {
         return BRAND.contains("huawei") || BRAND.contains("honor");
     }
 
-    public static boolean isEssentialPhone(){
+    public static boolean isEssentialPhone() {
         return BRAND.contains("essential");
     }
 

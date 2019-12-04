@@ -25,6 +25,9 @@ import androidx.core.content.FileProvider;
  */
 public final class FileUtils {
 
+    private FileUtils() {
+    }
+
     /**
      * 返回缓存文件夹
      */

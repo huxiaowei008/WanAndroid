@@ -12,6 +12,10 @@ import androidx.annotation.Nullable;
  * @date 2018/6/5
  */
 public final class HexUtils {
+
+    private HexUtils() {
+    }
+
     /**
      * 用于建立十六进制字符的输出的小写字符数组
      */

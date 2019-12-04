@@ -18,6 +18,9 @@ import androidx.annotation.NonNull;
  */
 public final class StringUtils {
 
+    private StringUtils() {
+    }
+
     @NonNull
     public static String jsonFormat(@NonNull String json) {
         if (json.isEmpty()) {
@@ -42,7 +45,6 @@ public final class StringUtils {
     public static Map<String, String> urlRequestFormat(String str) {
         Map<String, String> mapRequest = new HashMap<String, String>();
         String[] arrSplit;
-
         if (str == null) {
             return mapRequest;
         }

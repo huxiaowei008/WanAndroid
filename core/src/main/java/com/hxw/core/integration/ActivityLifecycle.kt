@@ -15,8 +15,7 @@ import timber.log.Timber
  * @author hxw
  * @date 2018/5/5
  */
-class ActivityLifecycle : Application.ActivityLifecycleCallbacks {
-
+class ActivityLifecycle internal constructor() : Application.ActivityLifecycleCallbacks {
     private val mFragmentLifecycle: FragmentLifecycle by lazy { FragmentLifecycle() }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {

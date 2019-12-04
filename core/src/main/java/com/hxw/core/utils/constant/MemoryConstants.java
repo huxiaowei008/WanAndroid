@@ -13,6 +13,9 @@ import androidx.annotation.IntDef;
  */
 public final class MemoryConstants {
 
+    private MemoryConstants() {
+    }
+
     /**
      * Byte与Byte的倍数
      */

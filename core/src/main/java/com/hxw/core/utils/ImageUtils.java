@@ -30,6 +30,9 @@ import androidx.annotation.NonNull;
  */
 public final class ImageUtils {
 
+    private ImageUtils() {
+    }
+
     /**
      * 添加水印
      *

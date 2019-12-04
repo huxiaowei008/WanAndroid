@@ -20,6 +20,9 @@ import androidx.core.view.ViewCompat;
  */
 public final class StatusBarUtils {
 
+    private StatusBarUtils() {
+    }
+
     private static boolean supportTranslucent() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
                 // Essential Phone 在 Android 8 之前沉浸式做得不全，系统不从状态栏顶部开始布局却会下发 WindowInsets

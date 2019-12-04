@@ -13,6 +13,9 @@ import androidx.annotation.IntDef;
  */
 public final class TimeConstants {
 
+    private TimeConstants() {
+    }
+
     /**
      * 毫秒与毫秒的倍数
      */

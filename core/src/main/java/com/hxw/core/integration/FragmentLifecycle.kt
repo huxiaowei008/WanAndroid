@@ -14,7 +14,7 @@ import timber.log.Timber
  * @author hxw
  * @date 2018/5/5
  */
-class FragmentLifecycle : FragmentManager.FragmentLifecycleCallbacks() {
+class FragmentLifecycle internal constructor(): FragmentManager.FragmentLifecycleCallbacks() {
 
     override fun onFragmentAttached(fm: FragmentManager, f: Fragment, context: Context) {
         super.onFragmentAttached(fm, f, context)

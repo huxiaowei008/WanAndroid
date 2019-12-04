@@ -12,6 +12,10 @@ import androidx.annotation.IntDef;
  * @date 2019/1/30
  */
 public final class NetworkStateConstants {
+
+    private NetworkStateConstants() {
+    }
+
     /**
      * 加载中
      */

@@ -187,11 +187,11 @@ fun Date.toStr(pattern: String = "yyyy-MM-dd HH:mm:ss"): String {
  * @param pattern 时间格式
  * @return Date类型
  */
-fun String.toDate(pattern: String = "yyyy-MM-dd HH:mm:ss"): Date? = try {
+fun String.toDate(pattern: String = "yyyy-MM-dd HH:mm:ss"): Date = try {
     SimpleDateFormat(pattern, Locale.CHINA).parse(this)
 } catch (e: ParseException) {
     e.printStackTrace()
-    null
+    Date()
 }
 
 

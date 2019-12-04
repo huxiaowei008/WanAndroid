@@ -4,6 +4,7 @@ import android.app.Activity
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.*
+import kotlin.system.exitProcess
 
 
 /**
@@ -127,10 +128,10 @@ object AppManager {
             //从操作系统中结束掉当前程序的进程
             android.os.Process.killProcess(android.os.Process.myPid())
             //退出JVM(java虚拟机),释放所占内存资源,0表示正常退出(非0的都为异常退出)
-            System.exit(0)
+            exitProcess(0)
         } catch (e: Exception) {
             e.printStackTrace()
-            System.exit(-1)
+            exitProcess(-1)
         }
 
     }
