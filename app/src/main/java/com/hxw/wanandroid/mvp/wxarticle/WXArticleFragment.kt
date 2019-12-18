@@ -9,6 +9,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.text.buildSpannedString
 import androidx.core.text.color
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
@@ -22,7 +23,6 @@ import com.hxw.wanandroid.paging.NetworkState
 import kotlinx.android.synthetic.main.fragment_wx_article.*
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * @author hxw
@@ -30,8 +30,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class WXArticleFragment : AbstractFragment() {
 
-    private val mViewModel: WXArticleViewModel by viewModel()
-    private val mCommonViewModel: CommonViewModel by viewModel()
+    private val mViewModel: WXArticleViewModel by viewModels()
+    private val mCommonViewModel: CommonViewModel by viewModels()
 
     override val layoutId: Int
         get() = R.layout.fragment_wx_article

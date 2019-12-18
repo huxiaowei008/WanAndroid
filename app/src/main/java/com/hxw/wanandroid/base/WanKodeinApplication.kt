@@ -16,7 +16,7 @@ import org.koin.android.ext.android.get
  * @date 2018/7/17
  */
 class WanKodeinApplication : Application() {
-    private val delegate by lazy { ApplicationDelegate(listOf(coreModule, appModule, viewModel)) }
+    private val delegate by lazy { ApplicationDelegate(listOf(coreModule, appModule)) }
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
         delegate.attachBaseContext(base)

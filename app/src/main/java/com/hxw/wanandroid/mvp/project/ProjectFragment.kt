@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,13 +21,12 @@ import com.hxw.wanandroid.paging.NetworkState
 import kotlinx.android.synthetic.main.fragment_project.*
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * @author hxw on 2018/7/23
  */
 class ProjectFragment : AbstractFragment() {
-    private val mViewModel: ProjectViewModel by viewModel()
+    private val mViewModel: ProjectViewModel by viewModels()
 
     override val layoutId: Int
         get() = R.layout.fragment_project

@@ -79,8 +79,17 @@ public final class ImageUtils {
             //绘制白色字体内容
             textPaint.setColor(Color.WHITE);
             textPaint.setTextSize(config.getTextSize());
-            StaticLayout staticLayout1 = new StaticLayout(config.getText(), textPaint, canvas.getWidth() - config.getMargin() * 2,
-                    Layout.Alignment.ALIGN_NORMAL, 1, 0, true);
+            StaticLayout staticLayout1;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                staticLayout1 = StaticLayout.Builder
+                        .obtain(config.getText(), 0, config.getText().length(), textPaint, canvas.getWidth() - config.getMargin() * 2)
+                        .setLineSpacing(0, 1)
+                        .setIncludePad(true)
+                        .build();
+            } else {
+                staticLayout1 = new StaticLayout(config.getText(), textPaint, canvas.getWidth() - config.getMargin() * 2,
+                        Layout.Alignment.ALIGN_NORMAL, 1, 0, true);
+            }
             //举例这几种,其他有需要在加
             //设置文字绘制的位置
             switch (config.getGravity()) {
@@ -105,8 +114,17 @@ public final class ImageUtils {
             textPaint.setStyle(Paint.Style.STROKE);
             textPaint.setColor(Color.BLACK);
             textPaint.setStrokeWidth(config.getTextSize() / 30);
-            StaticLayout staticLayout2 = new StaticLayout(config.getText(), textPaint, canvas.getWidth() - config.getMargin() * 2,
-                    Layout.Alignment.ALIGN_NORMAL, 1, 0, true);
+            StaticLayout staticLayout2;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                staticLayout2 = StaticLayout.Builder
+                        .obtain(config.getText(), 0, config.getText().length(), textPaint, canvas.getWidth() - config.getMargin() * 2)
+                        .setLineSpacing(0, 1)
+                        .setIncludePad(true)
+                        .build();
+            } else {
+                staticLayout2 = new StaticLayout(config.getText(), textPaint, canvas.getWidth() - config.getMargin() * 2,
+                        Layout.Alignment.ALIGN_NORMAL, 1, 0, true);
+            }
             staticLayout2.draw(canvas);
             canvas.restore();
         }

@@ -17,15 +17,18 @@ import com.hxw.wanandroid.paging.BasePageViewModel
 import com.hxw.wanandroid.paging.PageSourceFactory
 import com.hxw.wanandroid.paging.SimplePagedListAdapter
 import kotlinx.coroutines.launch
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import retrofit2.await
 
 /**
  * @author hxw
  * @date 2019/2/5
  */
-class WXArticleViewModel(private val wanApi: WanApi) : BasePageViewModel<Int, ArticleEntity>() {
+class WXArticleViewModel : BasePageViewModel<Int, ArticleEntity>(), KoinComponent {
     private var id: Int = 0
     private var key: String = ""
+    private val wanApi: WanApi by inject()
     val treeData = MutableLiveData<MutableList<TreeEntity>>()
     override val sourceFactory: PageSourceFactory<Int, ArticleEntity> = PageSourceFactory {
         WXArticleDataSource(wanApi, id, key, viewModelScope)

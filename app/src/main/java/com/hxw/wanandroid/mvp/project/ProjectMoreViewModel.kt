@@ -11,12 +11,16 @@ import com.hxw.wanandroid.entity.ArticleEntity
 import com.hxw.wanandroid.paging.BasePageViewModel
 import com.hxw.wanandroid.paging.PageSourceFactory
 import com.hxw.wanandroid.paging.SimplePagedListAdapter
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 /**
  * @author hxw
  * @date 2019/2/5
  */
-class ProjectMoreViewModel(wanApi: WanApi) : BasePageViewModel<Int, ArticleEntity>() {
+class ProjectMoreViewModel : BasePageViewModel<Int, ArticleEntity>(), KoinComponent {
+
+    private val wanApi: WanApi by inject()
     private var cid: Int = 0
     override val sourceFactory: PageSourceFactory<Int, ArticleEntity> = PageSourceFactory {
         ProjectMoreDataSource(wanApi, cid, viewModelScope)

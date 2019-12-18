@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,7 +28,6 @@ import kotlinx.coroutines.launch
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import retrofit2.await
 
 /**
@@ -36,7 +36,7 @@ import retrofit2.await
  */
 class ProjectMoreActivity : AbstractActivity() {
     private val api: WanApi by inject()
-    private val mViewModel: ProjectMoreViewModel by viewModel()
+    private val mViewModel: ProjectMoreViewModel by viewModels()
 
     override val layoutId: Int
         get() = R.layout.activtiy_project_more

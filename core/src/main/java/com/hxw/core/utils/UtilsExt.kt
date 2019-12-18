@@ -7,15 +7,16 @@ package com.hxw.core.utils
  */
 fun String.jsonFormat() = StringUtils.jsonFormat(this)
 
-fun String.addCharToLeft(strLength: Int, c: Char = '0') = HexUtils.addCharToLeft(this, strLength, c)
+fun String.addCharToLeft(strLength: Int, c: Char = '0') =
+    HexUtils.addCharToLeft(this, strLength, c)
 
 fun String.addCharToRight(strLength: Int, c: Char = '0') =
     HexUtils.addCharToRight(this, strLength, c)
 
-fun String.toSigned() = HexUtils.unSignedToSigned(this)
+fun String.toSigned() = HexUtils.unSignedToSigned2(this)
 
 fun String.hexToInt() = Integer.parseInt(this, 16)
 
-fun ByteArray.toHexStr() = HexUtils.bytes2HexStr2(this)
+fun ByteArray.toHexStr(): String = HexUtils.bytes2HexStr2(this)
 
-fun String.hexToBytes() = HexUtils.hexStr2Bytes(this)
+fun String.hexToBytes(): ByteArray = HexUtils.hexStr2Bytes(this)

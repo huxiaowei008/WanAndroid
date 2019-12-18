@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.text.buildSpannedString
 import androidx.core.text.color
@@ -25,14 +26,13 @@ import kotlinx.android.synthetic.main.activity_system_list.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.get
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * @author hxw
  * @date 2019/2/2
  */
 class SystemListActivity : AbstractActivity() {
-    private val mCommonViewModel: CommonViewModel by viewModel()
+    private val mCommonViewModel: CommonViewModel by viewModels()
     private val systemItem by lazy { intent.getSerializableExtra(Constant.SYSTEM_ITEM) as TreeEntity }
     private val subIndex by lazy { intent.getIntExtra(Constant.SUB_SYSTEM_ITEM, 0) }
 

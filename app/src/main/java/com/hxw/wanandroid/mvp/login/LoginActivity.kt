@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.core.content.edit
 import androidx.lifecycle.Observer
 import com.hxw.core.base.AbstractActivity
@@ -16,7 +17,6 @@ import com.hxw.wanandroid.mvp.host.HostSettingActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 /**
@@ -24,7 +24,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  *
  */
 class LoginActivity : AbstractActivity() {
-    private val mViewModel: LoginViewModel by viewModel()
+    private val mViewModel: LoginViewModel by viewModels()
     private val sp: SharedPreferences by inject()
     override val layoutId: Int
         get() = R.layout.activity_login

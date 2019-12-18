@@ -40,6 +40,9 @@ public class Test {
         String g = "20000101";
         String crcrc = HexUtils.calcCrc16(g);
         System.out.println("crc->" + crcrc);
+
+        String p=HexUtils.addCharToRight(HexUtils.bytes2HexStr1("1.4".getBytes()), 4, '0');
+        System.out.println("装好->"+p);
 //
 //        String i="AA013300000001efeb2b5d3e6bd641000000002017090510112520170906101125efeb2b5d3e6bd6410102030405060708010101010101010101010101010101010102030405060708091011121308DF";
 //        String h=EncryptUtils.encryptAES2HexString(i.getBytes(),"11223344556677aa".getBytes(),"AES/CBC/NoPadding","mplock1234567890".getBytes());

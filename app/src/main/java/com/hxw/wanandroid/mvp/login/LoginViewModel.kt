@@ -10,6 +10,9 @@ import com.hxw.wanandroid.WanApi
 import com.hxw.wanandroid.entity.UserEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.core.KoinComponent
+import org.koin.core.get
+import org.koin.core.inject
 import retrofit2.await
 
 
@@ -17,9 +20,9 @@ import retrofit2.await
  * @author hxw
  * @date 2019/1/24
  */
-class LoginViewModel(private val wanApi: WanApi) : ViewModel() {
+class LoginViewModel : ViewModel(),KoinComponent {
 
-
+    private val wanApi: WanApi by inject()
     val userInfo = MutableLiveData<UserEntity>()
 
     fun login(username: String, password: String) {

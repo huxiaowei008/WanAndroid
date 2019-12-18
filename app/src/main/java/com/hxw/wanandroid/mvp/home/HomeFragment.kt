@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.text.buildSpannedString
 import androidx.core.text.color
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.api.load
@@ -20,7 +21,6 @@ import com.hxw.wanandroid.paging.NetworkState
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 /**
@@ -28,8 +28,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * @date 2018/7/23
  */
 class HomeFragment : AbstractFragment() {
-    private val mViewModel: HomeViewModel by viewModel()
-    private val mCommonViewModel: CommonViewModel by viewModel()
+    private val mViewModel: HomeViewModel by viewModels()
+    private val mCommonViewModel: CommonViewModel by viewModels()
     override val layoutId: Int
         get() = R.layout.fragment_home
 

@@ -17,14 +17,17 @@ import com.hxw.wanandroid.paging.BasePageViewModel
 import com.hxw.wanandroid.paging.PageSourceFactory
 import com.hxw.wanandroid.paging.SimplePagedListAdapter
 import kotlinx.coroutines.launch
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import retrofit2.await
 
 /**
  * @author hxw
  * @date 2019/1/25
  */
-class HomeViewModel(private val wanApi: WanApi) :
-    BasePageViewModel<Int, ArticleEntity>() {
+class HomeViewModel : BasePageViewModel<Int, ArticleEntity>(), KoinComponent {
+
+    private val wanApi: WanApi by inject()
     override val sourceFactory: PageSourceFactory<Int, ArticleEntity> = PageSourceFactory {
         HomeDataSource(wanApi, viewModelScope)
     }

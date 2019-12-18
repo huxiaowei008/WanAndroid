@@ -9,6 +9,7 @@ import android.transition.TransitionInflater
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.animation.AccelerateInterpolator
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
@@ -16,7 +17,6 @@ import com.hxw.core.base.AbstractActivity
 import com.hxw.core.utils.showToast
 import com.hxw.wanandroid.R
 import kotlinx.android.synthetic.main.activity_register.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 /**
@@ -24,7 +24,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  *
  */
 class RegisterActivity : AbstractActivity() {
-    private val mViewModel by viewModel<LoginViewModel>()
+    private val mViewModel by viewModels<LoginViewModel>()
 
     override val layoutId: Int
         get() = R.layout.activity_register

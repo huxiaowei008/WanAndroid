@@ -9,6 +9,8 @@ import com.hxw.core.utils.showToast
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.WanApi
 import kotlinx.coroutines.launch
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import retrofit2.await
 
 /**
@@ -16,8 +18,8 @@ import retrofit2.await
  * @author hxw
  * @date 2019/2/13
  */
-class CommonViewModel(private val api: WanApi) : ViewModel() {
-
+class CommonViewModel : ViewModel(), KoinComponent {
+    private val api: WanApi by inject()
     fun collectArticle(id: Int, action: () -> Unit) {
         viewModelScope.launch(exceptionHandler) {
             val result = api.collect(id).await()
