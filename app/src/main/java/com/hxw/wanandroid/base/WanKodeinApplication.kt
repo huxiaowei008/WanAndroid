@@ -6,9 +6,11 @@ import coil.Coil
 import coil.ImageLoader
 import com.hxw.core.base.ApplicationDelegate
 import com.hxw.core.base.coreModule
+import com.hxw.wanandroid.BuildConfig
 import com.hxw.wanandroid.R
 import okhttp3.OkHttpClient
 import org.koin.android.ext.android.get
+import timber.log.Timber
 
 
 /**
@@ -26,6 +28,9 @@ class WanKodeinApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         delegate.onCreate(this@WanKodeinApplication)
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
         Coil.setDefaultImageLoader(ImageLoader(this) {
             okHttpClient(get<OkHttpClient>())
             crossfade(true)

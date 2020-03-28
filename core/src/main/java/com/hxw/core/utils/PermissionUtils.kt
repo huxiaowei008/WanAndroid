@@ -7,14 +7,12 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
-import androidx.annotation.IntRange
 import androidx.annotation.NonNull
 import androidx.annotation.Size
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.hxw.core.PermissionAspect
 
 /**
  * 权限工具
@@ -22,8 +20,8 @@ import com.hxw.core.PermissionAspect
  * @date 2018/8/4
  */
 object PermissionUtils {
-
-    private lateinit var resultAction: PermissionAction
+    const val REQUEST_CODE = 10086
+    private var mAction = {}
 
     /**
      * 检查权限
@@ -42,7 +40,11 @@ object PermissionUtils {
         }
         //是否有权限
         for (perm in perms) {
-            if (ContextCompat.checkSelfPermission(context, perm) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(
+                    context,
+                    perm
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
                 return false
             }
         }
@@ -78,8 +80,13 @@ object PermissionUtils {
      * 请求权限的结果
      */
     @JvmStatic
-    fun onRequestPermissionsResult(host: Any, requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        if (requestCode != PermissionAspect.REQUEST_CODE) {
+    fun onRequestPermissionsResult(
+        host: Any,
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode != REQUEST_CODE) {
             return
         }
         permissions.forEachIndexed { index, s ->
@@ -89,7 +96,7 @@ object PermissionUtils {
                 return
             }
         }
-        resultAction.doAction()
+        mAction.invoke()
     }
 
     /**
@@ -106,7 +113,7 @@ object PermissionUtils {
             }
         } else if (host is Fragment) {
             if (!host.shouldShowRequestPermissionRationale(perms)) {
-                showSettingDialog(host.activity!!)
+                showSettingDialog(host.requireActivity())
             }
         } else {
             throw AssertionError("host 不是activity 或 fragment")
@@ -122,8 +129,10 @@ object PermissionUtils {
         builder.setTitle("温馨提示")
         builder.setMessage("如果没有请求的权限，这个应用程序可能无法正常工作。打开app设置界面，修改app权限。")
         builder.setPositiveButton("确定") { dialog, _ ->
-            context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    .setData(Uri.fromParts("package", context.packageName, null)))
+            context.startActivity(
+                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    .setData(Uri.fromParts("package", context.packageName, null))
+            )
             dialog.dismiss()
         }
         builder.setNegativeButton("取消") { dialog, _ -> dialog.dismiss() }
@@ -134,13 +143,17 @@ object PermissionUtils {
      * 权限请求一条龙
      */
     @JvmStatic
-    fun checkPermissions(host: Activity, perms: Array<String>, @IntRange(from = 0) requestCode: Int = PermissionAspect.REQUEST_CODE,
-                         action: PermissionAction) {
+    fun checkPermissions(
+        host: Activity,
+        perms: Array<String>,
+        action: () -> Unit={}
+    ) {
         //第一步:先判断是否有权限
         if (hasPermissions(host, *perms)) {
             //有权限
-            action.doAction()
+            action.invoke()
         } else {
+            mAction = action
             //第二步:判断是否需要解释(似乎可以不用这步)
             if (shouldShowRationale(host, *perms)) {
                 val builder = AlertDialog.Builder(host)
@@ -148,45 +161,45 @@ object PermissionUtils {
                 builder.setMessage("没有此权限会导致某些功能无法使用或崩溃")
                 builder.setPositiveButton("申请权限") { dialog, _ ->
                     //申请权限
-                    resultAction = action
-                    ActivityCompat.requestPermissions(host, perms, requestCode)
+                    ActivityCompat.requestPermissions(host, perms, REQUEST_CODE)
                     dialog.dismiss()
                 }
                 builder.setNegativeButton("取消") { dialog, _ -> dialog.dismiss() }
                 builder.show()
             } else {
                 //第三步:不需要就申请
-                resultAction = action
-                ActivityCompat.requestPermissions(host, perms, requestCode)
+                ActivityCompat.requestPermissions(host, perms, REQUEST_CODE)
             }
         }
     }
 
     @JvmStatic
-    fun checkPermissions(host: Fragment, perms: Array<String>, @IntRange(from = 0) requestCode: Int = PermissionAspect.REQUEST_CODE,
-                         action: PermissionAction) {
+    fun checkPermissions(
+        host: Fragment,
+        perms: Array<String>,
+        action: () -> Unit={}
+    ) {
         //第一步:先判断是否有权限
-        if (hasPermissions(host.activity!!, *perms)) {
+        if (hasPermissions(host.requireActivity(), *perms)) {
             //有权限
-            action.doAction()
+            action.invoke()
         } else {
+            mAction = action
             //第二步:判断是否需要解释(似乎可以不用这步)
             if (shouldShowRationale(host, *perms)) {
-                val builder = AlertDialog.Builder(host.activity!!)
+                val builder = AlertDialog.Builder(host.requireActivity())
                 builder.setTitle("温馨提示")
                 builder.setMessage("没有此权限会导致某些功能无法使用或崩溃")
                 builder.setPositiveButton("申请权限") { dialog, _ ->
                     //申请权限
-                    resultAction = action
-                    host.requestPermissions(perms, requestCode)
+                    host.requestPermissions(perms, REQUEST_CODE)
                     dialog.dismiss()
                 }
                 builder.setNegativeButton("取消") { dialog, _ -> dialog.dismiss() }
                 builder.show()
             } else {
                 //第三步:不需要就申请
-                resultAction = action
-                host.requestPermissions(perms, requestCode)
+                host.requestPermissions(perms, REQUEST_CODE)
             }
         }
     }

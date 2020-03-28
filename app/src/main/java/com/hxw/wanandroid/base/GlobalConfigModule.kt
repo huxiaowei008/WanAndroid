@@ -1,7 +1,9 @@
 package com.hxw.wanandroid.base
 
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import coil.util.CoilUtils
 import com.google.gson.GsonBuilder
 import com.hxw.core.base.ConfigModule
 import com.hxw.wanandroid.WanApi
@@ -28,6 +30,7 @@ class GlobalConfigModule : ConfigModule, KoinComponent {
             .connectTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
+            .cache((CoilUtils.createDefaultCache(get<Application>())))
     }
 
     override fun configRetrofit(context: Context, builder: Retrofit.Builder) {

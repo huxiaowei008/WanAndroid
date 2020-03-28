@@ -12,7 +12,6 @@ import androidx.core.text.color
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.hxw.core.base.AbstractActivity
@@ -58,7 +57,7 @@ class SystemListActivity : AbstractActivity() {
     }
 
     private fun getViewModel(): SystemViewModel {
-        return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
+        return ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
                 return SystemViewModel(get(), systemItem.children[subIndex].id) as T

@@ -1,10 +1,9 @@
 package com.hxw.wanandroid.permission
 
 import android.Manifest
-import android.content.Intent
 import android.os.Bundle
-import com.hxw.core.annotation.CheckPermission
 import com.hxw.core.base.AbstractFragment
+import com.hxw.core.utils.PermissionUtils
 import com.hxw.wanandroid.R
 import kotlinx.android.synthetic.main.fragment_permission.*
 import org.jetbrains.anko.support.v4.longToast
@@ -28,9 +27,11 @@ class PermissionFragment : AbstractFragment() {
         }
     }
 
-    @CheckPermission(permissions = [Manifest.permission.READ_SMS])
+
     private fun smsTask() {
-        longToast("TODO: SMS things")
+        PermissionUtils.checkPermissions(this, arrayOf(Manifest.permission.READ_SMS)) {
+            longToast("TODO: SMS things")
+        }
     }
 
 }

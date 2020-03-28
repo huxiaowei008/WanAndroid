@@ -39,9 +39,8 @@ class TakePhotoActivity : AbstractActivity() {
         btn_camera1.setOnClickListener {
             //启动相机方式1
             PermissionUtils.checkPermissions(this@TakePhotoActivity,
-                arrayOf(Manifest.permission.CAMERA),
-                permissionCode,
-                PermissionAction { openCamera() })
+                arrayOf(Manifest.permission.CAMERA)
+            ) { openCamera() }
         }
 
         btn_camera2.setOnClickListener {

@@ -3,8 +3,8 @@ package com.hxw.wanandroid.permission
 import android.Manifest
 import android.os.Bundle
 import coil.api.load
-import com.hxw.core.annotation.CheckPermission
 import com.hxw.core.base.AbstractActivity
+import com.hxw.core.utils.PermissionUtils
 import com.hxw.wanandroid.R
 import kotlinx.android.synthetic.main.activity_permission.*
 import org.jetbrains.anko.longToast
@@ -32,15 +32,20 @@ class PermissionActivity : AbstractActivity() {
         iv_test.load("http://172.16.8.237:28182/total/survey/survey_c9ccbe5fea7a47b98fce319758d6e0fb.jpg")
     }
 
-    @CheckPermission(permissions = [Manifest.permission.CAMERA])
+
     private fun cameraTask() {
-        longToast("TODO: Camera things")
+        PermissionUtils.checkPermissions(this, arrayOf(Manifest.permission.CAMERA)) {
+            longToast("TODO: Camera things")
+        }
+
     }
 
-    @CheckPermission(permissions = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_CONTACTS])
+
     private fun locationAndContactsTask(msg: String) {
-        longToast("TODO: Location and Contacts things")
-        toast(msg)
+        PermissionUtils.checkPermissions(this, LOCATION_AND_CONTACTS) {
+            longToast("TODO: Location and Contacts things")
+            toast(msg)
+        }
     }
 
 

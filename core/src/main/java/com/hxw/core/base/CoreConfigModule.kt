@@ -2,7 +2,6 @@ package com.hxw.core.base
 
 import android.app.Application
 import android.preference.PreferenceManager
-import coil.util.CoilUtils
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.hxw.core.integration.HostSelectionInterceptor
@@ -11,6 +10,8 @@ import com.hxw.core.utils.onError
 import kotlinx.coroutines.CoroutineExceptionHandler
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidApplication
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -28,7 +29,7 @@ val coreModule = module {
     single<Gson> {
         val builder = GsonBuilder()
             .serializeNulls()
-        get<ConfigModule>().configGson(get<Application>(), builder)
+        getOrNull<ConfigModule>()?.configGson(androidApplication(), builder)
         builder.create()
     }
 
@@ -47,8 +48,8 @@ val coreModule = module {
         val builder = OkHttpClient.Builder()
             .addInterceptor(HostSelectionInterceptor)
             .addInterceptor(logging)
-            .cache((CoilUtils.createDefaultCache(get<Application>())))
-        get<ConfigModule>().configOkHttp(get<Application>(), builder)
+
+        getOrNull<ConfigModule>()?.configOkHttp(androidApplication(), builder)
         builder.build()
     }
 
@@ -58,11 +59,11 @@ val coreModule = module {
 //            .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
 //            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .addConverterFactory(GsonConverterFactory.create(get()))
-        get<ConfigModule>().configRetrofit(get<Application>(), builder)
+        getOrNull<ConfigModule>()?.configRetrofit(androidApplication(), builder)
         builder.build()
     }
 
-    factory { PreferenceManager.getDefaultSharedPreferences(get()) }
+    factory { PreferenceManager.getDefaultSharedPreferences(androidContext()) }
 }
 
 val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
