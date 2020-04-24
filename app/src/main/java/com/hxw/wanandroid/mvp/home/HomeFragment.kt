@@ -38,7 +38,10 @@ class HomeFragment : AbstractFragment() {
         initViewPager()
         initRecycler()
         initSwipeToRefresh()
-        mViewModel.getBanner()
+        mViewModel.bannerData.observe(this, Observer {
+            mViewModel.bannerAdapter.setData(it ?: listOf())
+                .notifyDataSetChanged()
+        })
     }
 
     private fun initViewPager() {
@@ -77,7 +80,7 @@ class HomeFragment : AbstractFragment() {
                 imageTintList = ColorStateList.valueOf(
                     ContextCompat
                         .getColor(
-                            activity!!, if (data.collect) {
+                            requireActivity(), if (data.collect) {
                                 R.color.colorPrimary
                             } else {
                                 R.color.grey_500

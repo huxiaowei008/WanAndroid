@@ -4,6 +4,7 @@ import com.hxw.core.base.ConfigModule
 import com.hxw.wanandroid.WanApi
 import org.koin.dsl.module
 import retrofit2.Retrofit
+import retrofit2.create
 
 /**
  * @author hxw
@@ -13,5 +14,5 @@ val appModule = module {
 
     single<ConfigModule> { GlobalConfigModule() }
 
-    single { get<Retrofit>().create(WanApi::class.java) }
+    single { get<Retrofit>().create<WanApi>() }
 }

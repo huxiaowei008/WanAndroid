@@ -27,7 +27,7 @@ class LoginViewModel : ViewModel(),KoinComponent {
 
     fun login(username: String, password: String) {
         viewModelScope.launch(Dispatchers.Main + exceptionHandler) {
-            val result = wanApi.login(username, password).await()
+            val result = wanApi.login(username, password)
             if (result.errorCode == Constant.NET_SUCCESS) {
                 showToast("登陆成功")
                 userInfo.value = result.data
@@ -39,7 +39,7 @@ class LoginViewModel : ViewModel(),KoinComponent {
 
     fun register(username: String, password: String, repassword: String) {
         viewModelScope.launch(Dispatchers.Main + exceptionHandler) {
-            val result = wanApi.register(username, password, repassword).await()
+            val result = wanApi.register(username, password, repassword)
             if (result.errorCode == Constant.NET_SUCCESS) {
                 showToast("注册成功")
                 userInfo.value = result.data

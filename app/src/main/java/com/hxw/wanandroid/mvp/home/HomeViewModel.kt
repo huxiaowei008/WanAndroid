@@ -1,12 +1,12 @@
 package com.hxw.wanandroid.mvp.home
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import androidx.recyclerview.widget.DiffUtil
 import com.hxw.core.adapter.SimplePagerAdapter
-import com.hxw.core.base.exceptionHandler
 import com.hxw.core.utils.showToast
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
@@ -16,10 +16,8 @@ import com.hxw.wanandroid.entity.BannerEntity
 import com.hxw.wanandroid.paging.BasePageViewModel
 import com.hxw.wanandroid.paging.PageSourceFactory
 import com.hxw.wanandroid.paging.SimplePagedListAdapter
-import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 import org.koin.core.inject
-import retrofit2.await
 
 /**
  * @author hxw
@@ -35,11 +33,12 @@ class HomeViewModel : BasePageViewModel<Int, ArticleEntity>(), KoinComponent {
     override val pagedList: LiveData<PagedList<ArticleEntity>> = sourceFactory
         .toLiveData(20)
 
-    private val bannerData = mutableListOf<BannerEntity>()
+    val bannerData = liveData<MutableList<BannerEntity>?> {
+        emit(getBanner())
+    }
 
     val bannerAdapter: SimplePagerAdapter<BannerEntity> by lazy {
         SimplePagerAdapter<BannerEntity>(R.layout.item_banner)
-            .setData(bannerData)
             .setLoop(true)
     }
 
@@ -64,15 +63,13 @@ class HomeViewModel : BasePageViewModel<Int, ArticleEntity>(), KoinComponent {
             })
     }
 
-    fun getBanner() {
-        viewModelScope.launch(exceptionHandler) {
-            val result = wanApi.banner.await()
-            if (result.errorCode == Constant.NET_SUCCESS) {
-                bannerData.addAll(result.data)
-                bannerAdapter.notifyDataSetChanged()
-            } else {
-                showToast(result.errorMsg)
-            }
+    suspend fun getBanner(): MutableList<BannerEntity>? {
+        val result = wanApi.getBanner()
+        return if (result.errorCode == Constant.NET_SUCCESS) {
+            result.data
+        } else {
+            showToast(result.errorMsg)
+            null
         }
     }
 }

@@ -8,7 +8,6 @@ import com.hxw.wanandroid.paging.NetworkState
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import retrofit2.await
 
 /**
  * @author hxw
@@ -27,7 +26,7 @@ class HomeDataSource(private val wanApi: WanApi, private val scope: CoroutineSco
             refreshState.postValue(NetworkState.error(throwable.message ?: "unknown err"))
             retry = { loadInitial(params, callback) }
         }) {
-            val result = wanApi.getHomeArticle(0).await()
+            val result = wanApi.getHomeArticle(0)
             if (result.errorCode == Constant.NET_SUCCESS) {
                 refreshState.postValue(NetworkState.SUCCESS)
                 retry = null
@@ -51,7 +50,7 @@ class HomeDataSource(private val wanApi: WanApi, private val scope: CoroutineSco
             networkState.postValue(NetworkState.error(throwable.message ?: "unknown err"))
             retry = { loadBefore(params, callback) }
         }) {
-            val result = wanApi.getHomeArticle(params.key).await()
+            val result = wanApi.getHomeArticle(params.key)
             if (result.errorCode == Constant.NET_SUCCESS) {
                 networkState.postValue(NetworkState.SUCCESS)
                 retry = null
@@ -72,7 +71,7 @@ class HomeDataSource(private val wanApi: WanApi, private val scope: CoroutineSco
             networkState.postValue(NetworkState.error(throwable.message ?: "unknown err"))
             retry = { loadAfter(params, callback) }
         }) {
-            val result = wanApi.getHomeArticle(params.key).await()
+            val result = wanApi.getHomeArticle(params.key)
             if (result.errorCode == Constant.NET_SUCCESS) {
                 networkState.postValue(NetworkState.SUCCESS)
                 retry = null

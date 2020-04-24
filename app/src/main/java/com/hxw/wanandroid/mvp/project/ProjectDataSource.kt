@@ -8,7 +8,6 @@ import com.hxw.wanandroid.paging.NetworkState
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import retrofit2.await
 
 
 /**
@@ -27,7 +26,7 @@ class ProjectDataSource(private val wanApi: WanApi, private val scope: Coroutine
             networkState.postValue(NetworkState.error(throwable.message ?: "unknown err"))
             retry = { loadInitial(params, callback) }
         }) {
-            val result = wanApi.getLatestProject(0).await()
+            val result = wanApi.getLatestProject(0)
             if (result.errorCode == Constant.NET_SUCCESS) {
                 networkState.postValue(NetworkState.SUCCESS)
                 retry = null
@@ -51,7 +50,7 @@ class ProjectDataSource(private val wanApi: WanApi, private val scope: Coroutine
             networkState.postValue(NetworkState.error(throwable.message ?: "unknown err"))
             retry = { loadBefore(params, callback) }
         }) {
-            val result = wanApi.getLatestProject(params.key).await()
+            val result = wanApi.getLatestProject(params.key)
             if (result.errorCode == Constant.NET_SUCCESS) {
                 networkState.postValue(NetworkState.SUCCESS)
                 retry = null
@@ -72,7 +71,7 @@ class ProjectDataSource(private val wanApi: WanApi, private val scope: Coroutine
             networkState.postValue(NetworkState.error(throwable.message ?: "unknown err"))
             retry = { loadAfter(params, callback) }
         }) {
-            val result = wanApi.getLatestProject(params.key).await()
+            val result = wanApi.getLatestProject(params.key)
             if (result.errorCode == Constant.NET_SUCCESS) {
                 networkState.postValue(NetworkState.SUCCESS)
                 retry = null

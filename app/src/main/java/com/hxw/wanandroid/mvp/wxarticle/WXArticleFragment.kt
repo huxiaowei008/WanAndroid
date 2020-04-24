@@ -105,7 +105,7 @@ class WXArticleFragment : AbstractFragment() {
             }
             view.findViewById<ImageView>(R.id.iv_favorite).apply {
                 imageTintList = ColorStateList.valueOf(ContextCompat
-                        .getColor(activity!!, if (data.collect) {
+                        .getColor(requireActivity(), if (data.collect) {
                             R.color.colorPrimary
                         } else {
                             R.color.grey_500

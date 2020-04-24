@@ -38,7 +38,7 @@ class SystemFragment : AbstractFragment() {
     override fun init(savedInstanceState: Bundle?) {
         initRecycler()
         lifecycle.coroutineScope.launch(exceptionHandler) {
-            val result = api.tree.await()
+            val result = api.getTree()
             Timber.i("result in thread ${Thread.currentThread().name}")
             if (result.errorCode == Constant.NET_SUCCESS) {
                 mAdapter.setData(result.data)

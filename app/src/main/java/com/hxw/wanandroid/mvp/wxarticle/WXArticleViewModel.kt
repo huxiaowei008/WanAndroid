@@ -19,7 +19,6 @@ import com.hxw.wanandroid.paging.SimplePagedListAdapter
 import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 import org.koin.core.inject
-import retrofit2.await
 
 /**
  * @author hxw
@@ -69,7 +68,7 @@ class WXArticleViewModel : BasePageViewModel<Int, ArticleEntity>(), KoinComponen
 
     fun getWxPublish() {
         viewModelScope.launch(exceptionHandler) {
-            val result = wanApi.wxPublic.await()
+            val result = wanApi.getWXPublic()
             if (result.errorCode == Constant.NET_SUCCESS) {
                 treeData.value = result.data
             } else {

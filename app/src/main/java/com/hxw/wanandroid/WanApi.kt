@@ -1,25 +1,10 @@
-package com.hxw.wanandroid;
+package com.hxw.wanandroid
 
-import com.hxw.wanandroid.entity.ArticleEntity;
-import com.hxw.wanandroid.entity.ArticleListEntity;
-import com.hxw.wanandroid.entity.BannerEntity;
-import com.hxw.wanandroid.entity.BaseEntity;
-import com.hxw.wanandroid.entity.BaseListEntity;
-import com.hxw.wanandroid.entity.CollectEntity;
-import com.hxw.wanandroid.entity.FriendEntity;
-import com.hxw.wanandroid.entity.HotKeyEntity;
-import com.hxw.wanandroid.entity.NaviEntity;
-import com.hxw.wanandroid.entity.TreeEntity;
-import com.hxw.wanandroid.entity.UserEntity;
-import com.hxw.wanandroid.entity.WebEntity;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
+import com.hxw.wanandroid.entity.*
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  * WanAndroid的接口api
@@ -27,9 +12,7 @@ import retrofit2.http.Query;
  * @author hxw
  * @date 2018/6/2
  */
-public interface WanApi {
-    String BASEURL = "https://www.wanandroid.com/";
-
+interface WanApi {
     /**
      * 1. 首页相关
      * 1.1 首页文章列表
@@ -38,9 +21,9 @@ public interface WanApi {
      * @return 首页文章列表数据
      */
     @GET("article/list/{page}/json")
-    Call<BaseEntity<ArticleListEntity<ArticleEntity>>> getHomeArticle(
-            @Path("page") int page
-    );
+    suspend fun getHomeArticle(
+        @Path("page") page: Int
+    ): BaseEntity<ArticleListEntity<ArticleEntity>>
 
     /**
      * 1.2 首页banner
@@ -48,7 +31,7 @@ public interface WanApi {
      * @return Banners数据
      */
     @GET("banner/json")
-    Call<BaseListEntity<BannerEntity>> getBanner();
+    suspend fun getBanner(): BaseListEntity<BannerEntity>
 
     /**
      * 1.3 常用网站
@@ -56,7 +39,7 @@ public interface WanApi {
      * @return 常用网站列表数据
      */
     @GET("friend/json")
-    Call<BaseEntity<List<FriendEntity>>> getFriend();
+    suspend fun getFriend(): BaseEntity<List<FriendEntity>>
 
     /**
      * 1.4 搜索热词
@@ -64,7 +47,7 @@ public interface WanApi {
      * @return 热词列表数据
      */
     @GET("hotkey/json")
-    Call<BaseEntity<List<HotKeyEntity>>> getHotKey();
+    suspend fun getHotKey(): BaseEntity<List<HotKeyEntity>>
 
     /**
      * 1.5 最新项目
@@ -73,9 +56,9 @@ public interface WanApi {
      * @return 最新项目列表数据
      */
     @GET("article/listproject/{page}/json")
-    Call<BaseEntity<ArticleListEntity<ArticleEntity>>> getLatestProject(
-            @Path("page") int page
-    );
+    suspend fun getLatestProject(
+        @Path("page") page: Int
+    ): BaseEntity<ArticleListEntity<ArticleEntity>>
 
     /**
      * 2. 体系
@@ -84,7 +67,7 @@ public interface WanApi {
      * @return 体系导航的树状结构数据
      */
     @GET("tree/json")
-    Call<BaseListEntity<TreeEntity>> getTree();
+    suspend fun getTree(): BaseListEntity<TreeEntity>
 
     /**
      * 2.2 知识体系下的文章
@@ -94,11 +77,10 @@ public interface WanApi {
      * @return 文章列表数据
      */
     @GET("article/list/{page}/json")
-    Call<BaseEntity<ArticleListEntity<ArticleEntity>>> getTreeArticle(
-            @Path("page") int page,
-            @Query("cid") int cid
-
-    );
+    suspend fun getTreeArticle(
+        @Path("page") page: Int,
+        @Query("cid") cid: Int
+    ): BaseEntity<ArticleListEntity<ArticleEntity>>
 
     /**
      * 3. 导航
@@ -107,7 +89,7 @@ public interface WanApi {
      * @return 导航列表数据
      */
     @GET("navi/json")
-    Call<BaseListEntity<NaviEntity>> getNavi();
+    suspend fun getNavi(): BaseListEntity<NaviEntity>
 
     /**
      * 4. 项目
@@ -116,7 +98,7 @@ public interface WanApi {
      * @return 项目的分类数据
      */
     @GET("project/tree/json")
-    Call<BaseListEntity<TreeEntity>> getProjectTree();
+    suspend fun getProjectTree(): BaseListEntity<TreeEntity>
 
     /**
      * 4.2 项目列表数据
@@ -126,10 +108,10 @@ public interface WanApi {
      * @return 项目列表数据
      */
     @GET("project/list/{page}/json")
-    Call<BaseEntity<ArticleListEntity<ArticleEntity>>> getProjectList(
-            @Path("page") int page,
-            @Query("cid") int cid
-    );
+    suspend fun getProjectList(
+        @Path("page") page: Int,
+        @Query("cid") cid: Int
+    ): BaseEntity<ArticleListEntity<ArticleEntity>>
 
     /**
      * 5. 登录与注册
@@ -140,16 +122,16 @@ public interface WanApi {
      * @return 用户信息数据
      */
     @POST("user/login")
-    Call<BaseEntity<UserEntity>> login(
-            @Query("username") String username,
-            @Query("password") String password
-    );
+    suspend fun login(
+        @Query("username") username: String?,
+        @Query("password") password: String?
+    ): BaseEntity<UserEntity>
 
     @POST("http://172.29.6.149:28182/engineering/address/getProjectId")
-    Call<BaseEntity<Object>> loginDeferred(
-            @Query("loginToken") String token,
-            @Query("projectId") String projectId
-    );
+    suspend fun loginDeferred(
+        @Query("loginToken") token: String?,
+        @Query("projectId") projectId: String?
+    ): BaseEntity<Any>
 
     /**
      * 5.2 注册
@@ -160,11 +142,11 @@ public interface WanApi {
      * @return 用户信息数据
      */
     @POST("user/register")
-    Call<BaseEntity<UserEntity>> register(
-            @Query("username") String username,
-            @Query("password") String password,
-            @Query("repassword") String repassword
-    );
+    suspend fun register(
+        @Query("username") username: String?,
+        @Query("password") password: String?,
+        @Query("repassword") repassword: String?
+    ): BaseEntity<UserEntity>
 
     /**
      * 5.3 退出登录
@@ -172,7 +154,7 @@ public interface WanApi {
      * @return 退出成功与否
      */
     @GET("user/logout/json")
-    Call<BaseEntity<Object>> loginOut();
+    suspend fun loginOut(): BaseEntity<Any>
 
     /**
      * 6. 收藏
@@ -182,9 +164,9 @@ public interface WanApi {
      * @return 收藏的文章列表数据
      */
     @GET("lg/collect/list/{page}/json")
-    Call<BaseEntity<ArticleListEntity<CollectEntity>>> getCollectList(
-            @Path("page") int page
-    );
+    suspend fun getCollectList(
+        @Path("page") page: Int
+    ): BaseEntity<ArticleListEntity<CollectEntity>>
 
     /**
      * 6.2 收藏站内文章
@@ -193,9 +175,9 @@ public interface WanApi {
      * @return 基础格式, 用于判断收藏成功与否
      */
     @POST("lg/collect/{id}/json")
-    Call<BaseEntity> collect(
-            @Path("id") int id
-    );
+    suspend fun collect(
+        @Path("id") id: Int
+    ): BaseEntity<*>
 
     /**
      * 6.3 收藏站外文章
@@ -206,11 +188,11 @@ public interface WanApi {
      * @return 基础格式, 用于判断收藏成功与否
      */
     @POST("lg/collect/add/json")
-    Call<BaseEntity> collect(
-            @Query("title") String title,
-            @Query("author") String author,
-            @Query("link") String link
-    );
+    suspend fun collect(
+        @Query("title") title: String?,
+        @Query("author") author: String?,
+        @Query("link") link: String?
+    ): BaseEntity<*>
 
     /**
      * 6.4 取消收藏
@@ -220,9 +202,9 @@ public interface WanApi {
      * @return 基础格式, 用于判断取消收藏成功与否
      */
     @POST("lg/uncollect_originId/{id}/json")
-    Call<BaseEntity> unCollect(
-            @Path("id") int id
-    );
+    suspend fun unCollect(
+        @Path("id") id: Int
+    ): BaseEntity<*>
 
     /**
      * 6.4.2 我的收藏页面（该页面包含自己录入的内容）
@@ -232,10 +214,10 @@ public interface WanApi {
      * @return 基础格式, 用于判断取消收藏成功与否
      */
     @POST("lg/uncollect_{originId}/{id}/json")
-    Call<BaseEntity> unCollect(
-            @Path("id") int id,
-            @Path("originId") int originId
-    );
+    suspend fun unCollect(
+        @Path("id") id: Int,
+        @Path("originId") originId: Int
+    ): BaseEntity<*>
 
     /**
      * 6.5 收藏网站列表
@@ -243,7 +225,7 @@ public interface WanApi {
      * @return 收藏的网站列表数据
      */
     @GET("lg/collect/usertools/json")
-    Call<BaseEntity<List<WebEntity>>> getCollectWeb();
+    suspend fun getCollectWeb(): BaseEntity<List<WebEntity>>
 
     /**
      * 6.6 收藏网址
@@ -253,10 +235,10 @@ public interface WanApi {
      * @return 基础格式, 用于判断收藏成功与否
      */
     @POST("lg/collect/addtool/json")
-    Call<BaseEntity<WebEntity>> collectWeb(
-            @Query("name") String name,
-            @Query("link") String link
-    );
+    suspend fun collectWeb(
+        @Query("name") name: String?,
+        @Query("link") link: String?
+    ): BaseEntity<WebEntity>
 
     /**
      * 6.7 编辑收藏网站
@@ -267,11 +249,11 @@ public interface WanApi {
      * @return 基础格式, 用于判断编辑成功与否
      */
     @POST("lg/collect/updatetool/json")
-    Call<BaseEntity<WebEntity>> updateWeb(
-            @Query("id") int id,
-            @Query("name") String name,
-            @Query("link") String link
-    );
+    suspend fun updateWeb(
+        @Query("id") id: Int,
+        @Query("name") name: String?,
+        @Query("link") link: String?
+    ): BaseEntity<WebEntity>
 
     /**
      * 6.8 删除收藏网站
@@ -280,9 +262,9 @@ public interface WanApi {
      * @return 基础格式, 用于判断删除成功与否
      */
     @POST("lg/collect/deletetool/json")
-    Call<BaseEntity> deleteWeb(
-            @Query("id") int id
-    );
+    suspend fun deleteWeb(
+        @Query("id") id: Int
+    ): BaseEntity<*>
 
     /**
      * 7. 搜索
@@ -293,10 +275,10 @@ public interface WanApi {
      * @return 文章列表数据
      */
     @POST("article/query/{page}/json")
-    Call<BaseEntity<ArticleListEntity<ArticleEntity>>> search(
-            @Query("k") String key,
-            @Path("page") int page
-    );
+    suspend fun search(
+        @Query("k") key: String?,
+        @Path("page") page: Int
+    ): BaseEntity<ArticleListEntity<ArticleEntity>>
 
     /**
      * 9. 微信公众号
@@ -305,7 +287,7 @@ public interface WanApi {
      * @return 微信公众号列表数据
      */
     @GET("wxarticle/chapters/json")
-    Call<BaseListEntity<TreeEntity>> getWXPublic();
+    suspend fun getWXPublic(): BaseListEntity<TreeEntity>
 
     /**
      * 9.2 获取公众号文章
@@ -315,10 +297,13 @@ public interface WanApi {
      * @param key  搜索关键字
      */
     @GET("wxarticle/list/{id}/{page}/json")
-    Call<BaseEntity<ArticleListEntity<ArticleEntity>>> getWxArticle(
-            @Path("id") int id,
-            @Path("page") int page,
-            @Query("k") String key
-    );
+    suspend fun getWxArticle(
+        @Path("id") id: Int,
+        @Path("page") page: Int,
+        @Query("k") key: String?
+    ): BaseEntity<ArticleListEntity<ArticleEntity>>
 
+    companion object {
+        const val BASEURL = "https://www.wanandroid.com/"
+    }
 }

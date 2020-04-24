@@ -9,7 +9,6 @@ import com.hxw.wanandroid.paging.NetworkState
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import retrofit2.await
 
 
 /**
@@ -32,7 +31,7 @@ class WXArticleDataSource(
             refreshState.postValue(NetworkState.error(throwable.message ?: "unknown err"))
             retry = { loadInitial(params, callback) }
         }) {
-            val result = wanApi.getWxArticle(cid, 1, key).await()
+            val result = wanApi.getWxArticle(cid, 1, key)
             if (result.errorCode == Constant.NET_SUCCESS) {
                 refreshState.postValue(NetworkState.SUCCESS)
                 retry = null
@@ -56,7 +55,7 @@ class WXArticleDataSource(
             networkState.postValue(NetworkState.error(throwable.message ?: "unknown err"))
             retry = { loadBefore(params, callback) }
         }) {
-            val result = wanApi.getWxArticle(cid, params.key, key).await()
+            val result = wanApi.getWxArticle(cid, params.key, key)
             if (result.errorCode == Constant.NET_SUCCESS) {
                 networkState.postValue(NetworkState.SUCCESS)
                 retry = null
@@ -77,7 +76,7 @@ class WXArticleDataSource(
             networkState.postValue(NetworkState.error(throwable.message ?: "unknown err"))
             retry = { loadAfter(params, callback) }
         }) {
-            val result = wanApi.getWxArticle(cid, params.key, key).await()
+            val result = wanApi.getWxArticle(cid, params.key, key)
             if (result.errorCode == Constant.NET_SUCCESS) {
                 networkState.postValue(NetworkState.SUCCESS)
                 retry = null

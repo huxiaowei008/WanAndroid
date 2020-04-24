@@ -22,7 +22,6 @@ import org.jetbrains.anko.support.v4.dip
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import org.koin.android.ext.android.inject
-import retrofit2.await
 import kotlin.random.Random
 
 /**
@@ -61,7 +60,7 @@ class NavigationFragment : AbstractFragment() {
     override fun init(savedInstanceState: Bundle?) {
         initRecycler()
         lifecycle.coroutineScope.launch(exceptionHandler) {
-            val result = api.navi.await()
+            val result = api.getNavi()
             if (result.errorCode == Constant.NET_SUCCESS) {
                 initTabLayout(result.data)
                 mAdapter.setData(result.data)
@@ -111,13 +110,13 @@ class NavigationFragment : AbstractFragment() {
 
     private fun initRecycler() {
         val color = intArrayOf(
-            ContextCompat.getColor(activity!!, R.color.red_500),
-            ContextCompat.getColor(activity!!, R.color.orange_500),
-            ContextCompat.getColor(activity!!, R.color.amber_500),
-            ContextCompat.getColor(activity!!, R.color.green_500),
-            ContextCompat.getColor(activity!!, R.color.blue_500),
-            ContextCompat.getColor(activity!!, R.color.indigo_500),
-            ContextCompat.getColor(activity!!, R.color.purple_500)
+            ContextCompat.getColor(requireActivity(), R.color.red_500),
+            ContextCompat.getColor(requireActivity(), R.color.orange_500),
+            ContextCompat.getColor(requireActivity(), R.color.amber_500),
+            ContextCompat.getColor(requireActivity(), R.color.green_500),
+            ContextCompat.getColor(requireActivity(), R.color.blue_500),
+            ContextCompat.getColor(requireActivity(), R.color.indigo_500),
+            ContextCompat.getColor(requireActivity(), R.color.purple_500)
         )
         mAdapter.setInitView { view, data, _ ->
             view.findViewById<TextView>(R.id.tv_name).text = data.name

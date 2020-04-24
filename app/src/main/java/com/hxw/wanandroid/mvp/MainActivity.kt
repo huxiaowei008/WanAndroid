@@ -69,7 +69,7 @@ class MainActivity : AbstractActivity() {
             when (it.itemId) {
                 R.id.nav_out -> {
                     lifecycle.coroutineScope.launch(exceptionHandler) {
-                        val result = api.loginOut().await()
+                        val result = api.loginOut()
                         if (result.errorCode == Constant.NET_SUCCESS) {
                             toast("登出成功")
                         } else {

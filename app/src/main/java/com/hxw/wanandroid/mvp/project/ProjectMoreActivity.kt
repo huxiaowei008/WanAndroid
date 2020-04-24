@@ -28,7 +28,6 @@ import kotlinx.coroutines.launch
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
-import retrofit2.await
 
 /**
  * @author hxw
@@ -45,7 +44,7 @@ class ProjectMoreActivity : AbstractActivity() {
         setSupportActionBar(tool_title)
         tool_title.setNavigationOnClickListener { finish() }
         lifecycle.coroutineScope.launch(exceptionHandler) {
-            val result = api.projectTree.await()
+            val result = api.getProjectTree()
             if (result.errorCode == Constant.NET_SUCCESS) {
                 initTab(result.data)
             } else {
