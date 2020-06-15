@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import androidx.recyclerview.widget.DiffUtil
-import com.hxw.core.base.exceptionHandler
+import com.hxw.core.base.exceptionMain
 import com.hxw.core.utils.showToast
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
@@ -67,7 +67,7 @@ class WXArticleViewModel : BasePageViewModel<Int, ArticleEntity>(), KoinComponen
     }
 
     fun getWxPublish() {
-        viewModelScope.launch(exceptionHandler) {
+        viewModelScope.launch(exceptionMain) {
             val result = wanApi.getWXPublic()
             if (result.errorCode == Constant.NET_SUCCESS) {
                 treeData.value = result.data

@@ -21,6 +21,7 @@ import com.hxw.wanandroid.paging.NetworkState
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 /**
@@ -29,7 +30,7 @@ import org.jetbrains.anko.support.v4.toast
  */
 class HomeFragment : AbstractFragment() {
     private val mViewModel: HomeViewModel by viewModels()
-    private val mCommonViewModel: CommonViewModel by viewModels()
+    private val mCommonViewModel: CommonViewModel by viewModel()
     override val layoutId: Int
         get() = R.layout.fragment_home
 

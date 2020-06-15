@@ -42,7 +42,6 @@ class TakePhotoActivity : AbstractActivity() {
                 arrayOf(Manifest.permission.CAMERA)
             ) { openCamera() }
         }
-
         btn_camera2.setOnClickListener {
             /**
              * 启动相机方式2,这方法不去保存图片的输出路径,会通过onActivityResult

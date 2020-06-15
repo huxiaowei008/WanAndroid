@@ -10,7 +10,7 @@ import com.google.android.material.internal.FlowLayout
 import com.google.android.material.tabs.TabLayout
 import com.hxw.core.adapter.SimpleRecyclerAdapter
 import com.hxw.core.base.AbstractFragment
-import com.hxw.core.base.exceptionHandler
+import com.hxw.core.base.exceptionMain
 import com.hxw.wanandroid.Constant
 import com.hxw.wanandroid.R
 import com.hxw.wanandroid.WanApi
@@ -59,7 +59,7 @@ class NavigationFragment : AbstractFragment() {
 
     override fun init(savedInstanceState: Bundle?) {
         initRecycler()
-        lifecycle.coroutineScope.launch(exceptionHandler) {
+        lifecycle.coroutineScope.launch(exceptionMain) {
             val result = api.getNavi()
             if (result.errorCode == Constant.NET_SUCCESS) {
                 initTabLayout(result.data)

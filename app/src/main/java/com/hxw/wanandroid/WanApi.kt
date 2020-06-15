@@ -13,6 +13,10 @@ import retrofit2.http.Query
  * @date 2018/6/2
  */
 interface WanApi {
+    companion object {
+        const val BASEURL = "https://www.wanandroid.com/"
+    }
+
     /**
      * 1. 首页相关
      * 1.1 首页文章列表
@@ -302,8 +306,4 @@ interface WanApi {
         @Path("page") page: Int,
         @Query("k") key: String?
     ): BaseEntity<ArticleListEntity<ArticleEntity>>
-
-    companion object {
-        const val BASEURL = "https://www.wanandroid.com/"
-    }
 }

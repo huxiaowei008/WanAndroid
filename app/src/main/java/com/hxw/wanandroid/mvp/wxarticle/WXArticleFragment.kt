@@ -23,6 +23,7 @@ import com.hxw.wanandroid.paging.NetworkState
 import kotlinx.android.synthetic.main.fragment_wx_article.*
 import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * @author hxw
@@ -31,7 +32,7 @@ import org.jetbrains.anko.support.v4.toast
 class WXArticleFragment : AbstractFragment() {
 
     private val mViewModel: WXArticleViewModel by viewModels()
-    private val mCommonViewModel: CommonViewModel by viewModels()
+    private val mCommonViewModel: CommonViewModel by viewModel()
 
     override val layoutId: Int
         get() = R.layout.fragment_wx_article
@@ -104,29 +105,33 @@ class WXArticleFragment : AbstractFragment() {
                 }
             }
             view.findViewById<ImageView>(R.id.iv_favorite).apply {
-                imageTintList = ColorStateList.valueOf(ContextCompat
-                        .getColor(requireActivity(), if (data.collect) {
-                            R.color.colorPrimary
-                        } else {
-                            R.color.grey_500
-                        }))
+                imageTintList = ColorStateList.valueOf(
+                    ContextCompat
+                        .getColor(
+                            requireActivity(), if (data.collect) {
+                                R.color.colorPrimary
+                            } else {
+                                R.color.grey_500
+                            }
+                        )
+                )
             }.setOnClickListener {
-                        if (data.collect) {
-                            mCommonViewModel.unCollectArticle(data.id) {
-                                data.collect = false
-                                mViewModel.wxAdapter.notifyItemChanged(position)
-                            }
-                        } else {
-                            mCommonViewModel.collectArticle(data.id) {
-                                data.collect = true
-                                mViewModel.wxAdapter.notifyItemChanged(position)
-                            }
-                        }
-
+                if (data.collect) {
+                    mCommonViewModel.unCollectArticle(data.id) {
+                        data.collect = false
+                        mViewModel.wxAdapter.notifyItemChanged(position)
                     }
+                } else {
+                    mCommonViewModel.collectArticle(data.id) {
+                        data.collect = true
+                        mViewModel.wxAdapter.notifyItemChanged(position)
+                    }
+                }
+
+            }
             view.setOnClickListener {
                 startActivity<AgentWebActivity>(
-                        Constant.WEB_URL to data.link
+                    Constant.WEB_URL to data.link
                 )
             }
         }
