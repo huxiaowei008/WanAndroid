@@ -1,5 +1,7 @@
 package com.hxw.wanandroid;
 
+import com.hxw.core.utils.HexUtils;
+
 import java.text.DecimalFormat;
 
 /**
@@ -9,6 +11,7 @@ import java.text.DecimalFormat;
 public class Mortgage {
 
     public static void main(String[] args) {
+
         DecimalFormat format = new DecimalFormat("#.00");
         //贷款
         double loan = 2000000;
@@ -22,13 +25,13 @@ public class Mortgage {
         double earn2=0;
         //等额本息计算
         double pow = Math.pow(1 + rate, time);
-        double refund1 = Double.valueOf(format.format(loan * rate * pow / (pow - 1)));
+        double refund1 = Double.parseDouble(format.format(loan * rate * pow / (pow - 1)));
         //等额本金计算
         double bMonth = loan / time;
-        double bReturn = 0;
+        double bReturn ;
         for (int i = 0; i < time; i++) {
             bReturn = bMonth * i;
-            double refund2 = Double.valueOf(format.format(bMonth + (loan - bReturn) * rate));
+            double refund2 = Double.parseDouble(format.format(bMonth + (loan - bReturn) * rate));
 
             if (refund1<refund2){
                 earn1=(refund2-refund1+earn1)*(1+lrate);

@@ -24,8 +24,7 @@ class BleActivity : AbstractActivity() {
     private var mCmdSize = 0
     private val mCmdList = mutableListOf<String>()
     private val random = HexUtils.randomHex(12)
-
-
+    
     override fun init(savedInstanceState: Bundle?) {
         BleTool.getInstance().init(this)
         btn_scan.setOnClickListener {

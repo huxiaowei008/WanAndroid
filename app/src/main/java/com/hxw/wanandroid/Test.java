@@ -13,7 +13,7 @@ public class Test {
     public static void main(String[] args) {
 //        String str = "appid=appid&noncestr=noncestr&sdk_ticket=-p3A5zVP95IuafPhzA6lRR95_F9nZEBfJ_n4E9t8ZFWKJTDPOwccVQhHCwDBmvLkayF_jh-m9HOExhumOziDWA&timestamp=1417508194";
 //        String en = EncryptUtils.encryptSHA1ToString(str.getBytes());
-        System.out.print(Integer.toHexString(253));
+//        System.out.print(HexUtils.calcCrc16("210000"));
 //
 //        String s = "21006b0d0a2b43434c4b3a31382f30382f3131" +
 //                "2c30353a35343a34372b33320010fcacff7cfd" +
@@ -79,5 +79,13 @@ public class Test {
 //        }
 //        System.out.println("aes->"+HexUtils.bytes2HexStr1(encrypted));
 
+//
+//        System.out.println("7月->"+60.03*100000000/35.32/(181.6*10000)+"公斤/头");
+//        System.out.println("8月->"+59.12*100000000/34.47/(163.4*10000)+"公斤/头");
+//        System.out.println("9月->"+57.54*100000000/32.12/(165*10000)+"公斤/头");
+
+        byte[] data = HexUtils.hexStr2Bytes("1d68e651690000");
+        int result = HexUtils.calcCrc16(data, 0, data.length, 0x1127);
+        System.out.println(Integer.toHexString(result));
     }
 }

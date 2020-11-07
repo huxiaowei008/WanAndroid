@@ -194,14 +194,12 @@ public final class HexUtils {
         }
         StringBuilder builder = new StringBuilder(data.length);
         for (byte item : data) {
-//            String str = Integer.toHexString(item & 0xFF);
-//            if (str.length() == 1) {
-//                builder.append('0');
-//            }
+//        builder.append(Integer.toHexString((item & 0xFF) | 0x100).substring(1, 3));
             builder.append(String.format("%02x", item));
         }
         return builder.toString();
     }
+
 
     /**
      * 产生十六进制随机数
@@ -336,7 +334,6 @@ public final class HexUtils {
             ucCRCLo = ucCRCHi ^ crc16_tab_h[iIndex];
             ucCRCHi = crc16_tab_l[iIndex];
         }
-
         return (ucCRCHi & 0xFF) << 8 | (ucCRCLo & 0xFF) & 0xFFFF;
     }
 }
